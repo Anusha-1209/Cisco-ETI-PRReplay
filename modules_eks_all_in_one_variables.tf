@@ -161,6 +161,11 @@ variable "bastion_instance_count" {
   default     = 1
 }
 
+variable "bastion_instance_type" {
+  description = "Bastion instance type"
+  default     = "t3.nano"
+}
+
 ################################################################################
 # DHCP Options Set
 ################################################################################
