@@ -3,6 +3,12 @@ variable "region" {
   type        = string
 }
 
+variable "name" {
+  type        = string
+  description = "EKS/VPC Name"
+
+}
+
 variable "application_name" {
   type        = string
   description = "The name of the application."

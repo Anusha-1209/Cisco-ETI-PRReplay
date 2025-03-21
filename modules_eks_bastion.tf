@@ -7,7 +7,7 @@ locals {
 data "aws_subnets" "public" {
   filter {
     name   = "tag:Name"
-    values = ["genie-dev-2-public-il-central-*"]
+    values = ["${var.name}-public-*"]
   }
 }
 
