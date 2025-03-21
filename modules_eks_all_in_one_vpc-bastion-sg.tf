@@ -2,26 +2,25 @@ locals {
   bastion_security_group      = join("", flatten([aws_security_group.bastion_host_security_group[*].id, var.bastion_security_group_id]))
 }
 resource "aws_security_group" "bastion_host_security_group" {
-  count       = var.bastion_security_group_id == "" ? 1 : 0
-  description = "Enable SSH access to the bastion host from external via SSH port"
-  name        = "${local.name}-bastion"
-  vpc_id      = local.vpc_id
+  count             = var.bastion_security_group_id == "" ? 1 : 0
+  description       = "Enable SSH access to the bastion host from external via SSH port"
+  name              = "${local.name}-bastion"
+  vpc_id            = local.vpc_id
 }
 
-resource "aws_security_group_rule" "ingress_bastion01" {
+resource "aws_security_group_rule" "bastion-ingress-01" {
 
-  count       = var.bastion_security_group_id == "" ? 1 : 0
-  description = "Incoming traffic to bastion"
-  type        = "ingress"
-  from_port   = var.public_ssh_port
-  to_port     = var.public_ssh_port
-  protocol    = "TCP"
-  /*cidr_blocks = concat(data.aws_subnet.subnets.*.cidr_block, var.cidrs)*/
+  count             = var.bastion_security_group_id == "" ? 1 : 0
+  description       =  "Incoming traffic to bastion"
+  type              = "ingress"
+  from_port         = var.public_ssh_port
+  to_port           = var.public_ssh_port
+  protocol          = "TCP"
   cidr_blocks       = var.cisco_cidrs
   security_group_id = local.bastion_security_group
 }
 
-resource "aws_security_group_rule" "ingress_bastion02" {
+resource "aws_security_group_rule" "bastion-ingress-02" {
 
   count             = var.bastion_security_group_id == "" ? 1 : 0
   description       = "Incoming traffic to bastion"
@@ -33,28 +32,28 @@ resource "aws_security_group_rule" "ingress_bastion02" {
   security_group_id = local.bastion_security_group
 }
 
-resource "aws_security_group_rule" "egress_bastion" {
-  count = var.bastion_security_group_id == "" ? 1 : 0
+resource "aws_security_group_rule" "bastion-egress-all" {
+  count             = var.bastion_security_group_id == "" ? 1 : 0
 
-  description = "Outgoing traffic from bastion to instances"
-  type        = "egress"
-  from_port   = "0"
-  to_port     = "65535"
-  protocol    = "-1"
-  cidr_blocks = ["0.0.0.0/0"]
+  description       = "Outgoing traffic from bastion to instances"
+  type              = "egress"
+  from_port         = "0"
+  to_port           = "65535"
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
 
   security_group_id = local.bastion_security_group
 }
 
 resource "aws_security_group" "bastion-to-eks-private-nodes-security_group" {
-  description = "Enable SSH access to the Private instances from the bastion via SSH port"
-  name        = "${local.name}-bastion-to-eks-nodes"
-  vpc_id      = local.vpc_id
+  description       = "Enable SSH access to the Private instances from the bastion via SSH port"
+  name              = "${local.name}-bastion-to-eks-nodes"
+  vpc_id            = local.vpc_id
 
-  tags = merge(var.tags)
+  tags              = merge(var.tags)
 }
 
-resource "aws_security_group_rule" "ingress_instances" {
+resource "aws_security_group_rule" "bastion-ingress-instances" {
   description = "Incoming traffic from bastion"
   type        = "ingress"
   from_port   = var.private_ssh_port
