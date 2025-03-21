@@ -46,7 +46,7 @@ resource "aws_security_group_rule" "egress_bastion" {
   security_group_id = local.bastion_security_group
 }
 
-resource "aws_security_group" "private_instances_security_group" {
+resource "aws_security_group" "bastion-to-eks-private-nodes-security_group" {
   description = "Enable SSH access to the Private instances from the bastion via SSH port"
   name        = "${local.name}-bastion-to-eks-nodes"
   vpc_id      = local.vpc_id
@@ -63,5 +63,5 @@ resource "aws_security_group_rule" "ingress_instances" {
 
   source_security_group_id = local.bastion_security_group
 
-  security_group_id = aws_security_group.private_instances_security_group.id
+  security_group_id = aws_security_group.bastion-to-eks-private-nodes-security_group.id
 }
