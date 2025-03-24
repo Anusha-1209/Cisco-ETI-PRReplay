@@ -13,7 +13,7 @@ terraform {
 locals {
   name              = "damarcil-test-use1-1"
   region            = "us-east-2"
-  aws_account_name  = "eticloud-preproduction"
+  aws_account_name  = "eticloud-preprod"
 }
 
 module "eks_all_in_one" {
