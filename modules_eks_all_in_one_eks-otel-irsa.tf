@@ -37,6 +37,7 @@ provider "aws" {
 data "aws_iam_openid_connect_provider" "eks_cluster" {
   provider            = aws.otel_aws_source
   url                 = local.oidc_issuer_url
+  depends_on = [ aws_eks_cluster.this ]
 }
 
 # IAM policy that grants read/write permissions to AMP

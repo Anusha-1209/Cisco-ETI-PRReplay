@@ -8,6 +8,13 @@ provider "vault" {
   address   = "https://keeper.cisco.com"
   namespace = "eticloud"
 }
+
+provider "vault" {
+  alias     = "teamsecrets"
+  address   = "https://keeper.cisco.com"
+  namespace = "eticloud/teamsecrets"
+}
+
 data "vault_generic_secret" "aws_infra_credential" {
   provider    = vault.eticloud
   path        = "secret/infra/aws/${var.aws_account_name}/terraform_admin"
@@ -32,4 +39,15 @@ provider "kubernetes" {
   host                   = local.cluster_endpoint
   cluster_ca_certificate = base64decode(local.cluster_auth_base64)
   token                  = data.aws_eks_cluster_auth.cluster.token
+}
+
+data "vault_generic_secret" "argocd_credential" {
+  provider    = vault.teamsecrets
+  path        = "secret/argocd/${var.argocd_instance_name}/admin"
+}
+
+provider "argocd" {
+  server_addr            = var.argocd_server_address
+  username               = data.vault_generic_secret.argocd_credential.data["username"]
+  password               = data.vault_generic_secret.argocd_credential.data["password"]
 }
