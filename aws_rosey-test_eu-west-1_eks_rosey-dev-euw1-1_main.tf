@@ -30,9 +30,4 @@ module "eks_all_in_one" {
   min_size          = 3                       # EKS node group min size
   max_size          = 10                      # EKS node group max size
   desired_size      = 3                       # EKS node group desired size
-
-  # Enroll in ArgoCD
-  enroll_cluster_in_argocd = true
-  argocd_server_address    = "argocd-cnapp.eticloud.io"
-  argocd_instance_name     = "cnapp"
 }
