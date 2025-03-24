@@ -12,12 +12,12 @@ terraform {
 
 locals {
   name              = "vowel-staging-use2-1"
-  region            = "us-east-2"
+  region            = "us-east-1"
   aws_account_name  = "vowel-genai-staging"
 }
 
 module "eks_all_in_one" {
-  source            = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=0.0.6"
+  source            = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=latest"
 
   name              = local.name              # EKS cluster name
   region            = local.region            # AWS provider region
