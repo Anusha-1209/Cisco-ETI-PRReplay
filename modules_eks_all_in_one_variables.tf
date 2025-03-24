@@ -166,6 +166,11 @@ variable "bastion_instance_type" {
   default     = "t3.nano"
 }
 
+variable "bastion_instance_ami_id" {
+  description = "Bastion instance AMI ID"
+  default     = ""
+}
+
 ################################################################################
 # DHCP Options Set
 ################################################################################
@@ -1345,6 +1350,27 @@ variable "cluster_timeouts" {
   description = "Create, update, and delete timeout configurations for the cluster"
   type        = map(string)
   default     = {}
+}
+################################################################################
+# EKS IRSA
+################################################################################
+
+variable "create_alb_irsa" {
+  description = "Controls if EKS ALB IRSA resources should be created"
+  type        = bool
+  default     = true
+}
+
+variable "create_otel_irsa" {
+  description = "Controls if EKS OTel IRSA resources should be created"
+  type        = bool
+  default     = true
+}
+
+variable "otel_destination_endpoint_aws_account" {
+  description = "AWS account ID"
+  type        = string
+  default     = "626007623524"
 }
 
 ################################################################################

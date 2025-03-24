@@ -184,7 +184,7 @@ data "tls_certificate" "this" {
   # Not available on outposts
   count = local.create_oidc_provider && var.include_oidc_root_ca_thumbprint ? 1 : 0
 
-  url = aws_eks_cluster.this[0].identity[0].oidc[0].issuer
+  url = local.oidc_issuer_url
 }
 
 resource "aws_iam_openid_connect_provider" "oidc_provider" {
@@ -193,7 +193,7 @@ resource "aws_iam_openid_connect_provider" "oidc_provider" {
 
   client_id_list  = distinct(compact(concat(["sts.${local.dns_suffix}"], var.openid_connect_audiences)))
   thumbprint_list = concat(local.oidc_root_ca_thumbprint, var.custom_oidc_thumbprints)
-  url             = aws_eks_cluster.this[0].identity[0].oidc[0].issuer
+  url             = local.oidc_issuer_url
 
   tags = merge(
     { Name = "${local.name}-eks-irsa" },
@@ -337,7 +337,7 @@ resource "aws_eks_identity_provider_config" "this" {
     groups_claim                  = lookup(each.value, "groups_claim", null)
     groups_prefix                 = lookup(each.value, "groups_prefix", null)
     identity_provider_config_name = try(each.value.identity_provider_config_name, each.key)
-    issuer_url                    = try(each.value.issuer_url, aws_eks_cluster.this[0].identity[0].oidc[0].issuer)
+    issuer_url                    = try(each.value.issuer_url, local.oidc_issuer_url)
     required_claims               = lookup(each.value, "required_claims", null)
     username_claim                = lookup(each.value, "username_claim", null)
     username_prefix               = lookup(each.value, "username_prefix", null)

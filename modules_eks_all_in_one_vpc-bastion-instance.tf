@@ -1,6 +1,6 @@
 resource "aws_launch_template" "bastion_launch_template" {
   name_prefix                   = "${local.name}-bastion"
-  image_id                      = local.ami_id
+  image_id                      = local.bastion_instance_ami_id
   instance_type                 = var.bastion_instance_type
   update_default_version        = true
   monitoring {
@@ -48,7 +48,7 @@ resource "aws_autoscaling_group" "bastion_auto_scaling_group" {
   min_size         = var.bastion_instance_count
   desired_capacity = var.bastion_instance_count
 
-  vpc_zone_identifier = aws_subnet.private[*].id
+  vpc_zone_identifier = aws_subnet.public[*].id
 
   default_cooldown          = 180
   health_check_grace_period = 180
