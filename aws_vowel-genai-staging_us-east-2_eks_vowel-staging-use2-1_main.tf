@@ -12,7 +12,7 @@ terraform {
 
 locals {
   name              = "vowel-staging-use2-1"
-  region            = "us-east-1"
+  region            = "us-east-2"
   aws_account_name  = "vowel-genai-staging"
 }
 
