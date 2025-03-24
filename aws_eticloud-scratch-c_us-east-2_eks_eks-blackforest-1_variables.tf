@@ -5,7 +5,7 @@
 variable "application_name" {
   type        = string
   description = "The name of the application."
-  default     = local.name
+  default     = "eks-blackforest-1"
 }
 
 variable "cisco_mail_alias" {
