@@ -2,11 +2,11 @@ data "aws_caller_identity" "current" {}
 data "aws_availability_zones" "available" {}
 
 locals {
-  name            = "eks-blackforest-1"
+  name            = "eks-derbypie-1"
   cluster_version = "1.28"
   region          = "us-east-2"
 
-  vpc_cidr        = "10.0.0.0/16"
+  vpc_cidr        = "10.10.0.0/16"
   azs             = slice(data.aws_availability_zones.available.names, 0, 3)
 
   cluster_os      = "Ubuntu20"
@@ -49,8 +49,7 @@ locals {
 ################################################################################
 
 module "eks" {
-  source                          = "terraform-aws-modules/eks/aws"
-  version                         = "19.21.0"
+  source                          = "./modules/eks"
 
   cluster_name                   = local.name
   cluster_version                = local.cluster_version
@@ -93,9 +92,8 @@ module "eks" {
 
       subnet_ids = module.vpc.private_subnets
 
-      min_size     = 1
-      max_size     = 7
-      desired_size = 3
+      min_size     = 3
+
       ami_id                     = data.aws_ami.eks_default_cisco.image_id
       enable_bootstrap_user_data = true
 
@@ -178,8 +176,7 @@ module "eks" {
 ################################################################################
 
 module "vpc" {
-  source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 4.0"
+  source  = "./modules/vpc"
 
   name = local.name
   cidr = local.vpc_cidr
@@ -232,16 +229,14 @@ data "aws_ami" "eks_default_cisco" {
 }
 
 module "key_pair" {
-  source  = "terraform-aws-modules/key-pair/aws"
-  version = "~> 2.0"
+  source  = "./modules/key_pair"
 
   key_name_prefix    = local.name
   create_private_key = true
 }
 
 module "ebs_kms_key" {
-  source  = "terraform-aws-modules/kms/aws"
-  version = "~> 1.5"
+  source  = "./modules/ebs_kms_key"
 
   description = "Customer managed key to encrypt EKS managed node group volumes"
 
