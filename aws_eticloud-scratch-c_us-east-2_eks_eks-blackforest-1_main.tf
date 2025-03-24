@@ -1,25 +1,47 @@
-provider "kubernetes" {
-  host                   = module.eks.cluster_endpoint
-  cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
-
-  exec {
-    api_version = "client.authentication.k8s.io/v1beta1"
-    command     = "aws"
-    # This requires the awscli to be installed locally where Terraform is executed
-    args = ["eks", "get-token", "--cluster-name", module.eks.cluster_name]
-  }
-}
-
 data "aws_caller_identity" "current" {}
 data "aws_availability_zones" "available" {}
 
 locals {
   name            = "eks-blackforest-1"
-  cluster_version = "1.27"
+  cluster_version = "1.28"
   region          = "us-east-2"
 
-  vpc_cidr = "10.0.0.0/16"
-  azs      = slice(data.aws_availability_zones.available.names, 0, 3)
+  vpc_cidr        = "10.0.0.0/16"
+  azs             = slice(data.aws_availability_zones.available.names, 0, 3)
+
+  cluster_os      = "Ubuntu20"
+  aws_auth_configmap_string = concat(
+    [
+      {
+        rolearn  = "${module.eks.eks_managed_node_groups["private-ng"].iam_role_arn}"
+        username = "system:node:{{EC2PrivateDNSName}}"
+        groups = [
+          "system:bootstrappers",
+          "system:nodes",
+        ]
+      },
+      {
+        rolearn  = "${module.eks.eks_managed_node_groups["private-ng"].iam_role_arn}"
+        username = "system:node:{{EC2PrivateDNSName}}"
+        groups = [
+          "system:bootstrappers",
+          "system:nodes",
+        ]
+      },
+      {
+        rolearn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/admin",
+        username = "admin",
+        groups   = ["system:masters"]
+      },
+      {
+        rolearn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/sre-audit-ro",
+        username = "sre-audit-ro",
+        groups   = ["view"]
+      }
+    ])
+    aws_auth_configmap_yaml = {
+      mapRoles = yamlencode(local.aws_auth_configmap_string)
+    }
 }
 
 ################################################################################
@@ -62,118 +84,21 @@ module "eks" {
     }
   }
 
-  self_managed_node_groups = {
-    # Default node group - as provisioned by the module defaults
-    default_node_group = {}
+  eks_managed_node_groups = {
 
-    # Bottlerocket node group
-    bottlerocket = {
-      name = "bottlerocket-self-mng"
+    # EKS Managed Private Node Group
+    private-ng = {
+      name            = "${local.name}-private-ng"
+      use_name_prefix = true
 
-      platform      = "bottlerocket"
-      ami_id        = data.aws_ami.eks_default_bottlerocket.id
-      instance_type = "m5.large"
-      desired_size  = 2
-      key_name      = module.key_pair.key_pair_name
-
-      bootstrap_extra_args = <<-EOT
-        # The admin host container provides SSH access and runs with "superpowers".
-        # It is disabled by default, but can be disabled explicitly.
-        [settings.host-containers.admin]
-        enabled = false
-
-        # The control host container provides out-of-band access via SSM.
-        # It is enabled by default, and can be disabled if you do not expect to use SSM.
-        # This could leave you with no way to access the API and change settings on an existing node!
-        [settings.host-containers.control]
-        enabled = true
-
-        # extra args added
-        [settings.kernel]
-        lockdown = "integrity"
-
-        [settings.kubernetes.node-labels]
-        label1 = "foo"
-        label2 = "bar"
-
-        [settings.kubernetes.node-taints]
-        dedicated = "experimental:PreferNoSchedule"
-        special = "true:NoSchedule"
-      EOT
-    }
-
-    mixed = {
-      name = "mixed"
-
-      min_size     = 1
-      max_size     = 5
-      desired_size = 2
-
-      bootstrap_extra_args = "--kubelet-extra-args '--node-labels=node.kubernetes.io/lifecycle=spot'"
-
-      use_mixed_instances_policy = true
-      mixed_instances_policy = {
-        instances_distribution = {
-          on_demand_base_capacity                  = 0
-          on_demand_percentage_above_base_capacity = 20
-          spot_allocation_strategy                 = "capacity-optimized"
-        }
-
-        override = [
-          {
-            instance_type     = "m5.large"
-            weighted_capacity = "1"
-          },
-          {
-            instance_type     = "m6i.large"
-            weighted_capacity = "2"
-          },
-        ]
-      }
-    }
-
-    efa = {
-      min_size     = 1
-      max_size     = 2
-      desired_size = 1
-
-      # aws ec2 describe-instance-types --region eu-west-1 --filters Name=network-info.efa-supported,Values=true --query "InstanceTypes[*].[InstanceType]" --output text | sort
-      instance_type = "c5n.9xlarge"
-
-      post_bootstrap_user_data = <<-EOT
-        # Install EFA
-        curl -O https://efa-installer.amazonaws.com/aws-efa-installer-latest.tar.gz
-        tar -xf aws-efa-installer-latest.tar.gz && cd aws-efa-installer
-        ./efa_installer.sh -y --minimal
-        fi_info -p efa -t FI_EP_RDM
-
-        # Disable ptrace
-        sysctl -w kernel.yama.ptrace_scope=0
-      EOT
-
-      network_interfaces = [
-        {
-          description                 = "EFA interface example"
-          delete_on_termination       = true
-          device_index                = 0
-          associate_public_ip_address = false
-          interface_type              = "efa"
-        }
-      ]
-    }
-
-    # Complete
-    complete = {
-      name            = "complete-self-mng"
-      use_name_prefix = false
-
-      subnet_ids = module.vpc.public_subnets
+      subnet_ids = module.vpc.private_subnets
 
       min_size     = 1
       max_size     = 7
       desired_size = 1
 
-      ami_id = data.aws_ami.eks_default.id
+      ami_id                     = data.aws_ami.eks_default_cisco.image_id
+      enable_bootstrap_user_data = true
 
       pre_bootstrap_user_data = <<-EOT
         export FOO=bar
@@ -183,14 +108,31 @@ module "eks" {
         echo "you are free little kubelet!"
       EOT
 
-      instance_type = "m6i.large"
+      capacity_type        = "SPOT"
+      force_update_version = true
+      instance_types       = ["m6a.large"]
+      labels = {
+        GithubRepo = "terraform-aws-eks"
+        GithubOrg  = "terraform-aws-modules"
+      }
 
-      launch_template_name            = "self-managed-ex"
-      launch_template_use_name_prefix = true
-      launch_template_description     = "Self managed node group example launch template"
+      taints = [
+        {
+          key    = "dedicated"
+          value  = "gpuGroup"
+          effect = "NO_SCHEDULE"
+        }
+      ]
 
-      ebs_optimized     = true
-      enable_monitoring = true
+      update_config = {
+        max_unavailable_percentage = 33 # or set `max_unavailable`
+      }
+
+      description = "EKS managed node group example launch template"
+
+      ebs_optimized           = true
+      disable_api_termination = false
+      enable_monitoring       = true
 
       block_device_mappings = {
         xvda = {
@@ -207,58 +149,6 @@ module "eks" {
         }
       }
 
-      instance_attributes = {
-        name = "instance-attributes"
-
-        min_size     = 1
-        max_size     = 2
-        desired_size = 1
-
-        bootstrap_extra_args = "--kubelet-extra-args '--node-labels=node.kubernetes.io/lifecycle=spot'"
-
-        instance_type = null
-
-        # launch template configuration
-        instance_requirements = {
-          cpu_manufacturers                           = ["intel"]
-          instance_generations                        = ["current", "previous"]
-          spot_max_price_percentage_over_lowest_price = 100
-
-          vcpu_count = {
-            min = 1
-          }
-
-          allowed_instance_types = ["t*", "m*"]
-        }
-
-        use_mixed_instances_policy = true
-        mixed_instances_policy = {
-          instances_distribution = {
-            on_demand_base_capacity                  = 0
-            on_demand_percentage_above_base_capacity = 0
-            on_demand_allocation_strategy            = "lowest-price"
-            spot_allocation_strategy                 = "price-capacity-optimized"
-          }
-
-          # ASG configuration
-          override = [
-            {
-              instance_requirements = {
-                cpu_manufacturers                           = ["intel"]
-                instance_generations                        = ["current", "previous"]
-                spot_max_price_percentage_over_lowest_price = 100
-
-                vcpu_count = {
-                  min = 1
-                }
-
-                allowed_instance_types = ["t*", "m*"]
-              }
-            }
-          ]
-        }
-      }
-
       metadata_options = {
         http_endpoint               = "enabled"
         http_tokens                 = "required"
@@ -267,9 +157,9 @@ module "eks" {
       }
 
       create_iam_role          = true
-      iam_role_name            = "self-managed-node-group-complete-example"
+      iam_role_name            = "${local.name}-private-ng-role"
       iam_role_use_name_prefix = false
-      iam_role_description     = "Self managed node group complete example role"
+      iam_role_description     = "EKS managed node group complete example role"
       iam_role_tags = {
         Purpose = "Protector of the kubelet"
       }
@@ -277,11 +167,8 @@ module "eks" {
         AmazonEC2ContainerRegistryReadOnly = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
         additional                         = aws_iam_policy.additional.arn
       }
-
-      timeouts = {
-        create = "80m"
-        update = "80m"
-        delete = "80m"
+      tags = {
+        ExtraTag = "EKS managed node group complete example"
       }
     }
   }
@@ -315,23 +202,33 @@ module "vpc" {
   }
 }
 
-data "aws_ami" "eks_default" {
+# data "aws_ami" "eks_default" {
+#   most_recent = true
+#   owners      = ["amazon"]
+
+#   filter {
+#     name   = "name"
+#     values = ["amazon-eks-node-${local.cluster_version}-v*"]
+#   }
+# }
+
+# data "aws_ami" "eks_default_bottlerocket" {
+#   most_recent = true
+#   owners      = ["amazon"]
+
+#   filter {
+#     name   = "name"
+#     values = ["bottlerocket-aws-k8s-${local.cluster_version}-x86_64-*"]
+#   }
+# }
+
+data "aws_ami" "eks_default_cisco" {
+  owners      = ["849570812361"] # <--- The Cloud 9 AWS account
   most_recent = true
-  owners      = ["amazon"]
 
   filter {
     name   = "name"
-    values = ["amazon-eks-node-${local.cluster_version}-v*"]
-  }
-}
-
-data "aws_ami" "eks_default_bottlerocket" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["bottlerocket-aws-k8s-${local.cluster_version}-x86_64-*"]
+    values = ["CiscoHardened-EKS${local.cluster_version}${local.cluster_os}-amd64-*"]
   }
 }
 
@@ -383,11 +280,47 @@ resource "aws_iam_policy" "additional" {
   })
 }
 
+resource "vault_generic_secret" "cluster_certficate_data" {
+  path      = "secret/infra/eks/${local.name}/certificate"
+  data_json = <<EOT
+{"b64certificate": "${module.eks.cluster_certificate_authority_data}" }
+EOT
+}
+
+resource "vault_generic_secret" "aws_auth_sre_cluster_endpoint" {
+  path      = "secret/infra/eks/${local.name}/cluster_endpoint"
+  data_json = <<EOT
+{"cluster_endpoint": "${module.eks.cluster_endpoint}" }
+EOT
+}
+
+resource "vault_generic_secret" "aws_auth_sre_token" {
+  path      = "secret/infra/eks/${local.name}/token"
+  data_json = <<EOT
+{"token": "${data.aws_eks_cluster_auth.cluster.token}" }
+EOT
+}
+
 data "aws_eks_cluster_auth" "cluster" {
   name = module.eks.cluster_name
 }
 provider "kubernetes" {
+  alias                  = "eks"
   host                   = module.eks.cluster_endpoint
   cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
   token                  = data.aws_eks_cluster_auth.cluster.token
+}
+
+resource "kubernetes_config_map_v1_data" "aws_auth_sre_data" {
+  provider = kubernetes.eks
+  force    = true
+
+  metadata {
+    name      = "aws-auth"
+    namespace = "kube-system"
+  }
+
+  data = local.aws_auth_configmap_yaml
+
+  depends_on = [ module.eks ]
 }
