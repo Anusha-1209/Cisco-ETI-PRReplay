@@ -16,7 +16,7 @@ provider "vault" {
 # Change `path = "secret/eticcprod/infra/<account_name>/aws" to specify the account in which the resources will be created. 
 # Must match the account in which the VPC was created.
 data "vault_generic_secret" "aws_infra_credential" {
-  path     = "secret/infra/aws/rosey-test/terraform-admin"
+  path     = "secret/infra/aws/rosey-test/terraform_admin"
   provider = vault.eticloud
 }
 
