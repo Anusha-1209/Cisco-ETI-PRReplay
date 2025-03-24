@@ -29,7 +29,6 @@ module "elasticache_redis" {
   at_rest_encryption_enabled = true
   transit_encryption_enabled = true
   apply_immediately          = true
-  family                     = "redis5.0"
 
   subnet_ids         = data.aws_subnets.eks_subnets.ids
   vpc_id             = data.aws_vpc.vpc_dev.id
