@@ -1410,6 +1410,12 @@ variable "otel_destination_endpoint_aws_account" {
   default     = "626007623524"
 }
 
+variable "otel_destination_endpoint_aws_account_name" {
+  description = "AWS account name"
+  type        = string
+  default     = "eticloud"
+}
+
 ################################################################################
 # KMS Key
 ################################################################################

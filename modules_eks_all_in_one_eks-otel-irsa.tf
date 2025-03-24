@@ -5,8 +5,8 @@
 
 
 data "vault_generic_secret" "otel_destination_endpoint_aws_infra_credential" {
-  path                = "secret/eticcprod/infra/prod/aws"
-  provider            = vault.eticcprod
+  path                = "secret/infra/aws/${var.otel_destination_endpoint_aws_account_name}/terraform_admin"
+  provider            = vault.eticloud
 }
 
 # eticloud, where the IAM roles and policies for Amazon Managed Prometheus and OTEL will be created
@@ -18,10 +18,10 @@ provider "aws" {
   region              = "us-east-2"
 }
 
-# Change `path = "secret/eticcprod/infra/<account_name>/aws" to specify the account in which the EKS cluster lives.
+# `path = "secret/infra/aws/<account_name>/terraform_admin" to specify the account in which the EKS cluster lives.
 data "vault_generic_secret" "otel_source_cluster_aws_infra_credential" {
-  path                = "secret/eticcprod/infra/${var.aws_account_name}/aws"
-  provider            = vault.eticcprod
+  path                = "secret/infra/aws/${var.aws_account_name}/terraform_admin"
+  provider            = vault.eticloud
 }
 
 # other AWS account, where the EKS cluster live
