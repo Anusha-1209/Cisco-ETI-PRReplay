@@ -17,7 +17,7 @@ locals {
 }
 
 module "eks_all_in_one" {
-  source            = "../../../../../modules/eks_all_in_one"
+  source            = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=0.0.1"
 
   name              = local.name              # EKS cluster name
   region            = local.region            # AWS provider region
