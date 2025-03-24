@@ -3,7 +3,7 @@ terraform {
     # This is the name of the backend S3 bucket.
     bucket          = "eticloud-tf-state-nonprod" # UPDATE ME.
     # This is the path to the Terraform state file in the backend S3 bucket.
-    key             = "terraform-state/aws/vowel-genai-staging/us-east-2/eks/vowel-staging-use2-1.tfstate" # UPDATE ME.
+    key             = "terraform-state/aws/eticloud-preproduction/us-east-2/eks/damarcil-test-use1-1.tfstate" # UPDATE ME.
     # This is the region where the backend S3 bucket is located.
     region          = "us-east-2" # DO NOT CHANGE.
 
@@ -11,13 +11,13 @@ terraform {
 }
 
 locals {
-  name              = "vowel-staging-use2-1"
-  region            = "us-east-1"
-  aws_account_name  = "vowel-genai-staging"
+  name              = "damarcil-test-use1-1"
+  region            = "us-east-2"
+  aws_account_name  = "eticloud-preprod"
 }
 
 module "eks_all_in_one" {
-  source            = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=latest" # Based on v0.0.10
+  source            = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=0.0.8"
 
   name              = local.name              # EKS cluster name
   region            = local.region            # AWS provider region
@@ -27,7 +27,7 @@ module "eks_all_in_one" {
 
   # EKS Managed Private Node Group
   instance_types    = ["m6a.2xlarge"]         # EKS instance types
-  min_size          = 3                       # EKS node group min size
+  min_size          = 2                       # EKS node group min size
   max_size          = 15                      # EKS node group max size
-  desired_size      = 3                       # EKS node group desired size
+  desired_size      = 2                       # EKS node group desired size
 }
