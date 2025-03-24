@@ -2284,7 +2284,7 @@ variable "update_config" {
 variable "timeouts" {
   description = "Create, update, and delete timeout configurations for the node group"
   type        = map(string)
-  default     = { "create": "10m"}
+  default     = { "create": "60m"}
 }
 
 ################################################################################

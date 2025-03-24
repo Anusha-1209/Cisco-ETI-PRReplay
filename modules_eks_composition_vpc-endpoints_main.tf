@@ -35,8 +35,8 @@ resource "aws_vpc_endpoint" "this" {
   tags = merge(var.tags, lookup(each.value, "tags", {}))
 
   timeouts {
-    create = lookup(var.timeouts, "create", "10m")
-    update = lookup(var.timeouts, "update", "10m")
-    delete = lookup(var.timeouts, "delete", "10m")
+    create = lookup(var.timeouts, "create", "60m")
+    update = lookup(var.timeouts, "update", "60m")
+    delete = lookup(var.timeouts, "delete", "60m")
   }
 }
