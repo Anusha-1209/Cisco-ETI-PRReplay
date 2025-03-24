@@ -34,7 +34,7 @@ module "elasticache_redis" {
 
   subnet_ids         = data.aws_subnets.eks_subnets.ids
   vpc_id             = data.aws_vpc.vpc_dev.id
-  source_cidr_blocks = "10.0.0.0/16"
+  source_cidr_blocks = ["10.0.0.0/16"]
   
   tags = {
     ApplicationName    = "eu-west-1-rosey-dev-euw1-1"
