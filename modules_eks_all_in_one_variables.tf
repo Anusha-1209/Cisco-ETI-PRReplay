@@ -1754,23 +1754,6 @@ variable "cluster_addons_timeouts" {
   default     = {}
 }
 
-variable "setup_external_secrets_operator" {
-  description = "Determines whether to setup external-secrets"
-  type        = bool
-  # DO NOT create EKS Cluster with external-secrets enabled until External Secrets Operator is installed in the cluster
-  default     = false
-}
-
-variable "external_secrets_namespaces" {
-  description = "Map of namespaces to install external-secrets config"
-  type        = list(string)
-  default     = {
-    eticloud = {
-      vault_policy = [ "external-secrets-dev"]
-    }
-  }
-}
-
 ################################################################################
 # EKS Identity Provider
 ################################################################################

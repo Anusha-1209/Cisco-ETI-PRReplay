@@ -10,10 +10,22 @@ terraform {
   }
 }
 
+locals {
+  name = "rosey-dev-euw1-1"
+}
+
+data "aws_eks_cluster" "this" {
+  name = local.name
+}
+
+data "vault_generic_secret" "cluster_certificate" {
+    path = "secret/infra/eks/${local.name}/certificate"
+}
+
 module "eks_all_in_one" {
   source            = "../../../../../modules/eks_all_in_one"
 
-  name              = "rosey-dev-euw1-1"      # EKS cluster name
+  name              = local.name              # EKS cluster name
   region            = "eu-west-1"             # AWS provider region
   aws_account_name  = "rosey-test"            # AWS account name
   cidr              = "10.0.0.0/16"           # VPC CIDR
@@ -24,13 +36,17 @@ module "eks_all_in_one" {
   min_size          = 3                       # EKS node group min size
   max_size          = 10                      # EKS node group max size
   desired_size      = 3                       # EKS node group desired size
+}
 
-  # ESO Setup
-  # DO NOT create EKS Cluster with external-secrets enabled until External Secrets Operator is installed in the cluster
-  setup_external_secrets_operator = true
-  external_secrets_namespaces     = {
-    eticloud = {
-      vault_policy = [ "external-secrets-dev"]
-    }
-  }
+module "eticloud_setup_external_secrets_operator" {
+  source               = "git::https://github.com/cisco-eti/sre-tf-module-eso-access.git?ref=0.0.2"
+  cluster_name         = local.name
+  vault_namespace      = "eticloud"
+  kubernetes_host      = data.aws_eks_cluster.cluster.endpoint
+  kubernetes_ca        = data.vault_generic_secret.cluster_certificate.data["b64certificate"]
+  policies             = ["external-secrets-dev"]
+
+  depends_on = [
+    module.eks_all_in_one
+  ]
 }
