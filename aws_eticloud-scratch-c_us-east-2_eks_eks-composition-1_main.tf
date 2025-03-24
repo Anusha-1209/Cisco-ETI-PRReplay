@@ -6,7 +6,7 @@ data "aws_availability_zones" "available" {}
 ################################################################################
 
 module "eks" {
-  source                         = "git::https://github.com/cisco-eti/sre-tf-module-eks-composition.git?ref=main"
+  source                         = "../../../../../modules/eks_composition/eks"
 
   cluster_name                   = local.name
   cluster_version                = local.cluster_version
