@@ -20,28 +20,28 @@ data "vault_generic_secret" "aws_infra_credential" {
   provider = vault.eticloud
 }
 
-terraform {
-  backend "s3" {
-    bucket = "eticloud-tf-state-nonprod"                                                           # We separate the different environments into different buckets. The buckets are eticloud-tf-state-sandbox, eticloud-tf-state-nonprod, eticloud-tf-state-prod. The environment should match the CSBEnvironment below.
-    key    = "terraform-state/rosey-test/eks/eu-west-1/rosey-staging-euw1-1-eso.tfstate" # Note the path here. It should match the patten terraform_state/<service>/<region>/<name>.tfstate
-    region = "us-east-2"                                                                        # Do not change
-    # profile = "eticloud" # if you are doing developing Terraform, you can specify a local profile to use for accessing the statefile ONLY. A CLI login to Keeper is also required.
-  }
-  required_providers {
-    vault = {
-      source = "hashicorp/vault"
-      version = "3.23.0"
-    }
-    aws = {
-      source = "hashicorp/aws"
-      version = "5.31.0"
-    }
-    kubernetes = {
-      source = "hashicorp/kubernetes"
-      version = "2.25.2"
-    }
-  }
-}
+# terraform {
+#   backend "s3" {
+#     bucket = "eticloud-tf-state-nonprod"                                                           # We separate the different environments into different buckets. The buckets are eticloud-tf-state-sandbox, eticloud-tf-state-nonprod, eticloud-tf-state-prod. The environment should match the CSBEnvironment below.
+#     key    = "terraform-state/rosey-test/eks/eu-west-1/rosey-staging-euw1-1-eso.tfstate" # Note the path here. It should match the patten terraform_state/<service>/<region>/<name>.tfstate
+#     region = "us-east-2"                                                                        # Do not change
+#     # profile = "eticloud" # if you are doing developing Terraform, you can specify a local profile to use for accessing the statefile ONLY. A CLI login to Keeper is also required.
+#   }
+#   required_providers {
+#     vault = {
+#       source = "hashicorp/vault"
+#       version = "3.23.0"
+#     }
+#     aws = {
+#       source = "hashicorp/aws"
+#       version = "5.31.0"
+#     }
+#     kubernetes = {
+#       source = "hashicorp/kubernetes"
+#       version = "2.25.2"
+#     }
+#   }
+# }
 
 # Infra AWS Provider
 provider "aws" {
