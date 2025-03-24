@@ -27,7 +27,7 @@ module "eks_all_in_one" {
 
   # EKS Managed Private Node Group
   instance_types    = ["m6a.large"]           # EKS instance types
-  min_size          = 3                       # EKS node group min size
+  min_size          = 5                       # EKS node group min size
   max_size          = 10                      # EKS node group max size
   desired_size      = 5                       # EKS node group desired size
 }
