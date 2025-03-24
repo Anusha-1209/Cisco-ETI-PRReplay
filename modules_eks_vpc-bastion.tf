@@ -4,31 +4,6 @@ locals {
   compact_all_security_groups                = compact(local.concat_all_security_groups)
 }
 
-data "aws_subnets" "public" {
-  filter {
-    name   = "tag:Name"
-    values = ["${var.name}-public-*"]
-  }
-}
-
-data "aws_ami" "ubuntu" {
-    most_recent = true
-    filter {
-        name   = "name"
-        values = ["*ubuntu-jammy-22.04-amd64-server-*"]
-    }
-    filter {
-        name = "virtualization-type"
-        values = ["hvm"]
-    }
-    owners = ["099720109477"]
-}
-
-data "aws_subnet" "target" {
-  for_each = "${toset(data.aws_subnets.public.ids)}"
-  id       = "${each.value}"
-}
-
 resource "aws_security_group" "bastion_host_security_group" {
 
   description = "Enable SSH access to the bastion host from external via SSH port"
@@ -104,7 +79,7 @@ resource "aws_launch_template" "bastion_launch_template" {
   iam_instance_profile {
     name = aws_iam_instance_profile.bastion_host_profile.name
   }
-  key_name = aws_key_pair.key_pair.key_name
+  key_name = aws_key_pair.bastion_key_pair.key_name
 
   tag_specifications {
     resource_type = "instance"
