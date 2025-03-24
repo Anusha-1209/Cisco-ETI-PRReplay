@@ -15,7 +15,7 @@ module "eks_all_in_one" {
   name              = "rosey-dev-euw1-1"        # EKS cluster name
   region            = "eu-west-1"             # AWS provider region
   aws_account_name  = "rosey-test"    # AWS account name
-  cidr              = "10.59.0.0/16"          # VPC CIDR
+  cidr              = "10.1.0.0/16"          # VPC CIDR
   cluster_version   = "1.28"                  # EKS cluster version
 
   # EKS Managed Private Node Group
