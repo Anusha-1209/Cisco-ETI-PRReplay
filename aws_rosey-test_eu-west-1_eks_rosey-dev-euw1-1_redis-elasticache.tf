@@ -17,7 +17,7 @@ data "aws_subnets" "eks_subnets" {
 module "elasticache_redis" {
   source                = "git::https://github.com/tmknom/terraform-aws-elasticache-redis.git?ref=tags/2.0.0"
   name                  = "rosey-dev-euw1-1"
-  number_cache_clusters = 2
+  number_cache_clusters = "2"
   node_type             = "cache.t2.medium"
 
   engine_version             = "7.1"
@@ -30,7 +30,6 @@ module "elasticache_redis" {
   transit_encryption_enabled = true
   apply_immediately          = true
   family                     = "redis5.0"
-  description                = "Redis replication group for rosey-dev-euw1-1"
 
   subnet_ids         = data.aws_subnets.eks_subnets.ids
   vpc_id             = data.aws_vpc.vpc_dev.id
