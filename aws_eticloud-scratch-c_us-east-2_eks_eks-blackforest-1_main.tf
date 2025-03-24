@@ -51,8 +51,8 @@ module "eks" {
   control_plane_subnet_ids = module.vpc.intra_subnets
 
   # Self managed node groups will not automatically create the aws-auth configmap so we need to
-  create_aws_auth_configmap = true
-  manage_aws_auth_configmap = true
+  create_aws_auth_configmap = false
+  manage_aws_auth_configmap = false
 
   self_managed_node_group_defaults = {
     # enable discovery of autoscaling groups by cluster-autoscaler
@@ -381,4 +381,13 @@ resource "aws_iam_policy" "additional" {
       },
     ]
   })
+}
+
+data "aws_eks_cluster_auth" "cluster" {
+  name = module.eks.cluster_name
+}
+provider "kubernetes" {
+  host                   = module.eks.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
+  token                  = data.aws_eks_cluster_auth.cluster.token
 }
