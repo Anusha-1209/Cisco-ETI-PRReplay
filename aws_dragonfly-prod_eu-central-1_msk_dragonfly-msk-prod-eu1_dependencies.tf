@@ -3,6 +3,8 @@ data "vault_generic_secret" "aws_infra_credential" {
   provider = vault.eticcprod
 }
 
+data "aws_caller_identity" "current" {}
+
 data "aws_iam_policy_document" "msk_secret_policy" {
   for_each = var.kafka_clients
 
