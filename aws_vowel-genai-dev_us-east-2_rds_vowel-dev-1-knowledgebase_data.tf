@@ -5,7 +5,7 @@ data "vault_generic_secret" "aws_infra_credential" {
 
 data "aws_vpc" "cluster_vpc" {
   filter {
-    name   = "tag:ApplicationName"
+    name   = "tag:Name"
     values = [local.cluster_vpc_name]
   }
 }
