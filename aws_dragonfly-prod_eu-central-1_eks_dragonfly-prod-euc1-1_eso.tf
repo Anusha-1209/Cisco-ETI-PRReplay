@@ -35,5 +35,5 @@ module "eso_eticloud" {
   vault_namespace = "eticloud"
   kubernetes_host = data.aws_eks_cluster.cluster.endpoint
   kubernetes_ca   = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
-  policies        = ["external-secrets-prod"]
+  policies        = ["external-secrets-prod-dragonfly"]
 }
