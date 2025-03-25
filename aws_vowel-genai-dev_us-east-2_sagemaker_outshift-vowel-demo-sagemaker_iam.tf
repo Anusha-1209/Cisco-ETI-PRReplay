@@ -30,7 +30,7 @@ resource "aws_iam_policy" "vowel-demo" {
       },
       {
         Action = [
-          "ecr:BatchGetImage"
+          "ecr:*"
         ]
         Effect   = "Allow"
         Resource = "*"
