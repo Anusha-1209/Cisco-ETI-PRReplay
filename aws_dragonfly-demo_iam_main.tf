@@ -6,10 +6,6 @@ terraform {
   }
 }
 
-provider "aws" {
-  region = "eu-west-1"
-}
-
 data "aws_eks_cluster" "dragonfly-demo-euw1-1" {
   name = "dragonfly-demo-euw1-1"
 }
@@ -49,6 +45,9 @@ locals {
   }
 }
 
+provider "aws" {
+  region = "eu-west-1"
+}
 module "aws_iam" {
   # EKS cluster partially created as of Jan 29 2024
   source = "git::https://github.com/cisco-eti/sre-tf-module-aws-iam.git?ref=iam-management"
