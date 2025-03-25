@@ -10,9 +10,9 @@ terraform {
   }
 }
 locals {
-  name = "rosey-dev-euw1-1"
-  region = "eu-west-1"
-  aws_account_name = "rosey-test"
+  name                 = "rosey-dev-euw1-1"
+  region               = "eu-west-1"
+  aws_account_name     = "rosey-test"
 }
 
 provider "vault" {
@@ -32,6 +32,24 @@ provider "aws" {
   region     = local.region
 }
 
+data "aws_vpc" "cluster_vpc" {
+  filter {
+    name   = "tag:Name"
+    values = [local.name]
+  }
+}
+
+# Create a security group for the Elasticache service
+resource "aws_security_group" "redis_security_group" {
+  name = "rosey-dev-euw1-1-sg"
+  ingress {
+    from_port       = 6379
+    to_port         = 6379
+    protocol        = "tcp"
+    cidr_blocks     = [data.aws_vpc.cluster_vpc.cidr_block]
+  }
+}
+
 resource "aws_elasticache_replication_group" "rosey-dev-euw1-1" {
   replication_group_id       = "rosey-dev-euw1-1"
   description                = "Redis cluster for rosey-dev-euw1-1 ElastiCache"
@@ -47,4 +65,6 @@ resource "aws_elasticache_replication_group" "rosey-dev-euw1-1" {
 
   num_node_groups            = 2
   replicas_per_node_group    = 1
+
+  security_group_ids         = [aws_security_group.redis_security_group.id]
 }
