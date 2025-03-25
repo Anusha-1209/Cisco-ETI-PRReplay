@@ -32,4 +32,16 @@ module "eks_all_in_one" {
 
   # Karpenter
   create_karpenter_irsa = true                 # Create Karpenter IRSA
+  aws_auth_additional_roles = [    
+    {
+      rolearn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/staging-eu-eks-role",
+      username = "devops",
+      groups = ["system:masters"]
+    },
+    {
+      rolearn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/KarpenterControllerRole-cnapp-staging-euc1-1",
+      username = "system:node:{{EC2PrivateDNSName}}",
+      groups = ["system:bootstrappers","system:nodes"]        
+    }
+  ]
 }
