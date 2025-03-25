@@ -7,12 +7,12 @@ resource "aws_iam_role" "readonly" {
 }
 
 
-resource "aws_iam_policy" "readonly-policy" {
-  name        = "read-only-policy"
-  path        = "/"
-  description = "Read-Only SSO IAM role access"
-  policy = file("policies/readonly_policy.json")
-}
+# resource "aws_iam_policy" "readonly-policy" {
+#   name        = "read-only-policy"
+#   path        = "/"
+#   description = "Read-Only SSO IAM role access"
+#   policy = file("policies/readonly_policy.json")
+# }
 
 
 
@@ -20,5 +20,5 @@ resource "aws_iam_policy" "readonly-policy" {
 
 resource "aws_iam_role_policy_attachment" "readonly-policy-attachment" {
   role       = aws_iam_role.readonly.name
-  policy_arn = aws_iam_policy.readonly-policy.arn
+  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
 }
