@@ -30,7 +30,7 @@ resource "aws_opensearch_domain" "dragonfly_prod_eu_1_os" {
   }
 
   vpc_options {
-    subnet_ids = data.aws_subnets.db_subnets.ids
+    subnet_ids = data.aws_db_subnet_group.db_subnet_group.subnet_ids
     security_group_ids = [
       aws_security_group.dragonfly_prod_eu_1_os.id
     ]

@@ -14,11 +14,9 @@ data "aws_vpc" "database_vpc" {
   }
 }
 
-data "aws_subnets" "db_subnets" {
-  filter {
-    name   = "vpc-id"
-    values = [data.aws_vpc.database_vpc.id]
-  }
+data "aws_db_subnet_group" "db_subnet_group" {
+  # this returns 3 subnets where the RDS DB lives, required to create the aws_opensearch_domain
+  name = "dragonfly-prod-data-euc1-1-db-subnet-group"
 }
 
 data "aws_vpc" "compute_vpc" {
