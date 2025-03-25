@@ -9,7 +9,7 @@ resource "aws_sagemaker_model" "redaction-pii-demo-model" {
 }
 
 resource "aws_iam_role" "redaction-pii-demo-role" {
-  assume_role_policy = data.aws_iam_policy_document.assume_role.json
+  assume_role_policy = data.aws_iam_policy_document.sagemaker_assume_role.json
 }
 
 
