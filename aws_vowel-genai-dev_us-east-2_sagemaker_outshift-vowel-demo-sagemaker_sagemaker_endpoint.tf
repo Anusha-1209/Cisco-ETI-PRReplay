@@ -1,6 +1,6 @@
 resource "aws_sagemaker_model" "redaction-pii-demo-model" {
   name               = "redaction-pii-demo-model"
-  execution_role_arn = aws_iam_role.redaction-pii-demo-role.arn
+  execution_role_arn = aws_iam_role.vowel-demo.arn
 
   primary_container {
     mode            = "SingleModel"
@@ -14,12 +14,6 @@ resource "aws_sagemaker_model" "redaction-pii-demo-model" {
     }
   }
 }
-
-resource "aws_iam_role" "redaction-pii-demo-role" {
-  assume_role_policy = data.aws_iam_policy_document.sagemaker_assume_role.json
-}
-
-
 
 resource "aws_sagemaker_endpoint_configuration" "ec" {
   name = "redaction-pii-demo-model-config"
