@@ -3,20 +3,20 @@ terraform {
     # This is the name of the backend S3 bucket.
     bucket  = "eticloud-tf-state-prod"
     # This is the path to the Terraform state file in the backend S3 bucket.
-    key     = "terraform-state/aws/dragonfly-prod/eu-central-1/redis/cnapp-prod-euc1-1.tfstate"
+    key     = "terraform-state/aws-dragonfly-production/eu-central-1/redis/dragonfly-prod-redis-euc1-1.tfstate"
     # This is the region where the backend S3 bucket is located.
     region  = "us-east-2" # DO NOT CHANGE.
   }
 }
 
 locals {
-  name              = "rosey-prod-euc1-1"
-  eks_vpc_name      = "cnapp-prod-euc1-1"
-  data_vpc_name     = "cnapp-prod-euc1-data"
+  name              = "dragonfly-prod-euc1-1"
+  eks_vpc_name      = "dragonfly-prod-euc1-1"
+  data_vpc_name     = "dragonfly-prod-data-euc1-1"
   region            = "eu-central-1"
-  aws_account_name  = "cnapp-prod"
-  node_type         = "cache.r7g.large"
-  subnet_group_name = "rosey-prod-data-sg-euc1-1"
+  aws_account_name  = "dragonfly-prod"
+  node_type         = "cache.t2.small"
+  subnet_group_name = "dragonfly-prod-data-sg-euc1-1"
 }
 
 provider "vault" {
@@ -78,7 +78,7 @@ resource "aws_security_group" "redis_security_group" {
   }
 }
 
-resource "aws_elasticache_replication_group" "rosey-prod-euc1-1" {
+resource "aws_elasticache_replication_group" "dragonfly-prod-euc1-1" {
   replication_group_id       = local.name
   description                = "Redis cluster ElastiCache"
   engine                     = "redis"
