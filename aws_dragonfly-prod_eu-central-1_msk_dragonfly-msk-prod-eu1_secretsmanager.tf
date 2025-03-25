@@ -18,8 +18,6 @@ resource "vault_generic_secret" "msk_auth_credentials" {
   })
 
   provider = vault.dragonfly
-
-  depends_on = [vault_mount.kv2]
 }
 
 // Secrets for SASL/SCRAM authentication

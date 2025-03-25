@@ -20,7 +20,7 @@ provider "vault" {
   alias     = "eticcprod"
   address   = "https://keeper.cisco.com"
   namespace = "eticloud"
-} 
+}
 
 provider "vault" {
   alias     = "dragonfly"
