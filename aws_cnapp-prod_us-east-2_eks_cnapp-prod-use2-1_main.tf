@@ -5,7 +5,7 @@ terraform {
     # This is the path to the Terraform state file in the backend S3 bucket.
     key     = "terraform-state/aws/cnapp-prod/us-east-2/eks/cnapp-prod-use2-1.tfstate"
     # This is the region where the backend S3 bucket is located.
-    region  = "us-east-2"                                                                   # DO NOT CHANGE.
+    region  = "us-east-2" # DO NOT CHANGE.
   }
 }
 
