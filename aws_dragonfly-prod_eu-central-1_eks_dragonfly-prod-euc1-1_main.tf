@@ -10,7 +10,7 @@ terraform {
 }
 
 locals {
-  name             = "dragonfly-prod-euc1"
+  name             = "dragonfly-prod-euc1-1"
   region           = "eu-central-1"
   aws_account_name = "dragonfly-prod"
 }
