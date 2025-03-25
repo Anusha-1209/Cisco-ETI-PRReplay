@@ -6,6 +6,10 @@ terraform {
   }
 }
 
+provider "aws" {
+  region = local.aws_region
+}
+
 data "aws_eks_cluster" "dragonfly-demo-euw1-1" {
   name = "dragonfly-demo-euw1-1"
 }
