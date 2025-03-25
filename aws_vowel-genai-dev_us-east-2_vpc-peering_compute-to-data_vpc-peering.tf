@@ -19,7 +19,7 @@ terraform {
 
 locals {
   acceptor_vpc_name  = "motific-dev-use2-1"
-  requestor_vpc_name = "rds-vowel-dev-1-vpc"
+  requestor_vpc_name = "motific-dev-use2-data"
 }
 
 # Get the VPC IDs based on the names of the VPCs
