@@ -161,7 +161,7 @@ resource "aws_security_group_rule" "dev-data-vpc-to-app" {
   to_port = 65535
   protocol = "-1"
   security_group_id = data.aws_security_group.es_cluster_sg.id
-  source_security_group_id = aws_security_group.eks_cluster_sg.id
+  source_security_group_id = data.aws_security_group.eks_cluster_sg.id
 }
 
 resource "aws_security_group_rule" "app-to-dev-data-vpc" {
@@ -170,5 +170,5 @@ resource "aws_security_group_rule" "app-to-dev-data-vpc" {
   to_port = 65535
   protocol = "-1"
   security_group_id = data.aws_security_group.eks_cluster_sg.id
-  source_security_group_id = aws_security_group.es_cluster_sg.id
+  source_security_group_id = data.aws_security_group.es_cluster_sg.id
 } 
