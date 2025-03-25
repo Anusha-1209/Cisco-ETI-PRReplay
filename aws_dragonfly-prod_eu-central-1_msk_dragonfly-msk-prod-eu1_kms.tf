@@ -14,7 +14,7 @@ resource "aws_kms_key" "encryption_key" {
       {
         "Sid" : "External",
         "Effect" : "Allow",
-        "Principal" : { "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root" },
+        "Principal" : { "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/admin" },
         "Action" : [
           "kms:Decrypt",
           "kms:Describe*",
