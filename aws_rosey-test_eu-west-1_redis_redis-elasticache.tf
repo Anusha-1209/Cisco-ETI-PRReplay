@@ -59,10 +59,10 @@ data "aws_subnets" "redis_subnets" {
 }
 
 # Create a subnet group for the Elasticache service
-resource "aws_elasticache_subnet_group" "redis_subnet_group" {
-  name       = local.subnet_group_name
-  subnet_ids = data.aws_subnets.redis_subnets.ids
-}
+# resource "aws_elasticache_subnet_group" "redis_subnet_group" {
+#   name       = local.subnet_group_name
+#   subnet_ids = data.aws_subnets.redis_subnets.ids
+# }
 
 # Create a security group for the Elasticache service
 resource "aws_security_group" "redis_security_group" {
@@ -92,6 +92,6 @@ resource "aws_elasticache_replication_group" "rosey-dev-euw1-1" {
   num_node_groups            = 2
   replicas_per_node_group    = 1
 
-  subnet_group_name          = aws_elasticache_subnet_group.redis_subnet_group.name
+  subnet_group_name          = local.subnet_group_name
   security_group_ids         = [aws_security_group.redis_security_group.id]
 }
