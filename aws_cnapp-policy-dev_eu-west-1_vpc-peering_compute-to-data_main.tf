@@ -9,7 +9,7 @@ terraform {
 locals {
   region           = "eu-west-1"
   aws_account_name = "cnapp-policy-dev"
-  vpc_data         = "policy-dev-data-euc1-1"
+  vpc_data         = "policy-dev-data-euw1-1"
   vpc_compute      = "cnapp-policy-dev-euw1-1"
 }
 
