@@ -5,7 +5,7 @@ terraform {
     # This is the path to the Terraform state file in the backend S3 bucket.
     key = "terraform-state/aws/eticloud-preprod/us-west-2/eks/eks-staging-2.tfstate" # UPDATE ME.
     # This is the region where the backend S3 bucket is located.
-    region = "us-west-2" # DO NOT CHANGE.
+    region = "us-east-2" # DO NOT CHANGE.
   }
 }
 
