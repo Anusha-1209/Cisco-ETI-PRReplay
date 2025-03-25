@@ -19,7 +19,7 @@ terraform {
 
 locals {
   acceptor_vpc_name  = "cnapp-prod-use2-1"
-  requestor_vpc_name = "rds-cnapp-prod-use2-1-vpc"
+  requestor_vpc_name = "rds-cnapp-prod-use2-1"
 }
 
 # Get the VPC IDs based on the names of the VPCs
