@@ -7,7 +7,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-2"
+  region = "eu-west-1"
 }
 
 data "aws_eks_cluster" "dragonfly-demo-euw1-1" {
