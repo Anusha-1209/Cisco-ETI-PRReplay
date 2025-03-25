@@ -25,6 +25,8 @@ data "aws_vpc" "requestor_vpc" {
   }
 }
 
+# VPC created from sre-tf-infra, not migrated to this repo
+# https://wwwin-github.cisco.com/eti/sre-tf-infra/tree/main/aws-dragonfly-production/vpc/eu-central-1/dragonfly-prod-data-euc1-1
 data "aws_vpc" "acceptor_vpc" {
   filter {
     name   = "tag:ApplicationName"
