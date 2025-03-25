@@ -15,6 +15,8 @@ locals {
   aws_account_name = "cnapp-staging"
 }
 
+data "aws_caller_identity" "current" {}
+
 module "eks_all_in_one" {
   source            = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=latest"
 
