@@ -14,6 +14,7 @@ locals {
   region               = "eu-west-1"
   aws_account_name     = "rosey-test"
   data_vpc_name        = "rosey-dev-data-euw1-1"
+  subnet_group_name    = "rosey-dev-data-sg-euw1-1"
 }
 
 provider "vault" {
@@ -75,5 +76,6 @@ resource "aws_elasticache_replication_group" "rosey-dev-euw1-1" {
   num_node_groups            = 2
   replicas_per_node_group    = 1
 
+  subnet_group_name          = local.subnet_group_name
   security_group_ids         = [aws_security_group.redis_security_group.id]
 }
