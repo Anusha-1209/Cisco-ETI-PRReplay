@@ -1,26 +1,3 @@
-locals {
-  name                    = "outshift-vowel-demo-sagemaker"
-  vpc_name                = "vowel-dev-use2-2"
-}
-
-data "aws_vpc" "eks_vpc" {
-  filter {
-    name   = "tag:Name"
-    values = [local.vpc_name]
-  }
-}
-
-data "aws_subnets" "private" {
-  filter {
-    name   = "vpc-id"
-    values = [data.aws_vpc.eks_vpc.id]
-  }
-  filter {
-    name   = "tag:Name"
-    values = ["*${local.vpc_name}-private*"]
-  }
-}
-
 resource "aws_sagemaker_domain" "vowel-demo" {
   domain_name = local.name
   auth_mode   = "IAM"
@@ -35,16 +12,6 @@ resource "aws_sagemaker_domain" "vowel-demo" {
 resource "aws_iam_role" "vowel-demo" {
   name               = local.name
   path               = "/"
-  assume_role_policy = data.aws_iam_policy_document.vowel-demo.json
+  assume_role_policy = data.aws_iam_policy_document.sagemaker_assume_role.json
 }
 
-data "aws_iam_policy_document" "vowel-demo" {
-  statement {
-    actions = ["sts:AssumeRole"]
-
-    principals {
-      type        = "Service"
-      identifiers = ["sagemaker.amazonaws.com"]
-    }
-  }
-}
