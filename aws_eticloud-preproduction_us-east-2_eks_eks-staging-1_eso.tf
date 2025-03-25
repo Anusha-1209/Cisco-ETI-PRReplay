@@ -41,5 +41,103 @@ module "eso_eticloud_apps_websites" {
   vault_namespace = "eticloud/apps/websites"
   kubernetes_host = data.aws_eks_cluster.cluster.endpoint
   kubernetes_ca   = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
-  policies        = ["websites-admin"]
+  policies        = [vault_policy.policy.name]
 }
+resource "vault_policy" "policy" {
+  name = "external-secrets-staging-websites"
+
+  policy = <<EOT
+    # K8s External Secrets Vault Policy
+
+    # Dev secrets
+    path "secret/data/dev/*" {
+      capabilities = ["read", "list"]
+    }
+    path "secret/dev/*" {
+      capabilities = ["read", "list"]
+    }
+    path "secret/data/staging/*" {
+      capabilities = ["read", "list"]
+    }
+    path "secret/staging/*" {
+      capabilities = ["read", "list"]
+    }
+    # Atlantis
+    path "secret/data/atlantis/*" {
+      capabilities = ["read", "list"]
+    }
+    path "secret/atlantis/*" {
+      capabilities = ["read", "list"]
+    }
+    path "secret/data/keeper-atlantis/*" {
+      capabilities = ["read", "list"]
+    }
+    path "secret/keeper-atlantis/*" {
+      capabilities = ["read", "list"]
+    }
+
+    # Common secrets
+    path "secret/data/common/*" {
+      capabilities = ["read", "list"]
+    }
+    path "secret/common/*" {
+      capabilities = ["read", "list"]
+    }
+
+    # Panoptica secrets
+    path "secret/data/panoptica/staging/*" {
+      capabilities = ["read", "list"]
+    }
+    path "secret/panoptica/staging/*" {
+      capabilities = ["read", "list"]
+    }
+    
+    # STO Secrets
+    path "secret/data/sto/*" {
+      capabilities = ["read", "list"]
+    }
+    path "secret/sto/*" {
+      capabilities = ["read", "list"]
+    }
+
+    # Grafana Secrets
+    path "secret/data/grafana/*" {
+      capabilities = ["read", "list"]
+    }
+    path "secret/grafana/*" {
+      capabilities = ["read", "list"]
+    }
+
+    # Harbor secrets
+    path "secret/data/harbor/harbor-staging/*" {
+      capabilities = ["read", "list"]
+    }
+    path "secret/harbor/harbor-staging/*" {
+      capabilities = ["read", "list"]
+    }
+
+    # One-eye secrets
+    path "secret/data/one-eye/*" {
+      capabilities = ["read", "list"]
+    }
+    path "secret/one-eye/*" {
+      capabilities = ["read", "list"]
+    }
+
+    # MSK secrets
+    path "secret/data/infra/msk/*" {
+      capabilities = ["read", "list"]
+    }
+    path "secret/infra/msk/*" {
+      capabilities = ["read", "list"]
+    }
+    # GRAFANA secrets
+    path "secret/data/grafana/*" {
+      capabilities = ["read", "list"]
+    }
+    path "secret/grafana/*" {
+      capabilities = ["read", "list"]
+    }
+
+EOT
+} 
