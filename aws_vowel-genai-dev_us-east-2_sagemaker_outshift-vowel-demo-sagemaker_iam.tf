@@ -16,9 +16,7 @@ resource "aws_iam_policy" "vowel-demo" {
           "s3:ListBucket",
         ]
         Effect   = "Allow"
-        Resource = [
-				"arn:aws:s3:::SageMaker"
-        ]
+        Resource = "*"
       },
       {
         Action = [
@@ -28,16 +26,7 @@ resource "aws_iam_policy" "vowel-demo" {
           "s3:ListBucket",
         ]
         Effect   = "Allow"
-        Resource = [
-				"arn:aws:s3:::SageMaker/*"
-			  ]
-      },
-      {
-        Action = ["sts:AssumeRole"],
-        Effect = "Allow",
-        Principal = {
-          Service = "sagemaker.amazonaws.com"
-        }
+        Resource = "*"
       }
     ]
   })
