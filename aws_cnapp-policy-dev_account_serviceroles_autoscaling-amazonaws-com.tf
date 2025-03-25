@@ -3,7 +3,7 @@ terraform {
     # This is the name of the backend S3 bucket.
     bucket  = "eticloud-tf-state-nonprod"
     # This is the path to the Terraform state file in the backend S3 bucket.
-    key     = "terraform-state/aws/${local.aws_account_name}/servicerole/autoscaling-amazonaws-com.tfstate"
+    key     = "terraform-state/aws/cnapp-policy-dev/servicerole/autoscaling-amazonaws-com.tfstate"
     # This is the region where the backend S3 bucket is located.
     region  = "us-east-2"
   }
