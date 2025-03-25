@@ -5,9 +5,9 @@ provider "vault" {
 }
 
 provider "vault" {
-  alias     = "eticloud/apps/websites"
+  alias     = "websites"
   address   = "https://keeper.cisco.com"
-  namespace = "websites"
+  namespace = "eticloud/apps/websites"
 }
 
 data "vault_generic_secret" "aws_infra_credential" {
