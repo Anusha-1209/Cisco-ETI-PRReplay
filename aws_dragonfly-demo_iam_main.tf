@@ -14,8 +14,9 @@ data "aws_eks_cluster" "dragonfly-target-euw1-1" {
 }
 
 locals {
-  region           = "eu-west-1"
+  aws_region       = "eu-west-1"
   aws_account_name = "dragonfly-demo"
+  aws_account_id   = "545452251603"
 
   eks_irsa = {
     secrets_manager_ro = {
