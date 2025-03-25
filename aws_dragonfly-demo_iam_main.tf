@@ -47,8 +47,8 @@ locals {
 
 module "aws_iam" {
   # EKS cluster partially created as of Jan 29 2024
-  source = "git::https://github.com/cisco-eti/sre-tf-module-aws-iam.git?ref=iam-management"
-  
+  source = "git::https://github.com/cisco-eti/sre-tf-module-aws-iam.git?ref=main"
+
   aws_region       = local.aws_region         # AWS provider region
   aws_account_name = local.aws_account_name   # AWS account name
   aws_account_id   = local.aws_account_id     # AWS account id
