@@ -35,7 +35,7 @@ module "eso_eticloud" {
   policies             = ["external-secrets-prod"]
 }
 
-module "eso_eticloud" {
+module "eso_eticloud_apps_securecn" {
   source               = "git::https://github.com/cisco-eti/sre-tf-module-eso-access.git?ref=0.0.2"
   cluster_name         = local.name
   vault_namespace      = "eticloud/apps/securecn"
