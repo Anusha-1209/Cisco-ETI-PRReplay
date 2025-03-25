@@ -17,11 +17,13 @@ provider "aws" {
 }
 
 data "aws_eks_cluster" "cluster" {
+  depends_on = [ module.cluster ]
   provider  = aws.target
   name      = local.name
 }
 
 data "vault_generic_secret" "cluster_certificate" {
+  depends_on = [ module.cluster ]
   provider = vault.eticloud
   path = "secret/infra/eks/${local.name}/certificate"
 }
