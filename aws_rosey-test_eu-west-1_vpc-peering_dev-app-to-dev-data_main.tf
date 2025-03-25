@@ -100,16 +100,58 @@ resource "aws_route" "app-to-data" {
 
 # security groups
 
-resource "aws_security_group" "dev-data-vpc-to-app-vpc" {
-  name = "dev-data-vpc-to-app"
-  description = "Allows all communication into app from the dev data vpc"
-  vpc_id = data.aws_vpc.acceptor_vpc.id
+# resource "aws_security_group" "dev-data-vpc-to-app-vpc" {
+#   name = "dev-data-vpc-to-app"
+#   description = "Allows all communication into app from the dev data vpc"
+#   vpc_id = data.aws_vpc.acceptor_vpc.id
+# }
+
+# resource "aws_security_group" "app-dev-to-data-vpc" {
+#   name = "app-to-dev-data-vpc"
+#   description = "Allows all communication into the dev data vpc from app"
+#   vpc_id = data.aws_vpc.requestor_vpc.id
+# }
+
+# # security group rules because the rules are going to reference the groups
+# resource "aws_security_group_rule" "dev-data-vpc-to-app" {
+#   type = "ingress"
+#   from_port = 0
+#   to_port = 65535
+#   protocol = "-1"
+#   security_group_id = aws_security_group.dev-data-vpc-to-app-vpc.id
+#   source_security_group_id = aws_security_group.app-dev-to-data-vpc.id
+# }
+
+# resource "aws_security_group_rule" "app-to-dev-data-vpc" {
+#   type = "ingress"
+#   from_port = 0
+#   to_port = 65535
+#   protocol = "-1"
+#   security_group_id = aws_security_group.app-dev-to-data-vpc.id
+#   source_security_group_id = aws_security_group.dev-data-vpc-to-app-vpc.id
+# }
+
+data "aws_security_groups" "eks_cluster_sg" {
+  filter {
+    name   = "group-name"
+    values = ["eks-cluster-sg-rosey-dev-euw1-1-1786136631"]
+  }
+
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.acceptor_vpc.id]
+  }
 }
 
-resource "aws_security_group" "app-dev-to-data-vpc" {
-  name = "app-to-dev-data-vpc"
-  description = "Allows all communication into the dev data vpc from app"
-  vpc_id = data.aws_vpc.requestor_vpc.id
+data "aws_security_groups" "es_cluster_sg" {
+  filter {
+    name = "group-name"
+    values = ["rosey-dev-data-sg-euw1-1"]
+  }
+    filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.requestor_vpc.id]
+  }
 }
 
 # security group rules because the rules are going to reference the groups
@@ -118,8 +160,8 @@ resource "aws_security_group_rule" "dev-data-vpc-to-app" {
   from_port = 0
   to_port = 65535
   protocol = "-1"
-  security_group_id = aws_security_group.dev-data-vpc-to-app-vpc.id
-  source_security_group_id = aws_security_group.app-dev-to-data-vpc.id
+  security_group_id = aws_security_group.es_cluster_sg.id
+  source_security_group_id = aws_security_group.eks_cluster_sg.id
 }
 
 resource "aws_security_group_rule" "app-to-dev-data-vpc" {
@@ -127,6 +169,6 @@ resource "aws_security_group_rule" "app-to-dev-data-vpc" {
   from_port = 0
   to_port = 65535
   protocol = "-1"
-  security_group_id = aws_security_group.app-dev-to-data-vpc.id
-  source_security_group_id = aws_security_group.dev-data-vpc-to-app-vpc.id
-}
+  security_group_id = aws_security_group.eks_cluster_sg.id
+  source_security_group_id = aws_security_group.es_cluster_sg.id
+} 
