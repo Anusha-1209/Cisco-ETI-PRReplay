@@ -17,6 +17,7 @@ locals {
   aws_region       = "eu-west-1"
   aws_account_name = "dragonfly-demo"
   aws_account_id   = "545452251603"
+  app_name         = "dragonfly-demo"
 
   eks_irsa = {
     secrets_manager_ro = {
@@ -45,6 +46,7 @@ module "aws_iam" {
 
   aws_region       = local.aws_region         # AWS provider region
   aws_account_name = local.aws_account_name   # AWS account name
+  app_name         = local.app_name           # AWS tag app_name
   eks_irsa         = local.eks_irsa           # EKS IRSA
 
 }
