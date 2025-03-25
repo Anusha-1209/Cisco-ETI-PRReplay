@@ -8,6 +8,7 @@ resource "awscc_osis_pipeline" "ingestion_pipeline" {
     msk_cluster_arn = data.aws_msk_cluster.dragonfly_msk_eu1.arn
     kafka_topics = [
       "falco",
+      "monitoring",
     ]
   })
 
