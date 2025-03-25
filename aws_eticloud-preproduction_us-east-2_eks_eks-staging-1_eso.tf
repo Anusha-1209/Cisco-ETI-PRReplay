@@ -39,7 +39,7 @@ module "eso_eticloud" {
   vault_namespace = "eticloud"
   kubernetes_host = data.aws_eks_cluster.cluster.endpoint
   kubernetes_ca   = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
-  policies        = [vault_policy.policy-eticloud.name]
+  policies        = ["external-secrets-staging"]
 }
 module "eso_eticloud_apps_websites" {
   source          = "git::https://github.com/cisco-eti/sre-tf-module-eso-access.git?ref=1.0.0"
@@ -49,107 +49,6 @@ module "eso_eticloud_apps_websites" {
   kubernetes_ca   = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
   policies        = [vault_policy.policy-apps.name]
 }
-
-
-resource "vault_policy" "policy-eticloud" {
-  name = "external-secrets-staging-websites"
-  provider = vault.eticloud
-  policy = <<EOT
-    # K8s External Secrets Vault Policy
-
-    # Dev secrets
-    path "secret/data/dev/*" {
-      capabilities = ["read", "list"]
-    }
-    path "secret/dev/*" {
-      capabilities = ["read", "list"]
-    }
-    path "secret/data/staging/*" {
-      capabilities = ["read", "list"]
-    }
-    path "secret/staging/*" {
-      capabilities = ["read", "list"]
-    }
-    # Atlantis
-    path "secret/data/atlantis/*" {
-      capabilities = ["read", "list"]
-    }
-    path "secret/atlantis/*" {
-      capabilities = ["read", "list"]
-    }
-    path "secret/data/keeper-atlantis/*" {
-      capabilities = ["read", "list"]
-    }
-    path "secret/keeper-atlantis/*" {
-      capabilities = ["read", "list"]
-    }
-
-    # Common secrets
-    path "secret/data/common/*" {
-      capabilities = ["read", "list"]
-    }
-    path "secret/common/*" {
-      capabilities = ["read", "list"]
-    }
-
-    # Panoptica secrets
-    path "secret/data/panoptica/staging/*" {
-      capabilities = ["read", "list"]
-    }
-    path "secret/panoptica/staging/*" {
-      capabilities = ["read", "list"]
-    }
-    
-    # STO Secrets
-    path "secret/data/sto/*" {
-      capabilities = ["read", "list"]
-    }
-    path "secret/sto/*" {
-      capabilities = ["read", "list"]
-    }
-
-    # Grafana Secrets
-    path "secret/data/grafana/*" {
-      capabilities = ["read", "list"]
-    }
-    path "secret/grafana/*" {
-      capabilities = ["read", "list"]
-    }
-
-    # Harbor secrets
-    path "secret/data/harbor/harbor-staging/*" {
-      capabilities = ["read", "list"]
-    }
-    path "secret/harbor/harbor-staging/*" {
-      capabilities = ["read", "list"]
-    }
-
-    # One-eye secrets
-    path "secret/data/one-eye/*" {
-      capabilities = ["read", "list"]
-    }
-    path "secret/one-eye/*" {
-      capabilities = ["read", "list"]
-    }
-
-    # MSK secrets
-    path "secret/data/infra/msk/*" {
-      capabilities = ["read", "list"]
-    }
-    path "secret/infra/msk/*" {
-      capabilities = ["read", "list"]
-    }
-    # GRAFANA secrets
-    path "secret/data/grafana/*" {
-      capabilities = ["read", "list"]
-    }
-    path "secret/grafana/*" {
-      capabilities = ["read", "list"]
-    }
-
-EOT
-}
-
 
 resource "vault_policy" "policy-apps" {
   name = "external-secrets-staging-websites"
