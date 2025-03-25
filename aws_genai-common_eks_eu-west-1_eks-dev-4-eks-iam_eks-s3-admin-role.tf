@@ -8,6 +8,7 @@ locals {
   cluster_name_s3 = "eks-dev-4" # The name of the associated EKS cluster. Must be updated
   account_id_s3   = data.aws_caller_identity.current_s3.account_id
   oidc_id_s3      = trimprefix(data.aws_eks_cluster.cluster_s3.identity[0].oidc[0].issuer, "https://")
+  oidc_issuer_url = data.aws_eks_cluster.cluster_s3.identity[0].oidc[0].issuer
 }
 
 resource "aws_iam_policy" "aws_s3_admin_policy" {
@@ -16,7 +17,23 @@ resource "aws_iam_policy" "aws_s3_admin_policy" {
   policy      = file("./resources/aws_s3_admin_policy.json")
 }
 
+
+data "aws_iam_openid_connect_provider" "eks_cluster" {
+  provider = aws.cluster-eks-dev-4
+  url = local.oidc_issuer_url
+}
+
+resource "aws_iam_openid_connect_provider" "openid_connect_provider" {
+  provider = aws.cluster-eks-dev-4
+  url      = local.oidc_issuer_url
+  client_id_list = [
+    "sts.amazonaws.com",
+  ]
+  thumbprint_list = data.aws_iam_openid_connect_provider.eks_cluster.thumbprint_list
+}
+
 resource "aws_iam_role" "aws_s3_admin_role" {
+  provider = aws.cluster-eks-dev-4
   name = "${local.cluster_name_s3}-s3-admin-role"
   assume_role_policy = jsonencode({
     "Version" : "2012-10-17"

@@ -8,9 +8,16 @@ data "vault_generic_secret" "aws_infra_credential" {
   path     = "secret/infra/aws/genai-common/terraform_admin"
 }
 
+data "vault_generic_secret" "aws_infra_credential_eticloud_preprod" {
+  path     = "secret/infra/aws/eticloud-preprod "
+}
+
+
 locals {
   cluster_name = "eks-dev-4" # The name of the associated EKS cluster. Must be updated
+  
 }
+
 
 provider "aws" {
   access_key  = data.vault_generic_secret.aws_infra_credential.data["AWS_ACCESS_KEY_ID"]
@@ -29,4 +36,12 @@ provider "aws" {
       ResourceOwner      = "ETI SRE"
     }
   }
+}
+
+# AWS account where the EKS cluster lives
+provider "aws" {
+  access_key = data.vault_generic_secret.aws_infra_credential_eticloud_preprod.data["AWS_ACCESS_KEY_ID"]
+  secret_key = data.vault_generic_secret.aws_infra_credential_eticloud_preprod.data["AWS_SECRET_ACCESS_KEY"]
+  region = "eu-west-1"
+  alias  = "cluster-eks-dev-4"
 }
