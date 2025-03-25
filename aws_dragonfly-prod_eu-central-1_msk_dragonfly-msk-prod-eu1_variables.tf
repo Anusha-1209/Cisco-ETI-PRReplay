@@ -25,15 +25,15 @@ variable "kafka_clients" {
   default = {
     "otel-collector" = {
       description = "Auth credentials of otel-collector for dragonfly-msk-prod-1"
-      vault_path  = "v2/secret/prod/msk/eu-central-1/dragonfly-msk-1/kafka-clients/otel-collector"
+      vault_path  = "secret/prod/msk/eu-central-1/dragonfly-msk-1/kafka-clients/otel-collector"
     },
     "notification-service" = {
       description = "Auth credentials of notification-service for dragonfly-msk-prod-1"
-      vault_path  = "v2/ssecret/prod/msk/eu-central-1/dragonfly-msk-1/kafka-clients/notification-service"
+      vault_path  = "secret/prod/msk/eu-central-1/dragonfly-msk-1/kafka-clients/notification-service"
     },
     "opensearch-ingestion-service" = {
       description = "Auth credentials of ingestion-service for dragonfly-msk-prod-1"
-      vault_path  = "v2/ssecret/prod/msk/eu-central-1/dragonfly-msk-1/kafka-clients/opensearch-ingestion-service"
+      vault_path  = "secret/prod/msk/eu-central-1/dragonfly-msk-1/kafka-clients/opensearch-ingestion-service"
     },
   }
 }

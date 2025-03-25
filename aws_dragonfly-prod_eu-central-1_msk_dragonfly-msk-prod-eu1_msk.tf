@@ -98,7 +98,7 @@ resource "aws_msk_cluster" "dragonfly_msk_eu1" {
 
 // Save brokers in vault
 resource "vault_generic_secret" "msk_brokers_sasl_scram" {
-  path = "secret/prod/msk/dragonfly-msk-eu1/brokers"
+  path = "secret/prod/msk/eu-central-1/dragonfly-msk-1/kafka-brokers"
 
   data_json = jsonencode({
     brokers = aws_msk_cluster.dragonfly_msk_eu1.bootstrap_brokers_sasl_scram
