@@ -86,7 +86,7 @@ resource "aws_route" "demo_to_target" {
   vpc_peering_connection_id = aws_vpc_peering_connection.demo_to_target.id
 }
 
-resource "aws_route" "demo_to_target" {
+resource "aws_route" "target_to_demo" {
   count                     = length(data.aws_route_tables.acceptor_vpc_rt.ids)
   route_table_id            = data.aws_route_tables.acceptor_vpc_rt.ids[count.index]
   destination_cidr_block    = data.aws_vpc.requestor_vpc.cidr_block
