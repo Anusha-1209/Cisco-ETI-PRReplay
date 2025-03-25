@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket  = "eticloud-tf-state-nonprod"                                                
-    key     = "terraform-state/aws/cnapp-staging/eu-central-1/rds/policy-staging-rds-euc1-1.tfstate"     
+    key     = "terraform-state/aws/cnapp-staging/eu-central-1/rds/cnapp-policy-staging-rds-euc1-1.tfstate"     
     region  = "us-east-2"                                                                  
   }
 }
