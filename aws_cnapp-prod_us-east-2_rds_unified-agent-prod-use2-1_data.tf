@@ -6,6 +6,6 @@ data "vault_generic_secret" "aws_infra_credential" {
 data "aws_vpc" "cluster_vpc" {
   filter {
     name   = "tag:Name"
-    values = [local.vpc_name]
+    values = [local.cluster_vpc_name]
   }
 }
