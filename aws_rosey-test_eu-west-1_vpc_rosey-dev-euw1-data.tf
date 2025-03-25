@@ -62,5 +62,6 @@ module "vpc" {
   region                          = local.aws_region
   name                            = local.vpc_name
   cidr                            = local.vpc_cidr
-  cluster_version                 = "1.28"                 
+  cluster_version                 = "1.28" 
+  enable_bootstrap_user_data      = false                
 }
