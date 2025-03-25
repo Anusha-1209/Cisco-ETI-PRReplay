@@ -98,17 +98,17 @@ resource "aws_msk_cluster" "dragonfly_msk_eu1" {
 
 // Save brokers in vault
 resource "vault_generic_secret" "msk_brokers_sasl_scram" {
-  path = "secret/prod/msk/dragonfly-msk-1/brokers"
+  path = "secret/prod/msk/dragonfly-msk-eu1/brokers"
 
   data_json = jsonencode({
-    brokers = aws_msk_cluster.dragonfly_msk_1.bootstrap_brokers_sasl_scram
+    brokers = aws_msk_cluster.dragonfly_msk_eu1.bootstrap_brokers_sasl_scram
   })
 
   provider = vault.dragonfly
 }
 
 resource "aws_msk_cluster_policy" "opensearch_ingestion_policy" {
-  cluster_arn = aws_msk_cluster.dragonfly_msk_1.arn
+  cluster_arn = aws_msk_cluster.dragonfly_msk_eu1.arn
 
   policy = jsonencode({
     "Version" : "2012-10-17",
@@ -123,7 +123,7 @@ resource "aws_msk_cluster_policy" "opensearch_ingestion_policy" {
           "kafka:DescribeCluster",
           "kafka:DescribeClusterV2"
         ],
-        "Resource" : aws_msk_cluster.dragonfly_msk_1.arn
+        "Resource" : aws_msk_cluster.dragonfly_msk_eu1.arn
       },
       {
         "Effect" : "Allow",
@@ -136,7 +136,7 @@ resource "aws_msk_cluster_policy" "opensearch_ingestion_policy" {
           "kafka:DescribeCluster",
           "kafka:DescribeClusterV2"
         ],
-        "Resource" : aws_msk_cluster.dragonfly_msk_1.arn
+        "Resource" : aws_msk_cluster.dragonfly_msk_eu1.arn
     }]
   })
 }
