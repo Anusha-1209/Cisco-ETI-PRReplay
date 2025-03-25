@@ -27,8 +27,7 @@ module "eks_all_in_one" {
 
   # EKS Managed Private Node Group
   hardened_image = false           # Use or not cisco hardened images
-  ami_type       = "AL2_x86_64"    # EKS AMI type, required in case non hardened images
-  ami_id         = null
+  ami_type       = "AL2_x86_64"    # EKS AMI type, required in case non hardened images  
   instance_types = ["m5a.2xlarge"] # EKS instance types, prod US uses m5a.2xlarge
   min_size       = 5               # EKS node group min size
   max_size       = 10              # EKS node group max size
