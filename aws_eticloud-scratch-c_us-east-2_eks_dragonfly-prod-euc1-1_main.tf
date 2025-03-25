@@ -3,14 +3,14 @@ terraform {
     # This is the name of the backend S3 bucket.
     bucket = "eticloud-tf-state-prod"
     # This is the path to the Terraform state file in the backend S3 bucket.
-    key = "terraform-state/aws/eticloud-scratch-c/eu-central-1/eks/dragonfly-prod-euc1.tfstate"
+    key = "terraform-state/aws/eticloud-scratch-c/eu-central-1/eks/dragonfly-prod-euc1-5.tfstate"
     # This is the region where the backend S3 bucket is located.
     region = "us-east-2" # DO NOT CHANGE.
   }
 }
 
 locals {
-  name             = "dragonfly-prod-euc1"
+  name             = "dragonfly-prod-euc1-5"
   region           = "eu-central-1"
   aws_account_name = "eticloud-scratch-c"
 }
