@@ -1,5 +1,6 @@
 data "aws_eks_cluster" "cluster_s3" {
   name = local.cluster_name_s3
+  provider = aws.cluster-eks-dev-4
 }
 
 data "aws_caller_identity" "current_s3" {}
