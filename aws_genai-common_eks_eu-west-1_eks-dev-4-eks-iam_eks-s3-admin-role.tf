@@ -24,7 +24,6 @@ data "aws_iam_openid_connect_provider" "eks_cluster" {
 }
 
 resource "aws_iam_openid_connect_provider" "openid_connect_provider" {
-  provider = aws.cluster-eks-dev-4
   url      = local.oidc_issuer_url
   client_id_list = [
     "sts.amazonaws.com",
@@ -33,7 +32,6 @@ resource "aws_iam_openid_connect_provider" "openid_connect_provider" {
 }
 
 resource "aws_iam_role" "aws_s3_admin_role" {
-  provider = aws.cluster-eks-dev-4
   name = "${local.cluster_name_s3}-s3-admin-role"
   assume_role_policy = jsonencode({
     "Version" : "2012-10-17"
