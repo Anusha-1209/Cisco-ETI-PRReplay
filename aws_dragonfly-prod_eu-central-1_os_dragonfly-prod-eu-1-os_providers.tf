@@ -18,7 +18,7 @@ provider "aws" {
 provider "vault" {
   alias     = "eticcprod"
   address   = "https://keeper.cisco.com"
-  namespace = "eticloud/eticcprod"
+  namespace = "eticloud"
 }
 
 provider "vault" {
