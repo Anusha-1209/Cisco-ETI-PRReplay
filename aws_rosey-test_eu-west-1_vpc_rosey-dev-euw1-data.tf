@@ -55,8 +55,8 @@ provider "aws" {
 ################################################################################
 module "vpc" {
   source                          = "git::https://github.com/cisco-eti/sre-tf-module-vpc-allinone.git?ref=vpc"
-  region                          = local.aws_region
   aws_account_name                = local.aws_account_name
+  region                          = local.aws_region
   name                            = local.vpc_name
   cidr                            = local.vpc_cidr
   cluster_version                 = "1.28"                 
