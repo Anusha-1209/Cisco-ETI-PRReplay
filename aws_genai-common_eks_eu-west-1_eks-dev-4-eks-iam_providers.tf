@@ -9,7 +9,7 @@ data "vault_generic_secret" "aws_infra_credential" {
 }
 
 data "vault_generic_secret" "aws_infra_credential_eticloud_preprod" {
-  path     = "secret/infra/aws/eticloud-preprod "
+  path     = "secret/infra/aws/eticloud-preprod/terraform_admin "
 }
 
 
