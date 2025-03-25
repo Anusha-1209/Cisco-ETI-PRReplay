@@ -41,5 +41,5 @@ module "eso_eticloud_apps_securecn" {
   vault_namespace      = "eticloud/apps/securecn"
   kubernetes_host      = data.aws_eks_cluster.cluster.endpoint
   kubernetes_ca        = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
-  policies             = ["external-secrets-cnapp-prod-use2-1"]
+  policies             = ["external-secrets-${local.name}"]
 }
