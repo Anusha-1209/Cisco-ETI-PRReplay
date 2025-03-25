@@ -146,7 +146,7 @@ data "aws_security_groups" "eks_cluster_sg" {
 data "aws_security_groups" "es_cluster_sg" {
   filter {
     name = "group-name"
-    values = ["rosey-dev-data-sg-euw1-1"]
+    values = ["rosey-data-dev-euw1-1-sg"]
   }
     filter {
     name   = "vpc-id"
