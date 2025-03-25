@@ -37,7 +37,7 @@ module "eso_eticloud" {
   policies             = ["external-secrets-dev"]
 }
 
-module "eso_eticloud_apps_ppu" {
+module "eso_eticloud_apps_vowel" {
   source               = "git::https://github.com/cisco-eti/sre-tf-module-eso-access.git?ref=1.0.0"
   cluster_name         = local.name
   vault_namespace      = "eticloud/apps/ppu"
