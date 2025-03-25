@@ -6,6 +6,6 @@ data "vault_generic_secret" "aws_infra_credential" {
 data "aws_vpc" "eks_vpc" {
   filter {
     name   = "tag:Name"
-    values = ["dragonfly-prod-data-euc1-1"]
+    values = ["dragonfly-prod-euc1-1"]
   }
 }
