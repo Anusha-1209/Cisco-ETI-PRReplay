@@ -41,7 +41,7 @@ module "eso_eticloud_apps_securecn" {
   vault_namespace      = "eticloud/apps/securecn"
   kubernetes_host      = data.aws_eks_cluster.cluster.endpoint
   kubernetes_ca        = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
-  policies             = ["external-secrets-${local.name}"]
+  policies             = ["external-secrets-securecn-staging-${local.name}"]
 }
 
 module "eso_eticloud_apps_rosey" {
@@ -50,5 +50,5 @@ module "eso_eticloud_apps_rosey" {
   vault_namespace      = "eticloud/apps/rosey"
   kubernetes_host      = data.aws_eks_cluster.cluster.endpoint
   kubernetes_ca        = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
-  policies             = ["external-secrets-${local.name}"]
+  policies             = ["external-secrets-rosey-staging-${local.name}"]
 }
