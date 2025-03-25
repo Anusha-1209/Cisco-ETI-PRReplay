@@ -1,11 +1,11 @@
 provider "vault" {
   address   = "https://keeper.cisco.com"
-  namespace = "eticloud/eticcprod"
+  namespace = "eticloud"
 }
 
 
 data "vault_generic_secret" "aws_infra_credential" {
-  path     = "secret/eticcprod/infra/genai-common/aws"
+  path     = "secret/infra/aws/genai-common/terraform_admin"
 }
 
 locals {
