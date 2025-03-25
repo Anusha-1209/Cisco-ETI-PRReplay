@@ -54,7 +54,7 @@ provider "aws" {
 # VPC
 ################################################################################
 module "vpc" {
-  source                          = "https://github.com/cisco-eti/sre-tf-module-aws-vpc.git?ref=2.0.5"
+  source                          = "git::https://github.com/cisco-eti/sre-tf-module-aws-vpc.git?ref=2.0.5"
   region                          = local.aws_region
   vpc_name                        = local.vpc_name
   vpc_cidr                        = local.vpc_cidr
