@@ -3,20 +3,20 @@ terraform {
     # This is the name of the backend S3 bucket.
     bucket  = "eticloud-tf-state-prod"
     # This is the path to the Terraform state file in the backend S3 bucket.
-    key     = "terraform-state/aws/cnapp-prod/eu-central-1/eks/cnapp-prod-use1-1.tfstate"
+    key     = "terraform-state/aws/cnapp-prod/eu-central-1/eks/cnapp-prod-use2-1.tfstate"
     # This is the region where the backend S3 bucket is located.
     region  = "us-east-2" # DO NOT CHANGE.
   }
 }
 
 locals {
-  name              = "rosey-prod-use1-1"
-  eks_vpc_name      = "cnapp-prod-use1-1"
-  data_vpc_name     = "cnapp-prod-use1-data"
+  name              = "rosey-prod-use2-1"
+  eks_vpc_name      = "cnapp-prod-use2-1"
+  data_vpc_name     = "cnapp-prod-use2-data"
   region            = "us-east-2"
   aws_account_name  = "cnapp-prod"
   node_type         = "cache.r7g.large"
-  subnet_group_name = "rosey-prod-data-sg-use1-1"
+  subnet_group_name = "rosey-prod-data-sg-use2-1"
 }
 
 provider "vault" {
