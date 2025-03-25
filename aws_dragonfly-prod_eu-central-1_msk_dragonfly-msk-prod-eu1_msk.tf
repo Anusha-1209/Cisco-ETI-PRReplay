@@ -105,6 +105,8 @@ resource "vault_generic_secret" "msk_brokers_sasl_scram" {
   })
 
   provider = vault.dragonfly
+
+  depends_on = [vault_mount.kv2]
 }
 
 resource "aws_msk_cluster_policy" "opensearch_ingestion_policy" {
