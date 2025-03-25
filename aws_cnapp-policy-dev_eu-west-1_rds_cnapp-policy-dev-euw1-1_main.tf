@@ -43,8 +43,8 @@ module "rds" {
   vpc_name          = local.vpc_data
   database_name     = "cnapp-policy"
   db_instance_type  = "db.r5.xlarge"
-  cluster_name      = "policy-rds-dev-eu1"
-  secret_path       = "secret/eticloud/infra/cnapp-policy-dev/policy-rds-dev-eu1"
+  cluster_name      = "policy-rds-dev-euw1"
+  secret_path       = "secret/eticloud/infra/cnapp-policy-dev/policy-rds-dev-euw1"
   db_engine_version = "15"
   db_allowed_cidrs  = [
     data.aws_vpc.eks_vpc.cidr_block,
