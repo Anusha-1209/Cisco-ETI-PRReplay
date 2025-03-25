@@ -33,7 +33,7 @@ provider "aws" {
 # Get the VPC IDs based on the names of the VPCs
 data "aws_vpc" "requestor_vpc" {
   filter {
-    name   = "tag:ApplicationName"
+    name   = "tag:Name"
     values = [local.vpc_data]
   }
 }
@@ -41,7 +41,7 @@ data "aws_vpc" "requestor_vpc" {
 # VPC created from sre-tf-infra, not migrated to this repo
 data "aws_vpc" "acceptor_vpc" {
   filter {
-    name   = "tag:ApplicationName"
+    name   = "tag:Name"
     values = [local.vpc_compute]
   }
 }
