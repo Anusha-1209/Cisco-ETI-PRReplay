@@ -29,5 +29,5 @@ module "eks_all_in_one" {
   max_size          = 5                       # EKS node group max size
   desired_size      = 3                       # EKS node group desired size
   # Karpenter
-  create_karpenter_irsa = true                 # Create Karpenter IRSA
+  create_karpenter_irsa = true                # Create Karpenter IRSA
 }
