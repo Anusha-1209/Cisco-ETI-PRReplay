@@ -9,7 +9,8 @@ terraform {
 locals {
   region           = "eu-central-1"
   aws_account_name = "cnapp-staging"
-  vpc_data         = "cnapp-staging-euc1-data"
+  data_vpc         = "cnapp-staging-euc1-data"
+  eks_vpc          = "cnapp-staging-euc1-1"
   rds_name         = "policy-staging-rds-euc1-1"
 }
 
@@ -30,9 +31,16 @@ provider "aws" {
   region     = local.region
 }
 
+data "aws_vpc" "eks_vpc" {
+  filter {
+    name   = "tag:Name"
+    values = [local.eks_vpc]
+  }
+}
+
 module "rds" {
   source            = "git::https://github.com/cisco-eti/sre-tf-module-aws-aurora-postgres?ref=1.1.0"
-  vpc_name          = local.vpc_data
+  vpc_name          = local.data_vpc
   database_name     = "postgressql"
   db_instance_type  = "db.r5.xlarge"
   cluster_name      = local.rds_name
