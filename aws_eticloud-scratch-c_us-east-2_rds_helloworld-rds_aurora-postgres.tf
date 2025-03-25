@@ -5,5 +5,6 @@ module "rds" {
   db_instance_type  = "db.t4g.micro"
   cluster_name      = "helloworld"
   db_engine_version = "15"
+  db_allowed_cidrs  = ["10.0.0.0/16"] # EKS VPC CIDR
   secret_path       = "secret/eticcprod/infra/aurora-pg/us-east-2/helloworld"
 }
