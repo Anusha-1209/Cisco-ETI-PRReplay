@@ -7,7 +7,6 @@ terraform {
 }
 
 locals {
-  name             = "policy-staging-euc1-1"
   region           = "eu-central-1"
   aws_account_name = "cnapp-staging"
   vpc_data         = "cnapp-staging-euc1-data"
@@ -29,13 +28,6 @@ provider "aws" {
   access_key = data.vault_generic_secret.aws_infra_credential.data["AWS_ACCESS_KEY_ID"]
   secret_key = data.vault_generic_secret.aws_infra_credential.data["AWS_SECRET_ACCESS_KEY"]
   region     = local.region
-}
-
-data "aws_vpc" "eks_vpc" {
-  filter {
-    name   = "tag:Name"
-    values = [local.name]
-  }
 }
 
 module "rds" {
