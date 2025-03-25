@@ -1,8 +1,8 @@
 provider "vault" {
-  alias     = "eticloud_eticcprod"
+  alias     = "eticcprod"
   address   = "https://keeper.cisco.com"
-  namespace = "eticloud/eticcprod"
-}
+  namespace = "eticloud"
+} 
 
 provider "aws" {
   access_key  = data.vault_generic_secret.aws_infra_credential.data["AWS_ACCESS_KEY_ID"]
