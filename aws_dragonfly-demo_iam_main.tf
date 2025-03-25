@@ -23,17 +23,18 @@ locals {
     secrets_manager_ro = {
         eks-dragonfly-demo = {
             services_accounts = ["system:serviceaccount:external-secrets:aws-secretstore"],
-            resources_names = ["*"]
+            eks_oidc          = "${replace(data.aws_eks_cluster.dragonfly-demo-euw1-1.identity[0].oidc[0].issuer, "https://", "")}"
+            resources_names   = ["*"]
         },
     }
     aws_alb_irsa = {
         eks-dragonfly-demo = {
             services_accounts = ["system:serviceaccount:kube-system:aws-load-balancer-controller"],
-            resources_names   = ["${replace(data.aws_eks_cluster.dragonfly-demo-euw1-1.identity[0].oidc[0].issuer, "https://", "")}"]
+            eks_oidc          = "${replace(data.aws_eks_cluster.dragonfly-demo-euw1-1.identity[0].oidc[0].issuer, "https://", "")}"
         },
         eks-dragonfly-target = {
             services_accounts = ["system:serviceaccount:kube-system:aws-load-balancer-controller"],
-            resources_names   = ["${replace(data.aws_eks_cluster.dragonfly-target-euw1-1.identity[0].oidc[0].issuer, "https://", "")}"]
+            eks_oidc          = "${replace(data.aws_eks_cluster.dragonfly-target-euw1-1.identity[0].oidc[0].issuer, "https://", "")}"
         }
     }
   }
