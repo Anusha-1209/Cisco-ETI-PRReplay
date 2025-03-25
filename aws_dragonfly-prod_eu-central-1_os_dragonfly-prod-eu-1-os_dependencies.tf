@@ -19,13 +19,6 @@ data "aws_subnets" "db_subnets" {
     name   = "vpc-id"
     values = [data.aws_vpc.database_vpc.id]
   }
-  filter {
-    name = "tag:Name"
-    values = [
-      # TODO: check this value
-      "dragonfly-prod-data-euc1-1-db-${data.aws_region.current.name}*"
-    ]
-  }
 }
 
 data "aws_vpc" "compute_vpc" {
