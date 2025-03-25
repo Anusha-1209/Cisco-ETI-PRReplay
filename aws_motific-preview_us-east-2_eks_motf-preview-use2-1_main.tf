@@ -3,7 +3,7 @@ terraform {
     # This is the name of the backend S3 bucket.
     bucket          = "eticloud-tf-state-nonprod" # UPDATE ME.
     # This is the path to the Terraform state file in the backend S3 bucket.
-    key             = "terraform-state/aws/vowel-genai-dev/us-east-2/eks/motific-dev-use2-1.tfstate" # UPDATE ME.
+    key             = "terraform-state/aws/motific-preview/us-east-2/eks/motf-preview-use2-1.tfstate" # UPDATE ME.
     # This is the region where the backend S3 bucket is located.
     region          = "us-east-2" # DO NOT CHANGE.
 
@@ -11,9 +11,9 @@ terraform {
 }
 
 locals {
-  name              = "motific-dev-use2-1"
+  name              = "motf-preview-use2-1"
   region            = "us-east-2"
-  aws_account_name  = "vowel-genai-dev"
+  aws_account_name  = "motific-preview"
 }
 
 module "eks_all_in_one" {
