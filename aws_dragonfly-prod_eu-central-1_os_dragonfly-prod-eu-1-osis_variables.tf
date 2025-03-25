@@ -1,7 +1,7 @@
 variable "pipeline_name" {
   description = "The name of the pipeline"
   type        = string
-  default     = "osis-dragonfly-prod-eu1-kafka"
+  default     = "osis-dragonfly-prd-eu1-kafka"
 }
 
 variable "domain_name" {
