@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     # This is the name of the backend S3 bucket.
-    bucket  = "eticloud-tf-state-nonprod"                                                   # UPDATE ME.
+    bucket  = "eticloud-tf-state-prod"
     # This is the path to the Terraform state file in the backend S3 bucket.
     key     = "terraform-state/aws/cnapp-prod/eu-west-1/eks/cnapp-prod-use2-1.tfstate"       # UPDATE ME.
     # This is the region where the backend S3 bucket is located.
