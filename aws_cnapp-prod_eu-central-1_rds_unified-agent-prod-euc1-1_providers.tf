@@ -11,7 +11,7 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = "cnapp-prod-euc1-1"
+      ApplicationName    = "unified-agent-prod-euc1-1"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
