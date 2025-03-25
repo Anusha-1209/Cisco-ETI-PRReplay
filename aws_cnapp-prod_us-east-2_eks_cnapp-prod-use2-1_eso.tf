@@ -16,6 +16,7 @@ provider "aws" {
 }
 
 data "aws_eks_cluster" "cluster" {
+  depends_on = [ module.eks_all_in_one ]
   name      = local.name
 }
 
