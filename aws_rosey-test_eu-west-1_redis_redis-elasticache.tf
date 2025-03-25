@@ -36,7 +36,7 @@ resource "aws_elasticache_replication_group" "rosey-dev-euw1-1" {
   replication_group_id       = "rosey-dev-euw1-1"
   description                = "Redis cluster for rosey-dev-euw1-1 ElastiCache"
   engine                     = "redis"
-  engine_version             = "7.1.0"
+  engine_version             = "7.1"
 
   node_type                  = "cache.t2.medium"
   port                       = 6379
