@@ -18,7 +18,7 @@ data "aws_subnets" "private" {
 
 data "aws_security_group" "vpc_default" {
   vpc_id = data.aws_vpc.db_vpc.id
-  name = "default"
+  name   = "default"
 }
 
 data "aws_vpc" "eks_vpc" {
@@ -32,7 +32,7 @@ data "aws_security_group" "eks-sg" {
   vpc_id = data.aws_vpc.eks_vpc.id
 
   filter {
-    name = "tag:Name"
+    name   = "tag:Name"
     values = ["eks-cluster-sg-motf-preview-use2-1*"]
   }
 }
@@ -45,8 +45,8 @@ output "vpc_db_security_group" {
 ### SASL/SCRAM secrets for cluster auth
 
 resource "aws_secretsmanager_secret" "msk_secret" {
-  name       = "AmazonMSK_msk-motific-preview"
-  kms_key_id = aws_kms_key.msk_custom_key.key_id
+  name                    = "AmazonMSK_msk-motific-preview"
+  kms_key_id              = aws_kms_key.msk_custom_key.key_id
   recovery_window_in_days = 0
 
   description = "SASL/SCRAM secret for msk-motific-preview"
@@ -64,7 +64,7 @@ provider "vault" {
 
 data "vault_generic_secret" "msk_credentials" {
   provider = vault.eticloud
-  path = "secret/infra/msk/motf-preview-use2-1"
+  path     = "secret/infra/msk/motf-preview-use2-1"
 }
 
 resource "aws_secretsmanager_secret_version" "msk_secret" {
@@ -129,10 +129,10 @@ module "msk" {
   # security groups to put on the cluster itself
   associated_security_group_ids = [data.aws_security_group.vpc_default.id]
   # security groups to give access to the cluster
-  allowed_security_group_ids = [data.aws_security_group.eks-sg.id]
-  client_sasl_scram_enabled  = true
+  allowed_security_group_ids                = [data.aws_security_group.eks-sg.id]
+  client_sasl_scram_enabled                 = true
   client_sasl_scram_secret_association_arns = [aws_secretsmanager_secret.msk_secret.arn]
-  jmx_exporter_enabled = true
-  node_exporter_enabled = true
-  enhanced_monitoring = "PER_TOPIC_PER_PARTITION"
+  jmx_exporter_enabled                      = true
+  node_exporter_enabled                     = true
+  enhanced_monitoring                       = "PER_TOPIC_PER_PARTITION"
 }
