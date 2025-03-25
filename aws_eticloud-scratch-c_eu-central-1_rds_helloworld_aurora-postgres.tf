@@ -6,5 +6,5 @@ module "rds" {
   cluster_name      = "helloworld"
   db_engine_version = "15"
   db_allowed_cidrs  = ["10.19.0.0/16"] # EKS VPC CIDR
-  secret_path       = "secret/eticcprod/infra/aurora-pg/eu-central-1/helloworld"
+  secret_path       = "secret/teamsecrets/rds/scratch/aurora-pg/eu-central-1/helloworld"
 }
