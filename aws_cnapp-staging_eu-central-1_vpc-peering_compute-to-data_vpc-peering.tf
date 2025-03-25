@@ -11,7 +11,7 @@ data "vault_generic_secret" "aws_infra_credential" {
 
 terraform {
   backend "s3" {
-    bucket = "eticloud-tf-state-prod"
+    bucket = "eticloud-tf-state-nonprod"
     key    = "terraform-state/vpc-peering/eu-central-1/data-cnapp-staging-euc1-1.tfstate"
     region = "us-east-2"
   }
