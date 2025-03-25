@@ -28,11 +28,11 @@ locals {
     aws_alb_irsa = {
         eks-dragonfly-demo = {
             services_accounts = ["system:serviceaccount:kube-system:aws-load-balancer-controller"],
-            eks_oidc          = "${replace(data.aws_eks_cluster.dragonfly-demo-euw1-1.identity[0].oidc[0].issuer, "https://", "")}"
+            resources_names   = "${replace(data.aws_eks_cluster.dragonfly-demo-euw1-1.identity[0].oidc[0].issuer, "https://", "")}"
         },
         eks-dragonfly-target = {
             services_accounts = ["system:serviceaccount:kube-system:aws-load-balancer-controller"],
-            eks_oidc          = "${replace(data.aws_eks_cluster.dragonfly-target-euw1-1.identity[0].oidc[0].issuer, "https://", "")}"
+            resources_names   = "${replace(data.aws_eks_cluster.dragonfly-target-euw1-1.identity[0].oidc[0].issuer, "https://", "")}"
         }
     }
   }
@@ -43,7 +43,7 @@ module "aws_iam" {
   source = "git::https://github.com/cisco-eti/sre-tf-module-aws-iam.git?ref=iam-management"
 
 
-  aws_region       = "eu-west-1"         # AWS provider region
+  aws_region       = local.aws_region         # AWS provider region
   aws_account_name = local.aws_account_name   # AWS account name
   eks_irsa         = local.eks_irsa           # EKS IRSA
 
