@@ -34,7 +34,7 @@ provider "aws" {
 data "aws_vpc" "requestor_vpc" {
   filter {
     name   = "tag:ApplicationName"
-    values = [local.vpc_compute]
+    values = [local.vpc_data]
   }
 }
 
@@ -42,7 +42,7 @@ data "aws_vpc" "requestor_vpc" {
 data "aws_vpc" "acceptor_vpc" {
   filter {
     name   = "tag:ApplicationName"
-    values = [local.vpc_data]
+    values = [local.vpc_compute]
   }
 }
 
