@@ -101,32 +101,32 @@ resource "aws_route" "app-to-data" {
 # security groups
 
 resource "aws_security_group" "dev-data-vpc-to-app-vpc" {
-  name = "dev-data-vpc-1-to-app"
+  name = "dev-data-vpc-to-app"
   description = "Allows all communication into app from the dev data vpc"
   vpc_id = data.aws_vpc.acceptor_vpc.id
 }
 
-resource "aws_security_group" "app-dev-to-data-vpc-1" {
-  name = "app-to-dev-data-vpc-1"
+resource "aws_security_group" "app-dev-to-data-vpc" {
+  name = "app-to-dev-data-vpc"
   description = "Allows all communication into the dev data vpc from app"
   vpc_id = data.aws_vpc.requestor_vpc.id
 }
 
 # security group rules because the rules are going to reference the groups
-resource "aws_security_group_rule" "dev-data-vpc-1-to-app" {
+resource "aws_security_group_rule" "dev-data-vpc-to-app" {
   type = "ingress"
   from_port = 0
   to_port = 65535
   protocol = "-1"
   security_group_id = aws_security_group.dev-data-vpc-to-app-vpc.id
-  source_security_group_id = aws_security_group.app-dev-to-data-vpc-1.id
+  source_security_group_id = aws_security_group.app-dev-to-data-vpc.id
 }
 
-resource "aws_security_group_rule" "app-to-dev-data-vpc-1" {
+resource "aws_security_group_rule" "app-to-dev-data-vpc" {
   type = "ingress"
   from_port = 0
   to_port = 65535
   protocol = "-1"
-  security_group_id = aws_security_group.app-dev-to-data-vpc-1.id
-  source_security_group_id = aws_security_group.dev-data-vpc-1-to-app.id
+  security_group_id = aws_security_group.app-dev-to-data-vpc.id
+  source_security_group_id = aws_security_group.dev-data-vpc-to-app.id
 }
