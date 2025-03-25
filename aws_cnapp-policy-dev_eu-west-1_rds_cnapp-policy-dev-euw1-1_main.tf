@@ -11,6 +11,7 @@ locals {
   region           = "eu-west-1"
   aws_account_name = "cnapp-policy-dev"
   vpc_data         = "policy-data-dev-euw1-1"
+  rds_name         = "policy-rds-dev-euw1-1"
 }
 
 provider "vault" {
@@ -39,12 +40,11 @@ data "aws_vpc" "eks_vpc" {
 
 module "rds" {
   source            = "git::https://github.com/cisco-eti/sre-tf-module-aws-aurora-postgres?ref=1.1.0"
-  
   vpc_name          = local.vpc_data
-  database_name     = "cnapp-policy"
+  database_name     = "postgressql"
   db_instance_type  = "db.r5.xlarge"
-  cluster_name      = "policy-rds-dev-euw1"
-  secret_path       = "secret/eticloud/infra/cnapp-policy-dev/policy-rds-dev-euw1"
+  cluster_name      = local.rds_name
+  secret_path       = "secret/eticloud/infra/cnapp-policy-dev/policy-rds-dev-eu1"
   db_engine_version = "15"
   db_allowed_cidrs  = [
     data.aws_vpc.eks_vpc.cidr_block,
