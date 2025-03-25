@@ -82,14 +82,14 @@ resource "aws_elasticache_replication_group" "rosey-staging-euw1-1" {
   engine                     = "redis"
   engine_version             = "7.1"
 
-  node_type                  = "cache.t2.medium"
+  node_type                  = "cache.t2.small"
   port                       = 6379
   parameter_group_name       = "default.redis7.cluster.on"
   automatic_failover_enabled = true
   at_rest_encryption_enabled = true
   transit_encryption_enabled = true
 
-  num_node_groups            = 2
+  num_node_groups            = 1
   replicas_per_node_group    = 1
 
   subnet_group_name          = local.subnet_group_name
