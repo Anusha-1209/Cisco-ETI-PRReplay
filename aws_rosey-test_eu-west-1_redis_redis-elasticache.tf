@@ -61,7 +61,7 @@ data "aws_subnets" "redis_subnets" {
 # Create a subnet group for the Elasticache service
 resource "aws_elasticache_subnet_group" "redis_subnet_group" {
   name       = local.subnet_group_name
-  subnet_ids = aws_subnets.redis_subnets.ids
+  subnet_ids = data.aws_subnets.redis_subnets.ids
 }
 
 # Create a security group for the Elasticache service
