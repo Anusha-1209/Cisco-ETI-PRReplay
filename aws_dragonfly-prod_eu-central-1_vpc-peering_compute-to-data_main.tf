@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "eticloud-tf-state-prod"
-    key    = "tterraform-state/aws/dragonfly-prod/eu-central-1/vpc-peering/compute-to-data/vpc-peering.tfstate"
+    key    = "terraform-state/aws/dragonfly-prod/eu-central-1/vpc-peering/compute-to-data/vpc-peering.tfstate"
     region = "us-east-2"
   }
 }
