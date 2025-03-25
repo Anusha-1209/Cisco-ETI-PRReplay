@@ -49,7 +49,7 @@ data "aws_vpc" "redis_vpc" {
 
 # Create a security group for the Elasticache service
 resource "aws_security_group" "redis_security_group" {
-  name   = "rosey-dev-euw1-1-sg"
+  name   = "rosey-dev-data-euw1-1-sg"
   vpc_id = data.aws_vpc.redis_vpc.id
   ingress {
     from_port       = 6379
