@@ -126,7 +126,9 @@ import {
   id = "/marvin-prod-use2-1-msk-s3-connectors/confluentinc-kafka-connect-s3-10.5.7.zip"
 }
 
-resource "aws_s3_object" "msk-connector-s3-object" {}
+resource "aws_s3_object" "msk-connector-s3-object" {
+  key = "confluentinc-kafka-connect-s3-10.5.7.zip"
+}
 
 resource "aws_mskconnect_custom_plugin" "msk-connect-s3-connector-plugin" {
   depends_on = [aws_s3_object.msk-connector-s3-object]
