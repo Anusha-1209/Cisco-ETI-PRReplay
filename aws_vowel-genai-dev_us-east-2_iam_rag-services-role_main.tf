@@ -84,9 +84,9 @@ resource "aws_iam_role" "aws_vowel_dev_rag_services_role" {
         Action = "sts:AssumeRoleWithWebIdentity"
         Condition = {
           StringEquals = {
-            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:aud" = "sts.amazonaws.com"
-            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:sub" = "system:serviceaccount:vowel-system:rag-acquisition-sa"
-            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:sub" = "system:serviceaccount:vowel-system:rag-inference-sa"
+            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:aud" = "sts.amazonaws.com",
+            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:sub" = "system:serviceaccount:vowel-system:rag-acquisition-sa",
+            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:sub" = "system:serviceaccount:vowel-system:rag-inference-sa",
             "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:sub" = "system:serviceaccount:vowel-system:rag-ingestion-manager-sa"
           }
         }
