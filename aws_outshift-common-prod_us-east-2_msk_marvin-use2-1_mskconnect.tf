@@ -121,8 +121,12 @@ import {
 
 resource "aws_s3_bucket" "marvin-msk-connectors-bucket" {}
 
+import {
+  to = aws_s3_object.msk-connector-s3-object
+  id = "/marvin-prod-use2-1-msk-s3-connectors/confluentinc-kafka-connect-s3-10.5.7.zip"
+}
+
 resource "aws_s3_object" "msk-connector-s3-object" {
-  depends_on = [aws_s3_bucket.marvin-msk-connectors-bucket]
   bucket = aws_s3_bucket.marvin-msk-connectors-bucket.id
   key    = "confluentinc-kafka-connect-s3-10.5.7.zip"
   source = "confluentinc-kafka-connect-s3-10.5.7.zip"
