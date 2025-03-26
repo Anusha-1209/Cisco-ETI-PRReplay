@@ -17,7 +17,7 @@ locals {
 
 module "eks_all_in_one" {
   # EKS cluster partially created as of Jan 15 2024
-  source = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=0.0.10"
+  source = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=latest"
 
   name             = local.name             # EKS cluster name
   region           = local.region           # AWS provider region
@@ -30,7 +30,4 @@ module "eks_all_in_one" {
   min_size       = 3               # EKS node group min size
   max_size       = 15              # EKS node group max size
   desired_size   = 3               # EKS node group desired size
-
-  # Karpenter
-  create_karpenter_irsa = true # Create Karpenter IRSA
 }
