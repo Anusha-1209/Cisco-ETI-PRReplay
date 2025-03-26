@@ -12,16 +12,6 @@ terraform {
   }
 }
 
-locals {
-  aws_region         = "us-east-2"
-  vpc_name           = "marvin-prod-use2-data"
-  vpc_cidr           = "10.3.0.0/16"
-  eks_cluster_name   = "marvin-prod-use2-1"
-  app_name           = "marvin-prod-use2-data" 
-  aws_account_name   = "outshift-common-prod" 
-  aws_account_id     = "058264538874"
-}
-
 ################################################################################
 # Provider configuration
 ################################################################################
@@ -33,22 +23,22 @@ provider "vault" {
 
 data "vault_generic_secret" "aws_infra_credential" {
   provider = vault.eticloud
-  path     = "secret/infra/aws/${local.aws_account_name}/terraform_admin"
+  path     = "secret/infra/aws/outshift-common-prod/terraform_admin"
 }
 
 provider "aws" {
   access_key  = data.vault_generic_secret.aws_infra_credential.data["AWS_ACCESS_KEY_ID"]
   secret_key  = data.vault_generic_secret.aws_infra_credential.data["AWS_SECRET_ACCESS_KEY"]
-  region      = local.aws_region
+  region      = "us-east-2"
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = local.app_name
+      ApplicationName    = "marvin-prod-use2-data-vpc"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
       EnvironmentName    = "Prod"
-      ResourceOwner      = "ETI SRE"
+      ResourceOwner      = "Outshift SRE"
     }
   }
 }
