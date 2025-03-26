@@ -119,9 +119,7 @@ import {
   id = "marvin-prod-use2-1-msk-s3-connectors"
 }
 
-resource "aws_s3_bucket" "marvin-msk-connectors-bucket" {
-  bucket = "marvin-prod-use2-1-msk-s3-connectors"
-}
+resource "aws_s3_bucket" "marvin-msk-connectors-bucket" {}
 
 resource "aws_s3_object" "msk-connector-s3-object" {
   depends_on = [aws_s3_bucket.marvin-msk-connectors-bucket]
