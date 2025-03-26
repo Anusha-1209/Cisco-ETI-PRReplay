@@ -19,7 +19,7 @@ module "ec2" {
   name               = local.name             # VPC name
   region             = local.region           # AWS provider region
   aws_account_name   = local.aws_account_name # AWS account name
-  instance_type      = "G5.2xlarge"           # EC2 instance type
+  instance_type      = "g5.2xlarge"           # EC2 instance type
   availability_zone  = "us-west-2c"
   is_public          = true                  # Is the instance public
   ignore_ami_changes = true                  # Ignore AMI changes
