@@ -45,7 +45,7 @@ module "ec2" {
   ignore_ami_changes = "true"
 
   # Tags
-  cisco_mail_alias    = "<no value>"
+  cisco_mail_alias    = "sraradhy@cisco.com"
   data_classification = "Cisco Restricted"
   data_taxonomy       = "Cisco Operations Data"
   environment         = "NonProd"
