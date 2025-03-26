@@ -1,6 +1,6 @@
 locals {
   name             = "marvin-prod-euc1-1"
-  region           = "us-central-1"
+  region           = "eu-central-1"
   aws_account_name = "outshift-common-prod"
 }
 
