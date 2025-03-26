@@ -76,7 +76,7 @@ resource "aws_iam_role" "aws_vowel_dev_rag_services_role" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
-     {
+      {
         Effect = "Allow",
         Principal = {
           Federated = "arn:aws:iam::961088030672:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6"
@@ -110,7 +110,7 @@ resource "aws_iam_role" "aws_vowel_dev_rag_services_role" {
         Action = "sts:AssumeRoleWithWebIdentity",
         Condition = {
           StringEquals = {
-             "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:aud" : "sts.amazonaws.com",
+            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:aud" : "sts.amazonaws.com",
             "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:sub" : "system:serviceaccount:vowel-system:rag-ingestion-manager-sa"
           }
         }
