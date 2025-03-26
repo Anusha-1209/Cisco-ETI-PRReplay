@@ -37,7 +37,7 @@ provider "aws" {
 }
 
 module "s3" {
-  source      = "git::https://wwwin-github.cisco.com/eti/sre-tf-module-aws-s3.git?ref=1.0.2"
+  source      = "git::https://github.com/cisco-eti/sre-tf-module-aws-s3.git?ref=1.0.2"
   bucket_name = "motific_raw_documents" # The name of the S3 bucket.  S3 bucket names are required to be globally unique across all of AWS.
   #Continuous Security Buddy Tags.
   #For more information, see the CSB tagging Sharepoint page here:
