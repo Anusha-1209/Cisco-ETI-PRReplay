@@ -32,5 +32,5 @@ module "eks_all_in_one" {
   desired_size   = 3               # EKS node group desired size
 
   # Karpenter
-  create_karpenter_irsa = true 
+  create_karpenter_irsa = true
 }
