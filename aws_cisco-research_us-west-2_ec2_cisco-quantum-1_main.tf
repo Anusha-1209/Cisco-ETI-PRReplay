@@ -32,7 +32,8 @@ module "ec2" {
 
   # AMI Type
   ami_type = "UBUNTU"
-
+  # add s3 bucket for user management
+  setup_s3_user_mgmt = true
   # VPC Name
   vpc_name = "cisco-quantum-vpc-1"
 
