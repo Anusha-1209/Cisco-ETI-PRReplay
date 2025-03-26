@@ -15,7 +15,7 @@ provider "vault" {
 }
 
 data "vault_generic_secret" "public_key" {
-  provider = vault.eticloud
+  provider = vault.vowel
   path     = "secret/dev/vowel-dev-vms/motific-win-server" # Defines which account the resources will be created in. Can be eticloud, scratch, eticloud-scratch-c, eticloud-cil, eticloud-demo
 }
 terraform {
@@ -41,7 +41,7 @@ data "aws_security_group" "default" {
 }
 resource "aws_key_pair" "auth" {
   key_name   = "motific-win-server-key-pair"
-  public_key = data.vault_generic_secret.public_key["public_key"]
+  public_key = data.vault_generic_secret.public_key.data["public_key"]
 }
 
 resource "aws_instance" "motific-win-server" {
