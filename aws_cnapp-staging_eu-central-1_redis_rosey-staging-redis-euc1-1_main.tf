@@ -90,6 +90,8 @@ resource "aws_elasticache_replication_group" "rosey-staging-euw1-1" {
   transit_encryption_enabled = true
   multi_az_enabled           = true
 
+  snapshot_retention_limit   = 30
+
   num_node_groups            = 1
   replicas_per_node_group    = 2
 
