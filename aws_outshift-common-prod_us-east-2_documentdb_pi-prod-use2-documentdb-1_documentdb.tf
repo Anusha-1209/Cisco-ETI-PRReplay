@@ -94,7 +94,7 @@ resource "aws_docdb_cluster" "docdb" {
   deletion_protection             = true
   storage_encrypted               = true
   db_subnet_group_name            = "pi-prod-use2-data-db-subnet-group"
-  vpc_security_group_ids          = ["sg-0675ee3607a38b3c1", aws_security_group.genie-prod-docdb-sg.id]
+  vpc_security_group_ids          = ["sg-0675ee3607a38b3c1", aws_security_group.docdb_sg.id]
   enabled_cloudwatch_logs_exports = ["audit", "profiler"]
 
   depends_on = [aws_security_group.docdb_sg]
