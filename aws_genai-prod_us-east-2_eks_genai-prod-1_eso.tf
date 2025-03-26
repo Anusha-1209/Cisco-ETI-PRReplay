@@ -4,6 +4,12 @@ provider "vault" {
   namespace = "eticloud"
 }
 
+provider "vault" {
+  alias     = "apps_ppu"
+  address   = "https://keeper.cisco.com"
+  namespace = "eticloud/apps/ppu"
+}
+
 data "vault_generic_secret" "aws_infra_credential" {
   path = "secret/infra/aws/${local.aws_account_name}/terraform_admin"
 }
@@ -36,7 +42,7 @@ module "eso_eticloud" {
 
 resource "vault_policy" "ppu-apps" {
   name     = "external-secrets-${local.name}"
-  provider = vault.eticloud
+  provider = vault.apps_ppu
   policy   = <<EOT
     # K8s External Secrets Vault Policy
 
