@@ -85,7 +85,7 @@ resource "aws_iam_role" "aws_motf_unified_plugins_role" {
         Condition = {
           StringEquals = {
             "oidc.eks.us-east-2.amazonaws.com/id/50C45BFA06C99983803E5393083A11C3:aud" = "sts.amazonaws.com"
-            "oidc.eks.us-east-2.amazonaws.com/id/50C45BFA06C99983803E5393083A11C3:sub" = "system:serviceaccount:vowel-system:default"
+            "oidc.eks.us-east-2.amazonaws.com/id/50C45BFA06C99983803E5393083A11C3:sub" = "system:serviceaccount:vowel-system:unified-plugins-sa"
           }
         }
       }
