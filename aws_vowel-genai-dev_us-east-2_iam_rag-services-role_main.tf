@@ -74,20 +74,44 @@ resource "aws_iam_role" "aws_vowel_dev_rag_services_role" {
   name = "vowel-dev-rag-services-role"
 
   assume_role_policy = jsonencode({
-    Version = "2012-10-17"
+    Version = "2012-10-17",
     Statement = [
       {
-        Effect = "Allow"
+        Effect = "Allow",
         Principal = {
           Federated = "arn:aws:iam::961088030672:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6"
-        }
-        Action = "sts:AssumeRoleWithWebIdentity"
+        },
+        Action = "sts:AssumeRoleWithWebIdentity",
         Condition = {
           StringEquals = {
-            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:aud" = "sts.amazonaws.com",
-            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:sub" = "system:serviceaccount:vowel-system:rag-acquisition-sa",
-            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:sub" = "system:serviceaccount:vowel-system:rag-inference-sa",
-            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:sub" = "system:serviceaccount:vowel-system:rag-ingestion-manager-sa"
+            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:aud": "sts.amazonaws.com",
+            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:sub": "system:serviceaccount:vowel-system:rag-acquisition-sa"
+          }
+        }
+      },
+      {
+        Effect = "Allow",
+        Principal = {
+          Federated = "arn:aws:iam::961088030672:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6"
+        },
+        Action = "sts:AssumeRoleWithWebIdentity",
+        Condition = {
+          StringEquals = {
+            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:aud": "sts.amazonaws.com",
+            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:sub": "system:serviceaccount:vowel-system:rag-inference-sa"
+          }
+        }
+      },
+      {
+        Effect = "Allow",
+        Principal = {
+          Federated = "arn:aws:iam::961088030672:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6"
+        },
+        Action = "sts:AssumeRoleWithWebIdentity",
+        Condition = {
+          StringEquals = {
+            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:aud": "sts.amazonaws.com",
+            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:sub": "system:serviceaccount:vowel-system:rag-ingestion-manager-sa"
           }
         }
       }
@@ -96,6 +120,7 @@ resource "aws_iam_role" "aws_vowel_dev_rag_services_role" {
 
   force_detach_policies = true
 }
+
 
 resource "aws_iam_role_policy_attachment" "aws_vowel_rag_services_policy_attachment" {
   role       = aws_iam_role.aws_vowel_dev_rag_services_role.name
