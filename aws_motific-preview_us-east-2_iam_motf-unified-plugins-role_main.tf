@@ -38,8 +38,8 @@ resource "aws_iam_policy" "aws_motf_unified_plugins_policy" {
           "sts:AssumeRoleWithWebIdentity"
         ],
         Resource = [
-          "arn:aws:iam::961088030672:role/motf-preview-unified-plugins-role",
-          "arn:aws:sagemaker:*:961088030672:endpoint/*"
+          "arn:aws:iam::851725238184:role/motf-preview-unified-plugins-role",
+          "arn:aws:sagemaker:*:851725238184:endpoint/*"
         ]
       },
       {
