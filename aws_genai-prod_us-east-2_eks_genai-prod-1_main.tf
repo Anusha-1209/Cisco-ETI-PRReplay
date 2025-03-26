@@ -19,3 +19,4 @@ module "eks_all_in_one" {
   # Karpenter
   create_karpenter_irsa = true # Create Karpenter IRSA
 }
+
