@@ -6,6 +6,5 @@ terraform {
     key             = "terraform-state/aws/genai-prod/us-east-2/eks/genai-prod-1.tfstate"  
     # This is the region where the backend S3 bucket is located.
     region          = "us-east-2"                                                                       
-
   }
 }
