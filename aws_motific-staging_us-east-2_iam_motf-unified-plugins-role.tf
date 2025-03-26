@@ -79,13 +79,13 @@ resource "aws_iam_role" "aws_motf_unified_plugins_role" {
       {
         Effect = "Allow"
         Principal = {
-          Federated = "arn:aws:iam::211125433326:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/*CHANGEME*"
+          Federated = "arn:aws:iam::211125433326:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/E44B0829BBFA73125E1843A705525B20"
         }
         Action = "sts:AssumeRoleWithWebIdentity"
         Condition = {
           StringEquals = {
-            "oidc.eks.us-east-2.amazonaws.com/id/*CHANGEME*:aud" = "sts.amazonaws.com"
-            "oidc.eks.us-east-2.amazonaws.com/id/*CHANGEME*:sub" = "system:serviceaccount:vowel-system:unified-plugins-sa"
+            "oidc.eks.us-east-2.amazonaws.com/id/E44B0829BBFA73125E1843A705525B20:aud" = "sts.amazonaws.com"
+            "oidc.eks.us-east-2.amazonaws.com/id/E44B0829BBFA73125E1843A705525B20:sub" = "system:serviceaccount:vowel-system:unified-plugins-sa"
           }
         }
       }
