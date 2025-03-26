@@ -68,6 +68,7 @@ resource "aws_iam_role" "eks_irsa_ecr_ro" {
 
 # IAM Policy
 resource "aws_iam_policy" "eks_irsa_ecr_ro_policy" {
+  for_each = local.eks_irsa != null ? lookup(local.eks_irsa, "dragonfly", {}) : {}
 
   name        = "${local.eks_irsa["dragonfly"][each.key].eks_cluster_name}-eks-irsa-ecr-ro-policy"
   description = "EKS IRSA secret access dragonfly ECR policy"
@@ -78,6 +79,7 @@ resource "aws_iam_policy" "eks_irsa_ecr_ro_policy" {
 
 # IAM Policy Attachment
 resource "aws_iam_policy_attachment" "eks_irsa_s3_ro_policy" {
+  for_each = local.eks_irsa != null ? lookup(local.eks_irsa, "dragonfly", {}) : {}
 
   name       = "${local.eks_irsa["dragonfly"][each.key].eks_cluster_name}-eks-irsa-ecr-ro-attach"
   roles      = [aws_iam_role.eks_irsa_ecr_ro.name]
