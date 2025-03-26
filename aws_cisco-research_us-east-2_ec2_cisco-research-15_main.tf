@@ -41,7 +41,8 @@ module "ec2" {
 
   # Ignore AMI changes
   ignore_ami_changes = "true"
-
+  # Create S3 bucket for user management
+  setup_s3_user_mgmt = true
   # Tags
   cisco_mail_alias    = "eti-sre-admins@cisco.com"
   data_classification = "Cisco Restricted"
