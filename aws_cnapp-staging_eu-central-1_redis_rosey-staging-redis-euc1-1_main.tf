@@ -88,9 +88,10 @@ resource "aws_elasticache_replication_group" "rosey-staging-euw1-1" {
   automatic_failover_enabled = true
   at_rest_encryption_enabled = true
   transit_encryption_enabled = true
+  multi_az_enabled           = true
 
   num_node_groups            = 1
-  replicas_per_node_group    = 1
+  replicas_per_node_group    = 2
 
   subnet_group_name          = local.subnet_group_name
   security_group_ids         = [aws_security_group.redis_security_group.id]
