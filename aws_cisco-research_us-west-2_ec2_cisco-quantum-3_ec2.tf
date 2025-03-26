@@ -21,6 +21,7 @@ module "ec2" {
   aws_account_name   = local.aws_account_name # AWS account name
   instance_type      = "g5.2xlarge"           # EC2 instance type
   availability_zone  = "us-west-2c"
+  setup_s3_user_mgmt = true
   is_public          = true                  # Is the instance public
   ignore_ami_changes = true                  # Ignore AMI changes
   ami_type           = "UBUNTU"              # Windows AMI OS Flavor
