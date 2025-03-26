@@ -1,5 +1,5 @@
 resource "aws_iam_role" "readonly" {
-  name = "readonly"
+  name               = "readonly"
   assume_role_policy = file("policies/sso_assume_role_policy.json")
   tags = {
     Name = "readonly"
