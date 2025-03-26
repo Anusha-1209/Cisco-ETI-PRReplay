@@ -2,13 +2,15 @@
 
 terraform {
   backend "s3" {
-    # We separate the different levels of development into different buckets.
-    # The buckets are eticloud-tf-state-sandbox, eticloud-tf-state-nonprod, eticloud-tf-state-prod.
+    # We separate the different levels of development into different buckets. 
+    # The buckets are eticloud-tf-state-sandbox, eticloud-tf-state-nonprod, eticloud-tf-state-prod. 
     # The environment should match the CSBEnvironment below.
-    bucket = "eticloud-tf-state-nonprod"
+    bucket = "eticloud-tf-state-nonprod"                                                           
+
     # Note the path here. It should match the pattern terraform_state/<service>/<region>/<name>.tfstate
-    key = "terraform-state/vowel-genai-dev/us-east-2/ec2/sraradhy-lnx-1.tfstate"
-    # Do not change without talking to the SRE team. This is the region where the terraform backend bucket is located.
+    key    = "terraform-state/vowel-genai-dev/us-east-2/ec2/sraradhy-lnx-1.tfstate"
+
+    # Do not change without talking to the SRE team.
     region = "us-east-2"
   }
 }
@@ -43,7 +45,7 @@ module "ec2" {
   ignore_ami_changes = "true"
 
   # Tags
-  cisco_mail_alias    = "sraradhy@cisco.com"
+  cisco_mail_alias    = "<no value>"
   data_classification = "Cisco Restricted"
   data_taxonomy       = "Cisco Operations Data"
   environment         = "NonProd"
