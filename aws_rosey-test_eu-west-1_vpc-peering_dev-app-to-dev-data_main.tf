@@ -22,14 +22,6 @@ terraform {
   }
 }
 
-# Get the VPC IDs based on the names of the VPCs
-data "aws_vpc" "acceptor_vpc" {
-  filter {
-    name   = "tag:Name"
-    values = ["rosey-dev-euw1-1"]
-  }
-}
-
 data "aws_vpc" "requestor_vpc" {
   filter {
     name   = "tag:Name"
@@ -38,7 +30,7 @@ data "aws_vpc" "requestor_vpc" {
 }
 
 data "aws_route_tables" "acceptor_vpc_rt" {
-  vpc_id = data.aws_vpc.acceptor_vpc.id
+  vpc_id = "vpc-067cd1c0b1e80c4c3"
 }
 
 data "aws_route_tables" "requestor_vpc_rt" {
