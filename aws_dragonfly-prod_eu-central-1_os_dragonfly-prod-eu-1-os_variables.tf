@@ -61,3 +61,8 @@ variable "os_master_user" {
   description = "Username for the master user of the Amazon OpenSearch Service domain"
   default     = "dragonfly-admin"
 }
+
+variable "warm_instance_type" {
+  description = "Warm instance type to use for the Amazon OpenSearch Service domain"
+  default     = "ultrawarm1.medium.search"
+}
