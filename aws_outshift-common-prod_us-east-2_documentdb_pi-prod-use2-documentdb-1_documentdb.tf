@@ -53,7 +53,7 @@ provider "aws" {
 # DocumentDB
 ################################################################################
 data "vault_generic_secret" "ppu_docdb_credential" {
-  path     = "secret/prod/ppu/backend"
+  path     = "secret/prod/backend"
   provider = vault.ppu
 }
 
