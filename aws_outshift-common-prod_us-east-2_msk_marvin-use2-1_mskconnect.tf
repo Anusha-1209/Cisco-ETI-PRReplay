@@ -121,13 +121,18 @@ import {
 
 resource "aws_s3_bucket" "marvin-msk-connectors-bucket" {}
 
-import {
-  to = aws_s3_object.msk-connector-s3-object
-  id = "/marvin-prod-use2-1-msk-s3-connectors/confluentinc-kafka-connect-s3-10.5.7.zip"
-}
 
 resource "aws_s3_object" "msk-connector-s3-object" {
-  key = "confluentinc-kafka-connect-s3-10.5.7.zip"
+  bucket = aws_s3_bucket.marvin-msk-connectors-bucket.id
+  key    = "confluentinc-kafka-connect-s3-10.5.7.zip"
+  tags = {
+    CSBDataClassification = "Cisco Restricted"
+    CSBEnvironment        = "Prod"
+    CSBApplicationName    = "Marvin"
+    CSBResourceOwner      = "Outshift SRE"
+    CSBCiscoMailAlias     = "eti-sre@cisco.com"
+    CSBDataTaxonomy       = "Cisco Operations Data"
+  }
 }
 
 resource "aws_mskconnect_custom_plugin" "msk-connect-s3-connector-plugin" {
