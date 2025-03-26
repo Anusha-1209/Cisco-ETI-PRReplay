@@ -22,7 +22,7 @@ resource "aws_iam_policy" "aws_s3_read_write_fail_over_requests_policy" {
           "s3:List*",
           "s3:Describe*"
         ],
-        "Resource": "arn:aws:s3:::marvin-staging-fail-over-requests*"
+        "Resource": "arn:aws:s3:::requests-failover-marvin-prod-use2-1*"
       }
     ]
   })
@@ -42,7 +42,7 @@ resource "aws_iam_policy" "aws_s3_msk_connect_marvin_policy" {
           "s3:List*",
           "s3:Describe*"
         ],
-        "Resource": "arn:aws:s3:::msk-connect-marvin-staging-1*"
+        "Resource": "arn:aws:s3:::msk-sink-connect-marvin-prod-use2-1*"
       }
     ]
   })
@@ -99,7 +99,7 @@ resource "aws_iam_policy" "aws_s3-msk-connect-marvin-staging-1_policy" {
           "s3:List*",
           "s3:Describe*"
         ],
-        "Resource": "arn:aws:s3:::msk-connect-marvin-staging-1*"
+        "Resource": "arn:aws:s3:::msk-sink-connect-marvin-prod-use2-1*"
       }
     ]
   })
