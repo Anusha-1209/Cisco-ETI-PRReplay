@@ -23,6 +23,6 @@ module "ec2" {
   availability_zone  = "us-west-2c"
   is_public          = true                  # Is the instance public
   ignore_ami_changes = true                  # Ignore AMI changes
-  ami_type           = "ubuntu"              # Windows AMI OS Flavor
+  ami_type           = "UBUNTU"              # Windows AMI OS Flavor
   vpc_name           = "cisco-quantum-vpc-1" # VPC Name
 }
