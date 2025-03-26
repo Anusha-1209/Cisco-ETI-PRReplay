@@ -14,7 +14,7 @@ provider "vault" {
 
 data "vault_generic_secret" "aws_infra_credential" {
   path     = "secret/infra/aws/outshift-common-prod/terraform_admin"
-  provider = vault.eticcprod
+  provider = vault.eticloud
 }
 
 provider "aws" {
@@ -32,8 +32,6 @@ provider "aws" {
     }
   }
 }
-
-
 
 resource "aws_glue_catalog_database" "aws_glue_catalog_marvin_database" {
   name = "marvin"
