@@ -31,7 +31,7 @@ resource "aws_iam_role" "eks_irsa_ecr_ro" {
 # IAM Policy
 resource "aws_iam_policy" "eks_irsa_ecr_ro_policy" {
 
-  name        = "${eks_cluster_name}-eks-irsa-ecr-ro-policy"
+  name        = "${local.eks_cluster_name}-eks-irsa-ecr-ro-policy"
   description = "EKS IRSA secret access ECR policy"
   policy = templatefile("${path.module}/policies/ecr_readonly_policy.tpl", {
     resources = local.resources_names
