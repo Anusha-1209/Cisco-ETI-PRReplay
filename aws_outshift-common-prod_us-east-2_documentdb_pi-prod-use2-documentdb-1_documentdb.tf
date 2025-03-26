@@ -60,7 +60,7 @@ data "vault_generic_secret" "ppu_docdb_credential" {
 resource "aws_security_group" "docdb_sg" {
   name        = "pi-prod-use2-documentdb-1-sg"
   description = "Allow inbound traffic from eks-prod-3 to genie prod docdb"
-  vpc_id      = "vpc-0b4e6ec021697885d"
+  vpc_id      = "vpc-0621cc8a0dc424f34"
   
   tags        = {
     "Name" = "pi-prod-use2-documentdb-1-sg"
