@@ -71,6 +71,6 @@ resource "aws_iam_role" "aws_motf_unified_plugins_role" {
 }
 
 resource "aws_iam_role_policy_attachment" "aws_motf_up_policy_attachment" {
-  role       = aws_iam_role.aws_motf_unified_plugins_role[0].name
-  policy_arn = aws_iam_policy.aws_motf_unified_plugins_policy[0].arn
+  role       = aws_iam_role.aws_motf_unified_plugins_role.name
+  policy_arn = aws_iam_policy.aws_motf_unified_plugins_policy.arn
 }
