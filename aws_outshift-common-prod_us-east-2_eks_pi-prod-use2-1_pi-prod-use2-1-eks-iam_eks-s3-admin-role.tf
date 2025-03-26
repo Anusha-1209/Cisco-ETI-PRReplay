@@ -14,7 +14,7 @@ resource "aws_iam_policy" "aws_pi_prod_triton_s3_policy" {
           "sts:AssumeRoleWithWebIdentity"
         ],
         Resource = [
-          "arn:aws:iam::58264538874:role/pi-prod-triton-s3-role"
+          aws_iam_role.aws_pi_prod_triton_s3_role.arn
         ]
       },
       {
