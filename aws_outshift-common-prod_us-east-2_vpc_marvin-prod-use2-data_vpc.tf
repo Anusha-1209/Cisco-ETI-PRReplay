@@ -53,6 +53,6 @@ module "vpc" {
   vpc_cidr                        = "10.3.0.0/16" 
   cluster_name                    = "marvin-prod-use2-data"
   create_database_subnet_group    = true
-  create_elasticache_subnet_group = false
+  create_elasticache_subnet_group = true
   create_secondary_subnets        = false               
 }
