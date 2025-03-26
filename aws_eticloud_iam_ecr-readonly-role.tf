@@ -52,7 +52,6 @@ resource "aws_iam_role" "eks_irsa_ecr_ro" {
     eks_oidc         = local.eks_irsa["dragonfly"][each.key].eks_oidc
     service_accounts = join("\",\"", (formatlist("system:serviceaccount:%s", "${local.eks_irsa["dragonfly"][each.key].service_accounts}")))
   })
-  })
 }
 
 # IAM Policy
