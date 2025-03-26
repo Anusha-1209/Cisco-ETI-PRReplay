@@ -114,6 +114,10 @@ resource "aws_iam_role_policy_attachment" "aws_msk_connect_msk_cluster_attach" {
   policy_arn = aws_iam_policy.aws_msk_connect_msk_cluster_policy.arn
 }
 
+import {
+  to = aws_s3_bucket.marvin-msk-connectors-bucket
+  id = "marvin-prod-use2-1-msk-s3-connectors"
+}
 
 resource "aws_s3_bucket" "marvin-msk-connectors-bucket" {
   bucket = "marvin-prod-use2-1-msk-s3-connectors"
