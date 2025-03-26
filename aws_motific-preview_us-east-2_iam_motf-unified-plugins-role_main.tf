@@ -1,22 +1,22 @@
 resource "aws_iam_policy" "aws_motf_unified_plugins_policy" {
   name        = "motf-preview-unified-plugins-policy"
   description = "AWS motific unified plugins Role IAM Policy"
-  policy      = jsonencode({
-    Version   = "2012-10-17",
+  policy = jsonencode({
+    Version = "2012-10-17",
     Statement = [
       {
-        Sid      = "VisualEditor0",
-        Effect   = "Allow",
-        Action   = [
+        Sid    = "VisualEditor0",
+        Effect = "Allow",
+        Action = [
           "sagemaker:ListEndpointConfigs",
           "sagemaker:ListEndpoints"
         ],
         Resource = "*"
       },
       {
-        Sid      = "VisualEditor1",
-        Effect   = "Allow",
-        Action   = [
+        Sid    = "VisualEditor1",
+        Effect = "Allow",
+        Action = [
           "sagemaker:InvokeEndpoint",
           "sts:AssumeRoleWithWebIdentity"
         ],
@@ -26,25 +26,25 @@ resource "aws_iam_policy" "aws_motf_unified_plugins_policy" {
         ]
       },
       {
-        Sid      = "AdditionalPermissions",
-        Effect   = "Allow",
-        Action   = [
+        Sid    = "AdditionalPermissions",
+        Effect = "Allow",
+        Action = [
           "secretsmanager:GetSecretValue"
         ],
         Resource = "*"
       },
       {
-        Sid      = "KMSPermissions",
-        Effect   = "Allow",
-        Action   = [
+        Sid    = "KMSPermissions",
+        Effect = "Allow",
+        Action = [
           "kms:*"
         ],
         Resource = "*"
       },
       {
-        Sid      = "FullS3Access",
-        Effect   = "Allow",
-        Action   = [
+        Sid    = "FullS3Access",
+        Effect = "Allow",
+        Action = [
           "s3:*"
         ],
         Resource = "*"
@@ -54,12 +54,12 @@ resource "aws_iam_policy" "aws_motf_unified_plugins_policy" {
 }
 
 resource "aws_iam_role" "aws_motf_unified_plugins_role" {
-  name                = "motf-preview-unified-plugins-role"
-  assume_role_policy  = jsonencode({
-    Version   = "2012-10-17",
+  name = "motf-preview-unified-plugins-role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
     Statement = [
       {
-        Effect    = "Allow",
+        Effect = "Allow",
         Principal = {
           Service = "sagemaker.amazonaws.com"
         },
