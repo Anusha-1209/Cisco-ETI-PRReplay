@@ -113,7 +113,7 @@ resource "kubernetes_secret" "dragonfly-cast-cluster-access-aws-cred-secret" {
   }
 
   data = {
-    "AWS_ACCESS_KEY_ID" = base64encode(aws_iam_access_key.dragonfly-cast-cluster-access_user_access_key.id)
-    "AWS_SECRET_ACCESS_KEY" = base64encode(aws_iam_access_key.dragonfly-cast-cluster-access_user_access_key.encrypted_secret)
+    "AWS_ACCESS_KEY_ID" = aws_iam_access_key.dragonfly-cast-cluster-access_user_access_key.id
+    "AWS_SECRET_ACCESS_KEY" = aws_iam_access_key.dragonfly-cast-cluster-access_user_access_key.secret
   }
 }
