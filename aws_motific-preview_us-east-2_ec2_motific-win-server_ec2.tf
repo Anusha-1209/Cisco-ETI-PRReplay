@@ -48,7 +48,7 @@ resource "aws_instance" "motific-win-server" {
   ami                    = "ami-0e6aa5f69f06ffa91" # Replace with the latest Windows AMI in your region
   instance_type          = "t2.large"              # You can choose another instance type if required
   vpc_security_group_ids = [data.aws_security_group.default.id]
-  subnet_id              = data.aws_subnet.vpc.id
+  subnet_id              = data.aws_vpc.vpc.id
   key_name               = aws_key_pair.auth.key_name
   tags = {
     data_classification = "Cisco Confidential"
