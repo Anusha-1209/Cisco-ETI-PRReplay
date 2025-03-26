@@ -58,10 +58,10 @@ provider "aws" {
 ################################################################################
 module "vpc" {
   source                          = "git::https://github.com/cisco-eti/sre-tf-module-aws-vpc?ref=2.0.6"
-  aws_account_name                = local.aws_account_name
-  region                          = local.aws_region
-  name                            = local.vpc_name
-  cidr                            = local.vpc_cidr
+  aws_account_name                = "outshift-common-prod"
+  region                          = "us-east-2"
+  name                            = "marvin-prod-use2-data"
+  cidr                            = "10.3.0.0/16"
   cluster_version                 = "1.28" 
   create_database_subnet_group    = true
   create_elasticache_subnet_group = false
