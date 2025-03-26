@@ -39,7 +39,7 @@ resource "aws_glue_catalog_database" "aws_glue_catalog_marvin_database" {
 
 resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_table" {
   name          = "events_prod_use2_1"
-  database_name = "marvin"
+  database_name = aws_glue_catalog_database.aws_glue_catalog_marvin_database.name
 
   table_type = "EXTERNAL_TABLE"
   parameters = {
