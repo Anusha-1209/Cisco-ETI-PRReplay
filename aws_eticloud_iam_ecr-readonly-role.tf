@@ -60,8 +60,8 @@ resource "aws_iam_role" "eks_irsa_ecr_ro" {
 
   name = "${local.eks_irsa["dragonfly"][each.key].eks_cluster_name}-eks-irsa-ecr-ro"
   assume_role_policy = templatefile("${path.module}/policies/assume_role_irsa.tpl", {
-    aws_account_id   = local.eks_oidc["dragonfly"][each.key].aws_account_id
-    eks_oidc         = local.eks_oidc["dragonfly"][each.key].eks_oidc
+    aws_account_id   = local.eks_irsa["dragonfly"][each.key].aws_account_id
+    eks_oidc         = local.eks_irsa["dragonfly"][each.key].eks_oidc
     service_accounts = join("\",\"", var.eks_irsa["dragonfly"][each.key].services_accounts)
   })
 }
