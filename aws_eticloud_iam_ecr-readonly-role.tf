@@ -7,46 +7,34 @@
 #################################
 # ECR Read Only Access 
 #################################
-data "aws_eks_cluster" "eks-dragonfly-dev-2" {
-  name = "eks-dragonfly-dev-2"
-}
-data "aws_eks_cluster" "eks-df-staging-1" {
-  name = "eks-df-staging-1"
-}
-data "aws_eks_cluster" "dragonfly-prod-euc1-1" {
-  name = "dragonfly-prod-euc1-1"
-}
-data "aws_eks_cluster" "dragonfly-prod-1" {
-  name = "dragonfly-prod-1"
-}
 locals {
   eks_irsa = {
     dragonfly = {
       eks-dragonfly-dev-2 = {
         aws_account_id    = "474213319131"
-        eks_oidc          = "${replace(data.aws_eks_cluster.eks-dragonfly-dev-2.identity[0].oidc[0].issuer, "https://", "")}"
-        eks_cluster_name  = data.aws_eks_cluster.eks-dragonfly-dev-2.name
+        eks_oidc          = "oidc.eks.eu-west-1.amazonaws.com/id/AEE5EF78D8DBE429EB35271E41F3AC72"
+        eks_cluster_name  = "eks-dragonfly-dev-2"
         services_accounts = ["dragonfly-backend:dragonfly-art-a-dev-app"],
         resources_names   = ["dragonfly/datamodel/*", "dragonfly/kg-plugin/*", "dragonfly/falco-rules/*"]
       },
       eks-df-staging-1 = {
         aws_account_id    = "947352569831"
-        eks_oidc          = "${replace(data.aws_eks_cluster.eks-df-staging-1.identity[0].oidc[0].issuer, "https://", "")}"
-        eks_cluster_name  = data.aws_eks_cluster.eks-df-staging-1.name
+        eks_oidc          = "oidc.eks.eu-west-1.amazonaws.com/id/28C9314DBD532A08FF0B98E387A4A19F"
+        eks_cluster_name  = "eks-df-staging-1"
         services_accounts = ["dragonfly-backend:dragonfly-art-a-staging-app"],
         resources_names   = ["dragonfly/datamodel/*", "dragonfly/kg-plugin/*", "dragonfly/falco-rules/*"]
       },
       dragonfly-prod-euc1-1 = {
         aws_account_id    = "651416187950"
-        eks_oidc          = "${replace(data.aws_eks_cluster.dragonfly-prod-euc1-1.identity[0].oidc[0].issuer, "https://", "")}"
-        eks_cluster_name  = data.aws_eks_cluster.dragonfly-prod-euc1-1.name
+        eks_oidc          = "oidc.eks.eu-central-1.amazonaws.com/id/1FB74EA8743EEA7992B0D95A4B404124"
+        eks_cluster_name  = "dragonfly-prod-euc1-1"
         services_accounts = ["dragonfly-backend:dragonfly-art-a-prod-eu-app"],
         resources_names   = ["dragonfly/datamodel/*", "dragonfly/kg-plugin/*", "dragonfly/falco-rules/*"]
       },
       dragonfly-prod-1 = {
         aws_account_id    = "651416187950"
-        eks_oidc          = "${replace(data.aws_eks_cluster.dragonfly-prod-euc1-1.identity[0].oidc[0].issuer, "https://", "")}"
-        eks_cluster_name  = data.aws_eks_cluster.dragonfly-prod-euc1-1.name
+        eks_oidc          = "oidc.eks.us-east-2.amazonaws.com/id/2FD8E66654862C5EF1DF7DB83F35F7AD"
+        eks_cluster_name  = "dragonfly-prod-1"
         services_accounts = ["dragonfly-backend:dragonfly-art-a-prod-app"],
         resources_names   = ["dragonfly/datamodel/*", "dragonfly/kg-plugin/*", "dragonfly/falco-rules/*"]
       },
