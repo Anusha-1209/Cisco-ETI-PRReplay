@@ -68,7 +68,7 @@ resource "aws_iam_role" "dragonfly-cast-cluster-access_role" {
           }
         }
       ]
-    })
+  })
 
 
   inline_policy {
@@ -80,7 +80,7 @@ resource "aws_iam_role" "dragonfly-cast-cluster-access_role" {
                 "eks:DescribeCluster"
             ],
             Effect: "Allow",
-            Resource: "arn:aws:iam::${local.account_id}:cluster/${local.source_cluster_name}",
+            Resource: "arn:aws:eks::${local.account_id}:cluster/${local.source_cluster_name}",
             Sid: "1"
         },
         {
@@ -88,7 +88,7 @@ resource "aws_iam_role" "dragonfly-cast-cluster-access_role" {
                 "eks:DescribeCluster"
             ],
             Effect: "Allow",
-            Resource: "arn:aws:iam::${local.account_id}:cluster/${local.target_cluster_name}",
+            Resource: "arn:aws:eks::${local.account_id}:cluster/${local.target_cluster_name}",
             Sid: "2"
         }
     ],
