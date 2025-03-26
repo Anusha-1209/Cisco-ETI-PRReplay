@@ -39,5 +39,5 @@ module "eso_eticloud_apps_ppu" {
   vault_namespace = "eticloud/apps/ppu"
   kubernetes_host = data.aws_eks_cluster.cluster.endpoint
   kubernetes_ca   = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
-  policies        = ["external-secrets-genai-prod-1"]
+  policies        = ["external-secrets-${local.name}"]
 }
