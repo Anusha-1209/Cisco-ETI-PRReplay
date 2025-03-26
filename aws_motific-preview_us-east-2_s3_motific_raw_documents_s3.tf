@@ -1,8 +1,8 @@
 # This provider allows access to the eticloud/eticcprod namespace in Keeper. Do not modify it without discussing with the SRE team.
 provider "vault" {
-  alias     = "eticcprod"
+  alias     = "eticloud"
   address   = "https://keeper.cisco.com"
-  namespace = "eticloud/eticcprod"
+  namespace = "eticloud"
 }
 
 # Change `path = "secret/eticcprod/infra/<account_name>/aws" to specify the account in which the resources will be created. 
