@@ -10,10 +10,10 @@ terraform {
   }
 }
 locals {
-  name                 = "rosey-staging-euc1-1"
+  name                 = "cnapp-staging-euc1-1"
   region               = "eu-central-1"
   aws_account_name     = "cnapp-staging"
-  data_vpc_name        = "cnapp-staging-euc1-data"
+  data_vpc_name             = "cnapp-staging-euc1-data"
   subnet_group_name    = "rosey-staging-cache-sg-euc1-1"
 }
 
