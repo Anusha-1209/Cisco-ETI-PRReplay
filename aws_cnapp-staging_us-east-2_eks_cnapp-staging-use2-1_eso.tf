@@ -41,7 +41,7 @@ module "eso_eticloud_apps_securecn" {
   vault_namespace      = "eticloud/apps/securecn"
   kubernetes_host      = data.aws_eks_cluster.cluster.endpoint
   kubernetes_ca        = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
-  policies             = ["external-secrets-securecn-staging-${local.name}"]
+  policies             = ["external-secrets-${local.name}"]
 }
 
 module "eso_eticloud_apps_rosey" {
@@ -50,5 +50,14 @@ module "eso_eticloud_apps_rosey" {
   vault_namespace      = "eticloud/apps/rosey"
   kubernetes_host      = data.aws_eks_cluster.cluster.endpoint
   kubernetes_ca        = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
-  policies             = ["external-secrets-rosey-staging-${local.name}"]
+  policies             = ["external-secrets-${local.name}"]
+}
+
+module "eso_eticloud_apps_policy" {
+  source               = "git::https://github.com/cisco-eti/sre-tf-module-eso-access.git?ref=1.0.0"
+  cluster_name         = local.name
+  vault_namespace      = "eticloud/apps/policy"
+  kubernetes_host      = data.aws_eks_cluster.cluster.endpoint
+  kubernetes_ca        = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
+  policies             = ["external-secrets-${local.name}"]
 }
