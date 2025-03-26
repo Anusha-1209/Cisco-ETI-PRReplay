@@ -6,7 +6,7 @@ terraform {
     # This is the name of the backend S3 bucket.
     bucket  = "eticloud-tf-state-prod"                                                   # UPDATE ME.
     # This is the path to the Terraform state file in the backend S3 bucket.
-    key     = "terraform-state/aws/outshift-common-prod/eu-central-1/vpc/marvin-prod-euc1-data.tfstate"  # UPDATE ME.
+    key     = "terraform-state/aws/outshift-common-prod/eu-central-1/vpc/pi-prod-euc1-data.tfstate"  # UPDATE ME.
     # This is the region where the backend S3 bucket is located.
     region  = "eu-central-1"                                                                   # DO NOT CHANGE.
   }
@@ -33,7 +33,7 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = "marvin-prod-euc1-data-vpc"
+      ApplicationName    = "pi-prod-euc1-data-vpc"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
@@ -49,9 +49,9 @@ provider "aws" {
 module "vpc" {
   source                          = "git::https://github.com/cisco-eti/sre-tf-module-aws-vpc?ref=2.0.6"
   region                          = "eu-central-1"
-  vpc_name                        = "marvin-prod-euc1-data"
-  vpc_cidr                        = "10.3.0.0/16"
-  cluster_name                    = "marvin-prod-euc1-data"
+  vpc_name                        = "pi-prod-euc1-data"
+  vpc_cidr                        = "10.4.0.0/16"
+  cluster_name                    = "pi-prod-euc1-data"
   create_database_subnet_group    = true
   create_elasticache_subnet_group = true
   create_secondary_subnets        = false
