@@ -34,23 +34,23 @@ module "eso_eticloud" {
   policies        = ["external-secrets-prod"]
 }
 
-resource "vault_policy" "policy-apps" {
+resource "vault_policy" "ppu-apps" {
   name     = "external-secrets-${local.name}"
   provider = vault.eticloud
   policy   = <<EOT
     # K8s External Secrets Vault Policy
 
     # Prod secrets
-    path "secret/data/preview/*" {
+    path "secret/data/prod/*" {
       capabilities = ["read", "list"]
     }
-    path "secret/preview/*" {
+    path "secret/prod/*" {
       capabilities = ["read", "list"]
     }
-    path "preview/*" {
+    path "prod/*" {
       capabilities = ["read", "list"]
     }
-    path "preview/data/*" {
+    path "prod/data/*" {
       capabilities = ["read", "list"]
     }
 EOT
@@ -62,5 +62,5 @@ module "eso_eticloud_apps_ppu" {
   vault_namespace = "eticloud/apps/ppu"
   kubernetes_host = data.aws_eks_cluster.cluster.endpoint
   kubernetes_ca   = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
-  policies        = [vault_policy.policy-apps.name]
+  policies        = ["external-secrets-${local.name}"]
 }
