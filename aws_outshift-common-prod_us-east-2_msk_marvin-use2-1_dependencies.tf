@@ -7,7 +7,7 @@ data "vault_generic_secret" "msk_auth_credentials" {
   for_each = var.kafka_clients
 
   path     = each.value.vault_path
-  provider = vault.securecn
+  provider = vault.apisec
 }
 
 data "aws_iam_policy_document" "msk_secret_policy" {

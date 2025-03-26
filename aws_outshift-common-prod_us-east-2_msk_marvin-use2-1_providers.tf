@@ -22,7 +22,7 @@ provider "vault" {
 }
 
 provider "vault" {
-  alias     = "securecn"
+  alias     = "apisec"
   address   = "https://keeper.cisco.com"
   namespace = "eticloud/apps/apisec"
 }
