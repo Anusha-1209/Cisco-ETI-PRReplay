@@ -56,12 +56,6 @@ resource "aws_kms_key" "msk_custom_key" {
   description = "Custom Key for MSK Cluster Scram Secret Association"
 }
 
-provider "vault" {
-  alias     = "eticloud"
-  address   = "https://keeper.cisco.com"
-  namespace = "eticloud"
-}
-
 data "vault_generic_secret" "msk_credentials" {
   provider = vault.eticloud
   path     = "secret/infra/msk/motf-preview-use2-1"
