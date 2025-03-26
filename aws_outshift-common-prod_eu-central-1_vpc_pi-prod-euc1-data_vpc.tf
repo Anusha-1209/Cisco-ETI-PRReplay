@@ -8,7 +8,7 @@ terraform {
     # This is the path to the Terraform state file in the backend S3 bucket.
     key     = "terraform-state/aws/outshift-common-prod/us-east-2/vpc/pi-prod-euc1-data.tfstate"  # UPDATE ME.
     # This is the region where the backend S3 bucket is located.
-    region  = "eu-central-1"                                                                   # DO NOT CHANGE.
+    region  = "us-east-2"                                                                   # DO NOT CHANGE.                                                             # DO NOT CHANGE.
   }
 }
 
