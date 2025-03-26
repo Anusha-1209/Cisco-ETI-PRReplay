@@ -98,3 +98,34 @@ resource "aws_route" "eks-to-db" {
   destination_cidr_block    = data.aws_vpc.requestor_vpc.cidr_block
   vpc_peering_connection_id = aws_vpc_peering_connection.peering_connection.id
 }
+
+resource "aws_security_group" "staging-data-vpc-to-app-vpc" {
+  name = "staging-data-vpc-to-app"
+  description = "Allows all communication into app from the staging data vpc"
+  vpc_id = data.aws_vpc.acceptor_vpc.id
+}
+
+resource "aws_security_group" "app-staging-to-data-vpc" {
+  name = "app-to-staging-data-vpc"
+  description = "Allows all communication into the staging data vpc from app"
+  vpc_id = data.aws_vpc.requestor_vpc.id
+}
+
+# security group rules because the rules are going to reference the groups
+resource "aws_security_group_rule" "staging-data-vpc-to-app" {
+  type = "ingress"
+  from_port = 0
+  to_port = 65535
+  protocol = "-1"
+  security_group_id = aws_security_group.staging-data-vpc-to-app-vpc.id
+  source_security_group_id = aws_security_group.app-staging-to-data-vpc.id
+}
+
+resource "aws_security_group_rule" "app-to-staging-data-vpc" {
+  type = "ingress"
+  from_port = 0
+  to_port = 65535
+  protocol = "-1"
+  security_group_id = aws_security_group.app-staging-to-data-vpc.id
+  source_security_group_id = aws_security_group.staging-data-vpc-to-app-vpc.id
+}
