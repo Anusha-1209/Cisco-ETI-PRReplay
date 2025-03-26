@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket = "motifi-staging-iam"                               
-    key    = "terraform-state/s3/us-east-2/motifi-staging-iam.tfstate" 
+    bucket = "eticloud-tf-state-nonprod"                               
+    key    = "terraform-state/aws/motific-staging/iam/iam-roles.tfstate" 
     region = "us-east-2"                                               
  }
 }
