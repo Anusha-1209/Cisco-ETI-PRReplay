@@ -33,11 +33,34 @@ module "eso_eticloud" {
   kubernetes_ca   = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
   policies        = ["external-secrets-prod"]
 }
+
+resource "vault_policy" "policy-apps" {
+  name     = "external-secrets-${local.name}"
+  provider = vault.eticloud
+  policy   = <<EOT
+    # K8s External Secrets Vault Policy
+
+    # Prod secrets
+    path "secret/data/preview/*" {
+      capabilities = ["read", "list"]
+    }
+    path "secret/preview/*" {
+      capabilities = ["read", "list"]
+    }
+    path "preview/*" {
+      capabilities = ["read", "list"]
+    }
+    path "preview/data/*" {
+      capabilities = ["read", "list"]
+    }
+EOT
+}
+
 module "eso_eticloud_apps_ppu" {
   source          = "git::https://github.com/cisco-eti/sre-tf-module-eso-access.git?ref=1.0.0"
   cluster_name    = local.name
   vault_namespace = "eticloud/apps/ppu"
   kubernetes_host = data.aws_eks_cluster.cluster.endpoint
   kubernetes_ca   = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
-  policies        = ["external-secrets-${local.name}"]
+  policies        = vault_policy.policy-apps.name
 }
