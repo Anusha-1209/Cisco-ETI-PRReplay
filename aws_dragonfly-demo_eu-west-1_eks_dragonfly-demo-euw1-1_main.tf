@@ -14,13 +14,11 @@ locals {
   target_cluster_name = "dragonfly-tgt-euw1-1"
   region           = "eu-west-1"
   aws_account_name = "dragonfly-demo"
+  aws_iam_cred_secret_name = "ast-aws-iam-credentials"
+  aws_iam_cred_secret_namespace = "argo"
   account_id = "545452251603"
 
 }
-
-# module "target_cluster" {
-#   source = "../dragonfly-tgt-euw1-1"
-# }
 
 module "eks_all_in_one" {
   # EKS cluster partially created as of Jan 15 2024
@@ -101,59 +99,14 @@ resource "aws_iam_access_key" "dragonfly-cast-cluster-access_user_access_key" {
   user = aws_iam_user.dragonfly-cast-cluster-access_user.name
 }
 
-variable "dragonfly-cast-cluster-init-args" {
-  type = string
-  default = <<EOF
-#!/bin/bash
-ROLE_ARN="arn:aws:iam::545452251603:role/dragonfly-cast-cluster-access"
-CRED=$(aws sts assume-role --role-arn $ROLE_ARN --role-session-name AWSCLI-Session)
-export AWS_ACCESS_KEY_ID=$(echo $CRED| jq -r '.Credentials.AccessKeyId')
-export AWS_SECRET_ACCESS_KEY=$(echo $CRED| jq -r '.Credentials.SecretAccessKey')
-export AWS_SESSION_TOKEN=$(echo $CRED| jq -r '.Credentials.SessionToken')
-aws sts get-caller-identity
-
-aws eks update-kubeconfig --region eu-west-1 --name dragonfly-demo-euw1-1 --no-cli-auto-prompt
-kubectl config view --minify
-kubectl create secret generic ast-source-kubeconfig --from-file=/.kube/config
-aws eks update-kubeconfig --region eu-west-1 --name dragonfly-tgt-euw1-1 --no-cli-auto-prompt --kubeconfig /tmp/config
-kubectl create secret generic ast-target-kubeconfigs --from-file=/tmp/config
-EOF
-}
-
-resource "kubernetes_job" "create-source-target-kubeconfigs-secret" {
+resource "kubernetes_secret" "dragonfly-cast-cluster-access-aws-cred-secret" {
   metadata {
-    name = "dragonfly-cast-cluster-init"
-  }
-  spec {
-    template {
-      metadata {}
-      spec {
-        container {
-          name    = "deploy"
-          image   = "docker.io/bartam1/ast:aws7"
-          env {
-            name  = "AWS_ACCESS_KEY_ID"
-            value = aws_iam_access_key.dragonfly-cast-cluster-access_user_access_key.id
-          }
-          env {
-            name  = "AWS_SECRET_ACCESS_KEY"
-            value = aws_iam_access_key.dragonfly-cast-cluster-access_user_access_key.encrypted_secret
-          }
-          
-          command = ["bash", "-c", "--"]
-          args = [var.dragonfly-cast-cluster-init-args]
-
-        }
-        restart_policy = "Never"
-      }
-    }
-    backoff_limit = 4
-  }
-  wait_for_completion = true
-  timeouts {
-    create = "2m"
-    update = "2m"
+    name = local.aws_iam_cred_secret_name
+    namespace = local.aws_iam_cred_secret_namespace
   }
 
-  //depends_on = [module.target_cluster]
+  string_data = {
+    "AWS_ACCESS_KEY_ID" = aws_iam_access_key.dragonfly-cast-cluster-access_user_access_key.id
+    "AWS_SECRET_ACCESS_KEY" = aws_iam_access_key.dragonfly-cast-cluster-access_user_access_key.encrypted_secret
+  }
 }

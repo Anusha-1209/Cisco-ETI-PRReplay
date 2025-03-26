@@ -16,15 +16,20 @@ provider "aws" {
   region     = local.region
 }
 
-# provider "kubernetes" {
-#   alias                  = "eks"
-#   host                   = local.cluster_endpoint
-#   cluster_ca_certificate = base64decode(local.cluster_auth_base64)
-#   token                  = data.aws_eks_cluster_auth.cluster.token
-# }
-
+provider "kubernetes" {
+  alias                  = "eks"
+  host                   = local.cluster_endpoint
+  cluster_ca_certificate = base64decode(local.cluster_auth_base64)
+  token                  = data.aws_eks_cluster_auth.cluster.token
+}
 
 data "aws_eks_cluster" "cluster" {
+  depends_on = [module.eks_all_in_one]
+  provider   = aws.target
+  name       = local.source_cluster_name
+}
+
+data "aws_eks_cluster_auth" "cluster" {
   depends_on = [module.eks_all_in_one]
   provider   = aws.target
   name       = local.source_cluster_name
