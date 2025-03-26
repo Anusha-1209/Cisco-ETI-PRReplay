@@ -25,8 +25,8 @@ resource "aws_iam_policy" "aws_vowel_dev_rag_services_policy" {
         Sid    = "VisualEditor0",
         Effect = "Allow",
         Action = [
-          "sagemakers":ListEndpointConfigs",
-          "sagemaker:ListEndpoint
+          "sagemakers:ListEndpointConfigs",
+          "sagemaker:ListEndpoint"
         ],
         Resource = "*"
       },
