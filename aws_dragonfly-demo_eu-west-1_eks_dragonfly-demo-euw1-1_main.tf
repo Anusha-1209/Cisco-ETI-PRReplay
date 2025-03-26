@@ -10,20 +10,27 @@ terraform {
 }
 
 locals {
-  name             = "dragonfly-demo-euw1-1"
+  source_cluster_name             = "dragonfly-demo-euw1-1"
+  target_cluster_name = "dragonfly-tgt-euw1-1"
   region           = "eu-west-1"
   aws_account_name = "dragonfly-demo"
+  account_id = "545452251603"
+
 }
+
+# module "target_cluster" {
+#   source = "../dragonfly-tgt-euw1-1"
+# }
 
 module "eks_all_in_one" {
   # EKS cluster partially created as of Jan 15 2024
   source = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=latest"
 
-  name                       = local.name             # EKS cluster name
-  region                     = local.region           # AWS provider region
-  aws_account_name           = local.aws_account_name # AWS account name
-  cidr                       = "10.3.0.0/16"          # VPC CIDR
-  cluster_version            = "1.28"                 # EKS cluster version
+  name             = local.source_cluster_name             # EKS cluster name
+  region           = local.region           # AWS provider region
+  aws_account_name = local.aws_account_name # AWS account name
+  cidr             = "10.3.0.0/16"          # VPC CIDR
+  cluster_version  = "1.28"                 # EKS cluster version
 
   # EKS Managed Private Node Group
   ami_type                   = "AMAZON_LINUX_2"# EKS AMI type, required in case non hardened images
@@ -32,4 +39,121 @@ module "eks_all_in_one" {
   min_size                   = 5               # EKS node group min size
   max_size                   = 10              # EKS node group max size
   desired_size               = 6               # EKS node group desired size
+
+  additional_aws_auth_configmap_roles = [
+      {
+        rolearn  = aws_iam_role.dragonfly-cast-cluster-access_role.arn,
+        username = "dragonfly-cast-cluster-access",
+        groups   = ["system:masters"]
+      }
+  ]
+}
+
+resource "aws_iam_role" "dragonfly-cast-cluster-access_role" {
+  name = "dragonfly-cast-cluster-access"
+
+  assume_role_policy = jsonencode({
+      Version : "2012-10-17",
+      Statement : [
+        {
+          Effect : "Allow",
+          Action : "sts:AssumeRole",
+          Principal: {
+            "AWS": aws_iam_user.dragonfly-cast-cluster-access_user.arn
+          }
+        }
+      ]
+    })
+
+
+  inline_policy {
+    name = "dragonfly-cast-cluster-access"
+    policy = jsonencode({
+    Statement: [
+        {
+            Action: [
+                "eks:DescribeCluster"
+            ],
+            Effect: "Allow",
+            Resource: "arn:aws:iam::${local.account_id}:cluster/${local.source_cluster_name}",
+            Sid: "1"
+        },
+        {
+            Action: [
+                "eks:DescribeCluster"
+            ],
+            Effect: "Allow",
+            Resource: "arn:aws:iam::${local.account_id}:cluster/${local.target_cluster_name}",
+            Sid: "2"
+        }
+    ],
+    Version: "2012-10-17"
+    })  
+  }
+
+}
+
+resource "aws_iam_user" "dragonfly-cast-cluster-access_user" {
+  name = "dragonfly-cast-cluster-access"
+}
+
+resource "aws_iam_access_key" "dragonfly-cast-cluster-access_user_access_key" {
+  user = aws_iam_user.dragonfly-cast-cluster-access_user.name
+}
+
+variable "dragonfly-cast-cluster-init-args" {
+  type = string
+  default = <<EOF
+#!/bin/bash
+ROLE_ARN="arn:aws:iam::545452251603:role/dragonfly-cast-cluster-access"
+CRED=$(aws sts assume-role --role-arn $ROLE_ARN --role-session-name AWSCLI-Session)
+export AWS_ACCESS_KEY_ID=$(echo $CRED| jq -r '.Credentials.AccessKeyId')
+export AWS_SECRET_ACCESS_KEY=$(echo $CRED| jq -r '.Credentials.SecretAccessKey')
+export AWS_SESSION_TOKEN=$(echo $CRED| jq -r '.Credentials.SessionToken')
+aws sts get-caller-identity
+
+aws eks update-kubeconfig --region eu-west-1 --name dragonfly-demo-euw1-1 --no-cli-auto-prompt
+kubectl config view --minify
+kubectl create secret generic ast-source-kubeconfig --from-file=/.kube/config
+aws eks update-kubeconfig --region eu-west-1 --name dragonfly-tgt-euw1-1 --no-cli-auto-prompt --kubeconfig /tmp/config
+kubectl create secret generic ast-target-kubeconfigs --from-file=/tmp/config
+EOF
+}
+
+resource "kubernetes_job" "create-source-target-kubeconfigs-secret" {
+  metadata {
+    name = "dragonfly-cast-cluster-init"
+  }
+  spec {
+    template {
+      metadata {}
+      spec {
+        container {
+          name    = "deploy"
+          image   = "docker.io/bartam1/ast:aws7"
+          env {
+            name  = "AWS_ACCESS_KEY_ID"
+            value = aws_iam_access_key.dragonfly-cast-cluster-access_user_access_key.id
+          }
+          env {
+            name  = "AWS_SECRET_ACCESS_KEY"
+            value = aws_iam_access_key.dragonfly-cast-cluster-access_user_access_key.encrypted_secret
+          }
+          
+          command = ["bash", "-c", "--"]
+          args = [var.dragonfly-cast-cluster-init-args]
+
+        }
+        restart_policy = "Never"
+      }
+    }
+    backoff_limit = 4
+  }
+  wait_for_completion = true
+  timeouts {
+    create = "2m"
+    update = "2m"
+  }
+
+  //depends_on = [module.target_cluster]
 }

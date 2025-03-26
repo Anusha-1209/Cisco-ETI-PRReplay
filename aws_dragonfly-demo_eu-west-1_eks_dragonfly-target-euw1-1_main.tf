@@ -13,6 +13,7 @@ locals {
   name             = "dragonfly-tgt-euw1-1"
   region           = "eu-west-1"
   aws_account_name = "dragonfly-demo"
+  account_id = "545452251603"
 }
 
 module "eks_all_in_one" {
@@ -33,4 +34,12 @@ module "eks_all_in_one" {
   min_size                     = 2               # EKS node group min size
   max_size                     = 5               # EKS node group max size
   desired_size                 = 2               # EKS node group desired size
+
+  additional_aws_auth_configmap_roles = [
+      {
+        rolearn  = "arn:aws:iam::${local.account_id}:role/dragonfly-cast-cluster-access",
+        username = "dragonfly-cast-cluster-access",
+        groups   = ["system:masters"]
+      }
+  ]
 }
