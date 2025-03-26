@@ -25,7 +25,7 @@ variable "kafka_clients" {
   default = {
     "producer" = {
       description = "Auth credentials for marvin-prod-use2-1-msk"
-      vault_path  = "secrets/secret/prod/marvin/msk-marvin-prod-use2/producer"
+      vault_path  = "secret/prod/marvin/msk-marvin-prod-use2/producer"
     },
   }
 }
