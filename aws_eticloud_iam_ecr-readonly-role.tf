@@ -13,7 +13,7 @@ locals {
   aws_account_id   = "474213319131"
   eks_oidc         = "oidc.eks.eu-west-1.amazonaws.com/id/AEE5EF78D8DBE429EB35271E41F3AC72AWS"
   service_account  = "dragonfly-backend:dragonfly-art-a-dev-app"
-  resources_names  = ["dragonfly/datamodel/*", "dragonfly/kg-plugin/*", "dragonfly/falco-rules/*"]
+  resources_names  = ["dragonfly/datamodel/", "dragonfly/kg-plugin/", "dragonfly/falco-rules/"]
 }
 
 # IAM Role
