@@ -6,7 +6,7 @@ variable "role_name" {
 variable "policy_arn" {
   description = "ARN of the PowerUserAccess AWS managed policy to attach to the role"
   type        = string
-  default = "arn:aws:iam::aws:policy/PowerUserAccess"
+  default     = "arn:aws:iam::aws:policy/PowerUserAccess"
 }
 
 variable "iam_read_only_policy_arn" {
