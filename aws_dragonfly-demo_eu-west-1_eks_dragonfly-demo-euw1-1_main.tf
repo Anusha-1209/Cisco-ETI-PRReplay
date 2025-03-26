@@ -93,7 +93,7 @@ resource "aws_iam_role" "dragonfly-cast-cluster-access_role" {
         }
     ],
     Version: "2012-10-17"
-    })  
+    })
   }
 
 }
@@ -107,6 +107,8 @@ resource "aws_iam_access_key" "dragonfly-cast-cluster-access_user_access_key" {
 }
 
 resource "kubernetes_secret" "dragonfly-cast-cluster-access-aws-cred-secret" {
+  provider = kubernetes.eks
+
   metadata {
     name = local.aws_iam_cred_secret_name
     namespace = local.aws_iam_cred_secret_namespace
