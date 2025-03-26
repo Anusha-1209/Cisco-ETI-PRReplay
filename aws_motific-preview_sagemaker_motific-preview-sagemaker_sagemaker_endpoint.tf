@@ -3,14 +3,14 @@ resource "aws_sagemaker_model" "redaction-pii-preview-model" {
   execution_role_arn = aws_iam_role.motific-preview.arn
 
   primary_container {
-    mode            = "SingleModel"
-    image           = "763104351884.dkr.ecr.us-east-2.amazonaws.com/huggingface-pytorch-inference:1.10.2-transformers4.17.0-gpu-py38-cu113-ubuntu20.04"
-    model_data_url  = "s3://motific-preview-sagemaker/models/redaction/v2/roberta-large-ner-english/model.tar.gz"
-    environment     = {
-      "HF_MODEL_ID" = "Jean-Baptiste/roberta-large-ner-english"
-      "HF_TASK"     = "token-classification"
+    mode           = "SingleModel"
+    image          = "763104351884.dkr.ecr.us-east-2.amazonaws.com/huggingface-pytorch-inference:1.10.2-transformers4.17.0-gpu-py38-cu113-ubuntu20.04"
+    model_data_url = "s3://motific-preview-sagemaker/models/redaction/v2/roberta-large-ner-english/model.tar.gz"
+    environment = {
+      "HF_MODEL_ID"                   = "Jean-Baptiste/roberta-large-ner-english"
+      "HF_TASK"                       = "token-classification"
       "SAGEMAKER_CONTAINER_LOG_LEVEL" = "20"
-      "SAGEMAKER_REGION" = "us-east-2"
+      "SAGEMAKER_REGION"              = "us-east-2"
     }
   }
 }
