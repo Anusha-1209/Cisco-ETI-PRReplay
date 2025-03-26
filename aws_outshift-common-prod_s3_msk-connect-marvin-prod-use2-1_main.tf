@@ -9,7 +9,7 @@ provider "vault" {
 # Must match the account in which the VPC was created.
 data "vault_generic_secret" "aws_infra_credential" {
   provider = vault.eticloud
-  path     = "secret/infra/aws/apisec-prod/terraform_admin"
+  path     = "secret/infra/aws/outshift-common-prod/terraform_admin"
 }
 
 terraform {
