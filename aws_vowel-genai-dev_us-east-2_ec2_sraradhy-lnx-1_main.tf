@@ -5,10 +5,10 @@ terraform {
     # We separate the different levels of development into different buckets. 
     # The buckets are eticloud-tf-state-sandbox, eticloud-tf-state-nonprod, eticloud-tf-state-prod. 
     # The environment should match the CSBEnvironment below.
-    bucket = "eticloud-tf-state-nonprod"                                                           
+    bucket = "eticloud-tf-state-nonprod"
 
     # Note the path here. It should match the pattern terraform_state/<service>/<region>/<name>.tfstate
-    key    = "terraform-state/vowel-genai-dev/us-east-2/ec2/sraradhy-lnx-1.tfstate"
+    key = "terraform-state/vowel-genai-dev/us-east-2/ec2/sraradhy-lnx-1.tfstate"
 
     # Do not change without talking to the SRE team.
     region = "us-east-2"
