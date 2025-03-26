@@ -37,7 +37,7 @@ provider "aws" {
 }
 
 module "s3" {
-  source                = "git::https://wwwin-github.cisco.com/eti/sre-tf-module-aws-s3.git?ref=1.0.2"
+  source                = "git::https://github.com/cisco-eti/sre-tf-module-aws-s3.git?ref=1.0.2"
   bucket_name           = "emr-motf-preview-use2-1"
   CSBApplicationName    = "Motific EMR S3 Bucket"
   CSBCiscoMailAlias     = "eti-sre-admins@cisco.com"
