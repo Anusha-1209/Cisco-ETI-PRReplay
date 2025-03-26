@@ -34,7 +34,7 @@ resource "aws_iam_policy" "eks_irsa_ecr_ro_policy" {
   description = "EKS IRSA secret access ECR policy"
   policy = templatefile("${path.module}/policies/ecr_readonly_policy.tpl", {
     resources = join("\"626007623524.dkr.ecr.us-east-2.amazonaws.com/,\"", local.resources_names)
-    resources = join("\",\"", (formatlist("626007623524.dkr.ecr.us-east-2.amazonaws.com/%s\",\"", local.resources_names)))
+    resources = join("\",\"", (formatlist("626007623524.dkr.ecr.us-east-2.amazonaws.com/%s", local.resources_names)))
   })
 }
 
