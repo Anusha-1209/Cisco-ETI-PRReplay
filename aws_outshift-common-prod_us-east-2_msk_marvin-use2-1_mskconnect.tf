@@ -115,6 +115,13 @@ resource "aws_iam_role_policy_attachment" "aws_msk_connect_msk_cluster_attach" {
 }
 
 import {
+  to = aws_s3_bucket.marvin-msk-connectors-bucket
+  id = "marvin-prod-use2-1-msk-s3-connectors"
+}
+
+resource "aws_s3_bucket" "marvin-msk-connectors-bucket" {}
+
+import {
   to = aws_s3_object.msk-connector-s3-object
   id = "/marvin-prod-use2-1-msk-s3-connectors/confluentinc-kafka-connect-s3-10.5.7.zip"
 }
