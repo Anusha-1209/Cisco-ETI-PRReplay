@@ -9,15 +9,16 @@ terraform {
   }
 }
 
-locals {
-  source_cluster_name             = "dragonfly-demo-euw1-1"
-  target_cluster_name = "dragonfly-tgt-euw1-1"
-  region           = "eu-west-1"
-  aws_account_name = "dragonfly-demo"
-  aws_iam_cred_secret_name = "ast-aws-iam-credentials"
-  aws_iam_cred_secret_namespace = "argo"
-  account_id = "545452251603"
+data "aws_caller_identity" "current" {}
 
+locals {
+  source_cluster_name           = "dragonfly-demo-euw1-1"
+  target_cluster_name           = "dragonfly-tgt-euw1-1"
+  region                        = "eu-west-1"
+  aws_account_name              = "dragonfly-demo"
+  aws_iam_cred_secret_name      = "ast-aws-iam-credentials"
+  aws_iam_cred_secret_namespace = "argo"
+  account_id                    = data.aws_caller_identity.current.account_id
 }
 
 module "eks_all_in_one" {
