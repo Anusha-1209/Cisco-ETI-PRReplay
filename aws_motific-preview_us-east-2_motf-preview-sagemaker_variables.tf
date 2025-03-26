@@ -4,7 +4,7 @@
 variable "aws_account_name" {
   type        = string
   description = "The AWS account name"
-  default     = "motific-pentest"
+  default     = "motific-preview"
 }
 
 variable "region" {

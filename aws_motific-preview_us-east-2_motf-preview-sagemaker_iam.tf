@@ -1,10 +1,10 @@
-resource "aws_iam_role" "motific-pentest" {
+resource "aws_iam_role" "motific-preview" {
   name               = local.name
   path               = "/"
   assume_role_policy = data.aws_iam_policy_document.sagemaker_assume_role.json
 }
 
-resource "aws_iam_policy" "motific-pentest" {
+resource "aws_iam_policy" "motific-preview" {
   name        = local.name
   path        = "/"
   description = "Policy for ${local.name}"
@@ -39,8 +39,8 @@ resource "aws_iam_policy" "motific-pentest" {
   })
 }
 
-resource "aws_iam_policy_attachment" "motific-pentest" {
+resource "aws_iam_policy_attachment" "motific-preview" {
   name       = local.name
-  roles      = [aws_iam_role.motific-pentest.name]
-  policy_arn = aws_iam_policy.motific-pentest.arn
+  roles      = [aws_iam_role.motific-preview.name]
+  policy_arn = aws_iam_policy.motific-preview.arn
 }
