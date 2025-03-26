@@ -18,4 +18,13 @@ module "eks_all_in_one" {
   desired_size   = 3               # EKS node group desired size
   # Karpenter
   create_karpenter_irsa = true # Create Karpenter IRSA
+  create_alb_role = true
+  create_otel_irsa = true
+  additional_aws_auth_configmap_roles = [
+      {
+        rolearn  = "arn:aws:iam::058264538874:role/devops",
+        username = "devops",
+        groups   = ["system:masters"]
+      }
+  ]
 }
