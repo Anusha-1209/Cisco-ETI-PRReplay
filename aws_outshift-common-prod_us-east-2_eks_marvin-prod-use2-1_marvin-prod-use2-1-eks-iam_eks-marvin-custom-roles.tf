@@ -100,6 +100,16 @@ resource "aws_iam_policy" "aws_s3-msk-connect-marvin-staging-1_policy" {
           "s3:Describe*"
         ],
         "Resource": "arn:aws:s3:::msk-sink-connect-marvin-prod-use2-1*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "s3:Get*",
+          "s3:Put*",
+          "s3:List*",
+          "s3:Describe*"
+        ],
+        "Resource": "arn:aws:s3:::athena-results-marvin-prod-use2-1*"
       }
     ]
   })
