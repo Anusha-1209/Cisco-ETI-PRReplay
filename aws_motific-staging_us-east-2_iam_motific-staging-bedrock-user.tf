@@ -8,7 +8,7 @@ resource "aws_iam_user" "motific-staging-bedrock-user" {
 }
 
 resource "aws_iam_access_key" "motific-staging-bedrock-user-key" {
-  user    = aws_iam_user.motific-staging-bedrock-user-user.name
+  user    = aws_iam_user.motific-staging-bedrock-user.name
   pgp_key = ""
 }
 
