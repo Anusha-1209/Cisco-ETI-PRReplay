@@ -72,18 +72,26 @@ resource "aws_iam_policy" "aws_motf_unified_plugins_policy" {
 
 resource "aws_iam_role" "aws_motf_unified_plugins_role" {
   name = "motf-preview-unified-plugins-role"
+
   assume_role_policy = jsonencode({
-    Version = "2012-10-17",
+    Version = "2012-10-17"
     Statement = [
       {
-        Effect = "Allow",
+        Effect = "Allow"
         Principal = {
-          Service = "sagemaker.amazonaws.com"
-        },
-        Action = "sts:AssumeRole"
+          Federated = "arn:aws:iam::851725238184:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/50C45BFA06C99983803E5393083A11C3"
+        }
+        Action = "sts:AssumeRoleWithWebIdentity"
+        Condition = {
+          StringEquals = {
+            "oidc.eks.us-east-2.amazonaws.com/id/50C45BFA06C99983803E5393083A11C3:aud" = "sts.amazonaws.com"
+            "oidc.eks.us-east-2.amazonaws.com/id/50C45BFA06C99983803E5393083A11C3:sub" = "system:serviceaccount:vowel-system:default"
+          }
+        }
       }
     ]
   })
+
   force_detach_policies = true
 }
 
