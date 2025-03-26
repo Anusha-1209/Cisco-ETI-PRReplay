@@ -37,6 +37,7 @@ module "eks_all_in_one" {
   # EKS Managed Private Node Group
   ami_id                     = "ami-056e32f51503d3604" # EKS AMI ID, required in case non hardened images
   ami_type                   = "AMAZON_LINUX_2"  # EKS AMI type, required in case non hardened images
+  skip_cisco_hardened_ami    = true              # Skip Cisco hardened AMI
   instance_types               = ["m5a.2xlarge"] # EKS instance types, prod US uses m5a.2xlarge
   min_size                     = 2               # EKS node group min size
   max_size                     = 5               # EKS node group max size
