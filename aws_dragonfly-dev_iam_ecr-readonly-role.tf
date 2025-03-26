@@ -24,7 +24,7 @@ resource "aws_iam_role" "eks_irsa_ecr_ro" {
   assume_role_policy = templatefile("${path.module}/policies/assume_role_irsa.tpl", {
     aws_account_id   = local.aws_account_id
     eks_oidc         = local.eks_oidc
-    service_accounts = local.service_account
+    service_account  = local.service_account
   })
 }
 
@@ -34,7 +34,7 @@ resource "aws_iam_policy" "eks_irsa_ecr_ro_policy" {
   name        = "${local.eks_cluster_name}-eks-irsa-ecr-ro-policy"
   description = "EKS IRSA secret access ECR policy"
   policy = templatefile("${path.module}/policies/ecr_readonly_policy.tpl", {
-    resources = local.resources_names
+    resources = join("\",\"", local.resources_names)
   })
 }
 
