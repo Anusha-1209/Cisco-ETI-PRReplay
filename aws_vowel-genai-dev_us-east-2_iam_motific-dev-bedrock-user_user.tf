@@ -30,8 +30,8 @@ resource "aws_iam_access_key" "motific-dev-bedrock-user-key" {
 }
 
 resource "aws_iam_user_policy" "motific-dev-bedrock-user-policy" {
-  name      = "motific-dev-bedrock-user"
-  user      = aws_iam_user.motific-dev-bedrock-user-user.name
+  name = "motific-dev-bedrock-user"
+  user = aws_iam_user.motific-dev-bedrock-user-user.name
 
   policy = <<EOF
 {
