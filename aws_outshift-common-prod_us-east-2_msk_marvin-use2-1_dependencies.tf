@@ -30,7 +30,7 @@ data "aws_iam_policy_document" "msk_secret_policy" {
 data "aws_vpc" "eks_vpc" {
   filter {
     name   = "tag:Name"
-    values = ["apisec-prod-1-vpc"]
+    values = ["marvin-prod-use2-1"]
   }
 }
 
