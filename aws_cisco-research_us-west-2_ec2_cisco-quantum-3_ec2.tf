@@ -15,7 +15,7 @@ locals {
 # Find instance types and cost here - https://instances.vantage.sh/?min_vcpus=4&region=us-east-2
 
 module "ec2" {
-  source             = "git::https://github.com/cisco-eti/sre-tf-module-ec2-allinone.git?ref=latest"
+  source             = "git::https://github.com/cisco-eti/sre-tf-module-ec2-allinone.git?ref=2.0.3"
   name               = local.name             # VPC name
   region             = local.region           # AWS provider region
   aws_account_name   = local.aws_account_name # AWS account name
