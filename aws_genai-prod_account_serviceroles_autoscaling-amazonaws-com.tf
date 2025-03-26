@@ -1,11 +1,11 @@
 terraform {
   backend "s3" {
     # This is the name of the backend S3 bucket.
-    bucket  = "eticloud-tf-state-prod"
+    bucket = "eticloud-tf-state-prod"
     # This is the path to the Terraform state file in the backend S3 bucket.
-    key     = "terraform-state/aws/genai-prod/servicerole/autoscaling-amazonaws-com.tfstate"
+    key = "terraform-state/aws/genai-prod/servicerole/autoscaling-amazonaws-com.tfstate"
     # This is the region where the backend S3 bucket is located.
-    region  = "us-east-2"
+    region = "us-east-2"
   }
 }
 
@@ -16,8 +16,8 @@ provider "vault" {
 }
 
 data "vault_generic_secret" "aws_infra_credential" {
-  provider    = vault.eticloud
-  path        = "secret/infra/aws/${local.aws_account_name}/terraform_admin"
+  provider = vault.eticloud
+  path     = "secret/infra/aws/${local.aws_account_name}/terraform_admin"
 }
 
 provider "aws" {
@@ -27,8 +27,8 @@ provider "aws" {
 }
 
 locals {
-  region            = "us-east-2"
-  aws_account_name  = "genai-prod"
+  region           = "us-east-2"
+  aws_account_name = "genai-prod"
 }
 
 resource "aws_iam_service_linked_role" "AWSServiceRoleForAutoScaling" {
