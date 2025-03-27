@@ -20,8 +20,8 @@ module "eks_all_in_one" {
   create_karpenter_irsa = true # Create Karpenter IRSA
   additional_aws_auth_configmap_roles = [
       {
-        rolearn  = "arn:aws:iam::244624147909:role/pi-oncall-user",
-        username = "pi-oncall-user",
+        rolearn  = "arn:aws:iam::244624147909:role/pi-prod-oncall",
+        username = "pi-prod-oncall",
         groups   = ["system:masters"]
       }
   ]
