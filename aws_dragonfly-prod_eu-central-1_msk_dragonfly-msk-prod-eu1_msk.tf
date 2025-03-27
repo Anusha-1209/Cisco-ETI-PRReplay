@@ -102,6 +102,7 @@ resource "vault_generic_secret" "msk_brokers_sasl_scram" {
 
   data_json = jsonencode({
     brokers = aws_msk_cluster.dragonfly_msk_eu1.bootstrap_brokers_sasl_scram
+    brokers-iam = aws_msk_cluster.dragonfly_msk_eu1.bootstrap_brokers_iam
   })
 
   provider = vault.dragonfly
