@@ -28,25 +28,6 @@ resource "aws_iam_policy" "aws_s3_read_write_fail_over_requests_policy" {
   })
 }
 
-resource "aws_iam_policy" "aws_s3_msk_connect_marvin_policy" {
-  name        = "S3MskConnectMarvinPolicy-${local.cluster_name}"
-  description = "${local.cluster_name} AWS MSK Connect Role IAM Policy"
-  policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Effect": "Allow",
-        "Action": [
-          "s3:Get*",
-          "s3:Put*",
-          "s3:List*",
-          "s3:Describe*"
-        ],
-        "Resource": "arn:aws:s3:::msk-sink-connect-marvin-prod-use2-1*"
-      }
-    ]
-  })
-}
 
 resource "aws_iam_policy" "aws_s3_kms_read_policy" {
   name        = "S3MKSReadPolicy-${local.cluster_name}"
@@ -99,7 +80,7 @@ resource "aws_iam_policy" "aws_s3-msk-connect-marvin-staging-1_policy" {
           "s3:List*",
           "s3:Describe*"
         ],
-        "Resource": "arn:aws:s3:::msk-sink-connect-marvin-prod-use2-1*"
+        "Resource": "arn:aws:s3:::msk-connect-marvin-prod-use2-1*"
       },
       {
         "Effect": "Allow",
