@@ -11,7 +11,7 @@ data "vault_generic_secret" "aws_infra_credential" {
 provider "aws" {
   access_key  = data.vault_generic_secret.aws_infra_credential.data["AWS_ACCESS_KEY_ID"]
   secret_key  = data.vault_generic_secret.aws_infra_credential.data["AWS_SECRET_ACCESS_KEY"]
-  region      = "us-central-1" # Must match the region where the EKS cluster and VPC are created.
+  region      = "eu-central-1" # Must match the region where the EKS cluster and VPC are created.
   max_retries = 3
   default_tags {
     # These tags are required for security compliance.
