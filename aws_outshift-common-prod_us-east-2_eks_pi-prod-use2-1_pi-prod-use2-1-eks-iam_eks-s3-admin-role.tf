@@ -20,10 +20,11 @@ resource "aws_iam_policy" "aws_pi_prod_triton_s3_policy" {
       {
         Sid    = "FullS3Access",
         Effect = "Allow",
-        Action = [
-          "s3:prompt-intel-triton-production"
-        ],
-        Resource = "*"
+        Action = "s3:*",
+        Resource = [
+          "arn:aws:s3:::prompt-intel-triton-production",
+          "arn:aws:s3:::prompt-intel-triton-production/*"
+        ]
       }
     ]
   })
