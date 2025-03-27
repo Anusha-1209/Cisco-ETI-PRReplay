@@ -3,8 +3,8 @@ locals {
   aws_region       = "eu-central-1"
 
   arango_connector_plugin_name      = "kafka-connect-arangodb-euc1"
-  arango_connector_plugin_bucket    = "dragonfly-prod-binaries-repository"
-  arangodb_connector_logs_bucket    = "dragonfly-prod-kafka-connector-log-files"
+  arango_connector_plugin_bucket    = "dragonfly-prod-euc1-binaries-repository"
+  arangodb_connector_logs_bucket    = "dragonfly-prod-euc1-kafka-connector-log-files"
   arangodb_connector_plugin_version = "1.2.0"
   arangodb_connector_plugin_jar     = "kafka-connect-arangodb-${local.arangodb_connector_plugin_version}.jar"
 }

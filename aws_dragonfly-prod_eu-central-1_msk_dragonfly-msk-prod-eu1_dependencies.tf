@@ -59,12 +59,10 @@ data "aws_subnets" "msk_subnets" {
 
 data "aws_s3_bucket" "mskconnect_custom_plugin_bucket" {
   bucket = local.arango_connector_plugin_bucket
-  provider = aws.us-east-2
 }
 
 data "aws_s3_bucket" "mskconnect_logs_bucket" {
   bucket = local.arangodb_connector_logs_bucket
-  provider = aws.us-east-2
 }
 
 data "aws_s3_object" "arangodb_connector_plugin_jar" {
