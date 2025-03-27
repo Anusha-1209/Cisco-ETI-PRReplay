@@ -38,7 +38,7 @@ data "aws_iam_policy_document" "connector_role_policy_document" {
     ]
 
     resources = [
-      aws_msk_cluster.dragonfly_msk_1.arn
+      aws_msk_cluster.dragonfly_msk_eu1.arn
     ]
   }
 
@@ -51,7 +51,7 @@ data "aws_iam_policy_document" "connector_role_policy_document" {
     ]
 
     resources = [
-      "arn:aws:kafka:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:topic/${aws_msk_cluster.dragonfly_msk_1.cluster_name}/${aws_msk_cluster.dragonfly_msk_1.cluster_uuid}/*",
+      "arn:aws:kafka:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:topic/${aws_msk_cluster.dragonfly_msk_eu1.cluster_name}/${aws_msk_cluster.dragonfly_msk_eu1.cluster_uuid}/*",
     ]
   }
 
@@ -64,7 +64,7 @@ data "aws_iam_policy_document" "connector_role_policy_document" {
     ]
 
     resources = [
-      "arn:aws:kafka:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:topic/${aws_msk_cluster.dragonfly_msk_1.cluster_name}/${aws_msk_cluster.dragonfly_msk_1.cluster_uuid}/__amazon_msk_connect_*",
+      "arn:aws:kafka:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:topic/${aws_msk_cluster.dragonfly_msk_eu1.cluster_name}/${aws_msk_cluster.dragonfly_msk_eu1.cluster_uuid}/__amazon_msk_connect_*",
     ]
   }
 
@@ -77,8 +77,8 @@ data "aws_iam_policy_document" "connector_role_policy_document" {
     ]
 
     resources = [
-      "arn:aws:kafka:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:group/${aws_msk_cluster.dragonfly_msk_1.cluster_name}/${aws_msk_cluster.dragonfly_msk_1.cluster_uuid}/__amazon_msk_connect_*",
-      "arn:aws:kafka:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:group/${aws_msk_cluster.dragonfly_msk_1.cluster_name}/${aws_msk_cluster.dragonfly_msk_1.cluster_uuid}/connect-*",
+      "arn:aws:kafka:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:group/${aws_msk_cluster.dragonfly_msk_eu1.cluster_name}/${aws_msk_cluster.dragonfly_msk_eu1.cluster_uuid}/__amazon_msk_connect_*",
+      "arn:aws:kafka:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:group/${aws_msk_cluster.dragonfly_msk_eu1.cluster_name}/${aws_msk_cluster.dragonfly_msk_eu1.cluster_uuid}/connect-*",
     ]
   }
 
