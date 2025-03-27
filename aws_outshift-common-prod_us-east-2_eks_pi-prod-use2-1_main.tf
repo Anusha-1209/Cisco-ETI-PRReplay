@@ -18,4 +18,11 @@ module "eks_all_in_one" {
   desired_size   = 3               # EKS node group desired size
   # Karpenter
   create_karpenter_irsa = true # Create Karpenter IRSA
+  additional_aws_auth_configmap_roles = [
+      {
+        rolearn  = "arn:aws:iam::244624147909:role/pi-oncall-user",
+        username = "pi-oncall-user",
+        groups   = ["system:masters"]
+      }
+  ]
 }
