@@ -1,6 +1,6 @@
-module "a3po_role" {
+module "a3po_admin_role" {
   source    = "git::https://github.com/cisco-eti/platform-terraform-infra.git//modules/sso-roles"
-  role_name = "a3po"
+  role_name = "a3po-admin"
   tags = {
     ApplicationName = "outshift_ventures"
     Component       = "a3po"
@@ -9,9 +9,9 @@ module "a3po_role" {
   }
 }
 
-module "action_engine_role" {
+module "action_engine_admin_role" {
   source    = "git::https://github.com/cisco-eti/platform-terraform-infra.git//modules/sso-roles"
-  role_name = "action-engine"
+  role_name = "action-engine-admin"
   tags = {
     ApplicationName = "outshift_ventures"
     Component       = "action-engine"
@@ -20,9 +20,9 @@ module "action_engine_role" {
   }
 }
 
-module "aether_role" {
+module "aether_admin_role" {
   source    = "git::https://github.com/cisco-eti/platform-terraform-infra.git//modules/sso-roles"
-  role_name = "aether"
+  role_name = "aether-admin"
   tags = {
     ApplicationName = "outshift_ventures"
     Component       = "aether"
@@ -31,9 +31,9 @@ module "aether_role" {
   }
 }
 
-module "alfred_role" {
+module "alfred_admin_role" {
   source    = "git::https://github.com/cisco-eti/platform-terraform-infra.git//modules/sso-roles"
-  role_name = "alfred"
+  role_name = "alfred-admin"
   tags = {
     ApplicationName = "outshift_ventures"
     Component       = "alfred"
@@ -42,9 +42,9 @@ module "alfred_role" {
   }
 }
 
-module "aqua_role" {
+module "aqua_admin_role" {
   source    = "git::https://github.com/cisco-eti/platform-terraform-infra.git//modules/sso-roles"
-  role_name = "aqua"
+  role_name = "aqua-admin"
   tags = {
     ApplicationName = "outshift_ventures"
     Component       = "aqua"
@@ -53,9 +53,9 @@ module "aqua_role" {
   }
 }
 
-module "argus_role" {
+module "argus_admin_role" {
   source    = "git::https://github.com/cisco-eti/platform-terraform-infra.git//modules/sso-roles"
-  role_name = "argus"
+  role_name = "argus-admin"
   tags = {
     ApplicationName = "outshift_ventures"
     Component       = "argus"
@@ -64,9 +64,9 @@ module "argus_role" {
   }
 }
 
-module "cascade_role" {
+module "cascade_admin_role" {
   source    = "git::https://github.com/cisco-eti/platform-terraform-infra.git//modules/sso-roles"
-  role_name = "cascade"
+  role_name = "cascade-admin"
   tags = {
     ApplicationName = "outshift_ventures"
     Component       = "cascade"
@@ -75,9 +75,9 @@ module "cascade_role" {
   }
 }
 
-module "chef_role" {
+module "chef_admin_role" {
   source    = "git::https://github.com/cisco-eti/platform-terraform-infra.git//modules/sso-roles"
-  role_name = "chef"
+  role_name = "chef-admin"
   tags = {
     ApplicationName = "outshift_ventures"
     Component       = "chef"
@@ -86,9 +86,20 @@ module "chef_role" {
   }
 }
 
-module "ioa_identity_role" {
+module "chef_devops_role" {
   source    = "git::https://github.com/cisco-eti/platform-terraform-infra.git//modules/sso-roles"
-  role_name = "ioa-identity"
+  role_name = "chef-devops"
+  tags = {
+    ApplicationName = "outshift_ventures"
+    Component       = "chef"
+    CiscoMailAlias  = "outshift-chef-team@cisco.com"
+    ResourceOwner   = "outshift-chef-team"
+  }
+}
+
+module "ioa_identity_admin_role" {
+  source    = "git::https://github.com/cisco-eti/platform-terraform-infra.git//modules/sso-roles"
+  role_name = "ioa-identity-admin"
   tags = {
     ApplicationName = "outshift_ventures"
     Component       = "ioa_identity"
@@ -97,9 +108,9 @@ module "ioa_identity_role" {
   }
 }
 
-module "iridium_role" {
+module "iridium_admin_role" {
   source    = "git::https://github.com/cisco-eti/platform-terraform-infra.git//modules/sso-roles"
-  role_name = "iridium"
+  role_name = "iridium-admin"
   tags = {
     ApplicationName = "outshift_ventures"
     Component       = "iridium"
@@ -108,9 +119,9 @@ module "iridium_role" {
   }
 }
 
-module "marvin_role" {
+module "marvin_admin_role" {
   source    = "git::https://github.com/cisco-eti/platform-terraform-infra.git//modules/sso-roles"
-  role_name = "marvin"
+  role_name = "marvin-admin"
   tags = {
     ApplicationName = "outshift_foundational_services"
     Component       = "marvin"
@@ -119,9 +130,9 @@ module "marvin_role" {
   }
 }
 
-module "ostinato_role" {
+module "ostinato_admin_role" {
   source    = "git::https://github.com/cisco-eti/platform-terraform-infra.git//modules/sso-roles"
-  role_name = "ostinato"
+  role_name = "ostinato-admin"
   tags = {
     ApplicationName = "outshift_foundational_services"
     Component       = "ostinato"
@@ -131,9 +142,9 @@ module "ostinato_role" {
   }
 }
 
-module "eti_website_role" {
+module "eti_website_admin_role" {
   source    = "git::https://github.com/cisco-eti/platform-terraform-infra.git//modules/sso-roles"
-  role_name = "eti-website"
+  role_name = "eti-website-admin"
   tags = {
     ApplicationName = "outshift_marketing"
     Component       = "outshift_websites"
@@ -142,9 +153,9 @@ module "eti_website_role" {
   }
 }
 
-module "poirot_role" {
+module "poirot_admin_role" {
   source    = "git::https://github.com/cisco-eti/platform-terraform-infra.git//modules/sso-roles"
-  role_name = "poirot"
+  role_name = "poirot-admin"
   tags = {
     ApplicationName = "outshift_ventures"
     Component       = "poirot"
@@ -153,9 +164,9 @@ module "poirot_role" {
   }
 }
 
-module "phoenix_role" {
+module "phoenix_admin_role" {
   source    = "git::https://github.com/cisco-eti/platform-terraform-infra.git//modules/sso-roles"
-  role_name = "phoenix"
+  role_name = "phoenix-admin"
   tags = {
     ApplicationName = "outshift_ventures"
     Component       = "phoenix"
@@ -164,9 +175,9 @@ module "phoenix_role" {
   }
 }
 
-module "ragv2_role" {
+module "ragv2_admin_role" {
   source    = "git::https://github.com/cisco-eti/platform-terraform-infra.git//modules/sso-roles"
-  role_name = "ragv2"
+  role_name = "ragv2-admin"
   tags = {
     ApplicationName = "outshift_ventures"
     Component       = "ragv2"
