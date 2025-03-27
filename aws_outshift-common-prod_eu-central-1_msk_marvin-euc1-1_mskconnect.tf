@@ -23,7 +23,7 @@ resource "aws_iam_policy" "aws_msk_connect_msk_cluster_policy" {
           "kafka-cluster:DescribeTopic"
         ],
         "Resource" : [
-          "arn:aws:kafka:us-central-1:${data.aws_caller_identity.current.id}:topic/${aws_msk_cluster.marvin-prod-euc1-1-msk.cluster_name}/*"
+          "arn:aws:kafka:eu-central-1:${data.aws_caller_identity.current.id}:topic/${aws_msk_cluster.marvin-prod-euc1-1-msk.cluster_name}/*"
         ]
       },
       {
@@ -33,7 +33,7 @@ resource "aws_iam_policy" "aws_msk_connect_msk_cluster_policy" {
           "kafka-cluster:DescribeTopic"
         ],
         "Resource" : [
-          "arn:aws:kafka:us-central-1:${data.aws_caller_identity.current.id}:topic/${aws_msk_cluster.marvin-prod-euc1-1-msk.cluster_name}/*"
+          "arn:aws:kafka:eu-central-1:${data.aws_caller_identity.current.id}:topic/${aws_msk_cluster.marvin-prod-euc1-1-msk.cluster_name}/*"
         ]
       },
       {
@@ -45,7 +45,7 @@ resource "aws_iam_policy" "aws_msk_connect_msk_cluster_policy" {
           "kafka-cluster:DescribeTopic"
         ],
         "Resource" : [
-          "arn:aws:kafka:us-central-1:${data.aws_caller_identity.current.id}:topic/${aws_msk_cluster.marvin-prod-euc1-1-msk.cluster_name}/*"
+          "arn:aws:kafka:eu-central-1:${data.aws_caller_identity.current.id}:topic/${aws_msk_cluster.marvin-prod-euc1-1-msk.cluster_name}/*"
         ]
       },
       {
@@ -55,8 +55,8 @@ resource "aws_iam_policy" "aws_msk_connect_msk_cluster_policy" {
           "kafka-cluster:DescribeGroup"
         ],
         "Resource" : [
-          "arn:aws:kafka:us-central-1:${data.aws_caller_identity.current.id}:group/${aws_msk_cluster.marvin-prod-euc1-1-msk.cluster_name}/*/__amazon_msk_connect_*",
-          "arn:aws:kafka:us-central-1:${data.aws_caller_identity.current.id}:group/${aws_msk_cluster.marvin-prod-euc1-1-msk.cluster_name}/*/connect-*"
+          "arn:aws:kafka:eu-central-1:${data.aws_caller_identity.current.id}:group/${aws_msk_cluster.marvin-prod-euc1-1-msk.cluster_name}/*/__amazon_msk_connect_*",
+          "arn:aws:kafka:eu-central-1:${data.aws_caller_identity.current.id}:group/${aws_msk_cluster.marvin-prod-euc1-1-msk.cluster_name}/*/connect-*"
         ]
       }
     ]
@@ -96,7 +96,7 @@ resource "aws_iam_role" "aws_msk_connect_role" {
             "aws:SourceAccount" : data.aws_caller_identity.current.id
           },
           "ArnLike" : {
-            "aws:SourceArn" : "arn:aws:kafkaconnect:us-central-1:${data.aws_caller_identity.current.id}:connector/*"
+            "aws:SourceArn" : "arn:aws:kafkaconnect:eu-central-1:${data.aws_caller_identity.current.id}:connector/*"
           }
         }
       }
@@ -188,7 +188,7 @@ resource "aws_mskconnect_connector" "marvin-prod-euc1-1-msk-connect" {
 
   connector_configuration = {
     "connector.class"="io.confluent.connect.s3.S3SinkConnector"
-    "s3.region"="us-central-1"
+    "s3.region"="eu-central-1"
     "partition.duration.ms"="60000"
     "flush.size"="1000"
     "schema.compatibility"="NONE"
