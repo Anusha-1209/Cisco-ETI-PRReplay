@@ -38,7 +38,7 @@ provider "aws" {
 
 module "s3" {
   source      = "git::https://github.com/cisco-eti/sre-tf-module-aws-s3.git?ref=1.0.2"
-  bucket_name = "motific-preview-raw-documents" # The name of the S3 bucket.  S3 bucket names are required to be globally unique across all of AWS.
+  bucket_name = "prompt-intel-triton-production" # The name of the S3 bucket.  S3 bucket names are required to be globally unique across all of AWS.
   #Continuous Security Buddy Tags.
   #For more information, see the CSB tagging Sharepoint page here:
   #https://cisco.sharepoint.com/Sites/CSB/SitePages/Security%20Tagging%20and%20Audit%20in%20AWS.aspx
