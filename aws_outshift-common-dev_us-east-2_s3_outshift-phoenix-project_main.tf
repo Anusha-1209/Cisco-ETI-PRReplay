@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
-    bucket = "eticloud-tf-state-nonprod"                                                       # We separate the different levels of development into different buckets. The buckets are eticloud-tf-state-sandbox, eticloud-tf-state-nonprod, eticloud-tf-state-prod. The environment should match the CSBEnvironment below.
-    key    = "terraform-state/outshift-common-dev/us-east-2/s3/phoenix-ui.tfstate" # #note the path here. It should match the pattern terraform_state/<service>/<region>/<name>.tfstate
-    region = "us-east-2"                                                                       # Do not change without talking to the SRE team.
+    bucket = "eticloud-tf-state-nonprod"                                                       
+    key    = "terraform-state/outshift-common-dev/us-east-2/s3/phoenix-ui.tfstate" 
+    region = "us-east-2"                                                                       
   }
 }
 provider "vault" {
