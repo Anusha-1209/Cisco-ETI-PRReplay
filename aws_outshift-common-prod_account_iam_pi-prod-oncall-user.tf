@@ -1,26 +1,34 @@
+data "aws_iam_policy_document" "pi-prod-oncall-policy-document" {
+  statement {
+    sid    = "1"
+    effect = "Allow"
+    actions = [
+      "eks:ListClusters"
+    ]
+    resources = [
+      "arn:aws:eks:us-east-2:${local.account_id}:cluster/*"
+    ]
+  }
+
+  statement {
+    sid    = "2"
+    effect = "Allow"
+    actions = [
+      "eks:DescribeCluster",
+      "eks:ListNodegroups",
+      "iam:ListRoles",
+      "eks:DescribeAddonVersions",
+      "eks:ListIdentityProviderConfigs"
+    ]
+    resources = [
+      "arn:aws:eks:us-east-2:${local.account_id}:cluster/pi-prod-use2-1"
+    ]
+  }
+}
 resource "aws_iam_policy" "pi-prod-oncall-policy" {
   name        = "pi-prod-oncall-policy"
   description = "Prompt Intel OnCall IAM Policy"
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Sid    = "VisualEditor1",
-        Effect = "Allow",
-        Action = [
-          "eks:DescribeCluster",
-          "eks:ListClusters",
-          "eks:ListNodegroups",
-          "iam:ListRoles",
-          "eks:DescribeAddonVersions",
-          "eks:ListIdentityProviderConfigs"
-        ],
-        Resource = [
-          "arn:aws:eks:us-east-2:${local.account_id}:cluster/pi-prod-use2-1"
-        ]
-      }
-    ]
-  })
+  policy = data.aws_iam_policy_document.pi-prod-oncall-policy-document.json
 }
 
 
