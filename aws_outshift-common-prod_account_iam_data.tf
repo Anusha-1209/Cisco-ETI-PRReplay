@@ -1,3 +1,4 @@
+data "aws_caller_identity" "current" {}
 
 # IAM Policies
 data "aws_iam_policy_document" "assume_role_with_saml" {

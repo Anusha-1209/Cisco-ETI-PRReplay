@@ -16,7 +16,7 @@ resource "aws_iam_policy" "pi-prod-oncall-policy" {
           "eks:ListIdentityProviderConfigs"
         ],
         Resource = [
-          "arn:aws:eks:us-east-2:058264538874:cluster/pi-prod-use2-1"
+          "arn:aws:eks:us-east-2:${local.account_id}:cluster/pi-prod-use2-1"
         ]
       }
     ]
