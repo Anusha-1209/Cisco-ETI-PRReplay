@@ -44,7 +44,7 @@ module "rds" {
   database_name     = "postgressql"
   db_instance_type  = "db.r5.xlarge"
   cluster_name      = local.rds_name
-  secret_path       = "secret/eticcprod/infra/aurora-pg/eu-central-1/cnapp-prod/policy-prod-euc1-1"
+  secret_path       = "secret/eticcprod/infra/aurora-pg/eu-central-1/cnapp-prod/policy-prod-rds-euc1-1"
   db_engine_version = "15"
   db_allowed_cidrs  = [
     data.aws_vpc.eks_vpc.cidr_block,
