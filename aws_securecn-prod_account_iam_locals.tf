@@ -1,4 +1,4 @@
 locals {
   account_id = data.aws_caller_identity.current.account_id
-  account_name = "securecn-prod"
+  account_name = "cwpp-prod"
 }
