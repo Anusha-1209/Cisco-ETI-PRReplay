@@ -32,7 +32,7 @@ resource "aws_iam_policy" "pi-dev-policy" {
 
 # IAM Roles
 resource "aws_iam_role" "pi-dev" {
-  name                 = "pi-dev"
+  name                 = "AWS-${local.account_id}-pi-dev"
   description          = "Prompt Intel Dev SSO IAM role access"
   path                 = "/"
   max_session_duration = "3600"
