@@ -18,8 +18,8 @@ locals {
     }
   }
 }
-# IAM policy that allows to list a specific bucket and write objects to it
 
+# IAM policy that allows to list a specific bucket and write objects to it
 resource "aws_iam_policy" "plg_write_to_s3" {
   name        = "WriteToPLGAnalyticsS3Bucket"
   description = "IAM policy that allows to write to a specific S3 bucket"
