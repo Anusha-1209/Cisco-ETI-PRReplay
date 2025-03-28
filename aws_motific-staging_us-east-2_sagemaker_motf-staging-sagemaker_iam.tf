@@ -47,7 +47,7 @@ resource "aws_iam_policy" "s3-cross-account-access" {
     Version = "2012-10-17"
     Statement = [
       {
-          "Sid": "VisualEditor0",
+          "Sid": "0",
           "Effect": "Allow",
           "Action": [
               "s3:*"
@@ -55,7 +55,7 @@ resource "aws_iam_policy" "s3-cross-account-access" {
           "Resource": "arn:aws:s3:::vowel-dev-sagemaker/*"
       },
       {
-          "Sid": "VisualEditor0",
+          "Sid": "1",
           "Effect": "Allow",
           "Action": [
               "s3:ListBucket"
