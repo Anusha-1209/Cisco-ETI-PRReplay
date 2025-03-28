@@ -1,7 +1,7 @@
 data "aws_caller_identity" "current" {}
 
 locals {
-  aws_account_id                = data.aws_caller_identity.current.account_id
+  aws_account_id                = "730335524490"
   # cnapp prod clusters
   cnapp_prod_clusters_oidc_ids = [
     "28A49D0DC19E0AE06F2E38C0AD473F7D", "EFF9B51923E64F3067C820180603F855"
