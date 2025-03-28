@@ -9,8 +9,8 @@ terraform {
 locals {
   region           = "us-east-2"
   aws_account_name = "eticloud"
-  data_vpc         = "eks-prod-1-data"
-  eks_vpc          = "ekd-prod-1"
+  data_vpc         = "eks-common-prod-1-data"
+  eks_vpc          = "eks-common-prod-1"
   rds_name         = "rds-common-prod-1"
 }
 
