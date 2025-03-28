@@ -4,7 +4,7 @@ provider "vault" {
 }
 
 data "vault_generic_secret" "aws_infra_credential" {
-  path = "secret/infra/aws/eticloud-plg-prod/terraform_admin"
+  path = "secret/infra/aws/${local.aws_account_id}/terraform_admin"
 }
 
 provider "aws" {
