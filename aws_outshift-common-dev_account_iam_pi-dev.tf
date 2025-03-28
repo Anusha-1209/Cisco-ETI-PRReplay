@@ -47,4 +47,3 @@ resource "aws_iam_role_policy_attachment" "pi-dev-policy-attachment" {
     role = aws_iam_role.pi-dev.name
     policy_arn = aws_iam_policy.pi-dev-policy.arn
 }
-
