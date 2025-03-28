@@ -11,8 +11,8 @@ module "eks_all_in_one" {
 
   # EKS Managed Private Node Group
   instance_types          = ["t3.xlarge"]
-  ami_type                = "AMAZON_LINUX_2"
-  skip_cisco_hardened_ami = "true"
+  ami_type                = "CISCO_HARDENED_AL2"
+  skip_cisco_hardened_ami = "false"
   min_size                = "1"
   max_size                = "6"
   desired_size            = "1"
