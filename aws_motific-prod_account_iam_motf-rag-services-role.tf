@@ -97,6 +97,19 @@ resource "aws_iam_role" "aws_motf_rag_services_role" {
             "oidc.eks.us-east-2.amazonaws.com/id/3922A509AC14F3F9AD1CF060A8B873DA:sub" : "system:serviceaccount:vowel-system:rag-ingestion-manager-sa"
           }
         }
+      },
+      {
+        Effect = "Allow",
+        Principal = {
+          Federated = "arn:aws:iam::975049932165:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/3922A509AC14F3F9AD1CF060A8B873DA"
+        },
+        Action = "sts:AssumeRoleWithWebIdentity",
+        Condition = {
+          StringEquals = {
+            "oidc.eks.us-east-2.amazonaws.com/id/3922A509AC14F3F9AD1CF060A8B873DA:sub": "system:serviceaccount:vowel-system:rag-doc-processor-sa",
+            "oidc.eks.us-east-2.amazonaws.com/id/3922A509AC14F3F9AD1CF060A8B873DA:aud": "sts.amazonaws.com"
+            }
+        }
       }
     ]
   })
