@@ -31,7 +31,7 @@ resource "awscc_osis_pipeline" "ingestion_pipelines" {
     sts_role_arn    = module.pipeline_role.iam_role_arn
     opensearch_host = data.aws_opensearch_domain.dragonfly_prod_eu_1_os.endpoint
 
-    msk_cluster_arn = data.aws_msk_cluster.dragonfly_msk_1.arn
+    msk_cluster_arn = data.aws_msk_cluster.dragonfly_msk_eu1.arn
     kafka_topics    = each.value.topics
   })
 
