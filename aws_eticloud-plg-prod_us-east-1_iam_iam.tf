@@ -14,7 +14,7 @@ resource "aws_iam_policy" "plg_write_to_s3" {
         Action = [
           "s3:ListBucket"
         ],
-        Resource = "arn:aws:s3:::eti-plg-analytics-s3-bucket/Rosey/*"
+        Resource = "arn:aws:s3:::outshift-product-analytics-s3-bucket/Rosey/*"
       },
       {
         Sid    = "AllObjectActions",
@@ -22,7 +22,7 @@ resource "aws_iam_policy" "plg_write_to_s3" {
         Action = [
           "s3:PutObject"
         ],
-        Resource = "arn:aws:s3:::eti-plg-analytics-s3-bucket/Rosey"
+        Resource = "arn:aws:s3:::outshift-product-analytics-s3-bucket/Rosey"
       }
     ]
   })
