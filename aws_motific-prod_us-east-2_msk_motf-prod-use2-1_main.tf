@@ -102,7 +102,7 @@ module "msk" {
   name                 = "motf-prod-use2-1"
   vpc_id               = data.aws_vpc.db_vpc.id
   subnet_ids           = data.aws_subnets.private.ids
-  kafka_version        = "3.3.2"
+  kafka_version        = "3.5.1"
   broker_instance_type = "kafka.m5.large"
   properties = {
     "auto.create.topics.enable"      = true
