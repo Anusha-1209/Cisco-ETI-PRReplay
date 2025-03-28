@@ -26,7 +26,6 @@ module "eks_all_in_one" {
 
   # EKS Managed Private Node Group
   instance_types = ["m6a.2xlarge"] # EKS instance types
-  cluster_os     = "Ubuntu22"
   min_size       = 8               # EKS node group min size
   max_size       = 15              # EKS node group max size
   desired_size   = 8               # EKS node group desired size
