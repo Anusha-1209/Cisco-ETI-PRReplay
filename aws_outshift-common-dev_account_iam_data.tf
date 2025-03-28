@@ -58,7 +58,7 @@ data "aws_iam_policy_document" "labelbox-external-account" {
     condition {
       test     = "StringEquals"
       variable = "sts:ExternalId"
-      values   = ["clvdn9aks000a3b6n2hnfh6zk"]
+      values   = ["clvusadwy000a3b73vvvc24r6"]
     }
   }
 }
