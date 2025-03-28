@@ -6,6 +6,6 @@ module "s3" {
   CSBCiscoMailAlias     = "eti-sre-admins@cisco.com"
   CSBDataClassification = "Cisco Restricted"
   CSBDataTaxonomy       = "Cisco Operations Data"
-  CSBEnvironment        = "NonProd"
+  CSBEnvironment        = "Prod"
   CSBResourceOwner      = "ETI SRE"
 }
