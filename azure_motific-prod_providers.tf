@@ -9,6 +9,12 @@ provider "vault" {
   namespace = "eticloud"
 }
 
+provider "vault" {
+  alias     = "motific"
+  address   = "https://keeper.cisco.com"
+  namespace = "eticloud/apps/vowel"
+}
+
 provider "azurerm" {
   subscription_id = "c73d1cd9-08d8-4dc9-943c-cafe812dff5e"
   client_id       = data.vault_generic_secret.azure_infra_credential.data["appId"]
