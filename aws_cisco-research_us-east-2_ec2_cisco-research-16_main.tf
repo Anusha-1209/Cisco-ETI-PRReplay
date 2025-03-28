@@ -37,7 +37,7 @@ module "ec2" {
   vpc_name = "cisco-research-vpc"
 
   # Is the instance public
-  is_public = "true"
+  is_public = "false"
 
   # Ignore AMI changes
   ignore_ami_changes = "true"
