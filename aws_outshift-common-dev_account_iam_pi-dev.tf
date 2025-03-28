@@ -7,7 +7,7 @@ data "aws_iam_policy_document" "pi-dev-policy-document" {
       "s3:ListAllMyBuckets"
     ]
     resources = [
-      "*"
+      "arn:aws:s3:::pi-labelbox-datasets"
     ]
   }
 
