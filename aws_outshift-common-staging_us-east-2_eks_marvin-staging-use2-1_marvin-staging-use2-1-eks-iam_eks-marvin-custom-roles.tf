@@ -3,7 +3,7 @@ data "aws_eks_cluster" "cluster_marvin" {
   name = local.cluster_name
 }
 locals {
-  cluster_name = "marvin-staging-use2-1" # The name of the associated EKS cluster. Must be updated
+  cluster_name = "marvin-stage-use2-1" # The name of the associated EKS cluster. Must be updated
   account_id = data.aws_caller_identity.current_outshift_common.account_id
   oidc_id    = trimprefix(data.aws_eks_cluster.cluster_marvin.identity[0].oidc[0].issuer, "https://")
 }
@@ -22,7 +22,7 @@ resource "aws_iam_policy" "aws_s3_read_write_fail_over_requests_policy" {
           "s3:List*",
           "s3:Describe*"
         ],
-        "Resource": "arn:aws:s3:::requests-failover-marvin-staging-use2-1*"
+        "Resource": "arn:aws:s3:::requests-failover-marvin-stage-use2-1*"
       }
     ]
   })
@@ -80,7 +80,7 @@ resource "aws_iam_policy" "aws_s3-msk-connect-marvin-staging-1_policy" {
           "s3:List*",
           "s3:Describe*"
         ],
-        "Resource": "arn:aws:s3:::msk-connect-marvin-staging-use2-1*"
+        "Resource": "arn:aws:s3:::msk-connect-marvin-stage-use2-1*"
       },
       {
         "Effect": "Allow",
@@ -90,7 +90,7 @@ resource "aws_iam_policy" "aws_s3-msk-connect-marvin-staging-1_policy" {
           "s3:List*",
           "s3:Describe*"
         ],
-        "Resource": "arn:aws:s3:::athena-results-marvin-staging-use2-1*"
+        "Resource": "arn:aws:s3:::athena-results-marvin-stage-use2-1*"
       }
     ]
   })
