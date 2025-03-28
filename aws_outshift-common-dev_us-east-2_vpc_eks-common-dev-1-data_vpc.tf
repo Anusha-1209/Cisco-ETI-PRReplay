@@ -29,7 +29,7 @@ provider "aws" {
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
-      Environment        = "PreProd"
+      Environment        = "NonProd"
       ResourceOwner      = "Outshift SRE"
     }
   }

@@ -8,7 +8,7 @@ data "vault_generic_secret" "aws_infra_credential" {
 # Describes the statefile and table in the eticloud aws account. Each Atlantis project should have it's own statefile (key)
 terraform {
   backend "s3" {
-    bucket        = "eticloud-tf-state-preprod" # We separate the different environments into different buckets. The buckets are eticloud-tf-state-sandbox, eticloud-tf-state-nonprod, eticloud-tf-state-prod. The environment should match the CSBEnvironment below.
+    bucket        = "eticloud-tf-state-nonprod" # We separate the different environments into different buckets. The buckets are eticloud-tf-state-sandbox, eticloud-tf-state-nonprod, eticloud-tf-state-prod. The environment should match the CSBEnvironment below.
     key           = "terraform-state/aurora-postgres/us-east-2/rds-common-dev-1-rds.tfstate"  #note the path here. It should match the patten terraform_state/<service>/<region>/<name>.tfstate
     region        = "us-east-2" #do not change
   }
@@ -39,7 +39,7 @@ module "rds" {
     CSBCiscoMailAlias     = "eti-sre@cisco.com"
     CSBDataClassification = "Cisco Confidential"
     CSBDataTaxonomy       = "Cisco Operations Data"
-    CSBEnvironment        = "PreProd"
+    CSBEnvironment        = "NonProd"
     CSBResourceOwner      = "eti"
 }
 

@@ -11,7 +11,7 @@ data "vault_generic_secret" "aws_infra_credential" {
 
 terraform {
   backend "s3" {
-    bucket = "eticloud-tf-state-preprod"
+    bucket = "eticloud-tf-state-nonprod"
     key    = "terraform-state/vpc-peering/us-east-2/data-eks-common-dev-1.tfstate"
     region = "us-east-2"
   }
@@ -62,7 +62,7 @@ provider "aws" {
       CiscoMailAlias     = "eti-sre@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
-      Environment        = "PreProd"
+      Environment        = "NonProd"
       ResourceOwner      = "Outshift SRE"
     }
   }
