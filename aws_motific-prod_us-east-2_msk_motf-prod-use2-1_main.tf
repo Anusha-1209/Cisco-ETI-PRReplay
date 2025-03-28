@@ -1,7 +1,7 @@
 data "aws_vpc" "db_vpc" {
   filter {
     name   = "tag:Name"
-    values = ["motf-staging-use2-data"]
+    values = ["motf-prod-use2-data"]
   }
 }
 
@@ -24,7 +24,7 @@ data "aws_security_group" "vpc_default" {
 data "aws_vpc" "eks_vpc" {
   filter {
     name   = "tag:Name"
-    values = ["motf-staging-use2-1"]
+    values = ["motf-prod-use2-1"]
   }
 }
 
@@ -33,7 +33,7 @@ data "aws_security_group" "eks_sg" {
 
   filter {
     name   = "tag:Name"
-    values = ["eks-cluster-sg-motf-staging-use2-1-*"]
+    values = ["eks-cluster-sg-motf-prod-use2-1-*"]
   }
 }
 
@@ -45,11 +45,11 @@ output "vpc_db_security_group" {
 ### SASL/SCRAM secrets for cluster auth
 
 resource "aws_secretsmanager_secret" "msk_secret" {
-  name                    = "AmazonMSK_msk-motific-staging"
+  name                    = "AmazonMSK_msk-motific-prod"
   kms_key_id              = aws_kms_key.msk_custom_key.key_id
   recovery_window_in_days = 0
 
-  description = "SASL/SCRAM secret for msk-motific-staging"
+  description = "SASL/SCRAM secret for msk-motific-prod"
 }
 
 resource "aws_kms_key" "msk_custom_key" {
@@ -58,7 +58,7 @@ resource "aws_kms_key" "msk_custom_key" {
 
 data "vault_generic_secret" "msk_credentials" {
   provider = vault.eticloud
-  path     = "secret/infra/msk/motf-staging-use2-1"
+  path     = "secret/infra/msk/motf-prod-use2-1"
 }
 
 resource "aws_secretsmanager_secret_version" "msk_secret" {
@@ -87,7 +87,7 @@ resource "aws_secretsmanager_secret_policy" "msk_secret" {
 }
 
 # Allow inbound from db vpc CIDR to SASL/SCRAM port 9096 for bastion tunnels
-resource "aws_security_group_rule" "kafka_ingress_eks_motf-staging-use2-1" {
+resource "aws_security_group_rule" "kafka_ingress_eks_motf-prod-use2-1" {
   type              = "ingress"
   from_port         = 9096
   to_port           = 9096
@@ -99,7 +99,7 @@ resource "aws_security_group_rule" "kafka_ingress_eks_motf-staging-use2-1" {
 module "msk" {
   source               = "cloudposse/msk-apache-kafka-cluster/aws"
   version              = "2.3.0"
-  name                 = "motf-staging-use2-1"
+  name                 = "motf-prod-use2-1"
   vpc_id               = data.aws_vpc.db_vpc.id
   subnet_ids           = data.aws_subnets.private.ids
   kafka_version        = "3.3.2"
