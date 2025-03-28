@@ -18,31 +18,31 @@ terraform {
 }
 
 locals {
-  acceptor_vpc_name  = "eks-common-prod-1"
-  requestor_vpc_name = "prod-db-vpc-1"
+  new_acceptor_vpc_name  = "eks-common-prod-1"
+  old_requestor_vpc_name = "prod-db-vpc-1"
 }
 
 # Get the VPC IDs based on the names of the VPCs
-data "aws_vpc" "acceptor_vpc" {
+data "aws_vpc" "new_acceptor_vpc" {
   filter {
     name   = "tag:Name"
-    values = [local.acceptor_vpc_name]
+    values = [local.new_acceptor_vpc_name]
   }
 }
 
-data "aws_vpc" "requestor_vpc" {
+data "aws_vpc" "old_requestor_vpc" {
   filter {
     name   = "tag:Name"
-    values = [local.requestor_vpc_name]
+    values = [local.old_requestor_vpc_name]
   }
 }
 
-data "aws_route_tables" "acceptor_vpc_rt" {
-  vpc_id = data.aws_vpc.acceptor_vpc.id
+data "aws_route_tables" "new_acceptor_vpc_rt" {
+  vpc_id = data.aws_vpc.new_acceptor_vpc.id
 }
 
-data "aws_route_tables" "requestor_vpc_rt" {
-  vpc_id = data.aws_vpc.requestor_vpc.id
+data "aws_route_tables" "old_requestor_vpc_rt" {
+  vpc_id = data.aws_vpc.old_requestor_vpc.id
 }
 
 # Use this to get the account ID
@@ -57,8 +57,8 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      Name               = "VPC Peering between ${local.acceptor_vpc_name} and ${local.requestor_vpc_name}"
-      ApplicationName    = "${local.acceptor_vpc_name}-vpc-peering"
+      Name               = "VPC Peering between ${local.new_acceptor_vpc_name} and ${local.old_requestor_vpc_name}"
+      ApplicationName    = "${local.new_acceptor_vpc_name}-vpc-peering"
       CiscoMailAlias     = "eti-sre@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
@@ -69,10 +69,10 @@ provider "aws" {
 }
 
 # VPC peering resources
-resource "aws_vpc_peering_connection" "peering_connection" {
+resource "aws_vpc_peering_connection" "old_peering_connection" {
   peer_owner_id = data.aws_caller_identity.current.account_id
-  peer_vpc_id   = data.aws_vpc.acceptor_vpc.id
-  vpc_id        = data.aws_vpc.requestor_vpc.id
+  peer_vpc_id   = data.aws_vpc.new_acceptor_vpc.id
+  vpc_id        = data.aws_vpc.old_requestor_vpc.id
   auto_accept   = true
 
   accepter {
@@ -85,16 +85,16 @@ resource "aws_vpc_peering_connection" "peering_connection" {
 }
 
 # VPC routing resources
-resource "aws_route" "db-to-eks" {
-  count                     = length(data.aws_route_tables.requestor_vpc_rt.ids)
-  route_table_id            = data.aws_route_tables.requestor_vpc_rt.ids[count.index]
-  destination_cidr_block    = data.aws_vpc.acceptor_vpc.cidr_block
-  vpc_peering_connection_id = aws_vpc_peering_connection.peering_connection.id
+resource "aws_route" "old-db-to-eks" {
+  count                     = length(data.aws_route_tables.old_requestor_vpc_rt.ids)
+  route_table_id            = data.aws_route_tables.old_requestor_vpc_rt.ids[count.index]
+  destination_cidr_block    = data.aws_vpc.new_acceptor_vpc.cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.old_peering_connection.id
 }
 
-resource "aws_route" "eks-to-db" {
-  count                     = length(data.aws_route_tables.acceptor_vpc_rt.ids)
-  route_table_id            = data.aws_route_tables.acceptor_vpc_rt.ids[count.index]
-  destination_cidr_block    = data.aws_vpc.requestor_vpc.cidr_block
-  vpc_peering_connection_id = aws_vpc_peering_connection.peering_connection.id
+resource "aws_route" "eks-to-old-db" {
+  count                     = length(data.aws_route_tables.new_acceptor_vpc_rt.ids)
+  route_table_id            = data.aws_route_tables.new_acceptor_vpc_rt.ids[count.index]
+  destination_cidr_block    = data.aws_vpc.old_requestor_vpc.cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.old_peering_connection.id
 }
