@@ -25,3 +25,14 @@ resource "aws_iam_policy" "plg_write_to_s3" {
     ]
   })
 }
+
+# IAM role for each cluster we want to export metrics from
+resource "aws_iam_role" "plg_write_to_s3" {
+  name     = "WriteToPLGAnalyticsS3Bucket"
+  assume_role_policy = jsonencode()
+}
+
+resource "aws_iam_role_policy_attachment" "amp_ingest_policy" {
+  role       = aws_iam_role.plg_write_to_s3.name
+  policy_arn = aws_iam_policy.plg_write_to_s3.arn
+}
