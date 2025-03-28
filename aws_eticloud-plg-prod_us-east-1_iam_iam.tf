@@ -51,7 +51,7 @@ module "iam_eks_role_plg_s3" {
   source    = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version   = "5.39.0"
   for_each  = local.cnapp_clusters
-  role_name = "WriteToS3-${each.key}"
+  role_name = "WriteToS3-${each.key}-Rosey"
 
   role_policy_arns = {
     policy = aws_iam_policy.plg_write_to_s3.arn
