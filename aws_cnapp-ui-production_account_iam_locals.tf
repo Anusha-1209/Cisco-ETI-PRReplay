@@ -1,4 +1,4 @@
 locals {
   account_id = data.aws_caller_identity.current.account_id
-  account_name = "cybear-prod"
+  account_name = "cnapp-ui-production"
 }

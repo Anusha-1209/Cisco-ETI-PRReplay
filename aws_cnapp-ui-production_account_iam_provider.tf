@@ -17,7 +17,7 @@ provider "aws" {
     # These tags are required for security compliance.
     # For more information on Data Classification and Data Taxonomy, please talk to the SRE team.
     tags = {
-      ApplicationName    = "Cybear Production IAM Roles"
+      ApplicationName    = "CNAPP UI Production IAM Roles"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
