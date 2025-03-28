@@ -1,3 +1,5 @@
+data "aws_caller_identity" "current" {}
+
 locals {
   aws_account_id                = data.aws_caller_identity.current.account_id
   # cnapp prod clusters
@@ -7,9 +9,6 @@ locals {
 }
 
 # IAM policy that allows to list a specific bucket and write objects to it
-data "aws_caller_identity" "current" {}
-data "aws_region" "current" {}
-
 
 resource "aws_iam_policy" "plg_write_to_s3" {
   name        = "WriteToPLGAnalyticsS3Bucket"
