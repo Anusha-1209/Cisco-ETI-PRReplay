@@ -1,6 +1,7 @@
 # required for the thumbprint list of each EKS cluster
 
 data "tls_certificate" "eks_tls_certificate" {
+  for_each = local.cnapp_clusters
   url = "https://${each.value.eks_oidc}"
 }
 
