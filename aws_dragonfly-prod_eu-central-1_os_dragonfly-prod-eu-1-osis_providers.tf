@@ -5,7 +5,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      ApplicationName    = var.pipeline_name
+      ApplicationName    = "osis-dragonfly-prod-eu1"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
