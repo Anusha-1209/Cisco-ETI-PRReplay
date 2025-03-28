@@ -12,6 +12,6 @@ resource "aws_iam_openid_connect_provider" "eks_cluster" {
     "sts.amazonaws.com",
   ]
   thumbprint_list = [
-    data.tls_certificate.eks_tls_certificate.certificates[0].sha1_fingerprint,
+    data.tls_certificate.eks_tls_certificate[each.key].certificates[0].sha1_fingerprint,
   ]
 }
