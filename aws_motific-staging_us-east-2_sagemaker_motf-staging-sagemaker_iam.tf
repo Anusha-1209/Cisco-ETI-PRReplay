@@ -5,7 +5,7 @@ resource "aws_iam_role" "motific-staging" {
 }
 
 resource "aws_iam_policy" "motific-staging-s3" {
-  name        = local.name
+  name        = "${local.name}-s3"
   path        = "/"
   description = "Policy for ${local.name}"
   policy = jsonencode({
@@ -40,7 +40,7 @@ resource "aws_iam_policy" "motific-staging-s3" {
 }
 
 resource "aws_iam_policy" "s3-cross-account-access" {
-  name        = local.name
+  name        = "${local.name}-s3-cross-account-access"
   path        = "/"
   description = "Policy for ${local.name}"
   policy = jsonencode({
