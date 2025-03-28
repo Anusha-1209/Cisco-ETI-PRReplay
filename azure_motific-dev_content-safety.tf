@@ -12,11 +12,25 @@ resource "azurerm_cognitive_account" "content-safety" {
   sku_name = "S0"
 }
 
-resource "vault_generic_secret" "content-safety" {
+resource "vault_generic_secret" "content-safety-eticloud" {
+  provider = vault.eticloud
   path      = "secret/infra/azure/${local.name}/${local.region}/content-safety/keys"
   data_json = <<EOT
 {
 "endpoint": "${azurerm_cognitive_account.content-safety.endpoint}",
+"primary_access_key": "${azurerm_cognitive_account.content-safety.primary_access_key}",
+"secondary_access_key": "${azurerm_cognitive_account.content-safety.secondary_access_key}"
+}
+EOT
+}
+
+resource "vault_generic_secret" "content-safety-motific" {
+  provider = vault.motific
+  path      = "secret/${local.environment}/content_moderation_azure/"
+  data_json = <<EOT
+{
+"endpoint": "${azurerm_cognitive_account.content-safety.endpoint}",
+"AZURE_SECRET_KEY": "${azurerm_cognitive_account.content-safety.primary_access_key}",
 "primary_access_key": "${azurerm_cognitive_account.content-safety.primary_access_key}",
 "secondary_access_key": "${azurerm_cognitive_account.content-safety.secondary_access_key}"
 }
