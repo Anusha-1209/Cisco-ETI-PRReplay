@@ -42,6 +42,8 @@ module "ec2" {
   # Ignore AMI changes
   ignore_ami_changes = "true"
 
+  setup_s3_user_mgmt = true
+
   # Tags
   cisco_mail_alias    = "eti-sre-admins@cisco.com"
   data_classification = "Cisco Confidential"
