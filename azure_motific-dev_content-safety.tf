@@ -13,7 +13,7 @@ resource "azurerm_cognitive_account" "content-safety" {
 }
 
 resource "vault_generic_secret" "content-safety" {
-  path      = "secret/infra/azure/${local.name}/content-safety/keys"
+  path      = "secret/infra/azure/${local.name}/${local.region}/content-safety/keys"
   data_json = <<EOT
 {
 "endpoint": "${azurerm_cognitive_account.content-safety.endpoint}",
