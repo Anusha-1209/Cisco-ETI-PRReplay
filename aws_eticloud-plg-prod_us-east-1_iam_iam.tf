@@ -38,6 +38,8 @@ module "iam_eks_role_plg_s3" {
     policy = aws_iam_policy.plg_write_to_s3.arn
   }
 
+  assume_role_condition_test = "StringLike" # in order to support the below wildcards
+
   oidc_providers = {
     "${each.key}" = {
       provider_arn               = "arn:aws:iam::${local.aws_account_id}:oidc-provider/${each.value.eks_oidc}"
