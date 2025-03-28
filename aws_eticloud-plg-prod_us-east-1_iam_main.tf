@@ -4,32 +4,44 @@ resource "aws_iam_policy" "plg_write_to_s3" {
   description = "IAM policy that allows to write to a specific S3 bucket"
 
   policy = jsonencode({
-    "Version" = "2012-10-17",
-    "Statement" = [
+    Version = "2012-10-17",
+    Statement = [
       {
-        "Sid" = "ListObjectsInBucket",
-        "Effect" = "Allow",
-        "Action" = [
+        Sid    = "ListObjectsInBucket",
+        Effect = "Allow",
+        Action = [
           "s3:ListBucket"
         ],
-        "Resource" = "arn:aws:s3:::eti-plg-analytics-s3-bucket/Rosey/*"
+        Resource = "arn:aws:s3:::eti-plg-analytics-s3-bucket/Rosey/*"
       },
-       {
-        "Sid" = "AllObjectActions",
-        "Effect" = "Allow",
-        "Action" = [
+      {
+        Sid    = "AllObjectActions",
+        Effect = "Allow",
+        Action = [
           "s3:PutObject"
         ],
-        "Resource" = "*"
+        Resource = "arn:aws:s3:::eti-plg-analytics-s3-bucket/Rosey"
       }
     ]
   })
 }
 
-# IAM role for each cluster we want to export metrics from
+# 
 resource "aws_iam_role" "plg_write_to_s3" {
-  name     = "WriteToPLGAnalyticsS3Bucket"
-  assume_role_policy = jsonencode()
+  name = "WriteToPLGAnalyticsS3Bucket"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = "EKSAssumeRolePolicyToS3"
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "eks.amazonaws.com"
+        },
+      },
+    ]
+  })
 }
 
 resource "aws_iam_role_policy_attachment" "amp_ingest_policy" {
