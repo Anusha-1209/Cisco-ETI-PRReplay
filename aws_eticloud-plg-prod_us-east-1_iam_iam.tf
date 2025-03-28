@@ -43,7 +43,7 @@ module "iam_eks_role_plg_s3" {
   oidc_providers = {
     "${each.key}" = {
       provider_arn               = "arn:aws:iam::${local.aws_account_id}:oidc-provider/${each.value.eks_oidc}"
-      namespace_service_accounts = ["rosey*:rosey*"]
+      namespace_service_accounts = ["opentelemetry-exporter:*opentelemetry-exporter*"]
     }
   }
 }
