@@ -24,7 +24,7 @@ resource "aws_iam_role" "labelbox" {
   force_detach_policies = true
   permissions_boundary  = ""
 
-  assume_role_policy = data.aws_iam_policy_document.assume_role_account.json
+  assume_role_policy = data.aws_iam_policy_document.labelbox-external-account.json
 }
 
 resource "aws_iam_role_policy_attachment" "labelbox-policy-attachment" {

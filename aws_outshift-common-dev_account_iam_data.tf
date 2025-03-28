@@ -44,3 +44,21 @@ data "aws_iam_policy_document" "assume_role_account" {
     }
   }
 }
+
+data "aws_iam_policy_document" "labelbox-external-account" {
+  statement {
+    effect = "Allow"
+
+    actions = ["sts:AssumeRole"]
+    principals {
+      type = "AWS"
+
+      identifiers = ["arn:aws:iam::340636424752:root"]
+    }
+    condition {
+      test     = "StringEquals"
+      variable = "sts:ExternalId"
+      values   = ["clvdn9aks000a3b6n2hnfh6zk"]
+    }
+  }
+}
