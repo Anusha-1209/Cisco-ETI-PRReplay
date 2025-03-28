@@ -1,4 +1,16 @@
+locals {
+  aws_account_id                = data.aws_caller_identity.current.account_id
+  # cnapp prod clusters
+  cnapp_prod_clusters_oidc_ids = [
+    "28A49D0DC19E0AE06F2E38C0AD473F7D", "EFF9B51923E64F3067C820180603F855"
+  ]
+}
+
 # IAM policy that allows to list a specific bucket and write objects to it
+data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
+
+
 resource "aws_iam_policy" "plg_write_to_s3" {
   name        = "WriteToPLGAnalyticsS3Bucket"
   description = "IAM policy that allows to write to a specific S3 bucket"
@@ -34,11 +46,17 @@ resource "aws_iam_role" "plg_write_to_s3" {
     Statement = [
       {
         Sid    = "EKSAssumeRolePolicyToS3"
-        Action = "sts:AssumeRole"
+        Action = "sts:AssumeRoleWithWebIdentity"
         Effect = "Allow"
         Principal = {
-          Service = "eks.amazonaws.com"
+          Federated = "arn:aws:iam::${local.aws_account_id}:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/${[for cluster_oidc in cnapp_prod_clusters_oidc_ids: cluster_oidc]}",
         },
+        Condition = {
+          StringEquals = {
+            "oidc.eks.us-east-2.amazonaws.com/id/${[for cluster_oidc in cnapp_prod_clusters_oidc_ids: cluster_oidc]}:aud" : "sts.amazonaws.com",
+            "oidc.eks.us-east-2.amazonaws.com/id/${[for cluster_oidc in cnapp_prod_clusters_oidc_ids: cluster_oidc]}:sub" : "system:serviceaccount:rosey*:rosey*"
+          }
+        }
       },
     ]
   })
