@@ -3,10 +3,11 @@ data "aws_iam_policy_document" "pi-dev-policy-document" {
     sid    = "1"
     effect = "Allow"
     actions = [
-      "s3:ListBucket"
+      "s3:ListBucket",
+      "s3:ListAllMyBuckets"
     ]
     resources = [
-      "arn:aws:s3:::pi-labelbox-datasets"
+      "*"
     ]
   }
 
