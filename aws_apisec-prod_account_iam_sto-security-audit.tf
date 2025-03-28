@@ -17,6 +17,6 @@ resource "aws_iam_role" "sto-security-audit-role" {
 
 resource "aws_iam_role_policy_attachment" "sto-security-audit-policy-attachment" {
     role = aws_iam_role.sto-security-audit-role.name
-    policy_arn = aws_iam_policy.ReadOnlyAccess.arn
+    policy_arn = data.aws_iam_policy.ReadOnlyAccess.arn
 }
 
