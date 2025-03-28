@@ -80,5 +80,5 @@ resource "aws_iam_policy_attachment" "motific-staging-sagemaker" {
 resource "aws_iam_policy_attachment" "motific-staging-s3-cross-account-access" {
   name       = "${local.name}-s3-cross-account-access"
   roles      = [aws_iam_role.motific-staging.name]
-  policy_arn = aws_iam_policy.motific-staging-s3-cross-account-access.arn
+  policy_arn = aws_iam_policy.s3-cross-account-access.arn
 }
