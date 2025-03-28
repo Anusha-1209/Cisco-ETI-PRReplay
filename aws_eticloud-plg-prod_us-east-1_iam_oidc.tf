@@ -2,7 +2,7 @@
 
 data "tls_certificate" "eks_tls_certificate" {
   for_each = local.cnapp_clusters
-  url = "https://${each.value.eks_oidc}"
+  url      = "https://${each.value.eks_oidc}"
 }
 
 resource "aws_iam_openid_connect_provider" "eks_cluster" {
