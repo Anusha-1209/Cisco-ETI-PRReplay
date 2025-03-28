@@ -28,7 +28,7 @@ provider "aws" {
 
 locals {
   region           = "us-east-2"
-  aws_account_name = "outshift-common-prod"
+  aws_account_name = "outshift-common-staging"
 }
 
 resource "aws_iam_service_linked_role" "AWSServiceRoleForAutoScaling" {
