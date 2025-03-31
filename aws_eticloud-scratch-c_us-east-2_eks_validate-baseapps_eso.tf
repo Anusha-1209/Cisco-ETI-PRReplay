@@ -4,6 +4,11 @@ data "aws_eks_cluster" "cluster" {
   depends_on = [module.eks_all_in_one]
 }
 
+data "aws_eks_cluster_auth" "cluster" {
+  depends_on = [module.eks_all_in_one]
+  name       = local.name
+}
+
 data "vault_generic_secret" "cluster_certificate" {
   path       = "secret/infra/eks/${local.name}/certificate"
   depends_on = [module.eks_all_in_one]
