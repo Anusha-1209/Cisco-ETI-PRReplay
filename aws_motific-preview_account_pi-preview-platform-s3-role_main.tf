@@ -16,7 +16,7 @@ provider "aws" {
 }
 
 resource "aws_iam_policy" "aws_pi_preview_platform_s3_policy" {
-  name        = "pi-dev-platform-s3-policy"
+  name        = "pi-preview-platform-s3-policy"
   description = "AWS motific unified plugins Role IAM Policy"
   policy = jsonencode({
     Version = "2012-10-17",
@@ -28,7 +28,7 @@ resource "aws_iam_policy" "aws_pi_preview_platform_s3_policy" {
           "sts:AssumeRoleWithWebIdentity"
         ],
         Resource = [
-          "arn:aws:iam::851725238184:role/pi-dev-platform-s3-role"
+          "arn:aws:iam::851725238184:role/pi-preview-platform-s3-role"
         ]
       },
       {
@@ -48,7 +48,7 @@ resource "aws_iam_policy" "aws_pi_preview_platform_s3_policy" {
 }
 
 resource "aws_iam_role" "aws_pi_preview_platform_s3_role" {
-  name = "pi-dev-platform-s3-role"
+  name = "pi-preview-platform-s3-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
