@@ -47,24 +47,44 @@ resource "aws_iam_policy" "s3-cross-account-access" {
     Version = "2012-10-17"
     Statement = [
       {
-          "Sid": "0",
-          "Effect": "Allow",
-          "Action": [
-              "s3:*"
-          ],
-          "Resource": "arn:aws:s3:::vowel-dev-sagemaker/*"
+        "Sid" : "0",
+        "Effect" : "Allow",
+        "Action" : [
+          "s3:*"
+        ],
+        "Resource" : "arn:aws:s3:::vowel-dev-sagemaker/*"
       },
       {
-          "Sid": "1",
-          "Effect": "Allow",
-          "Action": [
-              "s3:ListBucket"
-          ],
-          "Resource": "arn:aws:s3:::vowel-dev-sagemaker"
+        "Sid" : "1",
+        "Effect" : "Allow",
+        "Action" : [
+          "s3:ListBucket"
+        ],
+        "Resource" : "arn:aws:s3:::vowel-dev-sagemaker"
       }
     ]
   })
 }
+
+resource "aws_iam_policy" "motific-staging-sagemaker-cw" {
+  name        = "${local.name}-sagemaker-cloudwatch-put-metrics"
+  path        = "/"
+  description = "Policy for ${local.name}"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        "Sid" : "0",
+        "Effect" : "Allow",
+        "Action" : [
+          "cloudwatch:PutMetricData",
+        ],
+        "Resource": "arn:aws:sagemaker:us-east-2:${local.account_id}:endpoint/*"
+      }
+    ]
+  })
+}
+
 resource "aws_iam_policy_attachment" "motific-staging-s3" {
   name       = "${local.name}-s3"
   roles      = [aws_iam_role.motific-staging.name]
@@ -75,6 +95,12 @@ resource "aws_iam_policy_attachment" "motific-staging-sagemaker" {
   name       = "${local.name}-sagemaker"
   roles      = [aws_iam_role.motific-staging.name]
   policy_arn = "arn:aws:iam::aws:policy/AmazonSageMakerFullAccess"
+}
+
+resource "aws_iam_policy_attachment" "motific-staging-sagemaker-cw" {
+  name       = "${local.name}-sagemaker-cw"
+  roles      = [aws_iam_role.motific-staging.name]
+  policy_arn = aws_iam_policy.motific-staging-sagemaker-cw.arn
 }
 
 resource "aws_iam_policy_attachment" "motific-staging-s3-cross-account-access" {
