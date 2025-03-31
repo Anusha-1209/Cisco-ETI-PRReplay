@@ -37,7 +37,7 @@ provider "aws" {
 
 module "vpc" {
   source                          = "git::https://github.com/cisco-eti/sre-tf-module-aws-vpc?ref=2.0.6"
-  region                          = "us-east-2"
+  region                          = "us-west-2"
   vpc_cidr                        = "10.3.0.0/16"
   vpc_name                        = "motf-staging-usw2-data"
   cluster_name                    = "motf-staging-usw2-data"
