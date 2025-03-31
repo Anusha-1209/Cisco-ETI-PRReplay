@@ -12,7 +12,7 @@ locals {
   subnet_group_name    = "marvin-staging-use2-data-ec-subnet-group"
   elasticache_name     = "marvin-redis-staging-use2-1"
   redis_vpc_name   = "marvin-staging-use2-data"
-  eks_cluster_vpc_name = "marvin-staging-use2-1"
+  eks_cluster_vpc_name = "marvin-stage-use2-1"
 }
 
 provider "aws" {
