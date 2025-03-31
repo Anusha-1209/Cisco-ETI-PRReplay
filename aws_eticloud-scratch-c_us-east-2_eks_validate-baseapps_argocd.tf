@@ -52,13 +52,13 @@ resource "kubernetes_cluster_role_binding" "argocd_manager" {
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "ClusterRole"
-    name      = kubernetes_cluster_role.argocd_manager[0].metadata.0.name
+    name      = kubernetes_cluster_role.argocd_manager.metadata.0.name
   }
 
   subject {
     kind      = "ServiceAccount"
-    name      = kubernetes_service_account_v1.argocd_manager[0].metadata.0.name
-    namespace = kubernetes_service_account_v1.argocd_manager[0].metadata.0.namespace
+    name      = kubernetes_service_account_v1.argocd_manager.metadata.0.name
+    namespace = kubernetes_service_account_v1.argocd_manager.metadata.0.namespace
   }
   depends_on = [kubernetes_cluster_role.argocd_manager]
 }
