@@ -2,6 +2,7 @@ resource "aws_cloudwatch_metric_alarm" "CNDR_Opensearch_No_FreeStorageSpace_Avai
   alarm_name                = "CNDR_Opensearch_No_FreeStorageSpace_Available"
   comparison_operator       = "LessThanOrEqualToThreshold"
   evaluation_periods        = 2
+  threshold_metric_id       = "m1"
   threshold                 = 50000
   alarm_actions             = [aws_sns_topic.dragonfly-urgent-pagerduty.arn]
   ok_actions                = [aws_sns_topic.dragonfly-urgent-pagerduty.arn]
@@ -9,7 +10,7 @@ resource "aws_cloudwatch_metric_alarm" "CNDR_Opensearch_No_FreeStorageSpace_Avai
   insufficient_data_actions = []
 
   metric_query {
-    id = "FreeStorageSpace"
+    id = "m1"
 
     metric {
       metric_name = "FreeStorageSpace"
