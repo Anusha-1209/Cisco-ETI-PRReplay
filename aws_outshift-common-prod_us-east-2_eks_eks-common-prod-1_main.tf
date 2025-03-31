@@ -3,7 +3,7 @@ terraform {
     # This is the name of the backend S3 bucket.
     bucket = "eticloud-tf-state-prod"
     # This is the path to the Terraform state file in the backend S3 bucket.
-    key = "terraform-state/aws/eticloud/us-east-2/eks/eks-common-prod-1.tfstate"
+    key = "terraform-state/aws/outshift-common-prod/us-east-2/eks/eks-common-prod-1.tfstate"
     # This is the region where the backend S3 bucket is located.
     region = "us-east-2" # DO NOT CHANGE.
   }
@@ -12,7 +12,7 @@ terraform {
 locals {
   name             = "eks-common-prod-1"
   region           = "us-east-2"
-  aws_account_name = "eticloud"
+  aws_account_name = "outshift-common-prod"
 }
 
 module "eks_all_in_one" {
