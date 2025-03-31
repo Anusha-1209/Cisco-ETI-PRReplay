@@ -1,4 +1,4 @@
-resource "aws_cloudwatch_metric_alarm" "foobar" {
+resource "aws_cloudwatch_metric_alarm" "CNDR_Opensearch_Cluster_Index_Writes_Blocked" {
   alarm_name                = "CNDR_Opensearch_Cluster_Index_Writes_Blocked"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = 2

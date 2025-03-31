@@ -1,4 +1,4 @@
-resource "aws_cloudwatch_metric_alarm" "foobar" {
+resource "aws_cloudwatch_metric_alarm" "CNDR_Opensearch_No_FreeStorageSpace_Available" {
   alarm_name                = "CNDR_Opensearch_No_FreeStorageSpace_Available"
   comparison_operator       = "LessThanOrEqualToThreshold"
   evaluation_periods        = 2
