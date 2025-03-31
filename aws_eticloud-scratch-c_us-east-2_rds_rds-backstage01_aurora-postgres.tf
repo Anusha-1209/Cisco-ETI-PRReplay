@@ -8,7 +8,7 @@ terraform {
 
 locals {
   region           = "us-east-2"
-  aws_account_name = "outshift-common-dev"
+  aws_account_name = "eticloud-scratch-c"
   data_vpc         = "backstage01-data"
   eks_vpc          = "backstage01"
   rds_name         = "rds-backstage01"
