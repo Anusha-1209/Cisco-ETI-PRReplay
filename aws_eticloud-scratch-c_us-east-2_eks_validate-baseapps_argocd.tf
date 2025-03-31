@@ -2,7 +2,7 @@
 
 data "vault_generic_secret" "aws_argocd_infra_credential" {
   provider = vault.eticloud
-  path     = "secret/infra/aws/eticloud-preprod/terraform_admin"
+  path     = "secret/infra/aws/${local.argocd_aws_account}/terraform_admin"
 }
 
 provider "aws" {
@@ -15,10 +15,10 @@ provider "aws" {
 
 module "argocd" {
   source              = "git::https://github.com/cisco-eti/sre-tf-module-argo-cluster-enrollment?ref=0.1.0"
-  argocd_cluster_name = "eks-dev-gitops-1"
-  eks_cluster_name = data.aws_eks_cluster.cluster.name
+  argocd_cluster_name = local.argocd_k8s_name
+  eks_cluster_name    = data.aws_eks_cluster.cluster.name
   providers = {
-    aws.eks = aws.eks
+    aws.eks    = aws.eks
     aws.argocd = aws.argocd
   }
 }

@@ -5,7 +5,7 @@ module "eks_all_in_one" {
   region                 = local.region           # AWS provider region
   aws_account_name       = local.aws_account_name # AWS account name
   cidr                   = local.vpc_cidr         # VPC CIDR
-  cluster_version        = "1.29"   # EKS cluster version
+  cluster_version        = "1.29"                 # EKS cluster version
   bastion_instance_count = 1                      # Bastion instance count
 
 

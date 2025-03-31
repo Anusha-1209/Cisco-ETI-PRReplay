@@ -11,7 +11,7 @@ data "vault_generic_secret" "aws_infra_credential" {
 }
 
 provider "aws" {
-  alias = "eks"
+  alias       = "eks"
   access_key  = data.vault_generic_secret.aws_infra_credential.data["AWS_ACCESS_KEY_ID"]
   secret_key  = data.vault_generic_secret.aws_infra_credential.data["AWS_SECRET_ACCESS_KEY"]
   region      = "us-east-2"
@@ -33,7 +33,7 @@ data "vault_generic_secret" "argocd_aws_infra_credential" {
   path     = "secret/infra/aws/eticloud-preprod/terraform_admin"
 }
 provider "aws" {
-  alias = "argocd"
+  alias       = "argocd"
   access_key  = data.vault_generic_secret.argocd_aws_infra_credential.data["AWS_ACCESS_KEY_ID"]
   secret_key  = data.vault_generic_secret.argocd_aws_infra_credential.data["AWS_SECRET_ACCESS_KEY"]
   region      = "us-east-2"
