@@ -194,5 +194,10 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_table" {
       type    = "string"
       comment = ""
     }
+    columns {
+      name    = "severity"
+      type    = "string"
+      comment = ""
+    }
   }
 }
