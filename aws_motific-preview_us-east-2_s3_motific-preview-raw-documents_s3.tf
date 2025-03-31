@@ -49,3 +49,13 @@ module "s3" {
   CSBCiscoMailAlias     = "eti-sre@cisco.com"
   CSBDataTaxonomy       = "Cisco Operations Data"
 }
+resource "aws_s3_bucket_lifecycle_configuration" "motific-preview-raw-documents" {
+  bucket = "motific-preview-raw-documents"
+  rule {
+    id     = "TTL-policy"
+    status = "Enabled"
+    expiration {
+      days = 7
+    }
+  }
+}
