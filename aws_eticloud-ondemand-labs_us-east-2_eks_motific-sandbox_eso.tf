@@ -34,11 +34,21 @@ resource "vault_policy" "demo-labs" {
     }
 EOT
 }
-module "eso_eticloud_apps_demo-labs" {
+
+module "eso_eticloud_apps_apisec" {
+  source          = "git::https://github.com/cisco-eti/sre-tf-module-eso-access.git?ref=1.0.0"
+  cluster_name    = local.name
+  vault_namespace = "eticloud/apps/apisec"
+  kubernetes_host = data.aws_eks_cluster.cluster.endpoint
+  kubernetes_ca   = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
+  policies        = [vault_policy.marvin-apps.name]
+}
+
+module "eso_eticloud_apps_vowel" {
   source               = "git::https://github.com/cisco-eti/sre-tf-module-eso-access.git?ref=1.0.0"
   cluster_name         = local.name
   vault_namespace      = "eticloud/apps/demo-labs"
   kubernetes_host      = data.aws_eks_cluster.eks.endpoint
   kubernetes_ca        = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
-  policies             = [vault_policy.marvin-apps.name]
+  policies             = ["external-secrets-dev"]
 }
