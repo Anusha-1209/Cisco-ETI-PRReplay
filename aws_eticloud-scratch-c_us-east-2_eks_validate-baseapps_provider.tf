@@ -28,8 +28,15 @@ provider "aws" {
 }
 
 provider "kubernetes" {
-  alias                  = "eks"
+  alias                  = "target"
   host                   = data.aws_eks_cluster.cluster.endpoint
   cluster_ca_certificate = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
   token                  = data.aws_eks_cluster_auth.cluster.token
+}
+
+provider "kubernetes" {
+  alias                  = "argocd"
+  host                   = data.aws_eks_cluster.argocd.endpoint
+  cluster_ca_certificate = base64decode(data.vault_generic_secret.argocd_cluster_certificate.data["b64certificate"])
+  token                  = data.aws_eks_cluster_auth.argocd.token
 }

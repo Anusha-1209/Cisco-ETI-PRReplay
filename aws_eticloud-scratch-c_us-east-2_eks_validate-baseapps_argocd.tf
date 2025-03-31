@@ -1,7 +1,22 @@
 
 
+data "aws_eks_cluster" "argocd" {
+  depends_on = [module.eks_all_in_one]
+  name       = local.argocd_k8s_name
+}
+
+data "aws_eks_cluster_auth" "argocd" {
+  depends_on = [module.eks_all_in_one]
+  name       = local.argocd_k8s_name
+}
+
+data "vault_generic_secret" "argocd_cluster_certificate" {
+  path       = "secret/infra/eks/${local.argocd_k8s_name}/certificate"
+  depends_on = [module.eks_all_in_one]
+}
+
 resource "kubernetes_service_account_v1" "argocd_manager" {
-  provider = kubernetes.eks
+  provider = kubernetes.target
   secret {
     name = "${local.argocd_manager_service_account_name}-token"
   }
@@ -13,7 +28,7 @@ resource "kubernetes_service_account_v1" "argocd_manager" {
 }
 
 resource "kubernetes_secret" "argocd_manager" {
-  provider = kubernetes.eks
+  provider = kubernetes.target
   metadata {
     name      = "${local.argocd_manager_service_account_name}-token"
     namespace = local.argocd_manager_namespace
@@ -26,7 +41,7 @@ resource "kubernetes_secret" "argocd_manager" {
 }
 
 resource "kubernetes_cluster_role" "argocd_manager" {
-  provider = kubernetes.eks
+  provider = kubernetes.target
   metadata {
     name = "${local.argocd_manager_service_account_name}-role"
   }
@@ -44,7 +59,7 @@ resource "kubernetes_cluster_role" "argocd_manager" {
 }
 
 resource "kubernetes_cluster_role_binding" "argocd_manager" {
-  provider = kubernetes.eks
+  provider = kubernetes.target
   metadata {
     name = "argocd-manager-role-binding"
   }
@@ -65,12 +80,12 @@ resource "kubernetes_cluster_role_binding" "argocd_manager" {
 
 ## Add AWS EKS cluster to ArgoCD
 resource "argocd_cluster" "eks" {
-  server = data.aws_eks_cluster.cluster.endpoint
-  name   = local.name
+  server = data.aws_eks_cluster.argocd.endpoint
+  name   = local.argocd_k8s_name
 
   config {
     tls_client_config {
-      ca_data = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
+      ca_data = base64decode(data.vault_generic_secret.argocd_cluster_certificate.data["b64certificate"])
     }
   }
   depends_on = [kubernetes_secret.argocd_manager]

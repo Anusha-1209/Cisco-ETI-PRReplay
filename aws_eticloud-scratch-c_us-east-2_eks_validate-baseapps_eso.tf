@@ -13,7 +13,6 @@ data "vault_generic_secret" "cluster_certificate" {
   path       = "secret/infra/eks/${local.name}/certificate"
   depends_on = [module.eks_all_in_one]
 }
-
 module "eso_eticloud" {
   source = "git::https://github.com/cisco-eti/sre-tf-module-eso-access.git?ref=1.0.0"
 
