@@ -258,7 +258,7 @@ resource "aws_iam_role_policy_attachment" "aws_marvin_auth_rds_attachment" {
   policy_arn = aws_iam_policy.aws_rds_iam_connect_policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "aws_marvin_auth_rds_attachment" {
+resource "aws_iam_role_policy_attachment" "aws_marvin_forensic_rds_attachment" {
   role       = aws_iam_role.aws_marvin_forensic_role.name
   policy_arn = aws_iam_policy.aws_rds_iam_connect_policy.arn
 }
