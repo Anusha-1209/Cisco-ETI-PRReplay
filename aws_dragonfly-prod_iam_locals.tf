@@ -1,4 +1,4 @@
 locals {
   account_id = data.aws_caller_identity.current.account_id
-  account_name = "cnapp-staging"
+  account_name = "dragonfly-prod"
 }

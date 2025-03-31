@@ -1,6 +1,6 @@
 resource "aws_iam_role" "staging_eu_eks_role" {
   name = "staging-eu-eks-role"
-  assume_role_policy = file("policies/sso_assume_role_policy.json")
+  assume_role_policy = data.aws_iam_policy_document.assume_role_with_saml.json
   tags = {
     Name = "eks-developer-access"
   }
