@@ -15,7 +15,7 @@ provider "aws" {
   region     = "us-east-2"
 }
 
-resource "aws_iam_policy" "aws_pi_dev_platform_s3_policy" {
+resource "aws_iam_policy" "aws_pi_preview_platform_s3_policy" {
   name        = "pi-dev-platform-s3-policy"
   description = "AWS motific unified plugins Role IAM Policy"
   policy = jsonencode({
@@ -37,13 +37,13 @@ resource "aws_iam_policy" "aws_pi_dev_platform_s3_policy" {
         Action = [
           "s3:*"
         ],
-        Resource = "*"
+        Resource = "arn:aws:s3:::pi-preview-platform-s3"
       }
     ]
   })
 }
 
-resource "aws_iam_role" "aws_pi_dev_platform_s3_role" {
+resource "aws_iam_role" "aws_pi_preview_platform_s3_role" {
   name = "pi-dev-platform-s3-role"
 
   assume_role_policy = jsonencode({
@@ -68,7 +68,7 @@ resource "aws_iam_role" "aws_pi_dev_platform_s3_role" {
   force_detach_policies = true
 }
 
-resource "aws_iam_role_policy_attachment" "aws_pi_dev_platform_s3_policy_attachment" {
-  role       = aws_iam_role.aws_pi_dev_platform_s3_role.name
-  policy_arn = aws_iam_policy.aws_pi_dev_platform_s3_policy.arn
+resource "aws_iam_role_policy_attachment" "aws_pi_preview_platform_s3_policy_attachment" {
+  role       = aws_iam_role.aws_pi_preview_platform_s3_role.name
+  policy_arn = aws_iam_policy.aws_pi_preview_platform_s3_policy.arn
 }
