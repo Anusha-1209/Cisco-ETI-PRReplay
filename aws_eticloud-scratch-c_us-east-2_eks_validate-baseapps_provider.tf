@@ -26,3 +26,10 @@ provider "aws" {
     }
   }
 }
+
+provider "kubernetes" {
+  alias                  = "eks"
+  host                   = data.aws_eks_cluster.cluster.endpoint
+  cluster_ca_certificate = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
+  token                  = data.aws_eks_cluster.cluster.token
+}
