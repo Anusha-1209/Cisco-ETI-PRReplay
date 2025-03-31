@@ -1,5 +1,3 @@
-
-
 data "aws_eks_cluster" "argocd" {
   depends_on = [module.eks_all_in_one]
   name       = local.argocd_k8s_name
@@ -28,10 +26,10 @@ resource "kubernetes_service_account_v1" "argocd_manager" {
 }
 
 resource "kubernetes_secret" "argocd_manager" {
-  provider = kubernetes.target
+  provider = kubernetes.argocd
   metadata {
     name      = "${local.argocd_manager_service_account_name}-token"
-    namespace = local.argocd_manager_namespace
+    namespace = "argocd"
     annotations = {
       "kubernetes.io/service-account.name" = local.argocd_manager_service_account_name
     }
