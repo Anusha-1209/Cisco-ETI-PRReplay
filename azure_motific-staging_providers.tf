@@ -20,5 +20,6 @@ provider "azurerm" {
   client_id       = data.vault_generic_secret.azure_infra_credential.data["appId"]
   client_secret   = data.vault_generic_secret.azure_infra_credential.data["password"]
   tenant_id       = data.vault_generic_secret.azure_infra_credential.data["tenant"]
+  skip_provider_registration = "true"
   features {}
 }
