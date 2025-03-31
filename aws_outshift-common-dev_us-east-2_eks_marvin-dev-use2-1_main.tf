@@ -22,7 +22,7 @@ module "eks_all_in_one" {
   create_otel_irsa = true
   additional_aws_auth_configmap_roles = [
       {
-        rolearn  = "arn:aws:iam::058264538874:role/devops",
+        rolearn  = "arn:aws:iam::471112537430:role/devops",
         username = "devops",
         groups   = ["system:masters"]
       }
