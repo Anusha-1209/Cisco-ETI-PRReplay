@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "eticloud-tf-state-prod"
-    key    = "terraform-state/outshift-common-prod/elasticache/eu-central-1/redis-marvin-prod-euc1-1.tfstate"
+    key    = "terraform-state/outshift-common-prod/elasticache/us-east-2/redis-marvin-prod-euc1-1.tfstate"
     region = "eu-central-1"
   }
 }
