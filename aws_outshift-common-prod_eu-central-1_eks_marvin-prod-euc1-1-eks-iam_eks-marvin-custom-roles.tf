@@ -20,7 +20,7 @@ resource "aws_iam_policy" "aws_rds_iam_connect_policy" {
           "rds-db:connect"
         ],
         "Resource": [
-          "arn:aws:rds-db:us-east-2:${local.account_id}:dbuser:db-QFOO4KOAYETYTEOVZWVB3EFGW4/pgmarvin"
+          "arn:aws:rds-db:us-east-2:${local.account_id}:dbuser:cluster-WS2A5V2R2GCR6GQVTMFEJIN5RI/pgmarvin"
         ]
       }
     ]
