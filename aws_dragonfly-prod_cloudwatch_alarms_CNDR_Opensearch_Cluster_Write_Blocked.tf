@@ -2,10 +2,6 @@ resource "aws_cloudwatch_metric_alarm" "CNDR_Opensearch_Cluster_Index_Writes_Blo
   alarm_name                = "CNDR_Opensearch_Cluster_Index_Writes_Blocked"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = 2
-  metric_name               = "ClusterIndexWritesBlocked"
-
-  namespace                 = "AWS/ES"
-  period                    = 120
   statistic                 = "Average"
   threshold                 = 1
   actions_enabled           = "true"
