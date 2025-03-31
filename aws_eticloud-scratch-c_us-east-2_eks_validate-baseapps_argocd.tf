@@ -1,88 +1,24 @@
-data "aws_eks_cluster" "argocd" {
-  provider   = aws.argocd
-  name       = local.argocd_k8s_name
+# This file was created by Outshift Platform Self-Service automation.
+
+data "vault_generic_secret" "aws_argocd_infra_credential" {
+  provider = vault.eticloud
+  path     = "secret/infra/aws/eticloud-preprod/terraform_admin"
 }
 
-data "aws_eks_cluster_auth" "argocd" {
-  provider   = aws.argocd
-  name       = local.argocd_k8s_name
+provider "aws" {
+  alias       = "argocd"
+  access_key  = data.vault_generic_secret.aws_argocd_infra_credential.data["AWS_ACCESS_KEY_ID"]
+  secret_key  = data.vault_generic_secret.aws_argocd_infra_credential.data["AWS_SECRET_ACCESS_KEY"]
+  region      = "us-east-2"
+  max_retries = 3
 }
 
-data "vault_generic_secret" "argocd_cluster_certificate" {
-  path       = "secret/infra/eks/${local.argocd_k8s_name}/certificate"
-}
-
-resource "kubernetes_service_account_v1" "argocd_manager" {
-  provider = kubernetes.target
-  secret {
-    name = "${local.argocd_manager_service_account_name}-token"
+module "argocd" {
+  source              = "git::https://github.com/cisco-eti/sre-tf-module-argo-cluster-enrollment?ref=0.1.0"
+  argocd_cluster_name = "eks-dev-gitops-1"
+  eks_cluster_name = data.aws_eks_cluster.cluster.name
+  providers = {
+    aws.eks = aws.eks
+    aws.argocd = aws.argocd
   }
-  metadata {
-    name      = local.argocd_manager_service_account_name
-    namespace = local.argocd_manager_namespace
-  }
-}
-
-resource "kubernetes_secret" "argocd_manager" {
-  provider = kubernetes.target
-  metadata {
-    name      = "${local.argocd_manager_service_account_name}-token"
-    namespace = local.argocd_manager_namespace
-    annotations = {
-      "kubernetes.io/service-account.name" = local.argocd_manager_service_account_name
-    }
-  }
-  wait_for_service_account_token = true
-  type                           = "kubernetes.io/service-account-token"
-  depends_on = [kubernetes_service_account_v1.argocd_manager]
-}
-
-resource "kubernetes_cluster_role" "argocd_manager" {
-  provider = kubernetes.target
-  metadata {
-    name = "${local.argocd_manager_service_account_name}-role"
-  }
-
-  rule {
-    api_groups = ["*"]
-    resources  = ["*"]
-    verbs      = ["*"]
-  }
-
-  rule {
-    non_resource_urls = ["*"]
-    verbs             = ["*"]
-  }
-}
-
-resource "kubernetes_cluster_role_binding" "argocd_manager" {
-  provider = kubernetes.target
-  metadata {
-    name = "argocd-manager-role-binding"
-  }
-
-  role_ref {
-    api_group = "rbac.authorization.k8s.io"
-    kind      = "ClusterRole"
-    name      = kubernetes_cluster_role.argocd_manager.metadata.0.name
-  }
-
-  subject {
-    kind      = "ServiceAccount"
-    name      = kubernetes_service_account_v1.argocd_manager.metadata.0.name
-    namespace = kubernetes_service_account_v1.argocd_manager.metadata.0.namespace
-  }
-  depends_on = [kubernetes_cluster_role.argocd_manager]
-}
-
-## Add AWS EKS cluster to ArgoCD
-resource "argocd_cluster" "eks" {
-  server = data.aws_eks_cluster.argocd.endpoint
-  name   = local.name
-  config {
-    tls_client_config {
-      ca_data = base64decode(data.vault_generic_secret.argocd_cluster_certificate.data["b64certificate"])
-    }
-  }
-  depends_on = [kubernetes_secret.argocd_manager]
 }

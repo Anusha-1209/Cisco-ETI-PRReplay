@@ -1,12 +1,12 @@
 # This file was created by Outshift Platform Self-Service automation.
 data "aws_eks_cluster" "cluster" {
-  provider   = aws.target
+  provider   = aws.eks
   name       = local.name
   depends_on = [module.eks_all_in_one]
 }
 
 data "aws_eks_cluster_auth" "cluster" {
-  provider   = aws.target
+  provider   = aws.eks
   depends_on = [module.eks_all_in_one]
   name       = local.name
 }
