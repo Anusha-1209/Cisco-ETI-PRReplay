@@ -10,7 +10,7 @@ locals {
   # VPC module creates this, there is no way to grab it from the module,
   # so you need to make sure the naming convention is consistent
   subnet_group_name    = "marvin-dev-use2-data-ec-subnet-group"
-  elasticache_name     = "marvin-redis-dev-use2-1"
+  redis_name     = "marvin-redis-dev-use2-1"
   redis_vpc_name   = "marvin-dev-use2-data"
   eks_cluster_vpc_name = "marvin-dev-use2-1"
 }
@@ -21,7 +21,7 @@ provider "aws" {
   region     = "us-east-2"
   default_tags {
     tags = {
-      ApplicationName    = local.elasticache_name
+      ApplicationName    = local.redis_name
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
@@ -69,7 +69,7 @@ resource "aws_security_group" "redis_security_group" {
 }
 
 resource "aws_elasticache_replication_group" "redis-marvin-dev-use2-1" {
-  replication_group_id       = local.elasticache_name
+  replication_group_id       = local.redis_name
   description                = "Redis cluster ElastiCache"
   engine                     = "redis"
   engine_version             = "7.1"

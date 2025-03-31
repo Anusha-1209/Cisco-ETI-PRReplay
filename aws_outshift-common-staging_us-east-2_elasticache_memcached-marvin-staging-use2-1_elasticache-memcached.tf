@@ -10,8 +10,8 @@ locals {
   # VPC module creates this, there is no way to grab it from the module,
   # so you need to make sure the naming convention is consistent
   subnet_group_name    = "marvin-staging-use2-data-ec-subnet-group"
-  elasticache_name     = "marvin-staging-use2-1"
-  memcached_vpc_name   = "marvin-staging-use2-data"
+  elasticache_name     = "marvin-stage-use2-1"
+  redis_vpc_name   = "marvin-staging-use2-data"
   eks_cluster_vpc_name = "marvin-stage-use2-1"
 }
 
@@ -52,7 +52,7 @@ data "aws_vpc" "cluster_vpc" {
 data "aws_vpc" "memcached_vpc" {
   filter {
     name   = "tag:Name"
-    values = [local.memcached_vpc_name]
+    values = [local.redis_vpc_name]
   }
 }
 
