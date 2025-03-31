@@ -109,7 +109,7 @@ resource "aws_iam_policy" "aws_s3-msk-connect-marvin-staging-1_policy" {
           "s3:List*",
           "s3:Describe*"
         ],
-        "Resource": "arn:aws:s3:::athena-results-marvin-stage-use2-1*"
+        "Resource": "arn:aws:s3:::athena-results-marvin-staging-use2-1*"
       }
     ]
   })
