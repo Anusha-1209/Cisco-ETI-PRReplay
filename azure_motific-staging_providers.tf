@@ -1,6 +1,6 @@
 data "vault_generic_secret" "azure_infra_credential" {
   provider = vault.eticloud
-  path     = "secret/infra/azure/terraform_admin"
+  path     = "secret/infra/azure/motific-staging/provider-access"
 }
 
 provider "vault" {
