@@ -37,7 +37,11 @@ resource "aws_iam_policy" "aws_pi_preview_platform_s3_policy" {
         Action = [
           "s3:*"
         ],
-        Resource = "arn:aws:s3:::pi-preview-platform-s3"
+        Resource = [
+          "arn:aws:s3:::pi-preview-platform-s3/*",
+          "arn:aws:s3:::pi-preview-platform-s3"
+        ]
+
       }
     ]
   })
