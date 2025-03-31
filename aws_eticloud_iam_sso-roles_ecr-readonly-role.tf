@@ -66,6 +66,9 @@ resource "aws_iam_policy" "eks_irsa_ecr_ro_policy" {
   policy = templatefile("${path.module}/policies/ecr_readonly_policy.json", {
     resources = join("\",\"", (formatlist("arn:aws:ecr:us-east-2:626007623524:repository/%s", "${local.eks_irsa["dragonfly"][each.key].resources_names}")))
   })
+  lifecycle {
+    ignore_changes = [ policy ]
+  }
 }
 
 # IAM Policy Attachment
