@@ -5,7 +5,7 @@
 ########################################################
 
 #################################
-# ECR Read Only Access 
+# ECR Read Only Access
 #################################
 locals {
   aws_account_id = "626007623524"
@@ -44,7 +44,7 @@ resource "aws_iam_role" "eks_irsa_ecr_ro" {
   for_each = local.eks_irsa != null ? lookup(local.eks_irsa, "dragonfly", {}) : {}
 
   name = "${local.eks_irsa["dragonfly"][each.key].eks_cluster_name}-eks-irsa-ecr-ro"
-  assume_role_policy = templatefile("${path.module}/policies/assume_role_irsa.tpl", {
+  assume_role_policy = templatefile("${path.module}/policies/assume_role_irsa.json", {
     aws_account_id = local.aws_account_id
     eks_oidc       = local.eks_irsa["dragonfly"][each.key].eks_oidc
     service_accounts = join(
@@ -63,7 +63,7 @@ resource "aws_iam_policy" "eks_irsa_ecr_ro_policy" {
 
   name        = "${local.eks_irsa["dragonfly"][each.key].eks_cluster_name}-eks-irsa-ecr-ro-policy"
   description = "EKS IRSA secret access dragonfly ECR policy"
-  policy = templatefile("${path.module}/policies/ecr_readonly_policy.tpl", {
+  policy = templatefile("${path.module}/policies/ecr_readonly_policy.json", {
     resources = join("\",\"", (formatlist("arn:aws:ecr:us-east-2:626007623524:repository/%s", "${local.eks_irsa["dragonfly"][each.key].resources_names}")))
   })
 }
