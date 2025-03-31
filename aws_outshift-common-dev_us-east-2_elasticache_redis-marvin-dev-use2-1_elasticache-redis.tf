@@ -68,14 +68,21 @@ resource "aws_security_group" "redis_security_group" {
   }
 }
 
-resource "aws_elasticache_cluster" "redis-elastic-cache" {
-  cluster_id           = local.elasticache_name
-  engine               = "redis"
-  node_type            = "cache.m4.large"
-  num_cache_nodes      = 1
-  parameter_group_name = "default.redis3.2"
-  port                 = 6379
-  subnet_group_name             = local.subnet_group_name
-  security_group_ids            = [aws_security_group.redis_security_group.id]
-}
+resource "aws_elasticache_replication_group" "dragonfly-prod-euc1-1" {
+  replication_group_id       = local.elasticache_name
+  description                = "Redis cluster ElastiCache"
+  engine                     = "redis"
+  engine_version             = "7.1"
+  node_type                  = "cache.m4.large"
+  port                       = 6379
+  parameter_group_name       = "default.redis7.cluster.on"
+  automatic_failover_enabled = true
+  at_rest_encryption_enabled = true
+  transit_encryption_enabled = true
 
+  num_node_groups            = 1
+  replicas_per_node_group    = 1
+
+  subnet_group_name          = local.subnet_group_name
+  security_group_ids         = [aws_security_group.redis_security_group.id]
+}
