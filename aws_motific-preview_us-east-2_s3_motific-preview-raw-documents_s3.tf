@@ -54,9 +54,6 @@ resource "aws_s3_bucket_lifecycle_configuration" "motific-preview-raw-documents"
   rule {
     id     = "TTL-policy"
     status = "Enabled"
-    expiration {
-      days = 7
-    }
     noncurrent_version_expiration {
       noncurrent_days = 7
     }
