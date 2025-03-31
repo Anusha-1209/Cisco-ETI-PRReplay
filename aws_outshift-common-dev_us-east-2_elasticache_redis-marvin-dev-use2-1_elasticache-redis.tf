@@ -75,7 +75,6 @@ resource "aws_elasticache_cluster" "redis-elastic-cache" {
   num_cache_nodes      = 1
   parameter_group_name = "default.redis3.2"
   port                 = 6379
-  engine_version       = "3.2.10"
   subnet_group_name             = local.subnet_group_name
   security_group_ids            = [aws_security_group.redis_security_group.id]
 }
