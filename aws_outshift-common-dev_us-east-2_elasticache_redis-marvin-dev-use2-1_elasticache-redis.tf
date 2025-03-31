@@ -68,7 +68,7 @@ resource "aws_security_group" "redis_security_group" {
   }
 }
 
-resource "aws_elasticache_replication_group" "dragonfly-prod-euc1-1" {
+resource "aws_elasticache_replication_group" "redis-marvin-dev-use2-1" {
   replication_group_id       = local.elasticache_name
   description                = "Redis cluster ElastiCache"
   engine                     = "redis"
