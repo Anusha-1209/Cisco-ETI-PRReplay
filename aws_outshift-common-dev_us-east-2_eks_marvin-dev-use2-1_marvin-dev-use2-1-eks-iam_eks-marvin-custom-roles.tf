@@ -108,7 +108,7 @@ resource "aws_iam_policy" "aws_rds_iam_connect_policy" {
           "rds-db:connect"
         ],
         "Resource": [
-          "arn:aws:rds-db:us-east-2:471112537430:dbuser:marvin-dev-use2-1-1/marvin"
+          "arn:aws:rds-db:us-east-2:${local.account_id}:dbuser:marvin-dev-use2-1-1/marvin"
         ]
       }
     ]
@@ -185,7 +185,7 @@ resource "aws_iam_role" "aws_marvin_prompt_inspection_role" {
 }
 
 resource "aws_iam_role" "aws_marvin_auth_role" {
-  name = "MarvinPromptInspectionRole-${local.cluster_name}"
+  name = "MarvinAuthRole-${local.cluster_name}"
   assume_role_policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
@@ -208,7 +208,7 @@ resource "aws_iam_role" "aws_marvin_auth_role" {
 }
 
 resource "aws_iam_role" "aws_marvin_forensic_role" {
-  name = "MarvinPromptInspectionRole-${local.cluster_name}"
+  name = "MarvinForensicRole-${local.cluster_name}"
   assume_role_policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
