@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
     bucket = "eticloud-tf-state-prod"
-    key    = "terraform-state/outshift-common-prod/elasticache/eu-cenral-1/redis-marvin-prod-euc1-1.tfstate"
-    region = "eu-cenral-1"
+    key    = "terraform-state/outshift-common-prod/elasticache/eu-central-1/redis-marvin-prod-euc1-1.tfstate"
+    region = "eu-central-1"
   }
 }
 
@@ -18,7 +18,7 @@ locals {
 provider "aws" {
   access_key = data.vault_generic_secret.aws_infra_credential.data["AWS_ACCESS_KEY_ID"]
   secret_key = data.vault_generic_secret.aws_infra_credential.data["AWS_SECRET_ACCESS_KEY"]
-  region     = "eu-cenral-1"
+  region     = "eu-central-1"
   default_tags {
     tags = {
       ApplicationName    = local.elasticache_name
