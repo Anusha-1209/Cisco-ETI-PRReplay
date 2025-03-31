@@ -10,7 +10,7 @@ locals {
   # VPC module creates this, there is no way to grab it from the module,
   # so you need to make sure the naming convention is consistent
   subnet_group_name    = "marvin-dev-use2-data-ec-subnet-group"
-  elasticache_name     = "marvin-dev-use2-1"
+  elasticache_name     = "marvin-redis-dev-use2-1"
   redis_vpc_name   = "marvin-dev-use2-data"
   eks_cluster_vpc_name = "marvin-dev-use2-1"
 }
