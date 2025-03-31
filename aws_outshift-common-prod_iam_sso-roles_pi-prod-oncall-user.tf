@@ -3,10 +3,14 @@ data "aws_iam_policy_document" "pi-prod-oncall-policy-document" {
     sid    = "1"
     effect = "Allow"
     actions = [
-      "eks:ListClusters"
+      "eks:ListClusters",
+      "sts:AssumeRole",
+      "sts:GetCallerIdentity",
+      "sts:AssumeRoleWithSAML",
+      "sts:AssumeRoleWithWebIdentity"
     ]
     resources = [
-      "arn:aws:eks:us-east-2:${local.account_id}:cluster/*"
+      "*"
     ]
   }
 

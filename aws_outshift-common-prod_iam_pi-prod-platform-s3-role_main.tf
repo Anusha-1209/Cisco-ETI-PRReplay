@@ -48,7 +48,6 @@ resource "aws_iam_policy" "aws_pi_dev_platform_s3_policy" {
 
 resource "aws_iam_role" "aws_pi_dev_platform_s3_role" {
   name = "pi-prod-platform-s3-role"
-
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -61,14 +60,14 @@ resource "aws_iam_role" "aws_pi_dev_platform_s3_role" {
         Condition = {
           StringEquals = {
             "oidc.eks.us-east-2.amazonaws.com/id/06C50AA8E04F72BD02243B0A49DCC8D8:aud" = "sts.amazonaws.com"
-            "oidc.eks.us-east-2.amazonaws.com/id/06C50AA8E04F72BD02243B0A49DCC8D8:sub" = "system:serviceaccount:platform-s3-sa"
+            "oidc.eks.us-east-2.amazonaws.com/id/06C50AA8E04F72BD02243B0A49DCC8D8:sub" = "system:serviceaccount:ppu-prod:platform-s3-sa"
           }
         }
       }
     ]
   })
 
-  force_detach_policies = true
+  force_detach_policies = false
 }
 
 resource "aws_iam_role_policy_attachment" "aws_pi_dev_platform_s3_policy_attachment" {

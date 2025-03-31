@@ -58,14 +58,27 @@ resource "aws_iam_role" "aws_pi_dev_triton_s3_role" {
         Condition = {
           StringEquals = {
             "oidc.eks.us-east-2.amazonaws.com/id/428BED16838229317784F16BFC14546E:aud" = "sts.amazonaws.com"
-            "oidc.eks.us-east-2.amazonaws.com/id/428BED16838229317784F16BFC14546E:sub" = "system:serviceaccount:triton-s3-sa"
+            "oidc.eks.us-east-2.amazonaws.com/id/428BED16838229317784F16BFC14546E:sub" = "system:serviceaccount:ppu-dev:triton-s3-sa"
           }
         }
+      },
+      {
+        Action    = "sts:AssumeRoleWithWebIdentity"
+        Condition = {
+            StringEquals = {
+                "oidc.eks.us-east-2.amazonaws.com/id/428BED16838229317784F16BFC14546E:aud" = "sts.amazonaws.com"
+                "oidc.eks.us-east-2.amazonaws.com/id/428BED16838229317784F16BFC14546E:sub" = "system:serviceaccount:ppu-test:triton-s3-sa"
+              }
+          }
+        Effect    = "Allow"
+        Principal = {
+            Federated = "arn:aws:iam::961088030672:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/428BED16838229317784F16BFC14546E"
+          }
       }
     ]
   })
 
-  force_detach_policies = true
+  force_detach_policies = false
 }
 
 resource "aws_iam_role_policy_attachment" "aws_pi_dev_triton_s3_policy_attachment" {
