@@ -11,7 +11,7 @@ resource "aws_cloudwatch_metric_alarm" "CNDR_Opensearch_Cluster_Index_Writes_Blo
 
   metric_query {
     id = "m1"
-    return_data = "true"
+    return_data = true
     metric {
       metric_name = "ClusterIndexWritesBlocked"
       namespace   = "AWS/ES"

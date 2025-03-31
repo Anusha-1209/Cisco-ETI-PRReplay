@@ -10,6 +10,7 @@ resource "aws_cloudwatch_metric_alarm" "CNDR_Opensearch_No_FreeStorageSpace_Avai
 
   metric_query {
     id = "m1"
+    return_data = true
 
     metric {
       metric_name = "FreeStorageSpace"
