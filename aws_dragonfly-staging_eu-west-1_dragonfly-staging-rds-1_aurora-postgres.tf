@@ -1,5 +1,5 @@
 module "rds" {
-  source            = "git::https://wwwin-github.cisco.com/eti/sre-tf-module-aws-aurora-postgres?ref=1.0.7"
+  source            = "git::https://github.cisco.com/cisco-eti/sre-tf-module-aws-aurora-postgres?ref=1.0.7"
   vpc_name          = "dragonfly-data-staging-1-vpc"
   database_name     = "dragonflywheel"
   db_instance_type  = "db.r5.xlarge"
