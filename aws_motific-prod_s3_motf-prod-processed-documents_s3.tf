@@ -49,8 +49,8 @@ module "s3" {
   CSBCiscoMailAlias     = "eti-sre@cisco.com"
   CSBDataTaxonomy       = "Cisco Operations Data"
 }
-resource "aws_s3_bucket_lifecycle_configuration" "motific-processed-documents" {
-  bucket = "motific-processed-documents"
+resource "aws_s3_bucket_lifecycle_configuration" "motf-prod-processed-documents" {
+  bucket = "motf-prod-processed-documents"
   rule {
     id     = "TTL-policy"
     status = "Enabled"
