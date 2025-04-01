@@ -13,7 +13,7 @@ provider "vault" {
 }
 
 data "vault_generic_secret" "aws_infra_credential" {
-  path     = "secret/infra/aws/dragonfly-staging/terraform_admins"
+  path     = "secret/infra/aws/dragonfly-staging/terraform_admin"
   provider = vault.eticloud
 }
 
