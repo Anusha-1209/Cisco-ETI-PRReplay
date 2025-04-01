@@ -74,7 +74,7 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_table" {
       serialization_library = "org.openx.data.jsonserde.JsonSerDe"
 
       parameters = {
-        paths: "actor,actorRole,actorType,additionalInfo,apiEndpoint,apiName,description,eventType,fullModelOutput,inspectorVersion,prompt,reqId,response,result,seqId,tenantId,timestamp"
+        paths: "actor,actorRole,actorType,additionalInfo,apiEndpoint,apiName,description,eventType,fullModelOutput,inspectorVersion,prompt,reqId,response,result,seqId,tenantId,timestamp,severity,servicename,integrationName"
       }
     }
 
@@ -196,6 +196,11 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_table" {
     }
     columns {
       name    = "severity"
+      type    = "string"
+      comment = ""
+    }
+    columns {
+      name    = "integrationName"
       type    = "string"
       comment = ""
     }

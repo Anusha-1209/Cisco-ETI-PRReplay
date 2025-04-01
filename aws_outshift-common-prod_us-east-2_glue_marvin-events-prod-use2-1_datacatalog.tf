@@ -65,7 +65,7 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_table" {
     type = "string"
   }
   storage_descriptor {
-    location      = "s3://msk-connect-marvin-prod-use2-1/topics/events/"
+    location      = "s3://msk-connect-marvin-dev-use2-1/topics/events/"
     input_format  = "org.apache.hadoop.mapred.TextInputFormat"
     output_format = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat"
 
@@ -74,7 +74,7 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_table" {
       serialization_library = "org.openx.data.jsonserde.JsonSerDe"
 
       parameters = {
-        paths: "actor,actorRole,actorType,additionalInfo,apiEndpoint,apiName,description,eventType,fullModelOutput,inspectorVersion,prompt,reqId,response,result,seqId,tenantId,timestamp"
+        paths: "actor,actorRole,actorType,additionalInfo,apiEndpoint,apiName,description,eventType,fullModelOutput,inspectorVersion,prompt,reqId,response,result,seqId,tenantId,timestamp,severity,servicename,integrationName"
       }
     }
 
@@ -196,6 +196,11 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_table" {
     }
     columns {
       name    = "severity"
+      type    = "string"
+      comment = ""
+    }
+    columns {
+      name    = "integrationName"
       type    = "string"
       comment = ""
     }
