@@ -34,7 +34,7 @@ data "vault_generic_secret" "aws_infra_credential" {
 data "aws_caller_identity" "current" {}
 
 module "eks" {
-  source          = "git::https://wwwin-github.cisco.com/eti/sre-tf-module-aws-eks?ref=2.0.1"
+  source          = "git::https://github.com/cisco-eti/sre-tf-module-aws-eks?ref=2.0.1"
   cluster_name    = "eks-df-staging-1"
   cluster_version = "1.27" # don't roll back!
   cluster_os      = "AmazonLinux2"
