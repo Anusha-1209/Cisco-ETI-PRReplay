@@ -4,7 +4,7 @@ module "rds" {
   database_name     = "dragonflywheel"
   db_instance_type  = "db.r5.xlarge"
   cluster_name      = "dragonfly-rds-1"
-  db_engine_version = "13.11"
+  db_engine_version = "13.12"
   secret_path       = "secret/eticcprod/infra/aurora-pg/eu-west-1/dragonfly-rds-1"
   db_allowed_cidrs = [
     data.aws_vpc.eks_vpc.cidr_block,
