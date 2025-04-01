@@ -8,9 +8,6 @@ data "aws_eks_cluster" "cluster" {
 data "aws_msk_cluster" "dragonfly_msk_1" {
   cluster_name = local.dragonfly_msk_cluster_name
 }
-data "aws_eks_cluster" "cluster" {
-  name = local.cluster_name
-}
 
 data "aws_s3_bucket" "mskconnect_custom_plugin_bucket" {
   bucket = local.arango_connector_plugin_bucket
