@@ -44,7 +44,7 @@ provider "aws" {
 module "vpc" {
   source                          = "git::https://github.com/cisco-eti/sre-tf-module-aws-vpc?ref=2.0.6"
   region                          = local.region
-  vpc_cidr                        = "10.2.0.0/16"
+  vpc_cidr                        = "10.0.0.0/16"
   vpc_name                        = "${local.name}-prod-use1-data"
   cluster_name                    = "${local.name}-prod-use1-data"
   create_database_subnet_group    = true
