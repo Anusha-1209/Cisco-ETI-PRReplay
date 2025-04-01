@@ -29,6 +29,6 @@ provider "aws" {
   region     = "us-east-2"
 }
 module "motific-processed-documents"{
-  source = "./src"
+  source = "./resource"
 
 }
