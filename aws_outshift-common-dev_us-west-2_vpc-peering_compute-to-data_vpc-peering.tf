@@ -6,14 +6,10 @@ terraform {
   }
 }
 
-module "vpc_peering_primary_to_primary"{
+module "vpc_peering_secondary_to_secondary"{
   source             = "git::https://github.com/cisco-eti/sre-tf-module-multi-region-vpc-peering.git?ref=single-region"
   aws_accounts_to_regions = {
-    "accepter" = {
-      account_name = "outshift-common-dev"
-      region       = "us-west-2"
-    }
-    "requester" = {
+    "common" = {
       account_name = "outshift-common-dev"
       region       = "us-west-2"
     }
