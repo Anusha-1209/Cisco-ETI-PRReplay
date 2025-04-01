@@ -5,7 +5,6 @@ data "aws_eks_cluster" "cluster" {
 
 # locals
 locals {
-  account_name       = "dragonfly-production"
   oidc_id            = trimprefix(data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer, "https://")
   vpc_name           = "dragonfly-compute-prod-1-vpc"
   eks_name           = "dragonfly-prod-1"
