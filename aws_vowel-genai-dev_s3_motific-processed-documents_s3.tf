@@ -28,7 +28,27 @@ provider "aws" {
   secret_key = data.vault_generic_secret.aws_infra_credential.data["AWS_SECRET_ACCESS_KEY"]
   region     = "us-east-2"
 }
-module "motific-processed-documents"{
-  source = "./src"
+module "s3" {
+  source      = "git::https://github.com/cisco-eti/sre-tf-module-aws-s3.git?ref=1.0.2"
+  bucket_name = "motific-processed-documents" 
+  #Continuous Security Buddy Tags.
+  #For more information, see the CSB tagging Sharepoint page here:
+  #https://cisco.sharepoint.com/Sites/CSB/SitePages/Security%20Tagging%20and%20Audit%20in%20AWS.aspx
+  CSBDataClassification = "Cisco Restricted"
+  CSBEnvironment        = "NonProd"
+  CSBApplicationName    = "sre-eks"
+  CSBResourceOwner      = "eti"
+  CSBCiscoMailAlias     = "eti-sre@cisco.com"
+  CSBDataTaxonomy       = "Cisco Operations Data"
+}
 
+resource "aws_s3_bucket_lifecycle_configuration" "motific-processed-documents" {
+  bucket = "motific-processed-documents"
+  rule {
+    id     = "TTL-policy"
+    status = "Enabled"
+    noncurrent_version_expiration {
+      noncurrent_days = 7
+    }
+  }
 }
