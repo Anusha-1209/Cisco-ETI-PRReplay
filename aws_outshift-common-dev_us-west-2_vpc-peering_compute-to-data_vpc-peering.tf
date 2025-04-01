@@ -95,7 +95,7 @@ data "aws_caller_identity" "current" {
 
 # VPC peering resources
 resource "aws_vpc_peering_connection" "peering_connection" {
-  provider      = aws.peer
+  provider      = aws.requester
   peer_owner_id = data.aws_caller_identity.current.account_id
   peer_vpc_id   = data.aws_vpc.acceptor_vpc.id
   vpc_id        = data.aws_vpc.requestor_vpc.id
