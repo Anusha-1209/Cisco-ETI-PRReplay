@@ -9,10 +9,3 @@ data "aws_vpc" "eks_vpc" {
     values = ["dragonfly-dev-2-vpc"]
   }
 }
-
-data "aws_vpc" "demo_vpc" {
-  filter {
-    name   = "tag:Name"
-    values = ["dragonfly-demo-1-vpc"]
-  }
-}
