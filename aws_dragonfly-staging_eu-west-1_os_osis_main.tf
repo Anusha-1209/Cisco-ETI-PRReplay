@@ -13,7 +13,7 @@ locals {
       topics = [
         "threat",
         "attack",
-      ]
+      ],
       min_units = 1,
       max_units = 4,
     },
