@@ -39,7 +39,7 @@ provider "aws" {
 module "sqs" {
   source  = "terraform-aws-modules/sqs/aws"
   name = "marvin-collect-events-dev-use2-1"
-  fifo_queue = true
+  fifo_queue = false
   tags = {
     CSBDataClassification = "Cisco Restricted"
     CSBEnvironment        = "NonProd"
