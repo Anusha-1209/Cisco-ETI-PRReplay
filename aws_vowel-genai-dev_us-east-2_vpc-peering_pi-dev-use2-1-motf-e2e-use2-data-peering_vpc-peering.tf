@@ -10,7 +10,7 @@ terraform {
 module "vpc_peering_pi_dev_motf_e2e_data" {
   source = "git::https://github.com/cisco-eti/sre-tf-module-multi-region-vpc-peering.git?ref=1.1.0"
   aws_accounts_to_regions = {
-    "vowel-genai-dev" = {
+    "common" = {
       account_name = "vowel-genai-dev"
       region       = "us-east-2"
     }
