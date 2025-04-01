@@ -9,7 +9,7 @@ terraform {
 locals {
   region           = "us-east-2"
   aws_account_name = "outshift-common-dev"
-  data_vpc         = "comn-dev-use2-1-data"
+  data_vpc         = "common-dev-vpc-data"
   eks_vpc          = "comn-dev-use2-1"
   rds_name         = "rds-common-dev-1"
 }

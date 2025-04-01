@@ -19,7 +19,7 @@ terraform {
 
 locals {
   acceptor_vpc_name  = "comn-dev-use2-1"
-  requestor_vpc_name = "comn-dev-use2-1-data"
+  requestor_vpc_name = "common-dev-vpc-data"
 }
 
 # Get the VPC IDs based on the names of the VPCs
