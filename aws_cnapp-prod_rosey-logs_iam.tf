@@ -73,20 +73,21 @@ resource "aws_iam_policy" "rosey_logs_eu" {
 }
 
 resource "aws_iam_role" "rosey_logs_us" {
-  name = "RoseyLogs-us"
+  provider = aws.us
+  name     = "RoseyLogs-us"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
         Effect = "Allow"
         Principal = {
-          Federated = "arn:aws:iam::${local.account_id}:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/..."
+          Federated = "arn:aws:iam::${local.account_id}:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/EFF9B51923E64F3067C820180603F855"
         }
         Action = "sts:AssumeRoleWithWebIdentity"
         Condition = {
           StringEquals = {
-            "oidc.eks.us-east-2.amazonaws.com/id/...:aud" = "sts.amazonaws.com"
-            "oidc.eks.us-east-2.amazonaws.com/id/...:sub" = "system:serviceaccount:opentelemetry-exporter:*opentelemetry*"
+            "oidc.eks.us-east-2.amazonaws.com/id/EFF9B51923E64F3067C820180603F855:aud" = "sts.amazonaws.com"
+            "oidc.eks.us-east-2.amazonaws.com/id/EFF9B51923E64F3067C820180603F855:sub" = "system:serviceaccount:opentelemetry-exporter:*opentelemetry*"
           }
         }
       }
@@ -97,7 +98,8 @@ resource "aws_iam_role" "rosey_logs_us" {
 }
 
 resource "aws_iam_role" "rosey_logs_eu" {
-  name = "RoseyLogs-eu"
+  provider = aws.eu
+  name     = "RoseyLogs-eu"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -109,8 +111,8 @@ resource "aws_iam_role" "rosey_logs_eu" {
         Action = "sts:AssumeRoleWithWebIdentity"
         Condition = {
           StringEquals = {
-            "oidc.eks.eu-central-1.amazonaws.com/id/...:aud" = "sts.amazonaws.com"
-            "oidc.eks.eu-central-1.amazonaws.com/id/...:sub" = "system:serviceaccount:opentelemetry-exporter:*opentelemetry*"
+            "oidc.eks.eu-central-1.amazonaws.com/id/EFF9B51923E64F3067C820180603F855:aud" = "sts.amazonaws.com"
+            "oidc.eks.eu-central-1.amazonaws.com/id/EFF9B51923E64F3067C820180603F855:sub" = "system:serviceaccount:opentelemetry-exporter:*opentelemetry*"
           }
         }
       }
@@ -120,8 +122,14 @@ resource "aws_iam_role" "rosey_logs_eu" {
   force_detach_policies = false
 }
 
-# Link 2 IAM roles to the same policy
 resource "aws_iam_role_policy_attachment" "rosey_logs_us" {
-  role       = aws_iam_role.rosey_logs[each.key].name
-  policy_arn = aws_iam_policy.rosey_logs[each.key].arn
+  provider   = aws.us
+  role       = aws_iam_role.rosey_logs_us.name
+  policy_arn = aws_iam_policy.rosey_logs_us.arn
+}
+
+resource "aws_iam_role_policy_attachment" "rosey_logs_eu" {
+  provider   = aws.eu
+  role       = aws_iam_role.rosey_logs_eu.name
+  policy_arn = aws_iam_policy.rosey_logs_eu.arn
 }
