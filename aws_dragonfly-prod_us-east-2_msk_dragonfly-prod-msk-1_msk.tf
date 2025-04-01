@@ -146,7 +146,7 @@ resource "vault_generic_secret" "msk_brokers" {
   path = "secret/prod/msk/${data.aws_region.current.name}/${aws_msk_cluster.dragonfly_msk_1.cluster_name}/brokers"
 
   data_json = jsonencode({
-    brokers = aws_msk_cluster.dragonfly_msk_1.bootstrap_brokers_sasl_scram
+    brokers     = aws_msk_cluster.dragonfly_msk_1.bootstrap_brokers_sasl_scram
     brokers-iam = aws_msk_cluster.dragonfly_msk_1.bootstrap_brokers_sasl_iam
   })
 

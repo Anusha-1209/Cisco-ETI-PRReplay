@@ -6,7 +6,7 @@ resource "aws_iam_role" "connector_role" {
     "Statement" : [
       {
         "Effect" = "Allow",
-        "Principal": {
+        "Principal" : {
           "Service" = "kafkaconnect.amazonaws.com"
         },
         "Action" = "sts:AssumeRole",

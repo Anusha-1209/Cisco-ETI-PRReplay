@@ -135,7 +135,7 @@ resource "vault_generic_secret" "msk_brokers" {
   path = "secret/dev/msk/dragonfly-msk-1/brokers"
 
   data_json = jsonencode({
-    brokers = aws_msk_cluster.dragonfly_msk_1.bootstrap_brokers_sasl_scram
+    brokers     = aws_msk_cluster.dragonfly_msk_1.bootstrap_brokers_sasl_scram
     brokers-iam = aws_msk_cluster.dragonfly_msk_1.bootstrap_brokers_sasl_iam
   })
 
@@ -146,7 +146,7 @@ resource "vault_generic_secret" "msk_region_brokers" {
   path = "secret/dev/msk/${data.aws_region.current.name}/dragonfly-msk-1/brokers"
 
   data_json = jsonencode({
-    brokers = aws_msk_cluster.dragonfly_msk_1.bootstrap_brokers_sasl_scram
+    brokers     = aws_msk_cluster.dragonfly_msk_1.bootstrap_brokers_sasl_scram
     brokers-iam = aws_msk_cluster.dragonfly_msk_1.bootstrap_brokers_sasl_iam
   })
 

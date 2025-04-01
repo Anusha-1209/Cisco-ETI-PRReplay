@@ -1,10 +1,10 @@
 resource "aws_mskconnect_custom_plugin" "plugin" {
-  name = "${local.arango_connector_plugin_name}-plugin"
+  name         = "${local.arango_connector_plugin_name}-plugin"
   content_type = "JAR"
   location {
     s3 {
       bucket_arn = data.aws_s3_bucket.mskconnect_custom_plugin_bucket.arn
-      file_key = data.aws_s3_object.arangodb_connector_plugin_jar.key
+      file_key   = data.aws_s3_object.arangodb_connector_plugin_jar.key
     }
   }
 }
@@ -16,7 +16,7 @@ resource "aws_iam_role" "connector_role" {
     Statement = [
       {
         "Effect" = "Allow",
-        "Principal": {
+        "Principal" : {
           "Service" = "kafkaconnect.amazonaws.com"
         },
         "Action" = "sts:AssumeRole"
@@ -98,7 +98,7 @@ data "aws_iam_policy_document" "connector_role_policy_document" {
     ]
   }
 
-statement {
+  statement {
     effect = "Allow"
 
     actions = [
@@ -127,12 +127,12 @@ resource "vault_generic_secret" "kafka_connect_vault" {
   path = "secret/prod/dragonfly-streaman/us/msk"
 
   data_json = jsonencode({
-    mskCustomPluginArn = aws_mskconnect_custom_plugin.plugin.arn,
-    mskCustomPluginRevision = aws_mskconnect_custom_plugin.plugin.latest_revision
-    mskS3LogBucket = data.aws_s3_bucket.mskconnect_logs_bucket.bucket
+    mskCustomPluginArn         = aws_mskconnect_custom_plugin.plugin.arn,
+    mskCustomPluginRevision    = aws_mskconnect_custom_plugin.plugin.latest_revision
+    mskS3LogBucket             = data.aws_s3_bucket.mskconnect_logs_bucket.bucket
     mskServiceExecutionRoleArn = aws_iam_role.connector_role.arn
-    mskVpcSG = aws_security_group.dragonfly_msk_1.id
-    mskVpcSubnets = join(",", data.aws_subnets.msk_subnets.ids)
+    mskVpcSG                   = aws_security_group.dragonfly_msk_1.id
+    mskVpcSubnets              = join(",", data.aws_subnets.msk_subnets.ids)
   })
 
   provider = vault.dragonfly
