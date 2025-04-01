@@ -31,7 +31,9 @@ resource "aws_kms_replica_key" "secondary" {
 
 # Primary region us-east-2
 module "rds_primary" {
-  provider          = aws.primary
+  providers = {
+    aws = aws.primary
+  }
   source            = "git::https://github.com/cisco-eti/sre-tf-module-aws-aurora-postgres?ref=2.0.0-rc1"
   vpc_name          = local.data_primary_vpc
   database_name     = "postgressql"
@@ -48,7 +50,9 @@ module "rds_primary" {
 
 # Secondary region us-east-2
 module "rds_secondary" {
-  provider                  = aws.secondary
+  providers = {
+    aws = aws.secondary
+  }
   source                    = "git::https://github.com/cisco-eti/sre-tf-module-aws-aurora-postgres?ref=2.0.0-rc1"
   vpc_name                  = local.data_secondary_vpc
   database_name             = null
