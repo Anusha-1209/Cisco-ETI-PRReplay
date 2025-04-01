@@ -11,7 +11,7 @@ terraform {
 }
 
 locals {
-  name             = "lightspin-prod-use1-1"
+  name             = "recon-prod-use1-1"
   region           = "us-east-1"
   aws_account_name = "lightspin-prod"
 }
