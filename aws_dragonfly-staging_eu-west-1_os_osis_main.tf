@@ -1,22 +1,31 @@
 locals {
   pipelines = {
     "dragonfly-osis-pipeline-1" = {
-
       topics = [
-        "falco",
         "monitoring",
       ],
-      min_units = 1,
-      max_units = 4,
+      min_units              = 1,
+      max_units              = 4,
+      pipeline_template_file = "./pipeline-monitoring.yaml",
     },
     "dragonfly-osis-pipeline-2" = {
       topics = [
         "threat",
         "attack",
-      ],
-      min_units = 1,
-      max_units = 4,
+      ]
+      min_units              = 1,
+      max_units              = 4,
+      pipeline_template_file = "./pipeline-threats-attacks.yaml",
     },
+    "dragonfly-osis-pipeline-3" = {
+      topics = [
+        "falco",
+      ]
+      min_units              = 1,
+      max_units              = 4,
+      pipeline_template_file = "./pipeline-sa.yaml",
+    },
+  }
   }
 }
 
