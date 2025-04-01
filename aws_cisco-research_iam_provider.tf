@@ -7,15 +7,16 @@ terraform {
   }
 }
 
-data "vault_generic_secret" "aws_infra_credential" {
-  path = ("secret/infra/aws/cisco-research/terraform_admin")
-  provider = vault.eticloud_eticcprod
+# This file was created by Outshift Platform Self-Service automation.
+provider "vault" {
+  alias     = "eticloud"
+  address   = "https://keeper.cisco.com"
+  namespace = "eticloud"
 }
 
-provider "vault" {
-  alias     = "eticloud_eticcprod"
-  address   = "https://keeper.cisco.com"
-  namespace = "eticloud/eticcprod"
+data "vault_generic_secret" "aws_infra_credential" {
+  provider = vault.eticloud
+  path     = "secret/infra/aws/cisco-research/terraform_admin"
 }
 
 provider "aws" {
