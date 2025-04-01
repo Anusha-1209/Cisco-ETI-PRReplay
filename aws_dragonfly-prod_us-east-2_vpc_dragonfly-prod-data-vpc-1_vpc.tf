@@ -1,5 +1,5 @@
 module "vpc" {
-  source                          = "git::https://github.com/cisco-eti/sre-tf-module-aws-vpc?ref=2.0.4"
+  source                          = "git::https://github.com/cisco-eti/sre-tf-module-aws-vpc?ref=2.0.6"
   region                          = "us-east-2"
   vpc_cidr                        = "10.11.0.0/16"
   vpc_name                        = "dragonfly-data-prod-1"
