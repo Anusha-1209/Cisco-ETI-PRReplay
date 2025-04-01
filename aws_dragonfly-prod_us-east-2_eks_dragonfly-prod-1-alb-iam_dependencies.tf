@@ -1,6 +1,5 @@
 data "vault_generic_secret" "aws_infra_credential" {
-  path     = "secret/eticcprod/infra/dragonfly-production/aws"
-  provider = vault.eticloud_eticcprod
+  path     = "secret/infra/aws/dragonfly-prod/terraform_admin"
 }
 
 data "aws_eks_cluster" "cluster" {

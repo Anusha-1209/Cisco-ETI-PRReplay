@@ -62,7 +62,4 @@ module "eks" {
       addon_version = "v1.23.1-eksbuild.1"
     }
   }
-  providers = {
-    vault = vault.eticloud_eticcprod
-  }
 }

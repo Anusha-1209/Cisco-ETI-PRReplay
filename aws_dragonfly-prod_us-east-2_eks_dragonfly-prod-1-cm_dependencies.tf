@@ -1,16 +1,13 @@
 data "vault_generic_secret" "aws_infra_credential" {
-  path     = "secret/eticcprod/infra/dragonfly-production/aws"
-  provider = vault.eticloud_eticcprod
+  path     = "secret/infra/aws/dragonfly-prod/terraform_admin"
 }
 
 data "vault_generic_secret" "cluster_certificate" {
   path     = "secret/infra/eks/dragonfly-prod-1/certificate"
-  provider = vault.eticloud_eticcprod
 }
 
 data "vault_generic_secret" "aws_auth_configmap" {
   path     = "secret/infra/eks/dragonfly-prod-1/aws-auth"
-  provider = vault.eticloud_eticcprod
 }
 
 data "aws_eks_cluster" "cluster" {
