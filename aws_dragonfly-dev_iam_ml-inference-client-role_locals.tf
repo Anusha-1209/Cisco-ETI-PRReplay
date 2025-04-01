@@ -1,5 +1,5 @@
 locals {
-  aws_account        = "dragonfly-prod"
+  aws_account        = "dragonfly-dev"
   role_name          = "ml-inferenceclient-role"
   role_description   = "IAM Role for inference client service"
 
