@@ -36,3 +36,4 @@ module "eso_eticloud" {
   kubernetes_ca   = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
   policies        = ["external-secrets-prod"]
 }
+
