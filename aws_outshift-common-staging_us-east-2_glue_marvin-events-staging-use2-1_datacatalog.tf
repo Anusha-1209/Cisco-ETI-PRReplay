@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket = "eticloud-tf-state-prod"
-    key = "terraform-state/aws/outshift-common-prod/us-east-2/msk/glue-events-table-marvin-prod-use2-1.tfstate"
+    bucket = "eticloud-tf-state-nonprod"
+    key = "terraform-state/aws/outshift-common-staging/us-east-2/msk/glue-events-table-marvin-staging-use2-1.tfstate"
     region = "us-east-2"
   }
 }
@@ -13,7 +13,7 @@ provider "vault" {
 }
 
 data "vault_generic_secret" "aws_infra_credential" {
-  path     = "secret/infra/aws/outshift-common-prod/terraform_admin"
+  path     = "secret/infra/aws/outshift-common-staging/terraform_admin"
   provider = vault.eticloud
 }
 
@@ -23,11 +23,11 @@ provider "aws" {
   region     = "us-east-2"
   default_tags {
     tags = {
-      ApplicationName    = "glue-events-table-marvin-prod-use2-1"
+      ApplicationName    = "glue-events-table-marvin-staging-use2-1"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
-      EnvironmentName    = "Prod"
+      EnvironmentName    = "NonProd"
       ResourceOwner      = "Outshift SRE"
     }
   }
@@ -38,7 +38,7 @@ resource "aws_glue_catalog_database" "aws_glue_catalog_marvin_database" {
 }
 
 resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_table" {
-  name          = "events_prod_use2_1"
+  name          = "events_staging_use2_1"
   database_name = aws_glue_catalog_database.aws_glue_catalog_marvin_database.name
 
   table_type = "EXTERNAL_TABLE"
@@ -65,7 +65,7 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_table" {
     type = "string"
   }
   storage_descriptor {
-    location      = "s3://msk-connect-marvin-prod-use2-1/topics/events/"
+    location      = "s3://msk-connect-marvin-staging-use2-1/topics/events/"
     input_format  = "org.apache.hadoop.mapred.TextInputFormat"
     output_format = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat"
 
@@ -206,4 +206,3 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_table" {
     }
   }
 }
-
