@@ -25,7 +25,7 @@ locals {
       min_units              = 1,
       max_units              = 4,
       pipeline_template_file = "./pipeline-sa.yaml",
-    },
+    }
   }
 }
 
