@@ -111,6 +111,22 @@ resource "aws_iam_policy" "aws_sagemaker_invoke_endpoint_policy" {
   })
 }
 
+resource "aws_iam_policy" "aws_sqs_collect_event_policy" {
+  name        = "SQSMarvinCollectEvent-${local.cluster_name}"
+  description = "${local.cluster_name} AWS Sage Maker Invoke Endpoint Policy"
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [{
+      "Effect": "Allow",
+      "Action": [
+        "sqs:SendMessage",
+        "sqs:ReceiveMessage"
+      ],
+      "Resource": "arn:aws:sqs:*:${local.account_id}:marvin-collect-events-dev-use2-1"
+    }]
+  })
+}
+
 resource "aws_iam_policy" "aws_rds_iam_connect_policy" {
   name        = "RDSIAMConnectPolicy-${local.cluster_name}"
   description = "${local.cluster_name} AWS RDS Connect via IAM Policy"
@@ -250,6 +266,11 @@ resource "aws_iam_role_policy_attachment" "aws_marvin_producer_attachment" {
   policy_arn = aws_iam_policy.aws_s3_kms_read_policy.arn
 }
 
+resource "aws_iam_role_policy_attachment" "aws_marvin_producer_sqs_attachment" {
+  role       = aws_iam_role.aws_marvin_producer_role.name
+  policy_arn = aws_iam_policy.aws_sqs_collect_event_policy.arn
+}
+
 resource "aws_iam_role_policy_attachment" "aws_marvin_batch_processing_athena_attachment" {
   role       = aws_iam_role.aws_marvin_batch_processing_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonAthenaFullAccess"
@@ -271,6 +292,11 @@ resource "aws_iam_role_policy_attachment" "aws_marvin_prompt_inspection_attachme
 resource "aws_iam_role_policy_attachment" "aws_marvin_prompt_inspection_sage_maker_inference_attachment" {
   role       = aws_iam_role.aws_marvin_prompt_inspection_role.name
   policy_arn = aws_iam_policy.aws_sagemaker_invoke_endpoint_policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "aws_marvin_prompt_inspection_sqs_collect_events_attachment" {
+  role       = aws_iam_role.aws_marvin_prompt_inspection_role.name
+  policy_arn = aws_iam_policy.aws_sqs_collect_event_policy.arn
 }
 
 resource "aws_iam_role_policy_attachment" "aws_marvin_auth_rds_attachment" {
