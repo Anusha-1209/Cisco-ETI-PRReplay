@@ -54,7 +54,7 @@ resource "vault_jwt_auth_backend" "oidc" {
   oidc_client_id     = var.oidc_client_id
   oidc_client_secret = data.vault_generic_secret.oidc_credential.data["client_secret"]
   oidc_discovery_url = "https://sso-dbbfec7f.sso.duosecurity.com/oidc/${var.oidc_client_id}"
-  default_role       = "developer"
+  default_role       = "admin"
 }
 
 
@@ -71,7 +71,7 @@ resource "vault_jwt_auth_backend_role" "admin" {
                                   "https://west.keeper.cisco.com/ui/vault/auth/oidc/oidc/callback"]
   bound_audiences              = [var.oidc_client_id]
   bound_claims = {
-    memberof = "CN=eti-${var.venture_name}-vault-admin,OU=Cisco Groups,DC=cisco,DC=com"
+    memberof = "CN=${var.venture_name}-vault-admin,OU=Cisco Groups,DC=cisco,DC=com"
   }
   disable_bound_claims_parsing = true
   bound_claims_type            = "string"
@@ -99,7 +99,7 @@ resource "vault_jwt_auth_backend_role" "developer" {
                                   "https://west.keeper.cisco.com/ui/vault/auth/oidc/oidc/callback"]
   bound_audiences              = [var.oidc_client_id]
   bound_claims = {
-    memberof = "CN=eti-${var.venture_name}-vault-developer,OU=Cisco Groups,DC=cisco,DC=com"
+    memberof = "CN=${var.venture_name}-vault-developer,OU=Cisco Groups,DC=cisco,DC=com"
   }
   disable_bound_claims_parsing = true
   bound_claims_type            = "string"
