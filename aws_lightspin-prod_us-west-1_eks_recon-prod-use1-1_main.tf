@@ -32,7 +32,7 @@ module "eks_all_in_one" {
   min_size       = 3               # EKS node group min size
   max_size       = 5              # EKS node group max size
   desired_size   = 3               # EKS node group desired size
-  create_vpc     = false
+  
   create_karpenter_irsa = true # Create Karpenter IRSA
   create_alb_irsa = true
   create_otel_irsa = true
