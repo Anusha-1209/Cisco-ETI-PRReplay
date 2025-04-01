@@ -1,11 +1,11 @@
 terraform {
   backend "s3" {
     # This is the name of the backend S3 bucket.
-    bucket  = "eticloud-tf-state-prod"
+    bucket = "eticloud-tf-state-prod"
     # This is the path to the Terraform state file in the backend S3 bucket.
-    key     = "terraform-state/aws-dragonfly-production/us-east-2/redis/dragonfly-prod-redis-use2-1.tfstate"
+    key = "terraform-state/aws-dragonfly-production/us-east-2/redis/dragonfly-prod-redis-use2-1.tfstate"
     # This is the region where the backend S3 bucket is located.
-    region  = "us-east-2" # DO NOT CHANGE.
+    region = "us-east-2" # DO NOT CHANGE.
   }
 }
 
@@ -26,8 +26,8 @@ provider "vault" {
 }
 
 data "vault_generic_secret" "aws_infra_credential" {
-  provider    = vault.eticloud
-  path        = "secret/infra/aws/${local.aws_account_name}/terraform_admin"
+  provider = vault.eticloud
+  path     = "secret/infra/aws/${local.aws_account_name}/terraform_admin"
 }
 
 provider "aws" {
@@ -71,18 +71,18 @@ resource "aws_security_group" "redis_security_group" {
   name   = local.subnet_group_name
   vpc_id = data.aws_vpc.redis_vpc.id
   ingress {
-    from_port       = 6379
-    to_port         = 6379
-    protocol        = "tcp"
-    cidr_blocks     = [data.aws_vpc.cluster_vpc.cidr_block]
+    from_port   = 6379
+    to_port     = 6379
+    protocol    = "tcp"
+    cidr_blocks = [data.aws_vpc.cluster_vpc.cidr_block]
   }
 }
 
 resource "aws_elasticache_replication_group" "dragonfly-prod-use2-1" {
-  replication_group_id       = local.name
-  description                = "Redis cluster ElastiCache"
-  engine                     = "redis"
-  engine_version             = "7.1"
+  replication_group_id = local.name
+  description          = "Redis cluster ElastiCache"
+  engine               = "redis"
+  engine_version       = "7.1"
 
   node_type                  = local.node_type
   port                       = 6379
@@ -91,9 +91,9 @@ resource "aws_elasticache_replication_group" "dragonfly-prod-use2-1" {
   at_rest_encryption_enabled = true
   transit_encryption_enabled = true
 
-  num_node_groups            = 1
-  replicas_per_node_group    = 1
+  num_node_groups         = 1
+  replicas_per_node_group = 1
 
-  subnet_group_name          = local.subnet_group_name
-  security_group_ids         = [aws_security_group.redis_security_group.id]
+  subnet_group_name  = local.subnet_group_name
+  security_group_ids = [aws_security_group.redis_security_group.id]
 }
