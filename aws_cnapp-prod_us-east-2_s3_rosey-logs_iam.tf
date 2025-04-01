@@ -24,7 +24,7 @@ resource "aws_iam_policy" "rosey_logs" {
           "sts:AssumeRoleWithWebIdentity"
         ],
         Resource = [
-          "arn:aws:iam::${local.account_id}:role/${aws_iam_role.rosey_logs.name}"
+          "arn:aws:iam::${local.account_id}:role/${aws_iam_role.rosey_logs[each.key].name}"
         ]
       },
       {
@@ -69,6 +69,8 @@ resource "aws_iam_role" "rosey_logs" {
   force_detach_policies = false
 }
 
+
+# Link 2 IAM roles to the same policy
 resource "aws_iam_role_policy_attachment" "rosey_logs" {
   for_each   = local.clusters
   role       = aws_iam_role.rosey_logs[each.key].name
