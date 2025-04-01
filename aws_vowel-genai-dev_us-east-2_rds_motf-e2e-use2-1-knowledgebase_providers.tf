@@ -11,7 +11,7 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = "motf-e2e-use2-1-knowledgebas"
+      ApplicationName    = "motf-e2e-use2-1-knowledgebase"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
