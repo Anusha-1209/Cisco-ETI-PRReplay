@@ -6,18 +6,11 @@ terraform {
   }
 }
 
-module "vpc-peering-us-east-2-eks-us-west-2-data" {
-  source = "git::https://github.com/cisco-eti/sre-tf-module-vpc-peering.git?ref=latest"
-  aws_accounts_to_regions = {
-    "accepter" = {
-      account_name = "vowel-genai-dev"
-      region       = "us-east-2"
-    }
-    "requester" = {
-      account_name = "vowel-genai-dev"
-      region       = "us-west-2"
-    }
-  }
+module "vpc_peering_us-east_2_eks_us_west_2_data" {
+  source             = "git::https://github.com/cisco-eti/sre-tf-module-vpc-peering.git?ref=latest"
+  aws_account_name   = "vowel-genai-dev"
   accepter_vpc_name  = "motf-dev-use2-1"
   requester_vpc_name = "motf-dev-usw2-data"
+  accepter_region    = "us-east-2"
+  requester_region   = "us-west-2"
 }
