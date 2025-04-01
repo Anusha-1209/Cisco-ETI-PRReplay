@@ -12,14 +12,14 @@ data "vault_generic_secret" "aws_infra_credential" {
 terraform {
   backend "s3" {
     bucket = "eticloud-tf-state-nonprod"
-    key    = "terraform-state/vpc-peering/us-east-2/data-eks-common-dev-1.tfstate"
+    key    = "terraform-state/vpc-peering/us-east-2/data-comn-dev-use2-1.tfstate"
     region = "us-east-2"
   }
 }
 
 locals {
-  acceptor_vpc_name  = "eks-common-dev-1"
-  requestor_vpc_name = "eks-common-dev-1-data"
+  acceptor_vpc_name  = "comn-dev-use2-1"
+  requestor_vpc_name = "comn-dev-use2-1-data"
 }
 
 # Get the VPC IDs based on the names of the VPCs
