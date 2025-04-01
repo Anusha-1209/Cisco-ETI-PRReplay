@@ -56,6 +56,7 @@ module "rds_secondary" {
   database_name             = null
   global_cluster_identifier = aws_rds_global_cluster.rds_global.id
   is_primary_cluster        = false
+  master_username           = null
   db_instance_type          = "db.r5.xlarge"
   # headless, no instances
   # instances                 = {}
