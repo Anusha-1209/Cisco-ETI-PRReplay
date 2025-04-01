@@ -43,7 +43,6 @@ module "rds_primary" {
   secret_path       = "secret/dev/infra/aurora-pg/us-east-2/outshift-common-dev/global-rds-common-dev-use2-1"
   db_engine_version = "15.4"
   db_allowed_cidrs  = setunion(data.aws_vpc.eks_primary_vpc.cidr_block, data.aws_vpc.eks_secondary_vpc.cidr_block)
-  ]
 }
 
 # Secondary region us-east-2
