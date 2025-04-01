@@ -9,5 +9,5 @@ locals {
   oidc_id      = trimprefix(data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer, "https://")
 
   dragonfly_backend_namespace = "dragonfly-backend"
-  service_account             = "${local.dragonfly_backend_namespace}:dragonfly-kserve-inference-sa"
+  service_account             = "${local.dragonfly_backend_namespace}:dragonfly-ml-inferenceserver"
 }
