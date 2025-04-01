@@ -96,6 +96,21 @@ resource "aws_iam_policy" "aws_s3-msk-connect-marvin-dev-1_policy" {
   })
 }
 
+resource "aws_iam_policy" "aws_sagemaker_invoke_endpoint_policy" {
+  name        = "RDSIAMConnectPolicy-${local.cluster_name}"
+  description = "${local.cluster_name} AWS Sage Maker Invoke Endpoint Policy"
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": "sagemaker:InvokeEndpoint",
+        "Resource": "*"
+      }
+    ]
+  })
+}
+
 resource "aws_iam_policy" "aws_rds_iam_connect_policy" {
   name        = "RDSIAMConnectPolicy-${local.cluster_name}"
   description = "${local.cluster_name} AWS RDS Connect via IAM Policy"
@@ -251,6 +266,11 @@ resource "aws_iam_role_policy_attachment" "aws_marvin_batch_processing_s3_attach
 resource "aws_iam_role_policy_attachment" "aws_marvin_prompt_inspection_attachment" {
   role       = aws_iam_role.aws_marvin_prompt_inspection_role.name
   policy_arn = aws_iam_policy.aws_s3_read_write_fail_over_requests_policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "aws_marvin_prompt_inspection_sage_maker_inference_attachment" {
+  role       = aws_iam_role.aws_marvin_prompt_inspection_role.name
+  policy_arn = aws_iam_policy.aws_sagemaker_invoke_endpoint_policy.arn
 }
 
 resource "aws_iam_role_policy_attachment" "aws_marvin_auth_rds_attachment" {
