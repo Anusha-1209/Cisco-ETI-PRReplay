@@ -236,11 +236,7 @@ resource "aws_iam_policy" "ci-custom-policy" {
     {
       "Effect": "Allow",
       "Action": [
-        "eks:DescribeCluster",
-        "eks:ListClusters",
-        "eks:ListNodegroups",
-        "eks:DescribeNodegroup",
-        "eks:UpdateKubeconfig"
+        "eks:*"
       ],
       "Resource": "*"
     }
