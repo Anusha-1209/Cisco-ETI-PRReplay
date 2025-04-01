@@ -19,7 +19,7 @@ terraform {
 
 locals {
   acceptor_vpc_name  = "vowel-dev-1-vpc"       # EKS cluster in us-east-2
-  requestor_vpc_name = "motific-dev-usw2-data" # RDS cluster in us-west-2
+  requestor_vpc_name = "motf-dev-usw2-data" # RDS cluster in us-west-2
 }
 
 # Get the VPC IDs based on the names of the VPCs
@@ -54,7 +54,6 @@ data "aws_caller_identity" "current" {
   provider = aws.primary
 }
 
-
 # VPC peering resources
 resource "aws_vpc_peering_connection" "peering_connection" {
   provider      = aws.primary
@@ -71,7 +70,6 @@ resource "aws_vpc_peering_connection" "peering_connection" {
     allow_remote_vpc_dns_resolution = true
   }
 }
-
 
 
 # VPC routing resources
