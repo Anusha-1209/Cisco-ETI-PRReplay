@@ -4,12 +4,12 @@ data "vault_generic_secret" "aws_infra_credential" {
 }
 
 data "vault_generic_secret" "cluster_certificate" {
-  path = "secret/infra/eks/dragonfly-prod-1/certificate"
+  path     = "secret/infra/eks/dragonfly-prod-1/certificate"
   provider = vault.eticloud
 }
 
 data "vault_generic_secret" "aws_auth_configmap" {
-  path = "secret/infra/eks/dragonfly-prod-1/aws-auth"
+  path     = "secret/infra/eks/dragonfly-prod-1/aws-auth"
   provider = vault.eticloud
 }
 

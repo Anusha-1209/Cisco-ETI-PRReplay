@@ -63,7 +63,7 @@ module "eks" {
     }
   }
 
-    providers = {
+  providers = {
     vault = vault.eticloud
   }
 }

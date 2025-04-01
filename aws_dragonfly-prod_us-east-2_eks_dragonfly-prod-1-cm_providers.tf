@@ -1,7 +1,7 @@
 provider "vault" {
   address   = "https://keeper.cisco.com"
   namespace = "eticloud"
-  alias    = "eticloud"
+  alias     = "eticloud"
 }
 
 # Infra AWS Provider
