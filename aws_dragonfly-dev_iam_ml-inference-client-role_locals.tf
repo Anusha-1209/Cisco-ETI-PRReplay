@@ -4,7 +4,7 @@ locals {
   role_description   = "IAM Role for inference client service"
 
   # AWS EKS Cluster
-  cluster_name = "dragonfly-prod-1"
+  cluster_name = "eks-dragonfly-dev-2"
   oidc_id      = trimprefix(data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer, "https://")
 
   # AWS MSK Cluster
