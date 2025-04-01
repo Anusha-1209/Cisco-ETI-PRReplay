@@ -204,3 +204,58 @@ resource "vault_kv_secret_v2" "ci_gha_backend_secret" {
 # - create an automated job that rotates the Secret ID and Role ID for `ci-gha-approle` in GitHub Actions Secrets.
 
 #endregion
+
+#region RESOURCES FOR SELF-SERVICE-APPROLE #######
+
+data "local_file" "self_service_policy_hcl" {
+  filename = "policies/self-service-policy.hcl"
+}
+
+resource "vault_policy" "self_service_policy" {
+  provider = vault.eticloud
+  name     = "self-service-approle"
+  policy   = data.local_file.self_service_policy_hcl.content
+
+  # lifecycle {
+  #   replace_triggered_by = [
+  #     data.local_file.self-service-policy-hcl.content
+  #   ]
+  # }
+}
+
+resource "vault_approle_auth_backend_role" "self_service_approle" {
+  provider       = vault.eticloud
+  backend        = vault_auth_backend.approle.path
+  role_name      = "self-service-approle"
+  token_policies = ["default", "self-service-approle"]
+  depends_on     = [
+    vault_policy.self_service_policy
+  ]
+}
+
+# Secret ID for the backend role. Required for automation.
+resource "vault_approle_auth_backend_role_secret_id" "self_service_backend_role_secret_id" {
+  provider  = vault.eticloud
+  backend   = vault_auth_backend.approle.path
+  role_name = vault_approle_auth_backend_role.self_service_approle.role_name
+}
+
+# Creates a secret with the backend role name, id, and secret id. Will be entered manually into Jenkins.
+resource "vault_kv_secret_v2" "self_service_backend_secret" {
+  provider  = vault.eticloud
+  mount     = "ci"
+  name      = "approle/self-service-approle"
+  data_json = jsonencode(
+    {
+      role_name = vault_approle_auth_backend_role.self_service_approle.role_name
+      role_id   = vault_approle_auth_backend_role.self_service_approle.role_id
+      secret_id = vault_approle_auth_backend_role_secret_id.self_service_backend_role_secret_id.secret_id
+    }
+  )
+}
+
+# TODO: automate rotating approle's RoleID and SecretID
+# - generate this approle's Secret ID and Role ID and store it in Vault - in testing
+# - create an automated job that rotates the Secret ID and Role ID for `self-service-approle`.
+
+#endregion
