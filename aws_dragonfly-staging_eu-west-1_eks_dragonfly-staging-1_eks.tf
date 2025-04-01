@@ -25,6 +25,7 @@ provider "aws" {
 provider "vault" {
   address   = "https://keeper.cisco.com"
   namespace = "eticloud"
+  alias     = "eticloud"
 }
 
 data "vault_generic_secret" "aws_infra_credential" {
@@ -96,5 +97,9 @@ module "eks" {
     aws-ebs-csi-driver = {
       addon_version = "v1.23.1-eksbuild.1"
     }
+  }
+
+  providers = {
+    vault = vault.eticloud
   }
 }
