@@ -223,7 +223,8 @@ locals {
     "external-secrets-comn-dev-use2-1"      = "policies/external-secrets-comn-dev-use2-1.hcl",
     "external-secrets-comn-staging-use2-1"  = "policies/external-secrets-comn-staging-use2-1.hcl",
     "external-secrets-comn-staging-usw2-1"  = "policies/external-secrets-comn-staging-usw2-1.hcl",
-    "external-secrets-eks-common-prod-1"    = "policies/external-secrets-eks-common-prod-1.hcl",
+    "external-secrets-comn-prod-use2-1"     = "policies/external-secrets-comn-prod-use2-1.hcl",
+    "external-secrets-comn-prod-usw2-1"     = "policies/external-secrets-comn-prod-usw2-1.hcl",
   }
 }
 
