@@ -120,7 +120,8 @@ resource "aws_iam_policy" "aws_sqs_collect_event_policy" {
       "Effect": "Allow",
       "Action": [
         "sqs:SendMessage",
-        "sqs:ReceiveMessage"
+        "sqs:ReceiveMessage",
+        "sqs:DeleteMessage"
       ],
       "Resource": "arn:aws:sqs:*:${local.account_id}:marvin-collect-events-dev-use2-1"
     }]
