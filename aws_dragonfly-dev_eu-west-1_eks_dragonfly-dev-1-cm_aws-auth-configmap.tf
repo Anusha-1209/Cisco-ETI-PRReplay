@@ -48,12 +48,12 @@ provider "aws" {
 
 data "vault_generic_secret" "cluster_certificate" {
   path     = "secret/infra/eks/eks-dragonfly-dev-2/certificate"
-  provider = vault.eticloud_eticcprod
+  provider = vault.eticloud
 }
 
 data "vault_generic_secret" "aws_auth_configmap" {
   path     = "secret/infra/eks/eks-dragonfly-dev-2/aws-auth"
-  provider = vault.eticloud_eticcprod
+  provider = vault.eticloud
 }
 
 data "aws_eks_cluster" "cluster" {
