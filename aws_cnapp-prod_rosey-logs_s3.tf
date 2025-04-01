@@ -41,7 +41,6 @@ resource "aws_s3_bucket_lifecycle_configuration" "rosey_logs_us" {
     id     = "TTL-policy"
     status = "Enabled"
 
-    # expiration TBD
     expiration {
       days = 7
     }
@@ -55,7 +54,6 @@ resource "aws_s3_bucket_lifecycle_configuration" "rosey_logs_eu" {
     id     = "TTL-policy"
     status = "Enabled"
 
-    # expiration TBD
     expiration {
       days = 7
     }

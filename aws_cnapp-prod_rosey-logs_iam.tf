@@ -4,8 +4,8 @@ data "aws_caller_identity" "current" {}
 
 resource "aws_iam_policy" "rosey_logs" {
   for_each    = local.clusters
-  name        = "RoseyLogs-${substr(each.key, 0, 2)}"
-  description = "IAM Policy required in order to write to the rosey-logs-${substr(each.key, 0, 2)} bucket"
+  name        = "RoseyLogs-${each.value.region_prefix}"
+  description = "IAM Policy required in order to write to the rosey-logs-${each.value.region_prefix} bucket"
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -26,8 +26,8 @@ resource "aws_iam_policy" "rosey_logs" {
           "s3:*Object"
         ],
         Resource = [
-          "arn:aws:s3:::rosey-logs-${substr(each.key, 0, 2)}/*",
-          "arn:aws:s3:::rosey-logs-${substr(each.key, 0, 2)}",
+          "arn:aws:s3:::rosey-logs-${each.value.region_prefix}/*",
+          "arn:aws:s3:::rosey-logs-${each.value.region_prefix}",
         ]
       }
     ]
@@ -36,20 +36,20 @@ resource "aws_iam_policy" "rosey_logs" {
 
 resource "aws_iam_role" "rosey_logs" {
   for_each = local.clusters
-  name     = "RoseyLogs-${substr(each.key, 0, 2)}"
+  name     = "RoseyLogs-${each.value.region_prefix}"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
         Effect = "Allow"
         Principal = {
-          Federated = "arn:aws:iam::${local.account_id}:oidc-provider/oidc.eks.${each.key}.amazonaws.com/id/${each.value}"
+          Federated = "arn:aws:iam::${local.account_id}:oidc-provider/oidc.eks.${each.value.region}.amazonaws.com/id/${each.value.oidc_provider_id}"
         }
         Action = "sts:AssumeRoleWithWebIdentity"
         Condition = {
           StringEquals = {
-            "oidc.eks.${each.key}.amazonaws.com/id/${each.value}:aud" = "sts.amazonaws.com"
-            "oidc.eks.${each.key}.amazonaws.com/id/${each.value}:sub" = "system:serviceaccount:opentelemetry-exporter:*opentelemetry*"
+            "oidc.eks.${each.value.region}.amazonaws.com/id/${each.value.oidc_provider_id}:aud" = "sts.amazonaws.com"
+            "oidc.eks.${each.value.region}.amazonaws.com/id/${each.value.oidc_provider_id}:sub" = "system:serviceaccount:opentelemetry-exporter:*opentelemetry*"
           }
         }
       }
