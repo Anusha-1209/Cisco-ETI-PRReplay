@@ -28,7 +28,7 @@ module "ec2" {
   aws_account_name = "cisco-research"
 
   # EC2 instance type
-  instance_type = "m6a.large"
+  instance_type = "m6a.xlarge"
 
   # AMI Type
   ami_type = "UBUNTU"
