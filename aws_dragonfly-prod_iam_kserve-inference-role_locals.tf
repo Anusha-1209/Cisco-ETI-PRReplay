@@ -1,5 +1,5 @@
 locals {
-  aws_account        = "dragonfly-staging"
+  aws_account        = "dragonfly-prod"
   role_name          = "dragonfly-kserve-inference-role"
   role_description   = "IAM Role for kserve inference service"
 
