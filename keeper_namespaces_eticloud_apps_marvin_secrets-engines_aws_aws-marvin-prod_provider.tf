@@ -9,7 +9,7 @@ provider "vault" {
 
 data "vault_generic_secret" "aws_infra_credential" {
   provider = vault.eticloud
-  path     = "secret/infra/aws/marvin-prod/terraform_admin"
+  path     = "secret/infra/aws/outshift-common-prod/terraform_admin"
 }
 
 
