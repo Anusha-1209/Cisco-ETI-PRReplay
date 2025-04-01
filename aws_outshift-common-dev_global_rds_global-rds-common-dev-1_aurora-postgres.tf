@@ -11,7 +11,6 @@ resource "aws_rds_global_cluster" "rds_global" {
   # global RDS cluster aren't tied to a region so the provider should not matter here
   provider                     = aws.primary
   global_cluster_identifier    = "global-rds-common-dev-1"
-  database_name                = "postgressql"
   force_destroy                = true
   source_db_cluster_identifier = module.rds_primary.cluster_arn
   depends_on                   = [module.rds_primary]
