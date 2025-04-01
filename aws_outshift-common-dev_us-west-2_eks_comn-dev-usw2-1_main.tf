@@ -21,7 +21,7 @@ module "eks_all_in_one" {
   name             = local.name             # EKS cluster name
   region           = local.region           # AWS provider region
   aws_account_name = local.aws_account_name # AWS account name
-  cidr             = "10.1.0.0/16"          # VPC CIDR
+  cidr             = "10.2.0.0/16"          # VPC CIDR
   cluster_version  = "1.29"                 # EKS cluster version
 
   # EKS Managed Private Node Group
