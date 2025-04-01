@@ -21,7 +21,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
   }
 }
 
-resource "aws_iam_policy" "dragonfly_streaman_kafkconnect_policy" {
+resource "aws_iam_policy" "policy" {
   name        = "${local.cluster_name}-streaman-kafkaconnect-policy"
   description = "${local.cluster_name} policy for streaman role"
   policy = templatefile(
@@ -37,10 +37,7 @@ resource "aws_iam_role" "role" {
   description = local.role_description
 
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
-  inline_policy {
-    name   = "kserve-inference-policy"
-    policy = data.aws_iam_policy_document.policy.json
-  }
-
-  managed_policy_arns = []
+  managed_policy_arns = [
+    aws_iam_policy.policy.arn
+  ]
 }
