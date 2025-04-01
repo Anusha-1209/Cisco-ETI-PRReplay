@@ -82,3 +82,26 @@ resource "aws_iam_role" "role" {
 
   managed_policy_arns = []
 }
+
+data "aws_iam_policy_document" "sqs_policy" {
+  statement {
+    sid = "PortshiftSQSAccess"
+
+    actions = [
+      "sqs:*"
+    ]
+    resources = [
+      "arn:aws:sqs:us-east-1:579418176921:queue-eventsForwarderTopic-lightspin"
+    ]
+  }
+}
+resource "aws_iam_policy" "portshift_sqs_policy" {
+  name        = "${local.cluster_name}-streaman-portshift-sqs"
+  description = "${local.cluster_name} policy for event manager role"
+  policy      = data.aws_iam_policy_document.sqs_policy.json
+}
+
+resource "aws_iam_role_policy_attachment" "dragonfly_event_manager_sqs_policy_attachment" {
+  role       = aws_iam_role.role.name
+  policy_arn = aws_iam_policy.portshift_sqs_policy.arn
+}
