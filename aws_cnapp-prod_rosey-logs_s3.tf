@@ -1,7 +1,3 @@
-locals {
-  bucket_names = ["rosey-logs-us", "rosey-logs-eu"]
-}
-
 # https://github.com/hashicorp/terraform/issues/24476
 # have to repeat module call due to using 2 providers for each AWS region
 module "s3-us" {
@@ -38,9 +34,23 @@ module "s3-eu" {
   CSBDataTaxonomy       = "Cisco Operations Data"
 }
 
-resource "aws_s3_bucket_lifecycle_configuration" "rosey-logs" {
-  for_each = toset(local.bucket_names)
-  bucket   = each.key
+resource "aws_s3_bucket_lifecycle_configuration" "rosey_logs_us" {
+  provider = aws.us
+  bucket   = "rosey-logs-us"
+  rule {
+    id     = "TTL-policy"
+    status = "Enabled"
+
+    # expiration TBD
+    expiration {
+      days = 7
+    }
+  }
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "rosey_logs_eu" {
+  provider = aws.us
+  bucket   = "rosey-logs-eu"
   rule {
     id     = "TTL-policy"
     status = "Enabled"
