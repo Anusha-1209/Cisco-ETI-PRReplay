@@ -128,7 +128,17 @@ resource "aws_iam_policy" "ci-custom-policy" {
     {
       "Effect": "Allow",
       "Action": [
-        "iam:*"
+        "iam:CreateRole",
+        "iam:AttachRolePolicy",
+        "iam:DetachRolePolicy",
+        "iam:PutRolePolicy",
+        "iam:CreatePolicy",
+        "iam:GetPolicy",
+        "iam:DeletePolicy",
+        "iam:GetRole",
+        "iam:DeleteRole",
+        "iam:PassRole",
+        "iam:DeleteRolePolicy"
       ],
       "Resource": "*"
     }
