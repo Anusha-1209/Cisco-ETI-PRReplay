@@ -3,7 +3,7 @@ data "aws_caller_identity" "current" {
 }
 
 locals {
-    account_id = data.aws_caller_identity.current.account_id
+  account_id = data.aws_caller_identity.current.account_id
 }
 
 #region Create the IAM user secret engine will use to auth against AWS
@@ -38,7 +38,6 @@ resource "aws_iam_user_policy" "vault-secret-engine-user-apisec" {
   ]
 }
 EOF
-  
 }
 #endregion
 
@@ -47,14 +46,14 @@ resource "aws_iam_role" "ci-s3-push" {
   provider           = aws.apisec
   name               = "ci-s3-push"
   assume_role_policy = jsonencode({
-    "Version" : "2012-10-17",
-    "Statement" : [
+    "Version": "2012-10-17",
+    "Statement": [
       {
-        "Effect" : "Allow",
-        "Principal" : {
-          "AWS" : "${aws_iam_user.vault-secret-engine-user-apisec.arn}"
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "${aws_iam_user.vault-secret-engine-user-apisec.arn}"
         },
-        "Action" : "sts:AssumeRole"
+        "Action": "sts:AssumeRole"
       }
     ]
   })
@@ -108,14 +107,14 @@ resource "aws_iam_role" "ci-default-role" {
   provider           = aws.apisec
   name               = "ci-default"
   assume_role_policy = jsonencode({
-    "Version" : "2012-10-17",
-    "Statement" : [
+    "Version": "2012-10-17",
+    "Statement": [
       {
-        "Effect" : "Allow",
-        "Principal" : {
-          "AWS" : "${aws_iam_user.vault-secret-engine-user-apisec.arn}"
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "${aws_iam_user.vault-secret-engine-user-apisec.arn}"
         },
-        "Action" : "sts:AssumeRole"
+        "Action": "sts:AssumeRole"
       },
       {
         "Effect": "Allow",
@@ -124,7 +123,7 @@ resource "aws_iam_role" "ci-default-role" {
         },
         "Action": "sts:AssumeRole",
         "Condition": {}
-    }
+      }
     ]
   })
 
@@ -139,29 +138,28 @@ resource "aws_iam_role_policy_attachment" "ci-default-s3-write-policy-attach" {
   policy_arn = aws_iam_policy.ci-s3-write-policy.arn
 }
 #endregion
-# Existing Terraform configuration...
 
-# Additional IAM role for the user
+#region ci-custom role and policy
 resource "aws_iam_role" "ci-custom-role" {
   provider           = aws.apisec
   name               = "ci-custom-role"
   assume_role_policy = jsonencode({
-    Version : "2012-10-17",
-    Statement : [
+    "Version": "2012-10-17",
+    "Statement": [
       {
-        "Effect" : "Allow",
-        "Principal" : {
-        "AWS" : "${aws_iam_user.vault-secret-engine-user-apisec.arn}"
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "${aws_iam_user.vault-secret-engine-user-apisec.arn}"
         },
-        "Action" : "sts:AssumeRole"
+        "Action": "sts:AssumeRole"
       }
     ]
   })
-   tags = {
+
+  tags = {
     Name = "ci-custom-role"
   }
 }
-
 
 resource "aws_iam_policy" "ci-custom-policy" {
   provider    = aws.apisec
@@ -234,16 +232,26 @@ resource "aws_iam_policy" "ci-custom-policy" {
         "apigateway:*"
       ],
       "Resource": "arn:aws:apigateway:*::/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "eks:DescribeCluster",
+        "eks:ListClusters",
+        "eks:ListNodegroups",
+        "eks:DescribeNodegroup",
+        "eks:UpdateKubeconfig"
+      ],
+      "Resource": "*"
     }
   ]
 }
 EOF
 }
 
-# Attach the custom policy to the ci-custom-role
 resource "aws_iam_role_policy_attachment" "ci-custom-policy-attach" {
   provider   = aws.apisec
   role       = aws_iam_role.ci-custom-role.name
   policy_arn = aws_iam_policy.ci-custom-policy.arn
 }
-
+#endregion
