@@ -38,7 +38,7 @@ module "vpc" {
   source                          = "git::https://github.com/cisco-eti/sre-tf-module-aws-vpc?ref=2.0.6"
   region                          = "eu-west-1"
   vpc_cidr                        = "10.10.0.0/16"
-  vpc_name                        = "dragonfly-compute-staging-1-vpc"
+  vpc_name                        = "dragonfly-compute-staging-1"
   cluster_name                    = "eks-df-staging-1"
   create_database_subnet_group    = false
   create_elasticache_subnet_group = false
