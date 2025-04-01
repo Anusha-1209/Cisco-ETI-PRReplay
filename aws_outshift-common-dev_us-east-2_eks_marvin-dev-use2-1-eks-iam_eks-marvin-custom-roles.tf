@@ -290,7 +290,7 @@ resource "aws_iam_role_policy_attachment" "aws_marvin_producer_sqs_attachment" {
   policy_arn = aws_iam_policy.aws_sqs_collect_event_policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "aws_marvin_producer_sqs_attachment" {
+resource "aws_iam_role_policy_attachment" "aws_marvin_producer_comprehend_attachment" {
   role       = aws_iam_role.aws_marvin_producer_role.name
   policy_arn = aws_iam_policy.aws_rds_aws_comprehend_policy.arn
 }
