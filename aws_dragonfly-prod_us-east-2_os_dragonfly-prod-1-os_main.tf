@@ -13,7 +13,7 @@ resource "aws_opensearch_domain" "dragonfly_prod_1_os" {
     dedicated_master_count   = 3
     dedicated_master_type    = var.instance_type
 
-    instance_count = 12
+    instance_count = 6
     instance_type  = var.instance_type
 
     warm_enabled = true
