@@ -97,7 +97,7 @@ resource "aws_iam_policy" "aws_s3-msk-connect-marvin-dev-1_policy" {
 }
 
 resource "aws_iam_policy" "aws_sagemaker_invoke_endpoint_policy" {
-  name        = "RDSIAMConnectPolicy-${local.cluster_name}"
+  name        = "SageMakerConnectPolicy-${local.cluster_name}"
   description = "${local.cluster_name} AWS Sage Maker Invoke Endpoint Policy"
   policy = jsonencode({
     "Version": "2012-10-17",
