@@ -206,3 +206,4 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_table" {
     }
   }
 }
+
