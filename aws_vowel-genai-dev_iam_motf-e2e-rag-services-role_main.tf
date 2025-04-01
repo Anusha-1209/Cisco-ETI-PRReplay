@@ -57,39 +57,39 @@ resource "aws_iam_role" "aws_motf_e2e_rag_services_role" {
       {
         Effect = "Allow",
         Principal = {
-          Federated = "arn:aws:iam::961088030672:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6"
+          Federated = "arn:aws:iam::961088030672:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/C1CB13EB43CD94EE17721A0719CCF08D"
         },
         Action = "sts:AssumeRoleWithWebIdentity",
         Condition = {
           StringEquals = {
-            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:aud" : "sts.amazonaws.com",
-            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:sub" : "system:serviceaccount:vowel-system:rag-acquisition-sa"
+            "oidc.eks.us-east-2.amazonaws.com/id/C1CB13EB43CD94EE17721A0719CCF08D:aud" : "sts.amazonaws.com",
+            "oidc.eks.us-east-2.amazonaws.com/id/C1CB13EB43CD94EE17721A0719CCF08D:sub" : "system:serviceaccount:vowel-system:rag-acquisition-sa"
           }
         }
       },
       {
         Effect = "Allow",
         Principal = {
-          Federated = "arn:aws:iam::961088030672:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6"
+          Federated = "arn:aws:iam::961088030672:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/C1CB13EB43CD94EE17721A0719CCF08D"
         },
         Action = "sts:AssumeRoleWithWebIdentity",
         Condition = {
           StringEquals = {
-            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:aud" : "sts.amazonaws.com",
-            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:sub" : "system:serviceaccount:vowel-system:rag-inference-sa"
+            "oidc.eks.us-east-2.amazonaws.com/id/C1CB13EB43CD94EE17721A0719CCF08D:aud" : "sts.amazonaws.com",
+            "oidc.eks.us-east-2.amazonaws.com/id/C1CB13EB43CD94EE17721A0719CCF08D:sub" : "system:serviceaccount:vowel-system:rag-inference-sa"
           }
         }
       },
       {
         Effect = "Allow",
         Principal = {
-          Federated = "arn:aws:iam::961088030672:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6"
+          Federated = "arn:aws:iam::961088030672:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/C1CB13EB43CD94EE17721A0719CCF08D"
         },
         Action = "sts:AssumeRoleWithWebIdentity",
         Condition = {
           StringEquals = {
-            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:aud" : "sts.amazonaws.com",
-            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:sub" : "system:serviceaccount:vowel-system:rag-ingestion-manager-sa"
+            "oidc.eks.us-east-2.amazonaws.com/id/C1CB13EB43CD94EE17721A0719CCF08D:aud" : "sts.amazonaws.com",
+            "oidc.eks.us-east-2.amazonaws.com/id/C1CB13EB43CD94EE17721A0719CCF08D:sub" : "system:serviceaccount:vowel-system:rag-ingestion-manager-sa"
           }
         }
       },
@@ -97,13 +97,13 @@ resource "aws_iam_role" "aws_motf_e2e_rag_services_role" {
         Action    = "sts:AssumeRoleWithWebIdentity"
         Condition = {
             StringEquals = {
-                "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:aud" = "sts.amazonaws.com"
-                "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:sub" = "system:serviceaccount:vowel-system:rag-doc-processor-sa"
+                "oidc.eks.us-east-2.amazonaws.com/id/C1CB13EB43CD94EE17721A0719CCF08D:aud" = "sts.amazonaws.com"
+                "oidc.eks.us-east-2.amazonaws.com/id/C1CB13EB43CD94EE17721A0719CCF08D:sub" = "system:serviceaccount:vowel-system:rag-doc-processor-sa"
               }
           }
         Effect    = "Allow"
         Principal = {
-            Federated = "arn:aws:iam::961088030672:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6"
+            Federated = "arn:aws:iam::961088030672:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/C1CB13EB43CD94EE17721A0719CCF08D"
           }
       }
     ]
