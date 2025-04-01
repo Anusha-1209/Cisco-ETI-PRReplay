@@ -218,7 +218,8 @@ locals {
     "external-secrets-dev"                  = "policies/external-secrets-dev.hcl",
     "external-secrets"                      = "policies/external-secrets.hcl",
     "jenkins"                               = "policies/jenkins.hcl",
-    "external-secrets-eks-common-dev-1"     = "policies/external-secrets-eks-common-dev-1.hcl",
+    "external-secrets-comn-dev-use2-1"      = "policies/external-secrets-comn-dev-use2-1.hcl",
+    "external-secrets-comn-dev-usw2-1"      = "policies/external-secrets-comn-dev-usw2-1.hcl",
   }
 }
 
