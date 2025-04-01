@@ -19,7 +19,6 @@ terraform {
 }
 
 locals {
-  region            = "us-east-2"
   aws_account_name  = "outshift-common-prod"
   data_vpc          = "common-prod-use2-vpc-data"
   primary_eks_vpc   = "comn-prod-use2-1"
@@ -42,14 +41,14 @@ provider "aws" {
   alias      = "primary"
   access_key = data.vault_generic_secret.aws_infra_credential.data["AWS_ACCESS_KEY_ID"]
   secret_key = data.vault_generic_secret.aws_infra_credential.data["AWS_SECRET_ACCESS_KEY"]
-  region     = local.region
+  region     = "us-east-2"
 }
 
 provider "aws" {
   alias      = "secondary"
   access_key = data.vault_generic_secret.aws_infra_credential.data["AWS_ACCESS_KEY_ID"]
   secret_key = data.vault_generic_secret.aws_infra_credential.data["AWS_SECRET_ACCESS_KEY"]
-  region     = local.region
+  region     = "us-west-2"
 }
 
 data "aws_vpc" "primary_eks_vpc" {
