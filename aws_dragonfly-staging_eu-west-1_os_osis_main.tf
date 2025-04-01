@@ -26,7 +26,6 @@ locals {
       pipeline_template_file = "./pipeline-sa.yaml",
     },
   }
-  }
 }
 
 resource "awscc_osis_pipeline" "ingestion_pipeline" {
