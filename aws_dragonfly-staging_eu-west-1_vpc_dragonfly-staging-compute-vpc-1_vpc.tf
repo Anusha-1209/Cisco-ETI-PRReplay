@@ -35,7 +35,7 @@ data "vault_generic_secret" "aws_infra_credential" {
 }
 
 module "vpc" {
-  source                          = "git::https://github.cisco.com/cisco-eti/sre-tf-module-aws-vpc?ref=2.0.4"
+  source                          = "git::https://github.com/cisco-eti/sre-tf-module-aws-vpc?ref=2.0.4"
   region                          = "eu-west-1"
   vpc_cidr                        = "10.10.0.0/16"
   vpc_name                        = "dragonfly-compute-staging-1"
