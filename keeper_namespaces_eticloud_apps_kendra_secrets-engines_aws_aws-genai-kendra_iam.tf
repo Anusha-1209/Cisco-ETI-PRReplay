@@ -131,7 +131,7 @@ resource "aws_iam_policy" "ci-custom-policy" {
         "iam:*"
       ],
       "Resource": "*"
-    },
+    }
   ]
 }
 EOF
