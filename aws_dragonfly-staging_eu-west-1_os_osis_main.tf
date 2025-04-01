@@ -32,7 +32,8 @@ resource "awscc_osis_pipeline" "ingestion_pipeline" {
   for_each = local.pipelines
 
   pipeline_name = each.key
-  pipeline_configuration_body = templatefile("./pipeline.yaml", {
+  pipeline_configuration_body = templatefile(
+    each.value.pipeline_template_file, {
     region          = data.aws_region.current.name
     sts_role_arn    = module.pipeline_role.iam_role_arn
     opensearch_host = data.aws_opensearch_domain.dragonfly_staging_1_os.endpoint
