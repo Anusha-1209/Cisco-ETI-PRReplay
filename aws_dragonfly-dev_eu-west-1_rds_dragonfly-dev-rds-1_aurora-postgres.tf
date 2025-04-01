@@ -8,6 +8,5 @@ module "rds" {
   secret_path       = "secret/eticcprod/infra/aurora-pg/eu-west-1/dragonfly-rds-1"
   db_allowed_cidrs = [
     data.aws_vpc.eks_vpc.cidr_block,
-    data.aws_vpc.demo_vpc.cidr_block,
   ]
 }
