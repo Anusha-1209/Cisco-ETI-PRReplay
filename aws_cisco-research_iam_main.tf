@@ -56,7 +56,20 @@ resource "aws_iam_policy" "research_rw" {
           "arn:aws:ec2:us-east-2:509581005347:*"
         ],
         "Effect": "Allow"
-      }
+      },
+      {
+        "Sid": "VisualEditor3",
+        "Effect": "Allow",
+        "Action": [
+          "ec2:DescribeInstances",
+          "ec2:DescribeNetworkInterfaces",
+          "ec2:DescribeVpcs",
+          "ec2:DescribeDhcpOptions",
+          "ec2:DescribeAvailabilityZones",
+          "kms:DescribeKey"
+        ],
+        "Resource": "*"
+    }
     ]
   }
   EOF
