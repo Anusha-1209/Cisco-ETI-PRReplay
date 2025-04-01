@@ -18,7 +18,7 @@ terraform {
 }
 
 locals {
-  acceptor_vpc_name  = "vowel-dev-1-vpc"    # EKS cluster in us-east-2
+  acceptor_vpc_name  = "motf-dev-use2-1"    # EKS cluster in us-east-2
   requestor_vpc_name = "motf-dev-usw2-data" # RDS cluster in us-west-2
 }
 

@@ -7,7 +7,6 @@ terraform {
 }
 
 provider "vault" {
-  alias     = "eticloud"
   address   = "https://keeper.cisco.com"
   namespace = "eticloud"
 }
@@ -15,7 +14,6 @@ provider "vault" {
 # AWS credentails are the same of cwpp-dev vault secret (we deploy on same aws account)
 data "vault_generic_secret" "aws_infra_credential" {
   path     = "secret/infra/aws/vowel-genai-dev/terraform_admin"
-  provider = vault.eticloud
 }
 
 provider "aws" {
