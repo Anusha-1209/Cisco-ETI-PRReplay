@@ -53,7 +53,7 @@ data "aws_caller_identity" "current" {}
 provider "aws" {
   access_key  = data.vault_generic_secret.aws_infra_credential.data["AWS_ACCESS_KEY_ID"]
   secret_key  = data.vault_generic_secret.aws_infra_credential.data["AWS_SECRET_ACCESS_KEY"]
-  # region      = "us-west-2"
+  region      = "us-east-2"
   max_retries = 3
   default_tags {
     tags = {
