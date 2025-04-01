@@ -12,8 +12,6 @@ locals {
       topics = [
         "threat",
         "attack",
-        "kg-edges",
-        "kg-nodes",
       ]
       min_units              = 1,
       max_units              = 4,
