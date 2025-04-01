@@ -38,7 +38,7 @@ data "aws_caller_identity" "current" {}
 locals {
   name             = "eks-dragonfly-dev-2"
   region           = "eu-west-1"
-  aws_account_name = "dragonfly-dev-1"
+  aws_account_name = "dragonfly-dev"
 }
 
 module "eks" {
