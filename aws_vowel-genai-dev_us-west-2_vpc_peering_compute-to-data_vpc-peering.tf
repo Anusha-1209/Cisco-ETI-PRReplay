@@ -9,11 +9,7 @@ terraform {
 module "vpc-peering-us-east-2-eks-us-west-2-data" {
   source = "git::https://github.com/cisco-eti/sre-tf-module-vpc-peering.git?ref=latest"
   aws_accounts_to_regions = {
-    "accepter" = {
-      account_name = "vowel-genai-dev"
-      region       = "us-east-2"
-    }
-    "requester" = {
+    "vowel-genai-dev" = {
       account_name = "vowel-genai-dev"
       region       = "us-west-2"
     }
