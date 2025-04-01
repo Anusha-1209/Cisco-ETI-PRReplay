@@ -7,7 +7,7 @@ data "aws_vpc" "eks_primary_vpc" {
   provider = aws.primary
   filter {
     name   = "tag:Name"
-    values = [local.eks_vpc]
+    values = [local.eks_primary_vpc]
   }
 }
 
@@ -15,6 +15,6 @@ data "aws_vpc" "eks_secondary_vpc" {
   provider = aws.secondary
   filter {
     name   = "tag:Name"
-    values = [local.eks_vpc]
+    values = [local.eks_secondary_vpc]
   }
 }

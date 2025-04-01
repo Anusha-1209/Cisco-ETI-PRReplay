@@ -6,15 +6,6 @@ terraform {
   }
 }
 
-locals {
-  region             = "us-east-2"
-  aws_account_name   = "outshift-common-dev"
-  data_primary_vpc   = "common-dev-vpc-data"
-  data_secondary_vpc = "common-dev-vpc-data"
-  eks_vpc            = "comn-dev-use2-1"
-  rds_name           = "rds-common-dev-1"
-}
-
 #
 resource "aws_rds_global_cluster" "rds_global" {
   # global RDS cluster aren't tied to a region so the provider should not matter here
