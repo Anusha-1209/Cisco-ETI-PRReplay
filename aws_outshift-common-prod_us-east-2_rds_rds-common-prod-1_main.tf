@@ -1,8 +1,20 @@
 terraform {
+  required_version = ">= 1.5.5"
   backend "s3" {
     bucket  = "eticloud-tf-state-prod"                                                
     key     = "terraform-state/aws/outshift-common-prod/us-east-2/rds/rds-common-prod-1.tfstate"     
     region  = "us-east-2"                                                                  
+  }
+  required_providers {
+    aws = {
+      source                = "hashicorp/aws"
+      version               = "~> 5.0"
+      configuration_aliases = [aws.primary, aws.secondary]
+    }
+    vault = {
+      source  = "hashicorp/vault"
+      version = "~> 3.0"
+    }
   }
 }
 
