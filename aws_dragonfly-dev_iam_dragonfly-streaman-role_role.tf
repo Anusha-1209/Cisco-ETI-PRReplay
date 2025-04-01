@@ -93,7 +93,7 @@ resource "aws_iam_policy" "kafka_connect_policy" {
 
 data "aws_iam_policy_document" "sqs_policy" {
   statement {
-    sid = "lightspin-sqs-access"
+    sid = "lightspin sqs access"
 
     actions = [
       "sqs:*"
