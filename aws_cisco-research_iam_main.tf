@@ -56,9 +56,22 @@ resource "aws_iam_policy" "research_rw" {
           "arn:aws:ec2:us-east-2:509581005347:*"
         ],
         "Effect": "Allow"
+      },    
+      {
+        "Sid": "sid3",
+        "Effect": "Allow",
+        "Action": [
+          "ec2:CreateTags"
+        ],
+        "Resource": "arn:aws:ec2:*:*:instance/*",
+        "Condition": {
+          "ForAnyValue:StringLike": {
+            "aws:TagKeys": "kubernetes.io/cluster/*"
+          }
+        }
       },
       {
-        "Sid": "VisualEditor3",
+        "Sid": "sid4",
         "Effect": "Allow",
         "Action": [
           "ec2:DescribeInstances",
