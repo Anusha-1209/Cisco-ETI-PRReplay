@@ -11,7 +11,6 @@ provider "vault" {
   namespace = "eticloud"
 }
 
-# AWS credentails are the same of cwpp-dev vault secret (we deploy on same aws account)
 data "vault_generic_secret" "aws_infra_credential" {
   path     = "secret/infra/aws/vowel-genai-dev/terraform_admin"
 }
