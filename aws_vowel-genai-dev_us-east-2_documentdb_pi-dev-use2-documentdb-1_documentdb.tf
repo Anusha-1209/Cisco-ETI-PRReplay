@@ -18,4 +18,5 @@ module "ppu_dev_documentdb_cluster" {
   vpc_data_name     = "motf-e2e-use2-data"
   vpc_eks_name      = "pi-dev-use2-1"
   venture_namespace = "ppu"
+  secret_path       = "secret/dev/ppu-backend-perf"
 }
