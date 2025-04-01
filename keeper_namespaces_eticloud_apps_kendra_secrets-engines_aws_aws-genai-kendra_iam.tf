@@ -138,7 +138,10 @@ resource "aws_iam_policy" "ci-custom-policy" {
         "iam:GetRole",
         "iam:DeleteRole",
         "iam:PassRole",
-        "iam:DeleteRolePolicy"
+        "iam:DeleteRolePolicy",
+        "iam:RemoveRoleFromInstanceProfile",
+        "iam:ListAttachedRolePolicies",
+        "iam:ListAttachedUserPolicies"
       ],
       "Resource": "*"
     }
