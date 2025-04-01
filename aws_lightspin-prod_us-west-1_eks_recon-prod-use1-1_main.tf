@@ -15,6 +15,7 @@ locals {
   account_id = data.aws_caller_identity.current.account_id
 }
 
+
 module "eks_all_in_one" {
   source           = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=latest"
   name             = local.name             # EKS cluster name
