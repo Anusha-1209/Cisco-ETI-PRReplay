@@ -16,4 +16,7 @@ module "eks_all_in_one" {
   min_size                = "3"
   max_size                = "6"
   desired_size            = "3"
+  create_karpenter_irsa   = "true"
+  create_alb_irsa         = "true"
+  create_otel_irsa        = "true"
 }
