@@ -45,7 +45,7 @@ output "vpc_db_security_group" {
 ### SASL/SCRAM secrets for cluster auth
 
 resource "aws_secretsmanager_secret" "msk_secret" {
-  name                    = "AmazonMSK_motf-dev-use2-1"
+  name                    = "AmazonMSK_motific-dev"
   kms_key_id              = aws_kms_key.msk_custom_key.key_id
   recovery_window_in_days = 0
 
