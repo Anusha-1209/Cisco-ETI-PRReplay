@@ -106,13 +106,6 @@ resource "aws_iam_policy" "ci-custom-policy" {
     {
       "Effect": "Allow",
       "Action": [
-        "s3:*"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
         "kendra:Query",
         "kendra:CreateIndex",
         "kendra:DeleteIndex",
