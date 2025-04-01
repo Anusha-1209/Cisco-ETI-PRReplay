@@ -13,7 +13,7 @@ terraform {
 locals {
   name             = "motf-dev-use2-1"
   region           = "us-east-2"
-  aws_account_name = "motific-dev"
+  aws_account_name = "vowel-genai-dev"
 }
 
 module "eks_all_in_one" {
