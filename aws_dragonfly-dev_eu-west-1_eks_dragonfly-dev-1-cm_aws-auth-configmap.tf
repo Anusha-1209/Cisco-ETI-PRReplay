@@ -11,9 +11,9 @@ data "vault_generic_secret" "aws_infra_credential" {
 
 terraform {
   backend "s3" {
-    bucket  = "eticloud-tf-state-nonprod"                                                               # We separate the different environments into different buckets. The buckets are eticloud-tf-state-sandbox, eticloud-tf-state-nonprod, eticloud-tf-state-prod. The environment should match the CSBEnvironment below.
-    key     = "terraform-state/aws-dragonfly-dev-1/eks/eu-west-1/eks-dragonfly-dev-2-eks-cm.tfstate"          # Note the path here. It should match the patten terraform_state/<service>/<region>/<name>.tfstate
-    region  = "us-east-2"                                                                               # Do not change
+    bucket = "eticloud-tf-state-nonprod"                                                            # We separate the different environments into different buckets. The buckets are eticloud-tf-state-sandbox, eticloud-tf-state-nonprod, eticloud-tf-state-prod. The environment should match the CSBEnvironment below.
+    key    = "terraform-state/aws-dragonfly-dev-1/eks/eu-west-1/eks-dragonfly-dev-2-eks-cm.tfstate" # Note the path here. It should match the patten terraform_state/<service>/<region>/<name>.tfstate
+    region = "us-east-2"                                                                            # Do not change
   }
   required_providers {
     tls = {
@@ -47,13 +47,13 @@ provider "aws" {
 }
 
 data "vault_generic_secret" "cluster_certificate" {
-    path = "secret/infra/eks/eks-dragonfly-dev-2/certificate"
-    provider = vault.eticloud_eticcprod
+  path     = "secret/infra/eks/eks-dragonfly-dev-2/certificate"
+  provider = vault.eticloud_eticcprod
 }
 
-data "vault_generic_secret" "aws_auth_configmap"{
-    path = "secret/infra/eks/eks-dragonfly-dev-2/aws-auth"
-    provider = vault.eticloud_eticcprod
+data "vault_generic_secret" "aws_auth_configmap" {
+  path     = "secret/infra/eks/eks-dragonfly-dev-2/aws-auth"
+  provider = vault.eticloud_eticcprod
 }
 
 data "aws_eks_cluster" "cluster" {
@@ -80,13 +80,13 @@ resource "kubernetes_config_map_v1_data" "aws_auth_sre_data" {
     namespace = "kube-system"
   }
 
-  data       = local.aws_auth_configmap_data
+  data = local.aws_auth_configmap_data
 }
 
 locals {
-    aws_auth_configmap_b64_decode = base64decode(data.vault_generic_secret.aws_auth_configmap.data["sre_configmap_json_b64"])
-    aws_auth_configmap_json_decode = jsondecode(local.aws_auth_configmap_b64_decode)
-    aws_auth_configmap_data = {
-        mapRoles = yamlencode(local.aws_auth_configmap_json_decode)
-    }
+  aws_auth_configmap_b64_decode  = base64decode(data.vault_generic_secret.aws_auth_configmap.data["sre_configmap_json_b64"])
+  aws_auth_configmap_json_decode = jsondecode(local.aws_auth_configmap_b64_decode)
+  aws_auth_configmap_data = {
+    mapRoles = yamlencode(local.aws_auth_configmap_json_decode)
+  }
 }

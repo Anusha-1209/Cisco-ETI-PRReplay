@@ -1,9 +1,9 @@
 # Backend
 terraform {
   backend "s3" {
-    bucket  = "eticloud-tf-state-nonprod"                                                               # We separate the different environments into different buckets. The buckets are eticloud-tf-state-sandbox, eticloud-tf-state-nonprod, eticloud-tf-state-prod. The environment should match the CSBEnvironment below.
-    key     = "terraform-state/aws-dragonfly-dev-1/eks/eu-west-1/eks-dragonfly-dev-2-eks-eks-karpenter-roles.tfstate"          # Note the path here. It should match the patten terraform_state/<service>/<region>/<name>.tfstate
-    region  = "us-east-2"                                                                               # Do not change
+    bucket = "eticloud-tf-state-nonprod"                                                                             # We separate the different environments into different buckets. The buckets are eticloud-tf-state-sandbox, eticloud-tf-state-nonprod, eticloud-tf-state-prod. The environment should match the CSBEnvironment below.
+    key    = "terraform-state/aws-dragonfly-dev-1/eks/eu-west-1/eks-dragonfly-dev-2-eks-eks-karpenter-roles.tfstate" # Note the path here. It should match the patten terraform_state/<service>/<region>/<name>.tfstate
+    region = "us-east-2"                                                                                             # Do not change
   }
   required_providers {
     tls = {
@@ -60,120 +60,120 @@ resource "aws_iam_policy" "aws_karpenter_controller_policy" {
   name        = "KarpenterControllerPolicy-${local.eks_name}"
   description = "${local.eks_name} AWS Karpenter Controller Role IAM Policy"
   policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": [
-                "ssm:GetParameter",
-                "ec2:DescribeImages",
-                "ec2:RunInstances",
-                "ec2:DescribeSubnets",
-                "ec2:DescribeSecurityGroups",
-                "ec2:DescribeLaunchTemplates",
-                "ec2:DescribeInstances",
-                "ec2:DescribeInstanceTypes",
-                "ec2:DescribeInstanceTypeOfferings",
-                "ec2:DescribeAvailabilityZones",
-                "ec2:DeleteLaunchTemplate",
-                "ec2:CreateTags",
-                "ec2:CreateLaunchTemplate",
-                "ec2:CreateFleet",
-                "ec2:DescribeSpotPriceHistory",
-                "pricing:GetProducts"
-            ],
-            "Effect": "Allow",
-            "Resource": "*",
-            "Sid": "Karpenter"
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Action" : [
+          "ssm:GetParameter",
+          "ec2:DescribeImages",
+          "ec2:RunInstances",
+          "ec2:DescribeSubnets",
+          "ec2:DescribeSecurityGroups",
+          "ec2:DescribeLaunchTemplates",
+          "ec2:DescribeInstances",
+          "ec2:DescribeInstanceTypes",
+          "ec2:DescribeInstanceTypeOfferings",
+          "ec2:DescribeAvailabilityZones",
+          "ec2:DeleteLaunchTemplate",
+          "ec2:CreateTags",
+          "ec2:CreateLaunchTemplate",
+          "ec2:CreateFleet",
+          "ec2:DescribeSpotPriceHistory",
+          "pricing:GetProducts"
+        ],
+        "Effect" : "Allow",
+        "Resource" : "*",
+        "Sid" : "Karpenter"
+      },
+      {
+        "Action" : "ec2:TerminateInstances",
+        "Condition" : {
+          "StringLike" : {
+            "ec2:ResourceTag/karpenter.sh/nodepool" : "*"
+          }
         },
-        {
-            "Action": "ec2:TerminateInstances",
-            "Condition": {
-                "StringLike": {
-                    "ec2:ResourceTag/karpenter.sh/nodepool": "*"
-                }
-            },
-            "Effect": "Allow",
-            "Resource": "*",
-            "Sid": "ConditionalEC2Termination"
-        },
-        {
-            "Effect": "Allow",
-            "Action": "iam:PassRole",
-            "Resource": "arn:aws:iam::${local.account_id}:role/KarpenterNodeRole-${local.eks_name}",
-            "Sid": "PassNodeIAMRole"
-        },
-        {
-            "Effect": "Allow",
-            "Action": "eks:DescribeCluster",
-            "Resource": "arn:aws:eks:${local.aws_default_region}:${local.account_id}:cluster/${local.eks_name}",
-            "Sid": "EKSClusterEndpointLookup"
-        },
-        {
-            "Sid": "AllowScopedInstanceProfileCreationActions",
-            "Effect": "Allow",
-            "Resource": "*",
-            "Action": [
-            "iam:CreateInstanceProfile"
-            ],
-            "Condition": {
-            "StringEquals": {
-                "aws:RequestTag/kubernetes.io/cluster/${local.eks_name}": "owned",
-                "aws:RequestTag/topology.kubernetes.io/region": "${local.aws_default_region}"
-            },
-            "StringLike": {
-                "aws:RequestTag/karpenter.k8s.aws/ec2nodeclass": "*"
-            }
-            }
-        },
-        {
-            "Sid": "AllowScopedInstanceProfileTagActions",
-            "Effect": "Allow",
-            "Resource": "*",
-            "Action": [
-            "iam:TagInstanceProfile"
-            ],
-            "Condition": {
-            "StringEquals": {
-                "aws:ResourceTag/kubernetes.io/cluster/${local.eks_name}": "owned",
-                "aws:ResourceTag/topology.kubernetes.io/region": "${local.aws_default_region}",
-                "aws:RequestTag/kubernetes.io/cluster/${local.eks_name}": "owned",
-                "aws:RequestTag/topology.kubernetes.io/region": "${local.aws_default_region}"
-            },
-            "StringLike": {
-                "aws:ResourceTag/karpenter.k8s.aws/ec2nodeclass": "*",
-                "aws:RequestTag/karpenter.k8s.aws/ec2nodeclass": "*"
-            }
-            }
-        },
-        {
-            "Sid": "AllowScopedInstanceProfileActions",
-            "Effect": "Allow",
-            "Resource": "*",
-            "Action": [
-            "iam:AddRoleToInstanceProfile",
-            "iam:RemoveRoleFromInstanceProfile",
-            "iam:DeleteInstanceProfile"
-            ],
-            "Condition": {
-            "StringEquals": {
-                "aws:ResourceTag/kubernetes.io/cluster/${local.eks_name}": "owned",
-                "aws:ResourceTag/topology.kubernetes.io/region": "${local.aws_default_region}"
-            },
-            "StringLike": {
-                "aws:ResourceTag/karpenter.k8s.aws/ec2nodeclass": "*"
-            }
-            }
-        },
-        {
-            "Sid": "AllowInstanceProfileReadActions",
-            "Effect": "Allow",
-            "Resource": "*",
-            "Action": "iam:GetInstanceProfile"
+        "Effect" : "Allow",
+        "Resource" : "*",
+        "Sid" : "ConditionalEC2Termination"
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : "iam:PassRole",
+        "Resource" : "arn:aws:iam::${local.account_id}:role/KarpenterNodeRole-${local.eks_name}",
+        "Sid" : "PassNodeIAMRole"
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : "eks:DescribeCluster",
+        "Resource" : "arn:aws:eks:${local.aws_default_region}:${local.account_id}:cluster/${local.eks_name}",
+        "Sid" : "EKSClusterEndpointLookup"
+      },
+      {
+        "Sid" : "AllowScopedInstanceProfileCreationActions",
+        "Effect" : "Allow",
+        "Resource" : "*",
+        "Action" : [
+          "iam:CreateInstanceProfile"
+        ],
+        "Condition" : {
+          "StringEquals" : {
+            "aws:RequestTag/kubernetes.io/cluster/${local.eks_name}" : "owned",
+            "aws:RequestTag/topology.kubernetes.io/region" : "${local.aws_default_region}"
+          },
+          "StringLike" : {
+            "aws:RequestTag/karpenter.k8s.aws/ec2nodeclass" : "*"
+          }
         }
+      },
+      {
+        "Sid" : "AllowScopedInstanceProfileTagActions",
+        "Effect" : "Allow",
+        "Resource" : "*",
+        "Action" : [
+          "iam:TagInstanceProfile"
+        ],
+        "Condition" : {
+          "StringEquals" : {
+            "aws:ResourceTag/kubernetes.io/cluster/${local.eks_name}" : "owned",
+            "aws:ResourceTag/topology.kubernetes.io/region" : "${local.aws_default_region}",
+            "aws:RequestTag/kubernetes.io/cluster/${local.eks_name}" : "owned",
+            "aws:RequestTag/topology.kubernetes.io/region" : "${local.aws_default_region}"
+          },
+          "StringLike" : {
+            "aws:ResourceTag/karpenter.k8s.aws/ec2nodeclass" : "*",
+            "aws:RequestTag/karpenter.k8s.aws/ec2nodeclass" : "*"
+          }
+        }
+      },
+      {
+        "Sid" : "AllowScopedInstanceProfileActions",
+        "Effect" : "Allow",
+        "Resource" : "*",
+        "Action" : [
+          "iam:AddRoleToInstanceProfile",
+          "iam:RemoveRoleFromInstanceProfile",
+          "iam:DeleteInstanceProfile"
+        ],
+        "Condition" : {
+          "StringEquals" : {
+            "aws:ResourceTag/kubernetes.io/cluster/${local.eks_name}" : "owned",
+            "aws:ResourceTag/topology.kubernetes.io/region" : "${local.aws_default_region}"
+          },
+          "StringLike" : {
+            "aws:ResourceTag/karpenter.k8s.aws/ec2nodeclass" : "*"
+          }
+        }
+      },
+      {
+        "Sid" : "AllowInstanceProfileReadActions",
+        "Effect" : "Allow",
+        "Resource" : "*",
+        "Action" : "iam:GetInstanceProfile"
+      }
     ]
-    
-    })
- }
+
+  })
+}
 
 resource "aws_iam_role" "aws_karpenter_controller_role" {
   name = "KarpenterControllerRole-${local.eks_name}"
@@ -201,15 +201,15 @@ resource "aws_iam_role" "aws_karpenter_controller_role" {
 resource "aws_iam_role" "aws_karpenter_node_role" {
   name = "KarpenterNodeRole-${local.eks_name}"
   assume_role_policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Principal": {
-                "Service": "ec2.amazonaws.com"
-            },
-            "Action": "sts:AssumeRole"
-        }
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Principal" : {
+          "Service" : "ec2.amazonaws.com"
+        },
+        "Action" : "sts:AssumeRole"
+      }
     ]
   })
   force_detach_policies = true

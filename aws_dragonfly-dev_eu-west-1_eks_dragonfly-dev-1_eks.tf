@@ -75,21 +75,21 @@ module "eks" {
       groups   = ["system:masters"]
     },
     {
-      rolearn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/KarpenterNodeRole-${local.cluster_name}",
+      rolearn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/KarpenterNodeRole-${local.cluster_name}",
       username = "system:node:{{EC2PrivateDNSName}}",
-      groups = ["system:bootstrappers","system:nodes"]        
+      groups   = ["system:bootstrappers", "system:nodes"]
     }
   ]
 
   cluster_addons = {
     coredns = {
-      addon_version     = "v1.10.1-eksbuild.4"
+      addon_version = "v1.10.1-eksbuild.4"
     }
     kube-proxy = {
-      addon_version     = "v1.27.6-eksbuild.2"
+      addon_version = "v1.27.6-eksbuild.2"
     }
     vpc-cni = {
-      addon_version     = "v1.15.1-eksbuild.1"
+      addon_version = "v1.15.1-eksbuild.1"
       configuration_values = jsonencode({
         env = {
           # Reference docs https://docs.aws.amazon.com/eks/latest/userguide/cni-increase-ip-addresses.html
@@ -99,7 +99,7 @@ module "eks" {
       })
     }
     aws-ebs-csi-driver = {
-      addon_version     = "v1.23.1-eksbuild.1"
+      addon_version = "v1.23.1-eksbuild.1"
     }
   }
   providers = {

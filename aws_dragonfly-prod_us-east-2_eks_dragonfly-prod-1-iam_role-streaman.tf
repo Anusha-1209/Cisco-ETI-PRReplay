@@ -100,7 +100,7 @@ resource "aws_iam_policy" "dragonfly_streaman_kafkconnect_policy" {
 
 resource "aws_iam_role_policy_attachment" "dragonfly_msk_argo_writer_policy_attachment" {
   for_each = {
-    kafka-policy = aws_iam_policy.dragonfly_streaman_kafka_policy.arn,
+    kafka-policy         = aws_iam_policy.dragonfly_streaman_kafka_policy.arn,
     kafka-connect-policy = aws_iam_policy.dragonfly_streaman_kafkconnect_policy.arn
   }
 

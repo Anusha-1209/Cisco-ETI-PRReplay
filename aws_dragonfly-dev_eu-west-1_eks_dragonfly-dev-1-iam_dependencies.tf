@@ -9,9 +9,9 @@ data "aws_region" "current" {}
 
 data "aws_vpc" "compute_vpc" {
   filter {
-    name   = "tag:Name"
+    name = "tag:Name"
     values = [
-        local.vpc_id
+      local.vpc_id
     ]
   }
 }

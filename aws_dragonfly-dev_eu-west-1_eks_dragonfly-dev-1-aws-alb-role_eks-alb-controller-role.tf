@@ -5,8 +5,8 @@ data "aws_eks_cluster" "cluster_alb" {
 }
 locals {
   cluster_name_alb = "eks-dragonfly-dev-2"
-  account_id_alb = data.aws_caller_identity.current_alb.account_id
-  oidc_id_alb    = trimprefix(data.aws_eks_cluster.cluster_alb.identity[0].oidc[0].issuer, "https://")
+  account_id_alb   = data.aws_caller_identity.current_alb.account_id
+  oidc_id_alb      = trimprefix(data.aws_eks_cluster.cluster_alb.identity[0].oidc[0].issuer, "https://")
 }
 
 resource "aws_iam_policy" "aws_alb_controller_policy" {
