@@ -64,5 +64,5 @@ module "rds_secondary" {
   db_engine_version         = "15.4"
   db_allowed_cidrs          = [ data.aws_vpc.eks_primary_vpc.cidr_block, data.aws_vpc.eks_secondary_vpc.cidr_block ]
 
-  depends_on = [module.rds_primary]
+  depends_on = [module.rds_primary, data.aws_vpc.eks_primary_vpc, data.aws_vpc.eks_secondary_vpc]
 }
