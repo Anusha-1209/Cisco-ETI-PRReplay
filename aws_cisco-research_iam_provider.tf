@@ -8,7 +8,7 @@ terraform {
 }
 
 data "vault_generic_secret" "aws_infra_credential" {
-  path = ("secret/eticcprod/infra/cisco-research/aws")
+  path = ("secret/infra/aws/cisco-research/terraform_admin")
   provider = vault.eticloud_eticcprod
 }
 
