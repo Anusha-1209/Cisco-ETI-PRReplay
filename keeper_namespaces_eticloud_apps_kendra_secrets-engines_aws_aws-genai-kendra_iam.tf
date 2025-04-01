@@ -113,20 +113,15 @@ resource "aws_iam_policy" "ci-custom-policy" {
     {
       "Effect": "Allow",
       "Action": [
-        "iam:CreatePolicy",
-        "iam:GetPolicy",
-        "iam:DeletePolicy",
-        "iam:CreateRole",
-        "iam:AttachRolePolicy",
-        "iam:DetachRolePolicy",
-        "iam:PutRolePolicy",
-        "iam:GetRole",
-        "iam:DeleteRolePolicy"
-        "iam:DeleteRole",
-        "iam:RemoveRoleFromInstanceProfile",
-        "iam:DetachRolePolicy",
-        "iam:ListAttachedRolePolicies",
-        "iam:ListAttachedUserPolicies"
+        "kendra:Query",
+        "kendra:CreateIndex",
+        "kendra:DeleteIndex",
+        "kendra:DescribeIndex",
+        "kendra:ListIndices", 
+        "kendra:CreateDataSource",
+        "kendra:DescribeDataSource", 
+        "kendra:StartDataSourceSyncJob",
+        "kendra:ListDataSourceSyncJobs"
       ],
       "Resource": "*"
     }
