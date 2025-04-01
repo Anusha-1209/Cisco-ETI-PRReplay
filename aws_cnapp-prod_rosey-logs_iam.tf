@@ -10,13 +10,13 @@ resource "aws_iam_policy" "rosey_logs" {
     Version = "2012-10-17",
     Statement = [
       {
-        Sid    = "stsAssumeRoleWithWebIdentityLogs",
+        Sid    = "ListObjectsInBucket",
         Effect = "Allow",
         Action = [
-          "sts:AssumeRoleWithWebIdentity"
+          "s3:ListBucket"
         ],
         Resource = [
-          "arn:aws:iam::${local.account_id}:role/${aws_iam_role.rosey_logs[each.key].name}"
+          "arn:aws:s3:::rosey-logs-${each.value.region_prefix}"
         ]
       },
       {
