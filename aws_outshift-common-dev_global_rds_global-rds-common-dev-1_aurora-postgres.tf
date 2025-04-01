@@ -57,7 +57,7 @@ module "rds_secondary" {
   is_primary_cluster        = false
   db_instance_type          = "db.r5.xlarge"
   # headless, no instances
-  instances                 = {}
+  # instances                 = {}
   cluster_name              = "global-rds-common-dev-usw2-1"
   kms_key_id                = aws_kms_replica_key.secondary.arn
   secret_path               = "secret/dev/infra/aurora-pg/us-west-2/outshift-common-dev/global-rds-common-dev-usw2-1"
