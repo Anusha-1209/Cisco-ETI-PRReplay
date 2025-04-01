@@ -42,7 +42,7 @@ module "rds_primary" {
   kms_key_id        = aws_kms_key.primary.arn
   secret_path       = "secret/dev/infra/aurora-pg/us-east-2/outshift-common-dev/global-rds-common-dev-use2-1"
   db_engine_version = "15.4"
-  db_allowed_cidrs  = setunion(data.aws_vpc.eks_primary_vpc.cidr_block, data.aws_vpc.eks_secondary_vpc.cidr_block)
+  db_allowed_cidrs  = concat(sort(data.aws_vpc.eks_primary_vpc.cidr_block), sort(data.aws_vpc.eks_secondary_vpc.cidr_block))
 }
 
 # Secondary region us-east-2
