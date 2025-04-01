@@ -128,6 +128,25 @@ resource "aws_iam_policy" "aws_sqs_collect_event_policy" {
   })
 }
 
+resource "aws_iam_policy" "aws_comprehend_policy" {
+  name        = "ComprehendPolicy-${local.cluster_name}"
+  description = "${local.cluster_name} AWS Comprehend Policy"
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "comprehend:*",
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  })
+}
+
 resource "aws_iam_policy" "aws_rds_iam_connect_policy" {
   name        = "RDSIAMConnectPolicy-${local.cluster_name}"
   description = "${local.cluster_name} AWS RDS Connect via IAM Policy"
@@ -147,24 +166,6 @@ resource "aws_iam_policy" "aws_rds_iam_connect_policy" {
   })
 }
 
-resource "aws_iam_policy" "aws_rds_aws_comprehend_policy" {
-  name        = "ComprehendPolicy-${local.cluster_name}"
-  description = "${local.cluster_name} AWS Comprehend Policy"
-  policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Effect": "Allow",
-        "Action": [
-          "comprehend:*",
-        ],
-        "Resource": [
-          "*"
-        ]
-      }
-    ]
-  })
-}
 
 resource "aws_iam_role" "aws_marvin_producer_role" {
   name = "MarvinProducerRole-${local.cluster_name}"
@@ -293,7 +294,7 @@ resource "aws_iam_role_policy_attachment" "aws_marvin_producer_sqs_attachment" {
 
 resource "aws_iam_role_policy_attachment" "aws_marvin_producer_comprehend_attachment" {
   role       = aws_iam_role.aws_marvin_producer_role.name
-  policy_arn = aws_iam_policy.aws_rds_aws_comprehend_policy.arn
+  policy_arn = aws_iam_policy.aws_comprehend_policy.arn
 }
 
 resource "aws_iam_role_policy_attachment" "aws_marvin_batch_processing_athena_attachment" {
