@@ -1,13 +1,10 @@
 # Karpenter IAM resources for the dragonfly-prod-1 EKS cluster
-
-data "aws_caller_identity" "current" {}
 data "aws_eks_cluster" "cluster" {
   name = local.eks_name
 }
 
 # locals
 locals {
-  account_id         = data.aws_caller_identity.current.account_id
   account_name       = "dragonfly-production"
   oidc_id            = trimprefix(data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer, "https://")
   vpc_name           = "dragonfly-compute-prod-1-vpc"
