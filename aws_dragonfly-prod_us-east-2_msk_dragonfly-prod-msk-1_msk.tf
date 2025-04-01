@@ -30,6 +30,10 @@ resource "aws_msk_cluster" "dragonfly_msk_1" {
     storage_info {
       ebs_storage_info {
         volume_size = 1500
+
+        provisioned_throughput {
+          enabled = false
+        }
       }
     }
 
