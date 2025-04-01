@@ -7,11 +7,12 @@ terraform {
 }
 
 locals {
-  region           = "us-east-2"
-  aws_account_name = "outshift-common-prod"
-  data_vpc         = "eks-common-prod-1-data"
-  eks_vpc          = "eks-common-prod-1"
-  rds_name         = "rds-common-prod-1"
+  region            = "us-east-2"
+  aws_account_name  = "outshift-common-prod"
+  data_vpc          = "common-prod-use2-vpc-data"
+  primary_eks_vpc   = "comn-prod-use2-1"
+  secondary_eks_vpc = "comn-prod-usw2-1"
+  rds_name          = "rds-common-prod-1"
 }
 
 provider "vault" {
@@ -26,19 +27,39 @@ data "vault_generic_secret" "aws_infra_credential" {
 }
 
 provider "aws" {
+  alias      = "primary"
   access_key = data.vault_generic_secret.aws_infra_credential.data["AWS_ACCESS_KEY_ID"]
   secret_key = data.vault_generic_secret.aws_infra_credential.data["AWS_SECRET_ACCESS_KEY"]
   region     = local.region
 }
 
-data "aws_vpc" "eks_vpc" {
+provider "aws" {
+  alias      = "secondary"
+  access_key = data.vault_generic_secret.aws_infra_credential.data["AWS_ACCESS_KEY_ID"]
+  secret_key = data.vault_generic_secret.aws_infra_credential.data["AWS_SECRET_ACCESS_KEY"]
+  region     = local.region
+}
+
+data "aws_vpc" "primary_eks_vpc" {
+  provider = aws.primary
   filter {
     name   = "tag:Name"
-    values = [local.eks_vpc]
+    values = [local.primary_eks_vpc]
+  }
+}
+
+data "aws_vpc" "secondary_eks_vpc" {
+  provider = aws.secondary
+  filter {
+    name   = "tag:Name"
+    values = [local.secondary_eks_vpc]
   }
 }
 
 module "rds" {
+  providers = {
+    "aws" = aws.primary
+  }
   source            = "git::https://github.com/cisco-eti/sre-tf-module-aws-aurora-postgres?ref=1.1.0"
   vpc_name          = local.data_vpc
   database_name     = "postgressql"
@@ -47,6 +68,6 @@ module "rds" {
   secret_path       = "secret/eticcprod/infra/aurora-pg/us-east-2/outshift-common-prod/rds-common-prod-1"
   db_engine_version = "15"
   db_allowed_cidrs  = [
-    data.aws_vpc.eks_vpc.cidr_block,
+    data.aws_vpc.primary_eks_vpc.cidr_block, data.aws_vpc.secondary_eks_vpc.cidr_block,
   ]
 }
