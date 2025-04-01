@@ -49,7 +49,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "rosey_logs_us" {
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "rosey_logs_eu" {
-  provider = aws.us
+  provider = aws.eu
   bucket   = "rosey-logs-eu"
   rule {
     id     = "TTL-policy"
