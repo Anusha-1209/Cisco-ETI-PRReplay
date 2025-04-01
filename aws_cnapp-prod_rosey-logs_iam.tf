@@ -49,7 +49,7 @@ resource "aws_iam_role" "rosey_logs" {
         Condition = {
           StringEquals = {
             "oidc.eks.${each.value.region}.amazonaws.com/id/${each.value.oidc_provider_id}:aud" = "sts.amazonaws.com"
-            "oidc.eks.${each.value.region}.amazonaws.com/id/${each.value.oidc_provider_id}:sub" = "system:serviceaccount:opentelemetry-exporter:${each.value.name}-opentelemetry-collector"
+            "oidc.eks.${each.value.region}.amazonaws.com/id/${each.value.oidc_provider_id}:sub" = "system:serviceaccount:${local.application_name}:${each.value.name}-${local.application_name}"
           }
         }
       }

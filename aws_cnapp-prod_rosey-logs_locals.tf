@@ -1,6 +1,7 @@
 locals {
-  account_id   = data.aws_caller_identity.current.account_id
-  account_name = "cnapp-prod"
+  account_id       = data.aws_caller_identity.current.account_id
+  account_name     = "cnapp-prod"
+  application_name = "opentelemetry-exporter"
   # EKS clsuter region and OIDC provider id
   clusters = {
     "cnapp-prod-us" = {
