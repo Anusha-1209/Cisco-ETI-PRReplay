@@ -34,12 +34,13 @@ module "rds_primary" {
   providers = {
     aws = aws.primary
   }
-  source            = "git::https://github.com/cisco-eti/sre-tf-module-aws-aurora-postgres?ref=2.0.0-rc4"
+  source            = "git::https://github.com/cisco-eti/sre-tf-module-aws-aurora-postgres?ref=2.0.0-rc5"
   vpc_name          = local.data_primary_vpc
   database_name     = "postgressql"
   db_instance_type  = "db.r5.xlarge"
   cluster_name      = "global-rds-common-dev-use2-1"
   kms_key_id        = aws_kms_key.primary.arn
+  master_username   = "root"
   secret_path       = "secret/dev/infra/aurora-pg/us-east-2/outshift-common-dev/global-rds-common-dev-use2-1"
   db_engine_version = "15.4"
   db_allowed_cidrs  = [ data.aws_vpc.eks_primary_vpc.cidr_block, data.aws_vpc.eks_secondary_vpc.cidr_block ]
@@ -50,7 +51,7 @@ module "rds_secondary" {
   providers = {
     aws = aws.secondary
   }
-  source                    = "git::https://github.com/cisco-eti/sre-tf-module-aws-aurora-postgres?ref=2.0.0-rc4"
+  source                    = "git::https://github.com/cisco-eti/sre-tf-module-aws-aurora-postgres?ref=2.0.0-rc5"
   vpc_name                  = local.data_secondary_vpc
   database_name             = null
   global_cluster_identifier = aws_rds_global_cluster.rds_global.id
