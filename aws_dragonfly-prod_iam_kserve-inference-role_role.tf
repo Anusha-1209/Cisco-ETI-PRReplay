@@ -28,7 +28,7 @@ data "aws_iam_policy_document" "policy" {
     ]
 
     resources = [
-      "arn:aws:s3:::dragonfly-staging-ml-models"
+      "arn:aws:s3:::dragonfly-prod-ml-models"
     ]
 
     effect = "Allow"
@@ -40,7 +40,7 @@ data "aws_iam_policy_document" "policy" {
     ]
 
     resources = [
-      "arn:aws:s3:::dragonfly-staging-ml-models/*"
+      "arn:aws:s3:::dragonfly-prod-ml-models/*"
     ]
 
     effect = "Allow"
