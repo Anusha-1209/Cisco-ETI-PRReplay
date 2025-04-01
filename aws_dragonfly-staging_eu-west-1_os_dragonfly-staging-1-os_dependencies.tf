@@ -9,7 +9,7 @@ data "aws_region" "current" {}          # data.aws_region.current.name
 
 data "aws_vpc" "database_vpc" {
   filter {
-    name   = "tag:Name"
+    name = "tag:Name"
     values = [
       local.data_vpc_name
     ]
@@ -31,7 +31,7 @@ data "aws_subnets" "db_subnets" {
 
 data "aws_vpc" "compute_vpc" {
   filter {
-    name   = "tag:Name"
+    name = "tag:Name"
     values = [
       local.eks_vpc_name
     ]

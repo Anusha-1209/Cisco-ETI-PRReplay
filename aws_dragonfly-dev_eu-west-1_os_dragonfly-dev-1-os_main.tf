@@ -17,8 +17,8 @@ resource "aws_opensearch_domain" "dragonfly_dev_1_os" {
     instance_type  = var.instance_type
 
     warm_enabled = true
-    warm_count = 3
-    warm_type = var.warm_instance_type
+    warm_count   = 3
+    warm_type    = var.warm_instance_type
 
     zone_awareness_enabled = true
 
