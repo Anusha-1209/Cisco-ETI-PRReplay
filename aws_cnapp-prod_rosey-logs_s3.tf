@@ -1,0 +1,53 @@
+locals {
+  bucket_names = ["rosey-logs-us", "rosey-logs-eu"]
+}
+
+# https://github.com/hashicorp/terraform/issues/24476
+# have to repeat module call due to using 2 providers for each AWS region
+module "s3-us" {
+  providers = {
+    aws = aws.us
+  }
+  source      = "git::https://github.com/cisco-eti/sre-tf-module-aws-s3.git?ref=1.0.2"
+  bucket_name = "rosey-logs-us"
+  # Continuous Security Buddy Tags.
+  # For more information, see the CSB tagging Sharepoint page here:
+  # https://cisco.sharepoint.com/Sites/CSB/SitePages/Security%20Tagging%20and%20Audit%20in%20AWS.aspx
+  CSBDataClassification = "Cisco Highly Confidential"
+  CSBEnvironment        = "Prod"
+  CSBApplicationName    = "rosey-logs-us"
+  CSBResourceOwner      = "eti"
+  CSBCiscoMailAlias     = "eti-sre@cisco.com"
+  CSBDataTaxonomy       = "Cisco Operations Data"
+}
+
+module "s3-eu" {
+  providers = {
+    aws = aws.eu
+  }
+  source      = "git::https://github.com/cisco-eti/sre-tf-module-aws-s3.git?ref=1.0.2"
+  bucket_name = "rosey-logs-eu"
+  # Continuous Security Buddy Tags.
+  # For more information, see the CSB tagging Sharepoint page here:
+  # https://cisco.sharepoint.com/Sites/CSB/SitePages/Security%20Tagging%20and%20Audit%20in%20AWS.aspx
+  CSBDataClassification = "Cisco Highly Confidential"
+  CSBEnvironment        = "Prod"
+  CSBApplicationName    = "rosey-logs-eu"
+  CSBResourceOwner      = "eti"
+  CSBCiscoMailAlias     = "eti-sre@cisco.com"
+  CSBDataTaxonomy       = "Cisco Operations Data"
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "rosey-logs" {
+  for_each = toset(local.bucket_names)
+  bucket   = each.key
+  rule {
+    id     = "TTL-policy"
+    status = "Enabled"
+
+    # expiration TBD
+    expiration {
+      days = 7
+    }
+  }
+}
