@@ -52,6 +52,10 @@ resource "aws_sqs_queue_redrive_allow_policy" "marvin-collect-events-dlq-staging
 resource "aws_sqs_queue" "marvin-staging-use2-1-collect-events" {
   name = "marvin-collect-events-staging-use2-1"
   fifo_queue = false
+  redrive_policy = jsonencode({
+    deadLetterTargetArn = aws_sqs_queue.marvin-collect-events-dlq-staging-use2-1.arn
+    maxReceiveCount     = 4
+  })
   tags = {
     CSBDataClassification = "Cisco Restricted"
     CSBEnvironment        = "NonProd"

@@ -52,6 +52,10 @@ resource "aws_sqs_queue_redrive_allow_policy" "marvin-collect-events-dlq-prod-eu
 resource "aws_sqs_queue" "marvin-prod-euc1-1-collect-events" {
   name = "marvin-collect-events-prod-euc1-1"
   fifo_queue = false
+  redrive_policy = jsonencode({
+    deadLetterTargetArn = aws_sqs_queue.marvin-collect-events-dlq-prod-euc1-1.arn
+    maxReceiveCount     = 4
+  })
   tags = {
     CSBDataClassification = "Cisco Restricted"
     CSBEnvironment        = "Prod"

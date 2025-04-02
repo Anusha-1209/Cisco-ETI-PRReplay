@@ -54,6 +54,10 @@ resource "aws_sqs_queue" "marvin-pre-process-collect-events-staging-use2-1" {
   name = "marvin-pre-process-collect-events-staging-use2-1"
   fifo_queue = false
   visibility_timeout_seconds = 180
+  redrive_policy = jsonencode({
+    deadLetterTargetArn = aws_sqs_queue.marvin-pre-process-collect-events-dlq-staging-use2-1.arn
+    maxReceiveCount     = 4
+  })
   tags = {
     CSBDataClassification = "Cisco Restricted"
     CSBEnvironment        = "NonProd"
