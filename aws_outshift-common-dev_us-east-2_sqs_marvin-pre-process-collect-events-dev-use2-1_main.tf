@@ -39,7 +39,7 @@ provider "aws" {
 resource "aws_sqs_queue" "marvin-pre-process-collect-events-dev-use2-1" {
   name = "marvin-pre-process-collect-events-dev-use2-1"
   fifo_queue = false
-  visibility_timeout_seconds=180
+  visibility_timeout_seconds = 180
   tags = {
     CSBDataClassification = "Cisco Restricted"
     CSBEnvironment        = "NonProd"
