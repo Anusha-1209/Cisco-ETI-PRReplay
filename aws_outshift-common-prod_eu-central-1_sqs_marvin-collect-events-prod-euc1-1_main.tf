@@ -77,7 +77,7 @@ resource "aws_cloudwatch_metric_alarm" "marvin-collect-events-dlq-alarm-lp-prod-
   alarm_actions       = [aws_sns_topic.marvin-collect-events-dlq-sns-alarm-lp-prod-euc1-1.arn]
   tags = {
     CSBDataClassification = "Cisco Restricted"
-    CSBEnvironment        = "NonProd"
+    CSBEnvironment        = "Prod"
     CSBApplicationName    = "Marvin"
     CSBResourceOwner      = "Outshift SRE"
     CSBCiscoMailAlias     = "eti-sre@cisco.com"
@@ -102,7 +102,7 @@ resource "aws_cloudwatch_metric_alarm" "marvin-collect-events-dlq-alarm-hp-prod-
   alarm_actions       = [aws_sns_topic.marvin-collect-events-dlq-sns-alarm-hp-prod-euc1-1.arn]
   tags = {
     CSBDataClassification = "Cisco Restricted"
-    CSBEnvironment        = "NonProd"
+    CSBEnvironment        = "Prod"
     CSBApplicationName    = "Marvin"
     CSBResourceOwner      = "Outshift SRE"
     CSBCiscoMailAlias     = "eti-sre@cisco.com"
