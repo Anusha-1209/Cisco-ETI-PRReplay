@@ -19,7 +19,7 @@ resource "vault_policy" "ci_jenkins_policy" {
 
   lifecycle {
     replace_triggered_by = [
-      data.local_file.ci-policy-hcl.content
+      data.local_file.jenkins_policy_hcl.content
     ]
   }
 }
