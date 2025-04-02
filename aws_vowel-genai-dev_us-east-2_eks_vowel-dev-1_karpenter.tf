@@ -1,4 +1,4 @@
-# Karpenter IAM resources for the dragonfly-prod-1 EKS cluster
+# Karpenter IAM resources for the vowel-dev-1 EKS cluster
 
 data "aws_caller_identity" "current" {}
 data "aws_eks_cluster" "cluster" {
