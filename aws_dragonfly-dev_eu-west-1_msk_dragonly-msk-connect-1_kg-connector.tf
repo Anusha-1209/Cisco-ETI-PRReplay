@@ -1,4 +1,4 @@
-resource "aws_mskconnect_worker_configuration" "msk_connect_kg_worker_config" {
+resource "aws_mskconnect_worker_configuration" "dragonfly-kg-worker-config" {
   name                    = "dragonfly-kg-worker"
   properties_file_content = <<EOT
 key.converter=org.apache.kafka.connect.storage.StringConverter
@@ -90,4 +90,9 @@ resource "aws_mskconnect_connector" "dragonfly-kg-connector" {
   }
 
   service_execution_role_arn = aws_iam_role.msk_connect_execution_role.arn
+
+  worker_configuration {
+    arn = aws_mskconnect_worker_configuration.dragonfly-kg-worker-config.arn
+    revision = aws_mskconnect_worker_configuration.dragonfly-kg-worker-config.latest_revision
+  }
 }
