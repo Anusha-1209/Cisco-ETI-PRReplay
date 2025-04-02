@@ -35,7 +35,28 @@ resource "vault_namespace" "namespace" {
 # key-value secrets engine
 resource "vault_mount" "kvv2" {
   provider = vault.venture
-  path     = "secret"
+  path     = "bugbash"
+  type     = "kv"
+  options  = { version = "2" }
+}
+
+resource "vault_mount" "kvv2" {
+  provider = vault.venture
+  path     = "csm"
+  type     = "kv"
+  options  = { version = "2" }
+}
+
+resource "vault_mount" "kvv2" {
+  provider = vault.venture
+  path     = "genai"
+  type     = "kv"
+  options  = { version = "2" }
+}
+
+resource "vault_mount" "kvv2" {
+  provider = vault.venture
+  path     = "generic"
   type     = "kv"
   options  = { version = "2" }
 }
@@ -91,7 +112,7 @@ resource "vault_policy" "bugbash" {
   policy   = <<EOT
 # Manage auth methods broadly across Vault
 # List, create, update, and delete key/value secrets
-path "secret/bugbash/*"
+path "bugbash/*"
 {
   capabilities = ["read", "list"]
 }
@@ -131,7 +152,7 @@ resource "vault_policy" "csm" {
   policy   = <<EOT
 # Manage auth methods broadly across Vault
 # List, create, update, and delete key/value secrets
-path "secret/csm/*"
+path "csm/*"
 {
   capabilities = ["read", "list"]
 }
@@ -171,7 +192,7 @@ resource "vault_policy" "genai" {
   policy   = <<EOT
 # Manage auth methods broadly across Vault
 # List, create, update, and delete key/value secrets
-path "secret/genai/*"
+path "genai/*"
 {
   capabilities = ["read", "list"]
 }
@@ -210,7 +231,7 @@ resource "vault_policy" "generic-user" {
   policy   = <<EOT
   # Manage auth methods broadly across Vault
 # List, create, update, and delete key/value secrets
-path "secret/generic/*"
+path "generic/*"
 {
   capabilities = ["read", "list"]
 }
