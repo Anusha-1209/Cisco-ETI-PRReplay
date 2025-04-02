@@ -25,6 +25,23 @@ resource "aws_iam_policy" "aws_sqs_collect_event_policy" {
   })
 }
 
+resource "aws_iam_policy" "aws_sqs_pre_process_collect_event_policy" {
+  name        = "SQSMarvinPreProcessCollectEvent-${local.cluster_name}"
+  description = "${local.cluster_name} AWS SQS aws_sqs_pre_process_collect_event_policy"
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [{
+      "Effect": "Allow",
+      "Action": [
+        "sqs:SendMessage",
+        "sqs:ReceiveMessage",
+        "sqs:DeleteMessage"
+      ],
+      "Resource": "arn:aws:sqs:*:${local.account_id}:marvin-pre-process-collect-events-prod-use2-1"
+    }]
+  })
+}
+
 resource "aws_iam_policy" "aws_comprehend_policy" {
   name        = "ComprehendPolicy-${local.cluster_name}"
   description = "${local.cluster_name} AWS Comprehend Policy"
@@ -303,7 +320,10 @@ resource "aws_iam_role_policy_attachment" "aws_marvin_prompt_inspection_sqs_coll
   role       = aws_iam_role.aws_marvin_prompt_inspection_role.name
   policy_arn = aws_iam_policy.aws_sqs_collect_event_policy.arn
 }
-
+resource "aws_iam_role_policy_attachment" "aws_marvin_prompt_inspection_sqs_pre_process_collect_events_attachment" {
+  role       = aws_iam_role.aws_marvin_prompt_inspection_role.name
+  policy_arn = aws_iam_policy.aws_sqs_pre_process_collect_event_policy.arn
+}
 
 resource "aws_iam_role_policy_attachment" "aws_marvin_auth_rds_attachment" {
   role       = aws_iam_role.aws_marvin_auth_role.name
