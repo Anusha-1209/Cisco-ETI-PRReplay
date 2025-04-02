@@ -73,10 +73,8 @@ module "lambda_function_container_image" {
       "Resource": "arn:aws:ecr:us-east-2:626007623524:marvin/images/pii-service/server"
     }
   }
-  environment {
-    variables = {
-      SQS_URL = "https://sqs.us-east-2.amazonaws.com/471112537430/marvin-collect-events-dev-use2-1"
-    }
+  environment_variables {
+    SQS_URL = "https://sqs.us-east-2.amazonaws.com/471112537430/marvin-collect-events-dev-use2-1"
   }
 }
 
