@@ -71,7 +71,7 @@ module "lambda_function_container_image" {
         "ecr:GetDownloadUrlForLayer",
         "ecr:BatchGetImage"
       ],
-      resources: ["arn:aws:ecr:eu-central-1:058264538874:repository/marvin/images/pii-service/server"]
+      resources: ["arn:aws:ecr:eu-central-1:626007623524:repository/marvin/images/pii-service/server"]
     }
   }
   docker_additional_options = [
