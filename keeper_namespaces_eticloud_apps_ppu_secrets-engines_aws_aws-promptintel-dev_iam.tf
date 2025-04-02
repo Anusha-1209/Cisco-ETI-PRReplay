@@ -32,7 +32,7 @@ resource "aws_iam_user_policy" "vault-secret-engine-user-promptintel-dev" {
       "Effect": "Allow",
       "Action": "sts:AssumeRole",
       "Resource": [
-        "arn:aws:iam::${local.account_id}:role/jenkins"
+        "arn:aws:iam::${local.account_id}:role/jenkins-promptintel"
       ]
     }
   ]
