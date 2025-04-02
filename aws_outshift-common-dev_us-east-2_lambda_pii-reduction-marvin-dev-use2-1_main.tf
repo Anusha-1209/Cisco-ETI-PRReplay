@@ -50,7 +50,7 @@ module "lambda_function_container_image" {
   create_package = false
   timeout = 180
   memory_size = 3008
-  image_uri    = "471112537430.dkr.ecr.us-east-2.amazonaws.com/marvin/presidio-lambda:latest"
+  image_uri    = "626007623524.dkr.ecr.us-east-2.amazonaws.com/marvin/images/pii-service/server:main"
   package_type = "Image"
   attach_policy_statements = true
   policy_statements = {
