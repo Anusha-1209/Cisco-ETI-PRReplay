@@ -18,9 +18,50 @@ data "aws_msk_cluster" "dragonfly_msk_1" {
   cluster_name = "dragonfly-msk-1"
 }
 
-// execution role for msk connect
-data "aws_iam_role" "msk_connect_execution_role" {
-  name = "dragonfly-msk-connect-execution-role"
+// data vpc information
+data "aws_vpc" "msk_vpc" {
+  filter {
+    name = "tag:Name"
+    values = [
+      local.data_vpc
+    ]
+  }
+}
+
+// data subnets information
+data "aws_subnets" "msk_subnets" {
+  filter {
+    name = "vpc-id"
+    values = [
+      data.aws_vpc.msk_vpc.id
+    ]
+  }
+  tags = {
+    Tier = "Private"
+  }
+}
+
+// compute vpc information
+data "aws_vpc" "eks_vpc" {
+  filter {
+    name = "tag:Name"
+    values = [
+      local.compute_vpc
+    ]
+  }
+}
+
+// compute subnets information
+data "aws_subnets" "eks_subnets" {
+  filter {
+    name = "vpc-id"
+    values = [
+      data.aws_vpc.eks_vpc.id
+    ]
+  }
+  tags = {
+    Tier = "Private"
+  }
 }
 
 // bucket containing the custom plugin jar

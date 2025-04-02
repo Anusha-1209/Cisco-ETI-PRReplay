@@ -66,9 +66,7 @@ resource "aws_mskconnect_connector" "dragonfly-kg-connector" {
       bootstrap_servers = data.aws_msk_cluster.dragonfly_msk_1.bootstrap_brokers_sasl_iam
 
       vpc {
-        security_groups = [
-          aws_security_group.dragonfly_msk_1.id
-        ]
+        security_groups = []
         subnets = data.aws_subnets.msk_subnets.ids
       }
     }
