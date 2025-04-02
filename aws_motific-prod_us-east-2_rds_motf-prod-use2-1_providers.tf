@@ -11,11 +11,11 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = "motf-staging-use2-1"
+      ApplicationName    = "motf-prod-use2-1"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
-      Environment        = "NonProd"
+      Environment        = "Prod"
       ResourceOwner      = "Outshift SRE"
     }
   }
@@ -30,11 +30,11 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = "motf-preview-usw2"
+      ApplicationName    = "motf-prod-usw2"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
-      Environment        = "NonProd"
+      Environment        = "Prod"
       ResourceOwner      = "Outshift SRE"
     }
   }

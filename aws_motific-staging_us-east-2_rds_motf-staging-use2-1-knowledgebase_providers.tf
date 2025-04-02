@@ -11,7 +11,7 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = "motf-staging-use2-1"
+      ApplicationName    = "motf-staging-use2-1-knowledgebase"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
@@ -30,7 +30,7 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = "motf-preview-usw2"
+      ApplicationName    = "motf-staging-usw2-knowledgebase"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"

@@ -8,3 +8,17 @@ module "rds" {
   db_allowed_cidrs  = [data.aws_vpc.cluster_vpc.cidr_block]
   db_engine_version = "15"
 }
+
+resource "aws_rds_global_cluster" "motf-prod-knowledgebase-global" {
+  global_cluster_identifier = "motf-prod-knowledgebase-global"
+  # (Optional) Enable to remove DB Cluster members from Global Cluster on destroy. Required with source_db_cluster_identifier.
+  force_destroy                = true
+  source_db_cluster_identifier = module.rds.cluster_arn
+}
+
+resource "aws_kms_key" "rds_multi_region_primary" {
+  provider            = aws.secondary
+  description         = "RDS multi-region primary KMS key for ${local.aws_account_name}"
+  multi_region        = true
+  enable_key_rotation = true
+}
