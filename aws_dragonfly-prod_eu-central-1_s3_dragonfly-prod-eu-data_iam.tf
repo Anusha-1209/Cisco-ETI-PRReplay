@@ -5,7 +5,10 @@ data "aws_caller_identity" "current" {}
 data "aws_iam_policy_document" "s3_access" {
   statement {
     actions = [
-      "s3:*"
+      "s3:GetObject",
+      "s3:ListBucket",
+      "s3:PutObject",
+      "s3:DeleteObject"
     ]
     resources = [
       "arn:aws:s3:::${local.bucket_name}",
@@ -68,7 +71,7 @@ resource "aws_iam_role" "eks_s3_access_role" {
         Condition = {
           StringEquals = {
             "${local.eks_oidc_provider_url}:aud" = "sts.amazonaws.com",
-            "${local.eks_oidc_provider_url}:sub" = "system:serviceaccount:dragonfly-backend:*"
+            "${local.eks_oidc_provider_url}:sub" = "system:serviceaccount:dragonfly-backend:dragonfly-kafka-exporter"
           }
         }
       },
