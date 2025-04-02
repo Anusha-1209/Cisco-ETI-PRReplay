@@ -36,7 +36,7 @@ provider "aws" {
   max_retries = 3
 }
 
-module "sqs" {
+resource "aws_sqs_queue" "marvin-dev-use2-1-collect-events" {
   source  = "terraform-aws-modules/sqs/aws"
   name = "marvin-collect-events-dev-use2-1"
   fifo_queue = false
@@ -47,5 +47,16 @@ module "sqs" {
     CSBResourceOwner      = "Outshift SRE"
     CSBCiscoMailAlias     = "eti-sre@cisco.com"
     CSBDataTaxonomy       = "Cisco Operations Data"
+  }
+}
+
+
+resource "aws_lambda_function_event_invoke_config" "pii-reduction-marvin-use2-1-invoke-config" {
+  function_name = "pii-reduction-marvin-dev-use2-1"
+
+  destination_config {
+    on_success {
+      destination = aws_sqs_queue.marvin-dev-use2-1-collect-events.arn
+    }
   }
 }
