@@ -19,7 +19,7 @@ module "primary_cluster_to_secondary"{
     }
   }
   accepter_vpc_name  = "nonprod-db-vpc-3-vpc"
-  requester_vpc_name  = "comn-dev-use2-1"
+  requester_vpc_name  = "common-dev-use2-vpc-data"
 }
 
 # module "secondary_cluster_to_primary"{
