@@ -103,7 +103,7 @@ module "msk" {
   vpc_id               = data.aws_vpc.db_vpc.id
   subnet_ids           = data.aws_subnets.private.ids
   kafka_version        = "3.5.1"
-  broker_instance_type = "kafka.m5.large"
+  broker_instance_type = "kafka.m5.2xlarge"
   properties = {
     "auto.create.topics.enable"      = true
     "default.replication.factor"     = 3
