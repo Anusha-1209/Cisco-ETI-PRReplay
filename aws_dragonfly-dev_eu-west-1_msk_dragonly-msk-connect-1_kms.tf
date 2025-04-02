@@ -28,13 +28,13 @@ resource "aws_kms_key" "encryption_key" {
       {
         "Sid" : "External",
         "Effect" : "Allow",
-        "Principal" : { "AWS" : aws_mskconnect_custom_plugin.dragonfly_msk_connect_1.arn },
+        "Principal" : { "AWS" : aws_mskconnect_custom_plugin.dragonfly_kg_connector.arn },
         "Action" : [
-    "kms:Encrypt",
-    "kms:Decrypt",
-    "kms:ReEncrypt*",
-    "kms:GenerateDataKey*",
-    "kms:DescribeKey"
+          "kms:Encrypt",
+          "kms:Decrypt",
+          "kms:ReEncrypt*",
+          "kms:GenerateDataKey*",
+          "kms:DescribeKey"
         ],
         Resource : "*"
       }
