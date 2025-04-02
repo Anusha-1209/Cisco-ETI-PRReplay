@@ -1,16 +1,16 @@
 data "aws_caller_identity" "current_outshift_common" {}
-data "aws_eks_cluster" "cluster_marvin" {
-  name = local.cluster_name
+data "aws_eks_cluster" "test_cluster_marvin" {
+  name = local.test_cluster_name
 }
 locals {
-  cluster_name = "marvin-test-use2-1" # The name of the associated EKS cluster. Must be updated
+  test_cluster_name = "marvin-test-use2-1" # The name of the associated EKS cluster. Must be updated
   account_id = data.aws_caller_identity.current_outshift_common.account_id
-  oidc_id    = trimprefix(data.aws_eks_cluster.cluster_marvin.identity[0].oidc[0].issuer, "https://")
+  test_oidc_id    = trimprefix(data.aws_eks_cluster.test_cluster_marvin.identity[0].oidc[0].issuer, "https://")
 }
 
 resource "aws_iam_policy" "aws_s3_read_write_fail_over_requests_test_policy" {
-  name        = "S3ReadWriteFailOverRequestsPolicy-${local.cluster_name}"
-  description = "${local.cluster_name} AWS S3 Fail Over Requests IAM Policy"
+  name        = "S3ReadWriteFailOverRequestsPolicy-${local.test_cluster_name}"
+  description = "${local.test_cluster_name} AWS S3 Fail Over Requests IAM Policy"
   policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
@@ -30,8 +30,8 @@ resource "aws_iam_policy" "aws_s3_read_write_fail_over_requests_test_policy" {
 
 
 resource "aws_iam_policy" "aws_s3_kms_read_test_policy" {
-  name        = "S3MKSReadPolicy-${local.cluster_name}"
-  description = "${local.cluster_name} KMS Read Role IAM Policy"
+  name        = "S3MKSReadPolicy-${local.test_cluster_name}"
+  description = "${local.test_cluster_name} KMS Read Role IAM Policy"
   policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
@@ -67,8 +67,8 @@ resource "aws_iam_policy" "aws_s3_kms_read_test_policy" {
 }
 
 resource "aws_iam_policy" "aws_s3-msk-connect-marvin-test-1_policy" {
-  name        = "S3MSKConnectBatchProcssing-${local.cluster_name}"
-  description = "${local.cluster_name} S3 MSK Connect Role IAM Policy"
+  name        = "S3MSKConnectBatchProcssing-${local.test_cluster_name}"
+  description = "${local.test_cluster_name} S3 MSK Connect Role IAM Policy"
   policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
@@ -97,8 +97,8 @@ resource "aws_iam_policy" "aws_s3-msk-connect-marvin-test-1_policy" {
 }
 
 resource "aws_iam_policy" "aws_sagemaker_invoke_endpoint_test_policy" {
-  name        = "SageMakerInvokeEndpointPolicy-${local.cluster_name}"
-  description = "${local.cluster_name} AWS Sage Maker Invoke Endpoint Policy"
+  name        = "SageMakerInvokeEndpointPolicy-${local.test_cluster_name}"
+  description = "${local.test_cluster_name} AWS Sage Maker Invoke Endpoint Policy"
   policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
@@ -112,8 +112,8 @@ resource "aws_iam_policy" "aws_sagemaker_invoke_endpoint_test_policy" {
 }
 
 resource "aws_iam_policy" "aws_sqs_collect_event_test_policy" {
-  name        = "SQSMarvinCollectEvent-${local.cluster_name}"
-  description = "${local.cluster_name} AWS SQS aws_sqs_collect_event_policy"
+  name        = "SQSMarvinCollectEvent-${local.test_cluster_name}"
+  description = "${local.test_cluster_name} AWS SQS aws_sqs_collect_event_policy"
   policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [{
@@ -129,8 +129,8 @@ resource "aws_iam_policy" "aws_sqs_collect_event_test_policy" {
 }
 
 resource "aws_iam_policy" "aws_sqs_pre_process_collect_event_test_policy" {
-  name        = "SQSMarvinPreProcessCollectEvent-${local.cluster_name}"
-  description = "${local.cluster_name} AWS SQS aws_sqs_pre_process_collect_event_policy"
+  name        = "SQSMarvinPreProcessCollectEvent-${local.test_cluster_name}"
+  description = "${local.test_cluster_name} AWS SQS aws_sqs_pre_process_collect_event_policy"
   policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [{
@@ -146,8 +146,8 @@ resource "aws_iam_policy" "aws_sqs_pre_process_collect_event_test_policy" {
 }
 
 resource "aws_iam_policy" "aws_comprehend_test_policy" {
-  name        = "ComprehendPolicy-${local.cluster_name}"
-  description = "${local.cluster_name} AWS Comprehend Policy"
+  name        = "ComprehendPolicy-${local.test_cluster_name}"
+  description = "${local.test_cluster_name} AWS Comprehend Policy"
   policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
@@ -165,8 +165,8 @@ resource "aws_iam_policy" "aws_comprehend_test_policy" {
 }
 
 resource "aws_iam_policy" "aws_rds_iam_connect_test_policy" {
-  name        = "RDSIAMConnectPolicy-${local.cluster_name}"
-  description = "${local.cluster_name} AWS RDS Connect via IAM Policy"
+  name        = "RDSIAMConnectPolicy-${local.test_cluster_name}"
+  description = "${local.test_cluster_name} AWS RDS Connect via IAM Policy"
   policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
@@ -185,20 +185,20 @@ resource "aws_iam_policy" "aws_rds_iam_connect_test_policy" {
 
 
 resource "aws_iam_role" "aws_marvin_producer_test_role" {
-  name = "MarvinProducerRole-${local.cluster_name}"
+  name = "MarvinProducerRole-${local.test_cluster_name}"
   assume_role_policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
       {
         "Effect": "Allow",
         "Principal": {
-          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_id}"
+          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.test_oidc_id}"
         },
         "Action": "sts:AssumeRoleWithWebIdentity",
         "Condition": {
           "StringEquals": {
-            "${local.oidc_id}:aud": "sts.amazonaws.com",
-            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend:producer"
+            "${local.test_oidc_id}:aud": "sts.amazonaws.com",
+            "${local.test_oidc_id}:sub": "system:serviceaccount:marvin-backend:producer"
           }
         }
       }
@@ -208,20 +208,20 @@ resource "aws_iam_role" "aws_marvin_producer_test_role" {
 }
 
 resource "aws_iam_role" "aws_marvin_batch_processing_test_role" {
-  name = "MarvinBatchProcessingRole-${local.cluster_name}"
+  name = "MarvinBatchProcessingRole-${local.test_cluster_name}"
   assume_role_policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
       {
         "Effect": "Allow",
         "Principal": {
-          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_id}"
+          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.test_oidc_id}"
         },
         "Action": "sts:AssumeRoleWithWebIdentity",
         "Condition": {
           "StringEquals": {
-            "${local.oidc_id}:aud": "sts.amazonaws.com",
-            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend:batch-processing"
+            "${local.test_oidc_id}:aud": "sts.amazonaws.com",
+            "${local.test_oidc_id}:sub": "system:serviceaccount:marvin-backend:batch-processing"
           }
         }
       }
@@ -231,20 +231,20 @@ resource "aws_iam_role" "aws_marvin_batch_processing_test_role" {
 }
 
 resource "aws_iam_role" "aws_marvin_prompt_inspection_test_role" {
-  name = "MarvinPromptInspectionRole-${local.cluster_name}"
+  name = "MarvinPromptInspectionRole-${local.test_cluster_name}"
   assume_role_policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
       {
         "Effect": "Allow",
         "Principal": {
-          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_id}"
+          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.test_oidc_id}"
         },
         "Action": "sts:AssumeRoleWithWebIdentity",
         "Condition": {
           "StringEquals": {
-            "${local.oidc_id}:aud": "sts.amazonaws.com",
-            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend:prompt-inspection"
+            "${local.test_oidc_id}:aud": "sts.amazonaws.com",
+            "${local.test_oidc_id}:sub": "system:serviceaccount:marvin-backend:prompt-inspection"
           }
         }
       }
@@ -254,20 +254,20 @@ resource "aws_iam_role" "aws_marvin_prompt_inspection_test_role" {
 }
 
 resource "aws_iam_role" "aws_marvin_auth_test_role" {
-  name = "MarvinAuthRole-${local.cluster_name}"
+  name = "MarvinAuthRole-${local.test_cluster_name}"
   assume_role_policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
       {
         "Effect": "Allow",
         "Principal": {
-          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_id}"
+          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.test_oidc_id}"
         },
         "Action": "sts:AssumeRoleWithWebIdentity",
         "Condition": {
           "StringEquals": {
-            "${local.oidc_id}:aud": "sts.amazonaws.com",
-            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend:auth"
+            "${local.test_oidc_id}:aud": "sts.amazonaws.com",
+            "${local.test_oidc_id}:sub": "system:serviceaccount:marvin-backend:auth"
           }
         }
       }
@@ -277,20 +277,20 @@ resource "aws_iam_role" "aws_marvin_auth_test_role" {
 }
 
 resource "aws_iam_role" "aws_marvin_forensic_test_role" {
-  name = "MarvinForensicRole-${local.cluster_name}"
+  name = "MarvinForensicRole-${local.test_cluster_name}"
   assume_role_policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
       {
         "Effect": "Allow",
         "Principal": {
-          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_id}"
+          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.test_oidc_id}"
         },
         "Action": "sts:AssumeRoleWithWebIdentity",
         "Condition": {
           "StringEquals": {
-            "${local.oidc_id}:aud": "sts.amazonaws.com",
-            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend:forensic"
+            "${local.test_oidc_id}:aud": "sts.amazonaws.com",
+            "${local.test_oidc_id}:sub": "system:serviceaccount:marvin-backend:forensic"
           }
         }
       }

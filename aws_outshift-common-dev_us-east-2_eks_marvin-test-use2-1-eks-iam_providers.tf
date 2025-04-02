@@ -17,7 +17,7 @@ provider "aws" {
     # These tags are required for security compliance.
     # For more information on Data Classification and Data Taxonomy, please talk to the SRE team.
     tags = {
-      ApplicationName    = "${local.cluster_name} IAM Roles"
+      ApplicationName    = "${local.test_cluster_name} IAM Roles"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
