@@ -7,12 +7,11 @@ terraform {
 }
 
 locals {
-  # VPC module creates this, there is no way to grab it from the module,
-  # so you need to make sure the naming convention is consistent
   subnet_group_name    = "marvin-dev-use2-data-ec-subnet-group"
   elasticache_name     = "marvin-dev-use2-1"
   memcached_vpc_name   = "marvin-dev-use2-data"
   eks_cluster_vpc_name = "marvin-dev-use2-1"
+  eks_cluster_vpc_name_2 = "marvin-test-use2-1" # Add this line
 }
 
 provider "aws" {
@@ -49,6 +48,13 @@ data "aws_vpc" "cluster_vpc" {
   }
 }
 
+data "aws_vpc" "cluster_vpc_2" { # Add this block
+  filter {
+    name   = "tag:Name"
+    values = [local.eks_cluster_vpc_name_2]
+  }
+}
+
 data "aws_vpc" "memcached_vpc" {
   filter {
     name   = "tag:Name"
@@ -58,13 +64,16 @@ data "aws_vpc" "memcached_vpc" {
 
 # Create a security group for the Elasticache service
 resource "aws_security_group" "memcached_security_group" {
-  name = "memcached-marvin-dev-use2-1-sg"
+  name   = "memcached-marvin-dev-use2-1-sg"
   vpc_id = data.aws_vpc.memcached_vpc.id
   ingress {
-    from_port       = 11211
-    to_port         = 11211
-    protocol        = "tcp"
-    cidr_blocks     = [data.aws_vpc.cluster_vpc.cidr_block]
+    from_port   = 11211
+    to_port     = 11211
+    protocol    = "tcp"
+    cidr_blocks = [
+      data.aws_vpc.cluster_vpc.cidr_block,
+      data.aws_vpc.cluster_vpc_2.cidr_block, # Include the CIDR block of the second VPC
+    ]
   }
 }
 
@@ -75,6 +84,6 @@ resource "aws_elasticache_cluster" "memcached-elastic-cache" {
   num_cache_nodes      = 2
   parameter_group_name = "default.memcached1.6"
   port                 = 11211
-  subnet_group_name             = local.subnet_group_name
-  security_group_ids            = [aws_security_group.memcached_security_group.id]
+  subnet_group_name    = local.subnet_group_name
+  security_group_ids   = [aws_security_group.memcached_security_group.id]
 }

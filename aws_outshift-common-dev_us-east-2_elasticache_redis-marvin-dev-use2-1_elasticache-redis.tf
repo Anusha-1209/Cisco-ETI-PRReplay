@@ -7,12 +7,11 @@ terraform {
 }
 
 locals {
-  # VPC module creates this, there is no way to grab it from the module,
-  # so you need to make sure the naming convention is consistent
   subnet_group_name    = "marvin-dev-use2-data-ec-subnet-group"
-  redis_name     = "marvin-redis-dev-use2-1"
-  redis_vpc_name   = "marvin-dev-use2-data"
+  redis_name           = "marvin-redis-dev-use2-1"
+  redis_vpc_name       = "marvin-dev-use2-data"
   eks_cluster_vpc_name = "marvin-dev-use2-1"
+  eks_cluster_vpc_name_2 = "marvin-test-use2-1" # Add this line
 }
 
 provider "aws" {
@@ -49,6 +48,13 @@ data "aws_vpc" "cluster_vpc" {
   }
 }
 
+data "aws_vpc" "cluster_vpc_2" { # Add this block
+  filter {
+    name   = "tag:Name"
+    values = [local.eks_cluster_vpc_name_2]
+  }
+}
+
 data "aws_vpc" "redis_vpc" {
   filter {
     name   = "tag:Name"
@@ -58,13 +64,16 @@ data "aws_vpc" "redis_vpc" {
 
 # Create a security group for the Elasticache service
 resource "aws_security_group" "redis_security_group" {
-  name = "redis-marvin-dev-use2-1-sg"
+  name   = "redis-marvin-dev-use2-1-sg"
   vpc_id = data.aws_vpc.redis_vpc.id
   ingress {
-    from_port       = 6379
-    to_port         = 6379
-    protocol        = "tcp"
-    cidr_blocks     = [data.aws_vpc.cluster_vpc.cidr_block]
+    from_port   = 6379
+    to_port     = 6379
+    protocol    = "tcp"
+    cidr_blocks = [
+      data.aws_vpc.cluster_vpc.cidr_block,
+      data.aws_vpc.cluster_vpc_2.cidr_block, # Include the CIDR block of the second VPC
+    ]
   }
 }
 
