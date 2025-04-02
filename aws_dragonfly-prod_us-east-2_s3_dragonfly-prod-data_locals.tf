@@ -4,4 +4,5 @@ locals {
 
   bucket_name = "dragonfly-prod-data"
   eks_oidc_provider_id = "2FD8E66654862C5EF1DF7DB83F35F7AD"
+  msk_cluster_name = "dragonfly-msk-prod-1"
 }
