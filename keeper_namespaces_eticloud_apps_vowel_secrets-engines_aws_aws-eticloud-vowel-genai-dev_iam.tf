@@ -1,9 +1,5 @@
-data "aws_partition" "current" {
-  provider    = aws.vowel-genai-dev
-}
-
 data "aws_caller_identity" "current" {
-  provider    = aws.vowel-genai-dev
+  provider = aws.vowel-genai-dev
 }
 
 locals {

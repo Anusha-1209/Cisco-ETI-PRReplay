@@ -7,13 +7,12 @@ resource "vault_aws_secret_backend" "aws-kendra" {
   secret_key  = aws_iam_access_key.vault-secret-engine-user-kendra.secret
 }
 
-resource "vault_aws_secret_backend_role" "kendra-role" {
+resource "vault_aws_secret_backend_role" "jenkins-role" {
   provider        = vault.kendra
   backend         = vault_aws_secret_backend.aws-kendra.path
-  name            = "vault-role"
+  name            = "jenkins-role"
   credential_type = "assumed_role"
   role_arns       = [
-    aws_iam_role.default-role.arn,
-    aws_iam_role.custom-role.arn
+    aws_iam_role.jenkins.arn,
   ]
 }

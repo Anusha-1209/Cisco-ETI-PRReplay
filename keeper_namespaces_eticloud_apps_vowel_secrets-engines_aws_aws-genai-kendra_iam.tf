@@ -30,7 +30,7 @@ resource "aws_iam_user_policy" "vault-secret-engine-user-kendra" {
       "Effect": "Allow",
       "Action": "sts:AssumeRole",
       "Resource": [
-        "${aws_iam_role.default-role.arn}"
+        "arn:aws:iam::${local.account_id}:role/jenkins"
       ]
     }
   ]
@@ -38,48 +38,14 @@ resource "aws_iam_user_policy" "vault-secret-engine-user-kendra" {
 EOF
 
 }
-#endregion
 
-
-#region default role and policy attachments
-resource "aws_iam_role" "default-role" {
+# Additional IAM role for the user
+resource "aws_iam_role" "jenkins-role" {
   provider           = aws.kendra
-  name               = "default"
+  name               = "jenkins"
   assume_role_policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [
-      {
-        "Effect" : "Allow",
-        "Principal" : {
-          "AWS" : "${aws_iam_user.vault-secret-engine-user-kendra.arn}"
-        },
-        "Action" : "sts:AssumeRole"
-      },
-      {
-        "Effect": "Allow",
-        "Principal": {
-          "AWS": "arn:aws:iam::${local.account_id}:root"
-        },
-        "Action": "sts:AssumeRole",
-        "Condition": {}
-    }
-    ]
-  })
-
-  tags = {
-    Name = "default"
-  }
-}
-#endregion
-
-
-# Additional IAM role for the user
-resource "aws_iam_role" "custom-role" {
-  provider           = aws.kendra
-  name               = "custom-role"
-  assume_role_policy = jsonencode({
-    Version : "2012-10-17",
-    Statement : [
       {
         "Effect" : "Allow",
         "Principal" : {
@@ -90,15 +56,15 @@ resource "aws_iam_role" "custom-role" {
     ]
   })
    tags = {
-    Name = "custom-role"
+    Name = "jenkins-role"
   }
 }
 
 
-resource "aws_iam_policy" "custom-policy" {
+resource "aws_iam_policy" "jenkins-policy" {
   provider    = aws.kendra
-  name        = "custom-policy"
-  description = "Custom policy for custom-role"
+  name        = "jenkins-policy"
+  description = "jenkins policy for jenkins-role"
   policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -150,11 +116,11 @@ resource "aws_iam_policy" "custom-policy" {
 EOF
 }
 
-# Attach the custom policy to the custom-role
-resource "aws_iam_role_policy_attachment" "custom-policy-attach" {
+# Attach the jenkins policy to the jenkins-role
+resource "aws_iam_role_policy_attachment" "jenkins-policy-attach" {
   provider   = aws.kendra
-  role       = aws_iam_role.custom-role.name
-  policy_arn = aws_iam_policy.custom-policy.arn
+  role       = aws_iam_role.jenkins-role.name
+  policy_arn = aws_iam_policy.jenkins-policy.arn
 }
 
 
