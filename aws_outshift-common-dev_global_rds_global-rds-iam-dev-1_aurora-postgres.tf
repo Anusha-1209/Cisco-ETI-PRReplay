@@ -33,16 +33,17 @@ module "rds_primary" {
   providers = {
     aws = aws.primary
   }
-  source            = "git::https://github.com/cisco-eti/sre-tf-module-aws-aurora-postgres?ref=2.0.2"
-  vpc_name          = local.data_primary_vpc
-  database_name     = "postgressql"
-  db_instance_type  = "db.r5.xlarge"
-  cluster_name      = "global-rds-iam-dev-use2-1"
-  kms_key_id        = aws_kms_key.primary.arn
-  master_username   = "root"
-  secret_path       = "secret/dev/infra/aurora-pg/us-east-2/outshift-common-dev/global-rds-iam-dev-use2-1"
-  db_engine_version = "15.4"
-  db_allowed_cidrs  = [ data.aws_vpc.eks_primary_vpc.cidr_block, data.aws_vpc.eks_secondary_vpc.cidr_block ]
+  source              = "git::https://github.com/cisco-eti/sre-tf-module-aws-aurora-postgres?ref=2.0.2"
+  vpc_name            = local.data_primary_vpc
+  database_name       = "postgressql"
+  db_instance_type    = "db.r5.xlarge"
+  cluster_name        = "global-rds-iam-dev-use2-1"
+  kms_key_id          = aws_kms_key.primary.arn
+  master_username     = "root"
+  secret_path         = "secret/dev/infra/aurora-pg/us-east-2/outshift-common-dev/global-rds-iam-dev-use2-1"
+  db_engine_version   = "15.4"
+  db_allowed_cidrs    = [ data.aws_vpc.eks_primary_vpc.cidr_block, data.aws_vpc.eks_secondary_vpc.cidr_block ]
+  skip_final_snapshot = true
 }
 
 # Secondary region us-east-2
@@ -64,6 +65,7 @@ module "rds_secondary" {
   secret_path               = "secret/dev/infra/aurora-pg/us-west-2/outshift-common-dev/global-rds-iam-dev-usw2-1"
   db_engine_version         = "15.4"
   db_allowed_cidrs          = [ data.aws_vpc.eks_primary_vpc.cidr_block, data.aws_vpc.eks_secondary_vpc.cidr_block ]
+  skip_final_snapshot       = true
 
   depends_on = [module.rds_primary]
 }
