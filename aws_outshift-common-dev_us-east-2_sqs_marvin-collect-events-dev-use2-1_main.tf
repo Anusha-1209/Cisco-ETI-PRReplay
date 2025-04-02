@@ -48,14 +48,3 @@ resource "aws_sqs_queue" "marvin-dev-use2-1-collect-events" {
     CSBDataTaxonomy       = "Cisco Operations Data"
   }
 }
-
-
-resource "aws_lambda_function_event_invoke_config" "pii-reduction-marvin-use2-1-invoke-config" {
-  function_name = "pii-reduction-marvin-dev-use2-1"
-
-  destination_config {
-    on_success {
-      destination = aws_sqs_queue.marvin-dev-use2-1-collect-events.arn
-    }
-  }
-}
