@@ -1,0 +1,43 @@
+locals {
+  ingress_rules = []
+
+  egress_rules = [
+    {
+      from_port   = 0
+      to_port     = 65535
+      protocol    = "tcp"
+      cidr_blocks = [
+        "0.0.0.0/0",
+      ]
+    }
+  ]
+}
+
+
+resource "aws_security_group" "dragonfly_kg_1" {
+  name        = "dragonfly-kg-connector"
+  description = "Security group for Dragonfly Knowledge Graph Connector"
+  vpc_id      = data.aws_vpc.msk_vpc.id
+
+  dynamic "ingress" {
+    for_each = toset(local.ingress_rules)
+
+    content {
+      from_port   = ingress.value.from_port
+      to_port     = ingress.value.to_port
+      protocol    = ingress.value.protocol
+      cidr_blocks = ingress.value.cidr_blocks
+    }
+  }
+
+  dynamic "egress" {
+    for_each = toset(local.egress_rules)
+
+    content {
+      from_port   = egress.value.from_port
+      to_port     = egress.value.to_port
+      protocol    = egress.value.protocol
+      cidr_blocks = egress.value.cidr_blocks
+    }
+  }
+}
