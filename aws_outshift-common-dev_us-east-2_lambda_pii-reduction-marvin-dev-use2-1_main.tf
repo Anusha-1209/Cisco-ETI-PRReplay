@@ -45,4 +45,19 @@ module "lambda_function_container_image" {
   memory_size = 3008
   image_uri    = "471112537430.dkr.ecr.us-east-2.amazonaws.com/marvin/presidio-lambda:latest"
   package_type = "Image"
+  attach_policy_json = true
+  policy_jsons = jsonencode(
+    {
+      "Version": "2012-10-17",
+      "Statement": [{
+        "Effect": "Allow",
+        "Action": [
+          "sqs:SendMessage",
+          "sqs:ReceiveMessage",
+          "sqs:DeleteMessage"
+        ],
+        "Resource": "arn:aws:sqs:*:${local.account_id}:*"
+      }]
+    }
+  )
 }
