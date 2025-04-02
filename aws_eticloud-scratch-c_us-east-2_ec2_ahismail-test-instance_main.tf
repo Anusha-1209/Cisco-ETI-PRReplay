@@ -28,7 +28,7 @@ module "ec2" {
   aws_account_name = "eticloud-scratch-c"
 
   # EC2 instance type
-  instance_type = "t2.medium"
+  instance_type = "m6a.xlarge"
 
   # AMI Type
   ami_type = "UBUNTU"
