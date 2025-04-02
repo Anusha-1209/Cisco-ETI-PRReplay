@@ -273,7 +273,33 @@ resource "aws_iam_role" "aws_marvin_batch_processing_role" {
         "Condition": {
           "StringEquals": {
             "${local.oidc_id}:aud": "sts.amazonaws.com",
+            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-0:batch-processing"
+          }
+        }
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_id}"
+        },
+        "Action": "sts:AssumeRoleWithWebIdentity",
+        "Condition": {
+          "StringEquals": {
+            "${local.oidc_id}:aud": "sts.amazonaws.com",
             "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-1:batch-processing"
+          }
+        }
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_id}"
+        },
+        "Action": "sts:AssumeRoleWithWebIdentity",
+        "Condition": {
+          "StringEquals": {
+            "${local.oidc_id}:aud": "sts.amazonaws.com",
+            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-2:batch-processing"
           }
         }
       }
