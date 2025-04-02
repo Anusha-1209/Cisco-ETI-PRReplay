@@ -38,8 +38,8 @@ resource "aws_iam_policy" "aws_motf_unified_plugins_policy" {
           "sts:AssumeRoleWithWebIdentity"
         ],
         Resource = [
-          "arn:aws:iam::211125433326:role/motf-unified-plugins-role",
-          "arn:aws:sagemaker:*:211125433326:endpoint/*"
+          "arn:aws:iam::961088030672:role/motf-unified-plugins-role",
+          "arn:aws:sagemaker:*:961088030672:endpoint/*"
         ]
       },
       {
@@ -79,13 +79,13 @@ resource "aws_iam_role" "aws_motf_unified_plugins_role" {
       {
         Effect = "Allow"
         Principal = {
-          Federated = "arn:aws:iam::211125433326:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/E44B0829BBFA73125E1843A705525B20"
+          Federated = "arn:aws:iam::961088030672:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/88A0CF4074C45C888D0EA1B9B4086F38"
         }
         Action = "sts:AssumeRoleWithWebIdentity"
         Condition = {
           StringEquals = {
-            "oidc.eks.us-east-2.amazonaws.com/id/E44B0829BBFA73125E1843A705525B20:aud" = "sts.amazonaws.com"
-            "oidc.eks.us-east-2.amazonaws.com/id/E44B0829BBFA73125E1843A705525B20:sub" = "system:serviceaccount:vowel-system:unified-plugins-sa"
+            "oidc.eks.us-east-2.amazonaws.com/id/88A0CF4074C45C888D0EA1B9B4086F38:aud" = "sts.amazonaws.com"
+            "oidc.eks.us-east-2.amazonaws.com/id/88A0CF4074C45C888D0EA1B9B4086F38:sub" = "system:serviceaccount:vowel-system:unified-plugins-sa"
           }
         }
       }
