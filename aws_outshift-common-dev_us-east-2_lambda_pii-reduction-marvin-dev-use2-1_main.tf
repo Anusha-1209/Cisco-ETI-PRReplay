@@ -69,3 +69,4 @@ module "lambda_function_container_image" {
     }
   }
 }
+

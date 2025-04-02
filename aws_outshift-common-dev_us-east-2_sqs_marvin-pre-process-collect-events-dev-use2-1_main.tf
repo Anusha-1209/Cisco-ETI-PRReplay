@@ -55,3 +55,4 @@ resource "aws_lambda_event_source_mapping" "pii-reduction-marvin-use2-1-source-m
   event_source_arn = aws_sqs_queue.marvin-pre-process-collect-events-dev-use2-1.arn
   function_name    = "pii-reduction-marvin-dev-use2-1"
 }
+
