@@ -67,8 +67,6 @@ module "lambda_function_container_image" {
     ecr = {
       effect: "Allow",
       actions: [
-        "ecr:SetRepositoryPolicy",
-        "ecr:GetRepositoryPolicy",
         "ecr:BatchCheckLayerAvailability",
         "ecr:GetDownloadUrlForLayer",
         "ecr:BatchGetImage"
