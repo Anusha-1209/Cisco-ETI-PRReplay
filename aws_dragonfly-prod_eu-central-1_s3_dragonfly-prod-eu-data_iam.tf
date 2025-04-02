@@ -16,7 +16,7 @@ data "aws_iam_policy_document" "s3_access" {
 
 # Create the IAM role
 resource "aws_iam_role" "eks_s3_access_role" {
-  name = "${local.aws_account_name}-data-eks-s3-access-role"
+  name = "${local.aws_account_name}-data-eu-eks-s3-access-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -46,7 +46,7 @@ resource "aws_iam_role" "eks_s3_access_role" {
 
 # Attach the S3 access policy to the role
 resource "aws_iam_policy" "s3_access_policy" {
-  name   = "${local.aws_account_name}-data-s3-access-policy"
+  name   = "${local.aws_account_name}-data-eu-s3-access-policy"
   policy = data.aws_iam_policy_document.s3_access.json
 }
 
