@@ -123,7 +123,7 @@ resource "aws_iam_policy" "aws_sqs_collect_event_policy" {
         "sqs:ReceiveMessage",
         "sqs:DeleteMessage"
       ],
-      "Resource": "arn:aws:sqs:*:${local.account_id}:marvin-collect-events-dev*"
+      "Resource": "arn:aws:sqs:*:${local.account_id}:marvin-collect-events-test*"
     }]
   })
 }
@@ -140,7 +140,7 @@ resource "aws_iam_policy" "aws_sqs_pre_process_collect_event_policy" {
         "sqs:ReceiveMessage",
         "sqs:DeleteMessage"
       ],
-      "Resource": "arn:aws:sqs:*:${local.account_id}:marvin-pre-process-collect-events-dev*"
+      "Resource": "arn:aws:sqs:*:${local.account_id}:marvin-pre-process-collect-events-test*"
     }]
   })
 }
