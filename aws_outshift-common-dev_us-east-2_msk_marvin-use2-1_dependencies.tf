@@ -34,6 +34,13 @@ data "aws_vpc" "eks_vpc" {
   }
 }
 
+data "aws_vpc" "eks_test_vpc" {
+  filter {
+    name   = "tag:Name"
+    values = ["marvin-test-use2-1"]
+  }
+}
+
 data "aws_vpc" "msk_vpc" {
   filter {
     name   = "tag:Name"

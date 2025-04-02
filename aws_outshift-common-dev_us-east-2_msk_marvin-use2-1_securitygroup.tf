@@ -28,11 +28,38 @@ locals {
       ],
     },
     {
+      from_port : 9094,
+      to_port : 9094,
+      protocol : "tcp",
+      cidr_blocks : [
+        data.aws_vpc.msk_vpc.cidr_block,
+        data.aws_vpc.eks_test_vpc.cidr_block,
+      ],
+    },
+    {
+      from_port : 9096,
+      to_port : 9096,
+      protocol : "tcp",
+      cidr_blocks : [
+        data.aws_vpc.msk_vpc.cidr_block,
+        data.aws_vpc.eks_test_vpc.cidr_block,
+      ],
+    },
+    {
+      from_port : 9098,
+      to_port : 9098,
+      protocol : "tcp",
+      cidr_blocks : [
+        data.aws_vpc.msk_vpc.cidr_block,
+        data.aws_vpc.eks_test_vpc.cidr_block,
+      ],
+    },
+    {
       from_port : 2181,
       to_port : 2181,
       protocol : "tcp",
       cidr_blocks : [
-        data.aws_vpc.msk_vpc.cidr_block,
+        data.aws_vpc.eks_test_vpc.cidr_block,
       ],
     },
   ]
