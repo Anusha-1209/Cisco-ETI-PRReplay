@@ -1,6 +1,6 @@
 locals {
   secret = {
-    password = data.vault_generic_secret.arangodb_secrets.data["password"]
+    password       = data.vault_generic_secret.arangodb_secrets.data["password"]
     ca-certificate = data.vault_generic_secret.arangodb_secrets.data["ca.crt.b64"]
   }
 }
