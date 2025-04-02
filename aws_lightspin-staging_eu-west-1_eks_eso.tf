@@ -3,7 +3,7 @@ module "eso_eticloud" {
   cluster_name    = local.name
   vault_namespace = "eticloud"
   kubernetes_host = data.aws_eks_cluster.eks.endpoint
-  kubernetes_ca   = data.aws_eks_cluster.eks.certificate_authority[0].data
+  kubernetes_ca   = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
   policies        = ["external-secrets"]
 }
 
@@ -12,7 +12,7 @@ module "eso_eticloud_apps_lightspin" {
   cluster_name    = local.name
   vault_namespace = "eticloud/apps/lightspin"
   kubernetes_host = data.aws_eks_cluster.eks.endpoint
-  kubernetes_ca   = data.aws_eks_cluster.eks.certificate_authority[0].data
+  kubernetes_ca   = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
   policies        = ["external-secrets"]
 }
 
@@ -21,7 +21,7 @@ module "eso_apps_sre" {
   cluster_name    = local.name
   vault_namespace = "eticloud/apps/sre"
   kubernetes_host = data.aws_eks_cluster.eks.endpoint
-  kubernetes_ca   = data.aws_eks_cluster.eks.certificate_authority[0].data
+  kubernetes_ca   = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
   policies        = ["external-secrets"]
 }
 
