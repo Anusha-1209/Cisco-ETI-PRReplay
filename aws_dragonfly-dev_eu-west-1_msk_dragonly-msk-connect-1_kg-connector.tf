@@ -19,7 +19,7 @@ resource "aws_mskconnect_custom_plugin" "dragonfly-kg-connector" {
   location {
     s3 {
       bucket_arn = data.aws_s3_bucket.mskconnect_custom_plugin_bucket.arn
-      file_key   = data.aws_s3_object.arangodb_connector_plugin_jar.key
+      file_key   = data.aws_s3_object.mskconnect_custom_plugin_jar.key
     }
   }
 }
