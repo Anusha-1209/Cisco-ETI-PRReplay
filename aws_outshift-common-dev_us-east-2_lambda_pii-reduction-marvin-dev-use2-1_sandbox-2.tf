@@ -1,6 +1,6 @@
 module "lambda_function_container_image" {
   source = "terraform-aws-modules/lambda/aws"
-  function_name = "pii-reduction-marvin-dev-use2-1"
+  function_name = "pii-reduction-marvin-dev-sandbox-2-use2-1"
   description   = "Marvin Pii reduction"
   create_package = false
   timeout = 180
