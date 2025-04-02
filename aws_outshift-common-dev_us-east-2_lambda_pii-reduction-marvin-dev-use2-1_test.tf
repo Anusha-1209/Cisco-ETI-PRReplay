@@ -30,6 +30,6 @@ module "pii-reduction-marvin-test-use2-1" {
     }
   }
   environment_variables = {
-    SQS_URL = "https://sqs.us-east-2.amazonaws.com/471112537430/marvin-collect-events-test-0-use2-1"
+    SQS_URL = "https://sqs.us-east-2.amazonaws.com/471112537430/marvin-collect-events-test-use2-1"
   }
 }
