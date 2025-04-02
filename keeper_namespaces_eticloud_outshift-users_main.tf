@@ -33,9 +33,30 @@ resource "vault_namespace" "namespace" {
 }
 
 # key-value secrets engine
-resource "vault_mount" "kvv2" {
+resource "vault_mount" "bugbash" {
   provider = vault.venture
-  path     = "secret"
+  path     = "bugbash"
+  type     = "kv"
+  options  = { version = "2" }
+}
+
+resource "vault_mount" "csm" {
+  provider = vault.venture
+  path     = "csm"
+  type     = "kv"
+  options  = { version = "2" }
+}
+
+resource "vault_mount" "genai" {
+  provider = vault.venture
+  path     = "genai"
+  type     = "kv"
+  options  = { version = "2" }
+}
+
+resource "vault_mount" "generic" {
+  provider = vault.venture
+  path     = "generic"
   type     = "kv"
   options  = { version = "2" }
 }
@@ -91,7 +112,7 @@ resource "vault_policy" "bugbash" {
   policy   = <<EOT
 # Manage auth methods broadly across Vault
 # List, create, update, and delete key/value secrets
-path "secret/bugbash/*"
+path "bugbash/*"
 {
   capabilities = ["read", "list"]
 }
@@ -131,18 +152,18 @@ resource "vault_policy" "csm" {
   policy   = <<EOT
 # Manage auth methods broadly across Vault
 # List, create, update, and delete key/value secrets
-path "secret/csm/*"
+path "csm/*"
 {
   capabilities = ["read", "list"]
 }
 EOT
 }
 
-# Outshift isheriff-team Vault Role
-resource "vault_jwt_auth_backend_role" "isheriff-team" {
-  depends_on = [vault_policy.isheriff-team]
+# Outshift genai Vault Role
+resource "vault_jwt_auth_backend_role" "genai" {
+  depends_on = [vault_policy.genai]
   provider   = vault.venture
-  role_name  = "isheriff-team"
+  role_name  = "genai"
   role_type  = "oidc"
   backend    = vault_jwt_auth_backend.oidc.path
   allowed_redirect_uris = ["https://keeper.cisco.com/ui/vault/auth/oidc/oidc/callback",
@@ -150,7 +171,7 @@ resource "vault_jwt_auth_backend_role" "isheriff-team" {
   "https://west.keeper.cisco.com/ui/vault/auth/oidc/oidc/callback"]
   bound_audiences = [var.oidc_client_id]
   bound_claims = {
-    memberof = "CN=outshift-vault-isheriff-team,OU=Cisco Groups,DC=cisco,DC=com"
+    memberof = "CN=outshift-vault-genai,OU=Cisco Groups,DC=cisco,DC=com"
   }
   disable_bound_claims_parsing = true
   bound_claims_type            = "string"
@@ -163,15 +184,15 @@ resource "vault_jwt_auth_backend_role" "isheriff-team" {
   groups_claim = "memberof"
   oidc_scopes  = ["profile", "email", "openid"]
   user_claim   = "sub"
-  token_policies = [vault_policy.isheriff-team.name]
+  token_policies = [vault_policy.genai.name]
 }
-resource "vault_policy" "isheriff-team" {
+resource "vault_policy" "genai" {
   provider = vault.venture
-  name     = "isheriff-team"
+  name     = "genai"
   policy   = <<EOT
 # Manage auth methods broadly across Vault
 # List, create, update, and delete key/value secrets
-path "secret/isheriff-team/*"
+path "genai/*"
 {
   capabilities = ["read", "list"]
 }
@@ -210,7 +231,7 @@ resource "vault_policy" "generic-user" {
   policy   = <<EOT
   # Manage auth methods broadly across Vault
 # List, create, update, and delete key/value secrets
-path "secret/user/*"
+path "generic/*"
 {
   capabilities = ["read", "list"]
 }
