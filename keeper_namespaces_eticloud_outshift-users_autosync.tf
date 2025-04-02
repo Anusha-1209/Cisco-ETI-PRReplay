@@ -11,13 +11,18 @@ data "vault_generic_secret" "autosync_llms_azure_openai_gpt4" {
 }
 
 
-resource "vault_generic_secret" "llms_azure_openai_gpt4" {
-  provider = vault.venture
-  data_json = data.vault_generic_secret.autosync_llms_azure_openai_gpt4.data_json
-  dynamic "path" {
-    for_each = local.kv_paths
-    content {
-      path = "bugbash/${path.value}"
+dynamic "resource" {
+  for_each = local.kv_paths
+  content {
+    resource "vault_generic_secret" "llms_azure_openai_gpt4" {
+      provider = vault.venture
+      data_json = data.vault_generic_secret.autosync_llms_azure_openai_gpt4.data_json
+      dynamic "path" {
+        for_each = local.kv_paths
+        content {
+          path = "bugbash/${path.value}"
+        }
+      }
     }
   }
 }
