@@ -16,7 +16,7 @@ provider "aws" {
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
-      Environment        = "NonProd"
+      Environment        = "Prod"
       ResourceOwner      = "ETI SRE"
     }
   }
