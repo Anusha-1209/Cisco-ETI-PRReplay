@@ -74,3 +74,35 @@ resource "aws_lambda_event_source_mapping" "pii-reduction-marvin-use2-1-source-m
   function_name    = "pii-reduction-marvin-dev-use2-1"
 }
 
+resource "aws_cloudwatch_metric_alarm" "marvin-pre-process-collect-events-dlq-alarm-dev-use2-1" {
+  alarm_name          = "${aws_sqs_queue.marvin-pre-process-collect-events-dlq-dev-use2-1.name}-not-empty-alarm"
+  alarm_description   = "Items are on the ${aws_sqs_queue.marvin-pre-process-collect-events-dlq-dev-use2-1.name} queue"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = 1
+  metric_name         = "ApproximateNumberOfMessagesVisible"
+  namespace           = "AWS/SQS"
+  period              = 300
+  statistic           = "Average"
+  threshold           = 1
+  treat_missing_data  = "notBreaching"
+  alarm_actions       = [aws_sns_topic.marvin-pre-process-collect-events-dlq-sns-alarm-dev-use2-1.arn]
+  tags = {
+    CSBDataClassification = "Cisco Restricted"
+    CSBEnvironment        = "NonProd"
+    CSBApplicationName    = "Marvin"
+    CSBResourceOwner      = "Outshift SRE"
+    CSBCiscoMailAlias     = "eti-sre@cisco.com"
+    CSBDataTaxonomy       = "Cisco Operations Data"
+  }
+  dimensions = {
+    "QueueName" = aws_sqs_queue.marvin-pre-process-collect-events-dlq-dev-use2-1.name
+  }
+}
+resource "aws_sns_topic" "marvin-pre-process-collect-events-dlq-sns-alarm-dev-use2-1" {
+  name = "marvin-pre-process-collect-events-dlq-dev-use2-1"
+}
+resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
+  topic_arn = aws_sns_topic.marvin-pre-process-collect-events-dlq-sns-alarm-dev-use2-1.arn
+  protocol  = "https"
+  endpoint  = "https://events.pagerduty.com/integration/43a07f5f49c8410bc01cad237cadd0c3/enqueue"
+}
