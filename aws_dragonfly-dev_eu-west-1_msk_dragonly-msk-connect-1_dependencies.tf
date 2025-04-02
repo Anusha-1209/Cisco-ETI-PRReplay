@@ -27,3 +27,9 @@ data "aws_iam_role" "msk_connect_execution_role" {
 data "aws_s3_bucket" "mskconnect_custom_plugin_bucket" {
   bucket = local.arangodb_connector_plugin_bucket
 }
+
+// Jar object in the bucket
+data "aws_s3_object" "mskconnect_custom_plugin_jar" {
+  bucket = data.aws_s3_bucket.mskconnect_custom_plugin_bucket.bucket
+  key    = local.arangodb_connector_plugin_jar
+}
