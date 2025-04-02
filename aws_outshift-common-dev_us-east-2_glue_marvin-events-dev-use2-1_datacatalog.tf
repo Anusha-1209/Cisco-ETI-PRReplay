@@ -206,3 +206,39 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_table" {
     }
   }
 }
+
+data "aws_rds_cluster" "marvin-dev-use2-1" {
+  cluster_identifier = "marvin-dev-use2-1"
+}
+
+data "aws_vpc" "marvin-dev-use2-data" {
+  filter {
+    name   = "tag:Name"
+    values = ["marvin-dev-use2-data"]
+  }
+}
+resource "aws_subnet" "main" {
+  vpc_id     = data.aws_vpc.marvin-dev-use2-data.id
+#  cidr_block = "10.0.1.0/24"
+
+  tags = {
+    Name = "marvin-dev-use2-data-db-us-east-2a"
+  }
+}
+
+resource "aws_glue_connection" "example" {
+  name = "example"
+  connection_properties = {
+    JDBC_CONNECTION_URL = "jdbc:postgres://${data.aws_rds_cluster.marvin-dev-use2-1.endpoint}/marvin"
+    PASSWORD            = "examplepassword"
+    USERNAME            = "exampleusername"
+  }
+  physical_connection_requirements {
+#    availability_zone      = aws_subnet.example.availability_zone
+    availability_zone      = data.aws_rds_cluster.marvin-dev-use2-1.availability_zones
+    security_group_id_list = [data.aws_rds_cluster.marvin-dev-use2-1.vpc_security_group_ids]
+    subnet_id              = data.aws_vpc.marvin-dev-use2-data.
+  }
+}
+
+// LINKERD fedramp
