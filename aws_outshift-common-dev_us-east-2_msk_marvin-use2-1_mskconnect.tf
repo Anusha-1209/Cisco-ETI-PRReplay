@@ -194,7 +194,7 @@ resource "aws_mskconnect_connector" "marvin-dev-use2-1-msk-connect" {
     "schema.compatibility"="NONE"
     "tasks.max"="2"
     "timezone"="UTC"
-    "topics"="events"
+    "topics"="events*"
     "rotate.schedule.interval.ms"="30000"
     "offset.flush.interval.ms"="30000"
     "locale"="en-US"
