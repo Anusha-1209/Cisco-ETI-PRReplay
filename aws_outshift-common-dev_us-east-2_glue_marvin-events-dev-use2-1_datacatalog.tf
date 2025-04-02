@@ -233,7 +233,7 @@ resource "aws_glue_connection" "example" {
     USERNAME            = "exampleusername"
   }
   physical_connection_requirements {
-    availability_zone      = any(data.aws_rds_cluster.marvin-dev-use2-1.availability_zones)
+    availability_zone      = element(data.aws_rds_cluster.marvin-dev-use2-1.availability_zones, 0)
     security_group_id_list = [for sg in data.aws_rds_cluster.marvin-dev-use2-1.vpc_security_group_ids : tostring(sg.id)]
     subnet_id              = data.aws_subnet.db.id
   }
