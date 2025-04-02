@@ -64,6 +64,14 @@ module "lambda_function_container_image" {
       ]
       resources = ["arn:aws:sqs:*:${local.account_id}:*"]
     }
+    ecr = {
+      "Effect": "Allow",
+      "Action": [
+        "ecr:SetRepositoryPolicy",
+        "ecr:GetRepositoryPolicy"
+      ],
+      "Resource": "arn:aws:ecr:us-east-2:626007623524:marvin/images/pii-service/server"
+    }
   }
 }
 
