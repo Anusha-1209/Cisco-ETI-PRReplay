@@ -211,7 +211,33 @@ resource "aws_iam_role" "aws_marvin_producer_role" {
         "Condition": {
           "StringEquals": {
             "${local.oidc_id}:aud": "sts.amazonaws.com",
+            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-0:producer"
+          }
+        }
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_id}"
+        },
+        "Action": "sts:AssumeRoleWithWebIdentity",
+        "Condition": {
+          "StringEquals": {
+            "${local.oidc_id}:aud": "sts.amazonaws.com",
             "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-1:producer"
+          }
+        }
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_id}"
+        },
+        "Action": "sts:AssumeRoleWithWebIdentity",
+        "Condition": {
+          "StringEquals": {
+            "${local.oidc_id}:aud": "sts.amazonaws.com",
+            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-2:producer"
           }
         }
       }
@@ -283,7 +309,33 @@ resource "aws_iam_role" "aws_marvin_prompt_inspection_role" {
         "Condition": {
           "StringEquals": {
             "${local.oidc_id}:aud": "sts.amazonaws.com",
+            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-0:prompt-inspection"
+          }
+        }
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_id}"
+        },
+        "Action": "sts:AssumeRoleWithWebIdentity",
+        "Condition": {
+          "StringEquals": {
+            "${local.oidc_id}:aud": "sts.amazonaws.com",
             "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-1:prompt-inspection"
+          }
+        }
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_id}"
+        },
+        "Action": "sts:AssumeRoleWithWebIdentity",
+        "Condition": {
+          "StringEquals": {
+            "${local.oidc_id}:aud": "sts.amazonaws.com",
+            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-2:prompt-inspection"
           }
         }
       }
@@ -319,7 +371,33 @@ resource "aws_iam_role" "aws_marvin_auth_role" {
         "Condition": {
           "StringEquals": {
             "${local.oidc_id}:aud": "sts.amazonaws.com",
+            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-0:auth"
+          }
+        }
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_id}"
+        },
+        "Action": "sts:AssumeRoleWithWebIdentity",
+        "Condition": {
+          "StringEquals": {
+            "${local.oidc_id}:aud": "sts.amazonaws.com",
             "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-1:auth"
+          }
+        }
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_id}"
+        },
+        "Action": "sts:AssumeRoleWithWebIdentity",
+        "Condition": {
+          "StringEquals": {
+            "${local.oidc_id}:aud": "sts.amazonaws.com",
+            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-2:auth"
           }
         }
       }
@@ -355,7 +433,33 @@ resource "aws_iam_role" "aws_marvin_forensic_role" {
         "Condition": {
           "StringEquals": {
             "${local.oidc_id}:aud": "sts.amazonaws.com",
+            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-0:forensic"
+          }
+        }
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_id}"
+        },
+        "Action": "sts:AssumeRoleWithWebIdentity",
+        "Condition": {
+          "StringEquals": {
+            "${local.oidc_id}:aud": "sts.amazonaws.com",
             "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-1:forensic"
+          }
+        }
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Federated": "arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_id}"
+        },
+        "Action": "sts:AssumeRoleWithWebIdentity",
+        "Condition": {
+          "StringEquals": {
+            "${local.oidc_id}:aud": "sts.amazonaws.com",
+            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-2:forensic"
           }
         }
       }
