@@ -72,7 +72,7 @@ resource "aws_lambda_event_source_mapping" "pii-reduction-marvin-use2-1-source-m
 }
 
 resource "aws_cloudwatch_metric_alarm" "marvin-pre-process-collect-events-dlq-alarm-lp-prod-use2-1" {
-  alarm_name          = "${aws_sqs_queue.marvin-pre-process-collect-events-dlq-prod-use2-1.name}-not-empty-alarm"
+  alarm_name          = "${aws_sqs_queue.marvin-pre-process-collect-events-dlq-prod-use2-1.name}-lp-not-empty-alarm"
   alarm_description   = "Items are on the ${aws_sqs_queue.marvin-pre-process-collect-events-dlq-prod-use2-1.name} queue"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 1
@@ -97,7 +97,7 @@ resource "aws_cloudwatch_metric_alarm" "marvin-pre-process-collect-events-dlq-al
 }
 
 resource "aws_cloudwatch_metric_alarm" "marvin-pre-process-collect-events-dlq-alarm-hp-prod-use2-1" {
-  alarm_name          = "${aws_sqs_queue.marvin-pre-process-collect-events-dlq-prod-use2-1.name}-not-empty-alarm"
+  alarm_name          = "${aws_sqs_queue.marvin-pre-process-collect-events-dlq-prod-use2-1.name}-hp-not-empty-alarm"
   alarm_description   = "Items are on the ${aws_sqs_queue.marvin-pre-process-collect-events-dlq-prod-use2-1.name} queue"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 1
