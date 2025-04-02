@@ -59,7 +59,8 @@ module "lambda_function_container_image" {
       actions   = [
         "sqs:SendMessage",
         "sqs:ReceiveMessage",
-        "sqs:DeleteMessage"
+        "sqs:DeleteMessage",
+        "sqs:getQueueattributes"
       ]
       resources = ["arn:aws:sqs:*:${local.account_id}:*"]
     }
