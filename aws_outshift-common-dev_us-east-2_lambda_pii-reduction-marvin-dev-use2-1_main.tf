@@ -36,7 +36,8 @@ provider "aws" {
   max_retries = 3
 }
 
-resource "lambda_function_container_image" "pii-reduction-marvin-use2-1" {
+module "lambda_function_container_image" {
+  source = "terraform-aws-modules/lambda/aws"
   function_name = "pii-reduction-marvin-dev-use2-1"
   description   = "Marvin Pii reduction"
   create_package = false
