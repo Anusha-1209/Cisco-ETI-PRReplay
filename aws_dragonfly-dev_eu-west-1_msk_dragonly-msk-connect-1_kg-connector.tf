@@ -46,20 +46,20 @@ resource "aws_mskconnect_connector" "dragonfly_kg_connector" {
   }
 
   connector_configuration = {
+    "connection.endpoints"           = "$${secretsmanager:dragonfly-msk-connect-kg:endpoint}"
     "connector.class"                = "com.arangodb.kafka.ArangoSinkConnector"
-    "ssl.enabled"                    = "true"
-    "tasks.max"                      = "2"
-    "data.errors.tolerance"          = "all"
-    "connection.endpoints"           = "arangodb.eks-dragonfly-dev-1.dev.eticloud.io:8529"
-    "insert.overwriteMode"           = "UPDATE"
-    "data.errors.log.enable"         = "true"
-    "connection.user"                = "$${secretsmanager:dragonfly-msk-connect-kg:username}"
-    "value.converter.schemas.enable" = "false"
-    "ssl.hostname.verification"      = "true"
-    "value.converter"                = "org.apache.kafka.connect.json.JsonConverter"
     "connection.password"            = "$${secretsmanager:dragonfly-msk-connect-kg:password}"
-    "connection.ca.crt"              = "$${secretsmanager:dragonfly-msk-connect-kg:ca-certificate}"
+    "connection.user"                = "$${secretsmanager:dragonfly-msk-connect-kg:username}"
+    "data.errors.log.enable"         = "true"
+    "data.errors.tolerance"          = "all"
+    "insert.overwriteMode"           = "UPDATE"
+    "ssl.enabled"                    = "true"
+    "ssl.hostname.verification"      = "true"
+    "ssl.cert.value"                 = "$${secretsmanager:dragonfly-msk-connect-kg:ca-certificate}"
     "topics"                         = "$${secretsmanager:dragonfly-msk-connect-kg:topics}"
+    "tasks.max"                      = "2"
+    "value.converter.schemas.enable" = "false"
+    "value.converter"                = "org.apache.kafka.connect.json.JsonConverter"
   }
 
   kafka_cluster {
