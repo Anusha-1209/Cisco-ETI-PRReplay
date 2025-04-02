@@ -43,25 +43,21 @@ EOF
 
 ## jenkins role and policy
 
-resource "aws_iam_role" "jenkins-promptintel" {
+data "aws_iam_role" "jenkins-promptintel" {
   provider           = aws.vowel-genai-dev
   name               = "jenkins"
-  assume_role_policy = jsonencode({
-    "Version" : "2012-10-17",
-    "Statement" : [
-      {
-        "Effect" : "Allow",
-        "Principal" : {
-          "AWS" : "arn:aws:iam::${local.account_id}:user/vault-secret-engine-user-promptintel-dev"
-        },
-        "Action" : "sts:AssumeRole"
-      }
-    ]
-  })
-
-  tags = {
-    Name = "jenkins-promptintel"
-  }
+  # assume_role_policy = jsonencode({
+  #   "Version" : "2012-10-17",
+  #   "Statement" : [
+  #     {
+  #       "Effect" : "Allow",
+  #       "Principal" : {
+  #         "AWS" : "arn:aws:iam::${local.account_id}:user/vault-secret-engine-user-promptintel-dev"
+  #       },
+  #       "Action" : "sts:AssumeRole"
+  #     }
+  #   ]
+  # })
 }
 
 resource "aws_iam_policy" "jenkins-promptintel-policy" {
@@ -151,7 +147,7 @@ EOF
 
 resource "aws_iam_role_policy_attachment" "jenkins-promptintel-policy-attach" {
   provider    = aws.vowel-genai-dev
-  role        = aws_iam_role.jenkins-promptintel.name
+  role        = data.aws_iam_role.jenkins-promptintel.name
   policy_arn  = aws_iam_policy.jenkins-promptintel-policy.arn
 }
 
@@ -162,7 +158,7 @@ data "aws_iam_policy" "ci-ecr-cloudwatch-policy" {
 
 resource "aws_iam_role_policy_attachment" "ci-ecr-cloudwatch-policy-attach" {
   provider    = aws.vowel-genai-dev
-  role        = aws_iam_role.jenkins-promptintel.name
+  role        = data.aws_iam_role.jenkins-promptintel.name
   policy_arn  = data.aws_iam_policy.ci-ecr-cloudwatch-policy.arn
 }
 
