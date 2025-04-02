@@ -110,8 +110,7 @@ data "aws_iam_policy_document" "msk_connect_kg_role_policy_document" {
     ]
 
     resources = [
-      data.aws_secretsmanager_secret.msk_connect_kg_ca_cert.arn,
-      data.aws_secretsmanager_secret.msk_connect_kg_password.arn,
+      data.aws_secretsmanager_secret.msk_connect_kg.arn
     ]
   }
 }
