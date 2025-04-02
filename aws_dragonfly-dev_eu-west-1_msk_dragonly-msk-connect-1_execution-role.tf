@@ -83,7 +83,7 @@ data "aws_iam_policy_document" "msk_connect_kg_role_policy_document" {
     ]
 
     resources = [
-      "*"
+      aws_cloudwatch_log_group.dragonfly_kg_connector.arn
     ]
   }
 
