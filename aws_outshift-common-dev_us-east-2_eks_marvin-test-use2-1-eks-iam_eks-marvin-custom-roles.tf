@@ -8,7 +8,7 @@ locals {
   oidc_id    = trimprefix(data.aws_eks_cluster.cluster_marvin.identity[0].oidc[0].issuer, "https://")
 }
 
-resource "aws_iam_policy" "aws_s3_read_write_fail_over_requests_policy" {
+resource "aws_iam_policy" "aws_s3_read_write_fail_over_requests_test_policy" {
   name        = "S3ReadWriteFailOverRequestsPolicy-${local.cluster_name}"
   description = "${local.cluster_name} AWS S3 Fail Over Requests IAM Policy"
   policy = jsonencode({
@@ -29,7 +29,7 @@ resource "aws_iam_policy" "aws_s3_read_write_fail_over_requests_policy" {
 }
 
 
-resource "aws_iam_policy" "aws_s3_kms_read_policy" {
+resource "aws_iam_policy" "aws_s3_kms_read_test_policy" {
   name        = "S3MKSReadPolicy-${local.cluster_name}"
   description = "${local.cluster_name} KMS Read Role IAM Policy"
   policy = jsonencode({
@@ -66,7 +66,7 @@ resource "aws_iam_policy" "aws_s3_kms_read_policy" {
   })
 }
 
-resource "aws_iam_policy" "aws_s3-msk-connect-marvin-dev-1_policy" {
+resource "aws_iam_policy" "aws_s3-msk-connect-marvin-test-1_policy" {
   name        = "S3MSKConnectBatchProcssing-${local.cluster_name}"
   description = "${local.cluster_name} S3 MSK Connect Role IAM Policy"
   policy = jsonencode({
@@ -96,7 +96,7 @@ resource "aws_iam_policy" "aws_s3-msk-connect-marvin-dev-1_policy" {
   })
 }
 
-resource "aws_iam_policy" "aws_sagemaker_invoke_endpoint_policy" {
+resource "aws_iam_policy" "aws_sagemaker_invoke_endpoint_test_policy" {
   name        = "SageMakerInvokeEndpointPolicy-${local.cluster_name}"
   description = "${local.cluster_name} AWS Sage Maker Invoke Endpoint Policy"
   policy = jsonencode({
@@ -111,7 +111,7 @@ resource "aws_iam_policy" "aws_sagemaker_invoke_endpoint_policy" {
   })
 }
 
-resource "aws_iam_policy" "aws_sqs_collect_event_policy" {
+resource "aws_iam_policy" "aws_sqs_collect_event_test_policy" {
   name        = "SQSMarvinCollectEvent-${local.cluster_name}"
   description = "${local.cluster_name} AWS SQS aws_sqs_collect_event_policy"
   policy = jsonencode({
@@ -128,7 +128,7 @@ resource "aws_iam_policy" "aws_sqs_collect_event_policy" {
   })
 }
 
-resource "aws_iam_policy" "aws_sqs_pre_process_collect_event_policy" {
+resource "aws_iam_policy" "aws_sqs_pre_process_collect_event_test_policy" {
   name        = "SQSMarvinPreProcessCollectEvent-${local.cluster_name}"
   description = "${local.cluster_name} AWS SQS aws_sqs_pre_process_collect_event_policy"
   policy = jsonencode({
@@ -145,7 +145,7 @@ resource "aws_iam_policy" "aws_sqs_pre_process_collect_event_policy" {
   })
 }
 
-resource "aws_iam_policy" "aws_comprehend_policy" {
+resource "aws_iam_policy" "aws_comprehend_test_policy" {
   name        = "ComprehendPolicy-${local.cluster_name}"
   description = "${local.cluster_name} AWS Comprehend Policy"
   policy = jsonencode({
@@ -164,7 +164,7 @@ resource "aws_iam_policy" "aws_comprehend_policy" {
   })
 }
 
-resource "aws_iam_policy" "aws_rds_iam_connect_policy" {
+resource "aws_iam_policy" "aws_rds_iam_connect_test_policy" {
   name        = "RDSIAMConnectPolicy-${local.cluster_name}"
   description = "${local.cluster_name} AWS RDS Connect via IAM Policy"
   policy = jsonencode({
@@ -184,7 +184,7 @@ resource "aws_iam_policy" "aws_rds_iam_connect_policy" {
 }
 
 
-resource "aws_iam_role" "aws_marvin_producer_role" {
+resource "aws_iam_role" "aws_marvin_producer_test_role" {
   name = "MarvinProducerRole-${local.cluster_name}"
   assume_role_policy = jsonencode({
     "Version": "2012-10-17",
@@ -207,7 +207,7 @@ resource "aws_iam_role" "aws_marvin_producer_role" {
   force_detach_policies = true
 }
 
-resource "aws_iam_role" "aws_marvin_batch_processing_role" {
+resource "aws_iam_role" "aws_marvin_batch_processing_test_role" {
   name = "MarvinBatchProcessingRole-${local.cluster_name}"
   assume_role_policy = jsonencode({
     "Version": "2012-10-17",
@@ -230,7 +230,7 @@ resource "aws_iam_role" "aws_marvin_batch_processing_role" {
   force_detach_policies = true
 }
 
-resource "aws_iam_role" "aws_marvin_prompt_inspection_role" {
+resource "aws_iam_role" "aws_marvin_prompt_inspection_test_role" {
   name = "MarvinPromptInspectionRole-${local.cluster_name}"
   assume_role_policy = jsonencode({
     "Version": "2012-10-17",
@@ -253,7 +253,7 @@ resource "aws_iam_role" "aws_marvin_prompt_inspection_role" {
   force_detach_policies = true
 }
 
-resource "aws_iam_role" "aws_marvin_auth_role" {
+resource "aws_iam_role" "aws_marvin_auth_test_role" {
   name = "MarvinAuthRole-${local.cluster_name}"
   assume_role_policy = jsonencode({
     "Version": "2012-10-17",
@@ -276,7 +276,7 @@ resource "aws_iam_role" "aws_marvin_auth_role" {
   force_detach_policies = true
 }
 
-resource "aws_iam_role" "aws_marvin_forensic_role" {
+resource "aws_iam_role" "aws_marvin_forensic_test_role" {
   name = "MarvinForensicRole-${local.cluster_name}"
   assume_role_policy = jsonencode({
     "Version": "2012-10-17",
@@ -299,60 +299,60 @@ resource "aws_iam_role" "aws_marvin_forensic_role" {
   force_detach_policies = true
 }
 
-resource "aws_iam_role_policy_attachment" "aws_marvin_producer_attachment" {
-  role       = aws_iam_role.aws_marvin_producer_role.name
-  policy_arn = aws_iam_policy.aws_s3_kms_read_policy.arn
+resource "aws_iam_role_policy_attachment" "aws_marvin_producer_test_attachment" {
+  role       = aws_iam_role.aws_marvin_producer_test_role.name
+  policy_arn = aws_iam_policy.aws_s3_kms_read_test_policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "aws_marvin_producer_sqs_attachment" {
-  role       = aws_iam_role.aws_marvin_producer_role.name
-  policy_arn = aws_iam_policy.aws_sqs_collect_event_policy.arn
+resource "aws_iam_role_policy_attachment" "aws_marvin_producer_sqs_test_attachment" {
+  role       = aws_iam_role.aws_marvin_producer_test_role.name
+  policy_arn = aws_iam_policy.aws_sqs_collect_event_test_policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "aws_marvin_producer_comprehend_attachment" {
-  role       = aws_iam_role.aws_marvin_producer_role.name
-  policy_arn = aws_iam_policy.aws_comprehend_policy.arn
+resource "aws_iam_role_policy_attachment" "aws_marvin_producer_comprehend_test_attachment" {
+  role       = aws_iam_role.aws_marvin_producer_test_role.name
+  policy_arn = aws_iam_policy.aws_comprehend_test_policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "aws_marvin_batch_processing_athena_attachment" {
-  role       = aws_iam_role.aws_marvin_batch_processing_role.name
+resource "aws_iam_role_policy_attachment" "aws_marvin_batch_processing_athena_test_attachment" {
+  role       = aws_iam_role.aws_marvin_batch_processing_test_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonAthenaFullAccess"
 }
-resource "aws_iam_role_policy_attachment" "aws_marvin_batch_processing_rds_attachment" {
-  role       = aws_iam_role.aws_marvin_batch_processing_role.name
-  policy_arn = aws_iam_policy.aws_rds_iam_connect_policy.arn
+resource "aws_iam_role_policy_attachment" "aws_marvin_batch_processing_rds_test_attachment" {
+  role       = aws_iam_role.aws_marvin_batch_processing_test_role.name
+  policy_arn = aws_iam_policy.aws_rds_iam_connect_test_policy.arn
 }
-resource "aws_iam_role_policy_attachment" "aws_marvin_batch_processing_s3_attachment" {
-  role       = aws_iam_role.aws_marvin_batch_processing_role.name
-  policy_arn = aws_iam_policy.aws_s3-msk-connect-marvin-dev-1_policy.arn
-}
-
-resource "aws_iam_role_policy_attachment" "aws_marvin_prompt_inspection_attachment" {
-  role       = aws_iam_role.aws_marvin_prompt_inspection_role.name
-  policy_arn = aws_iam_policy.aws_s3_read_write_fail_over_requests_policy.arn
+resource "aws_iam_role_policy_attachment" "aws_marvin_batch_processing_s3_test_attachment" {
+  role       = aws_iam_role.aws_marvin_batch_processing_test_role.name
+  policy_arn = aws_iam_policy.aws_s3-msk-connect-marvin-test-1_policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "aws_marvin_prompt_inspection_sage_maker_inference_attachment" {
-  role       = aws_iam_role.aws_marvin_prompt_inspection_role.name
-  policy_arn = aws_iam_policy.aws_sagemaker_invoke_endpoint_policy.arn
+resource "aws_iam_role_policy_attachment" "aws_marvin_prompt_inspection_test_attachment" {
+  role       = aws_iam_role.aws_marvin_prompt_inspection_test_role.name
+  policy_arn = aws_iam_policy.aws_s3_read_write_fail_over_requests_test_policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "aws_marvin_prompt_inspection_sqs_collect_events_attachment" {
-  role       = aws_iam_role.aws_marvin_prompt_inspection_role.name
-  policy_arn = aws_iam_policy.aws_sqs_collect_event_policy.arn
+resource "aws_iam_role_policy_attachment" "aws_marvin_prompt_inspection_sage_maker_inference_test_attachment" {
+  role       = aws_iam_role.aws_marvin_prompt_inspection_test_role.name
+  policy_arn = aws_iam_policy.aws_sagemaker_invoke_endpoint_test_policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "aws_marvin_prompt_inspection_sqs_pre_process_collect_events_attachment" {
-  role       = aws_iam_role.aws_marvin_prompt_inspection_role.name
-  policy_arn = aws_iam_policy.aws_sqs_pre_process_collect_event_policy.arn
+resource "aws_iam_role_policy_attachment" "aws_marvin_prompt_inspection_sqs_collect_events_test_attachment" {
+  role       = aws_iam_role.aws_marvin_prompt_inspection_test_role.name
+  policy_arn = aws_iam_policy.aws_sqs_collect_event_test_policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "aws_marvin_auth_rds_attachment" {
-  role       = aws_iam_role.aws_marvin_auth_role.name
-  policy_arn = aws_iam_policy.aws_rds_iam_connect_policy.arn
+resource "aws_iam_role_policy_attachment" "aws_marvin_prompt_inspection_sqs_pre_process_collect_events_test_attachment" {
+  role       = aws_iam_role.aws_marvin_prompt_inspection_test_role.name
+  policy_arn = aws_iam_policy.aws_sqs_pre_process_collect_event_test_policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "aws_marvin_forensic_rds_attachment" {
-  role       = aws_iam_role.aws_marvin_forensic_role.name
-  policy_arn = aws_iam_policy.aws_rds_iam_connect_policy.arn
+resource "aws_iam_role_policy_attachment" "aws_marvin_auth_rds_test_attachment" {
+  role       = aws_iam_role.aws_marvin_auth_test_role.name
+  policy_arn = aws_iam_policy.aws_rds_iam_connect_test_policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "aws_marvin_forensic_rds_test_attachment" {
+  role       = aws_iam_role.aws_marvin_forensic_test_role.name
+  policy_arn = aws_iam_policy.aws_rds_iam_connect_test_policy.arn
 }
