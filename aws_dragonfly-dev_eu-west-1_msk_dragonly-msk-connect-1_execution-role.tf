@@ -40,7 +40,7 @@ data "aws_iam_policy_document" "msk_connect_kg_role_policy_document" {
     ]
 
     resources = [
-      "arn:aws:kafka:${each.value}:${data.aws_caller_identity.current.account_id}:topic/${data.aws_msk_cluster.dragonfly_msk_1.cluster_name}/${data.aws_msk_cluster.dragonfly_msk_1.cluster_uuid}/*",
+      "arn:aws:kafka:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:topic/${data.aws_msk_cluster.dragonfly_msk_1.cluster_name}/${data.aws_msk_cluster.dragonfly_msk_1.cluster_uuid}/*",
     ]
   }
 
@@ -53,7 +53,7 @@ data "aws_iam_policy_document" "msk_connect_kg_role_policy_document" {
     ]
 
     resources = [
-      "arn:aws:kafka:${each.value}:${data.aws_caller_identity.current.account_id}:topic/${data.aws_msk_cluster.dragonfly_msk_1.cluster_name}/${data.aws_msk_cluster.dragonfly_msk_1.cluster_uuid}/__amazon_msk_connect_*",
+      "arn:aws:kafka:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:topic/${data.aws_msk_cluster.dragonfly_msk_1.cluster_name}/${data.aws_msk_cluster.dragonfly_msk_1.cluster_uuid}/__amazon_msk_connect_*",
     ]
   }
 
@@ -66,8 +66,8 @@ data "aws_iam_policy_document" "msk_connect_kg_role_policy_document" {
     ]
 
     resources = [
-      "arn:aws:kafka:${each.value}:${data.aws_caller_identity.current.account_id}:group/${data.aws_msk_cluster.dragonfly_msk_1.cluster_name}/${data.aws_msk_cluster.dragonfly_msk_1.cluster_uuid}/__amazon_msk_connect_*",
-      "arn:aws:kafka:${each.value}:${data.aws_caller_identity.current.account_id}:group/${data.aws_msk_cluster.dragonfly_msk_1.cluster_name}/${data.aws_msk_cluster.dragonfly_msk_1.cluster_uuid}/connect-*",
+      "arn:aws:kafka:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:group/${data.aws_msk_cluster.dragonfly_msk_1.cluster_name}/${data.aws_msk_cluster.dragonfly_msk_1.cluster_uuid}/__amazon_msk_connect_*",
+      "arn:aws:kafka:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:group/${data.aws_msk_cluster.dragonfly_msk_1.cluster_name}/${data.aws_msk_cluster.dragonfly_msk_1.cluster_uuid}/connect-*",
     ]
   }
 
