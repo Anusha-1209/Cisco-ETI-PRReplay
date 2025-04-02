@@ -120,7 +120,7 @@ resource "aws_cloudwatch_metric_alarm" "marvin-pre-process-collect-events-dlq-al
 resource "aws_sns_topic" "marvin-pre-process-collect-events-dlq-sns-alarm-lp-prod-use2-1" {
   name = "marvin-pre-process-collect-events-dlq-lp-prod-use2-1"
 }
-resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
+resource "aws_sns_topic_subscription" "pd-lp" {
   topic_arn = aws_sns_topic.marvin-pre-process-collect-events-dlq-sns-alarm-lp-prod-use2-1.arn
   protocol  = "https"
   endpoint  = "https://events.pagerduty.com/integration/43a07f5f49c8410bc01cad237cadd0c3/enqueue"
@@ -129,7 +129,7 @@ resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
 resource "aws_sns_topic" "marvin-pre-process-collect-events-dlq-sns-alarm-hp-prod-use2-1" {
   name = "marvin-pre-process-collect-events-dlq-hp-prod-use2-1"
 }
-resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
+resource "aws_sns_topic_subscription" "pd-hp" {
   topic_arn = aws_sns_topic.marvin-pre-process-collect-events-dlq-sns-alarm-lp-prod-use2-1.arn
   protocol  = "https"
   endpoint  = "https://events.pagerduty.com/integration/709cded6efe54004c0f12ac0f9560fcd/enqueue"
