@@ -16,8 +16,8 @@ locals {
 
 
 resource "aws_security_group" "dragonfly_kg_1" {
-  name        = "dragonfly-msk-1-msk-default"
-  description = "dragonfly-msk-1 MSK cluster default security group"
+  name        = "dragonfly-kg-connector"
+  description = "Security group for Dragonfly Knowledge Graph Connector"
   vpc_id      = data.aws_vpc.msk_vpc.id
 
   dynamic "ingress" {
