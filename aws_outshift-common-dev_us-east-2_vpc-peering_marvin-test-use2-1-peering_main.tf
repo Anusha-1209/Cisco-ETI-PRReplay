@@ -14,6 +14,6 @@ module "vpc_peering_primary_to_primary"{
       region       = "us-east-2"
     }
   }
-  accepter_vpc_name  = "comn-dev-use2-1"
-  requester_vpc_name = "marvin-test-use2-1"
+  accepter_vpc_name  = "marvin-test-use2-1"
+  requester_vpc_name = "marvin-dev-use2-data"
 }
