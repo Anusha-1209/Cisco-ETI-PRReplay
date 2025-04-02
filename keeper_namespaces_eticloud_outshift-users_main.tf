@@ -151,10 +151,10 @@ resource "vault_policy" "csm" {
   name     = "csm"
   policy   = <<EOT
 # Manage auth methods broadly across Vault
-# List, create, update, and delete key/value secrets
+# Read, list, create, update key/value secrets
 path "csm/*"
 {
-  capabilities = ["read", "list"]
+  capabilities = ["read", "list", "create", "update"]
 }
 EOT
 }
