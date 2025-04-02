@@ -106,3 +106,4 @@ resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
   protocol  = "https"
   endpoint  = "https://events.pagerduty.com/integration/43a07f5f49c8410bc01cad237cadd0c3/enqueue"
 }
+
