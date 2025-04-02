@@ -62,33 +62,9 @@ resource "aws_sqs_queue" "marvin-prod-use2-1-collect-events" {
   }
 }
 
-resource "aws_cloudwatch_metric_alarm" "marvin-collect-events-dlq-alarm-prod-use2-1-lp" {
-  alarm_name          = "${aws_sqs_queue.marvin-collect-events-dlq-prod-use2-1.name}-not-empty-alarm"
-  alarm_description   = "Items are on the ${aws_sqs_queue.marvin-collect-events-dlq-prod-use2-1.name} queue"
-  comparison_operator = "GreaterThanOrEqualToThreshold"
-  evaluation_periods  = 1
-  metric_name         = "ApproximateNumberOfMessagesVisible"
-  namespace           = "AWS/SQS"
-  period              = 300
-  statistic           = "Average"
-  threshold           = 1
-  treat_missing_data  = "notBreaching"
-  alarm_actions       = [aws_sns_topic.marvin-collect-events-dlq-sns-alarm-prod-use2-1.arn]
-  tags = {
-    CSBDataClassification = "Cisco Restricted"
-    CSBEnvironment        = "NonProd"
-    CSBApplicationName    = "Marvin"
-    CSBResourceOwner      = "Outshift SRE"
-    CSBCiscoMailAlias     = "eti-sre@cisco.com"
-    CSBDataTaxonomy       = "Cisco Operations Data"
-  }
-  dimensions = {
-    "QueueName" = aws_sqs_queue.marvin-collect-events-dlq-prod-use2-1.name
-  }
-}
 
 resource "aws_cloudwatch_metric_alarm" "marvin-collect-events-dlq-alarm-lp-prod-use2-1" {
-  alarm_name          = "${aws_sqs_queue.marvin-collect-events-dlq-prod-use2-1.name}-not-empty-alarm"
+  alarm_name          = "${aws_sqs_queue.marvin-collect-events-dlq-prod-use2-1.name}-lp-not-empty-alarm"
   alarm_description   = "Items are on the ${aws_sqs_queue.marvin-collect-events-dlq-prod-use2-1.name} queue"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 1
@@ -113,7 +89,7 @@ resource "aws_cloudwatch_metric_alarm" "marvin-collect-events-dlq-alarm-lp-prod-
 }
 
 resource "aws_cloudwatch_metric_alarm" "marvin-collect-events-dlq-alarm-hp-prod-use2-1-hp" {
-  alarm_name          = "${aws_sqs_queue.marvin-collect-events-dlq-prod-use2-1.name}-not-empty-alarm"
+  alarm_name          = "${aws_sqs_queue.marvin-collect-events-dlq-prod-use2-1.name}-hp-not-empty-alarm"
   alarm_description   = "Items are on the ${aws_sqs_queue.marvin-collect-events-dlq-prod-use2-1.name} queue"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 1
@@ -140,7 +116,7 @@ resource "aws_cloudwatch_metric_alarm" "marvin-collect-events-dlq-alarm-hp-prod-
 resource "aws_sns_topic" "marvin-collect-events-dlq-sns-alarm-lp-prod-use2-1" {
   name = "marvin-collect-events-dlq-lp-prod-use2-1"
 }
-resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
+resource "aws_sns_topic_subscription" "pg-lp" {
   topic_arn = aws_sns_topic.marvin-collect-events-dlq-sns-alarm-lp-prod-use2-1.arn
   protocol  = "https"
   endpoint  = "https://events.pagerduty.com/integration/43a07f5f49c8410bc01cad237cadd0c3/enqueue"
@@ -149,7 +125,7 @@ resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
 resource "aws_sns_topic" "marvin-collect-events-dlq-sns-alarm-hp-prod-use2-1" {
   name = "marvin-collect-events-dlq-hp-prod-use2-1"
 }
-resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
+resource "aws_sns_topic_subscription" "pg-hp" {
   topic_arn = aws_sns_topic.marvin-collect-events-dlq-sns-alarm-hp-prod-use2-1.arn
   protocol  = "https"
   endpoint  = "https://events.pagerduty.com/integration/43a07f5f49c8410bc01cad237cadd0c3/enqueue"
