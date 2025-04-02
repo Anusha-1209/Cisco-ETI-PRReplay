@@ -28,6 +28,14 @@ locals {
     "csm",
     "bugbash"
   ]
+
+  datasources_sharepoint_ciscoeticloud_api_motific_rag_user_kv_paths = [
+    "genai"
+  ]
+
+  datasources_sharepoint_ciscoeticloud_human_motific_rag_user1_kv_paths = [
+    "genai"
+  ]
 }
 
 data "vault_generic_secret" "autosync_llms_mistral" {
@@ -56,6 +64,15 @@ data "vault_generic_secret" "autosync_datasources_sharepoint_outshiftgenai" {
   provider = vault.venture
 }
 
+data "vault_generic_secret" "autosync_datasources_sharepoint_ciscoeticloud_api_motific_rag_user" {
+  path = "autosync/datasources/sharepoint/ciscoeticloud/api_users/motific-rag-user"
+  provider = vault.venture
+}
+
+data "vault_generic_secret" "autosync_datasources_sharepoint_ciscoeticloud_human_motific_rag_user1" {
+  path = "autosync/datasources/sharepoint/ciscoeticloud/human_users/motific_rag_user1"
+  provider = vault.venture
+}
 resource "vault_generic_secret" "llms_mistral" {
   for_each = toset(local.mistral_kv_paths)
   provider = vault.venture
@@ -88,4 +105,18 @@ resource "vault_generic_secret" "datasources_sharepoint_outshiftgenai" {
   provider = vault.venture
   data_json = data.vault_generic_secret.autosync_datasources_sharepoint_outshiftgenai.data_json
   path = "${each.value}/datasources/sharepoint/OutshiftGenAI"
+}
+
+resource "vault_generic_secret" "datasources_sharepoint_ciscoeticloud_api_motific_rag_user" {
+  for_each = toset(local.datasources_sharepoint_ciscoeticloud_api_motific_rag_user_kv_paths)
+  provider = vault.venture
+  data_json = data.vault_generic_secret.autosync_datasources_sharepoint_ciscoeticloud_api_motific_rag_user.data_json
+  path = "${each.value}/datasources/sharepoint/ciscoeticloud/api_users/motific-rag-user"
+}
+
+resource "vault_generic_secret" "datasources_sharepoint_ciscoeticloud_api_motific_rag_user" {
+  for_each = toset(local.datasources_sharepoint_ciscoeticloud_human_motific_rag_user1_kv_paths)
+  provider = vault.venture
+  data_json = data.vault_generic_secret.autosync_datasources_sharepoint_ciscoeticloud_human_motific_rag_user1.data_json
+  path = "${each.value}/datasources/sharepoint/ciscoeticloud/human_users/motific_rag_user1"
 }
