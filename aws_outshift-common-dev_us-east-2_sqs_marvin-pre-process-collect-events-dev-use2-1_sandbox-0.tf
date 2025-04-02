@@ -13,7 +13,7 @@ resource "aws_sqs_queue" "marvin-pre-process-collect-events-dev-sandbox-0-use2-1
 }
 
 
-resource "aws_lambda_event_source_mapping" "pii-reduction-marvin-use2-1-source-mapping" {
-  event_source_arn = aws_sqs_queue.marvin-pre-process-collect-events-dev-use2-1.arn
+resource "aws_lambda_event_source_mapping" "pii-reduction-marvin-sandbox-0use2-1-source-mapping" {
+  event_source_arn = aws_sqs_queue.marvin-pre-process-collect-events-dev-sandbox-0-use2-1.arn
   function_name    = "pii-reduction-marvin-dev-sandbox-0-use2-1"
 }
