@@ -14,7 +14,7 @@ data "vault_generic_secret" "autosync_llms_azure_openai_gpt4" {
 
 
 resource "vault_generic_secret" "llms_azure_openai_gpt4" {
-  for_each = local.gpt4_kv_paths
+  for_each = toset(local.gpt4_kv_paths)
   provider = vault.venture
   data_json = data.vault_generic_secret.autosync_llms_azure_openai_gpt4.data_json
   path = "${each.value}/llms/azure/openai/gpt4"
