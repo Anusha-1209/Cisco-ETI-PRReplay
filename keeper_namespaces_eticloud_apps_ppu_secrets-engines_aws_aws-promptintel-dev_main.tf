@@ -14,6 +14,6 @@ resource "vault_aws_secret_backend_role" "jenkins-role" {
   credential_type = "assumed_role"
 
   role_arns = [
-    aws_iam_role.jenkins-promptintel.arn,
+    data.aws_iam_role.jenkins-promptintel.arn,
   ]
 }
