@@ -26,7 +26,7 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_test_table" {
     type = "string"
   }
   storage_descriptor {
-    location      = "s3://msk-connect-marvin-dev-use2-1/topics/events/"
+    location      = "s3://msk-connect-marvin-dev-use2-1/topics/events-test/"
     input_format  = "org.apache.hadoop.mapred.TextInputFormat"
     output_format = "org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat"
 
