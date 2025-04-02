@@ -75,7 +75,7 @@ module "lambda_function_container_image" {
     }
   }
   docker_additional_options = [
-    "-e", "SQS_URL='https://sqs.us-east-2.amazonaws.com/637423477129/marvin-collect-events-prod-ecu1-1'"
+    "-e", "SQS_URL='https://sqs.eu-central-1.amazonaws.com/637423477129/marvin-collect-events-prod-ecu1-1'"
   ]
 }
 
