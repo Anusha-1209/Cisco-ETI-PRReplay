@@ -67,7 +67,7 @@ resource "aws_mskconnect_connector" "dragonfly_kg_connector" {
 
       vpc {
         security_groups = [
-          aws_security_group.
+          aws_security_group.dragonfly_kg_1.id
         ]
         subnets = data.aws_subnets.msk_subnets.ids
       }
