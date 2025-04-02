@@ -45,7 +45,7 @@ locals {
 
 module "lambda_function_container_image" {
   source = "terraform-aws-modules/lambda/aws"
-  function_name = "pii-reduction-marvin-prod-ecu1-1"
+  function_name = "pii-reduction-marvin-prod-euc1-1"
   description   = "Marvin Pii reduction"
   create_package = false
   timeout = 180
