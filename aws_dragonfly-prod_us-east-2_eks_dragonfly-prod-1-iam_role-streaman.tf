@@ -81,6 +81,20 @@ data "aws_iam_policy_document" "dragonfly_streaman_kafka_policy" {
   }
 }
 
+data "aws_iam_policy_document" "sqs_policy" {
+  statement {
+    sid = "LightspinSQSAccess"
+
+    actions = [
+      "sqs:*"
+    ]
+    resources = [
+      "arn:aws:sqs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:dragonfly-sqs-prod-1.fifo"
+    ]
+  }
+}
+
+
 resource "aws_iam_policy" "dragonfly_streaman_kafka_policy" {
   name        = "${local.cluster_name}-streaman-connector-writer-policy"
   description = "Policies for streaman role"
@@ -98,10 +112,17 @@ resource "aws_iam_policy" "dragonfly_streaman_kafkconnect_policy" {
   })
 }
 
+resource "aws_iam_policy" "lightspin_sqs_policy" {
+  name        = "${local.cluster_name}-streaman-lightspin-sqs"
+  description = "${local.cluster_name} policy for streaman role"
+  policy      = data.aws_iam_policy_document.sqs_policy.json
+}
+
 resource "aws_iam_role_policy_attachment" "dragonfly_msk_argo_writer_policy_attachment" {
   for_each = {
     kafka-policy         = aws_iam_policy.dragonfly_streaman_kafka_policy.arn,
     kafka-connect-policy = aws_iam_policy.dragonfly_streaman_kafkconnect_policy.arn
+    lightspin-sqs-policy = aws_iam_policy.lightspin_sqs_policy.arn
   }
 
   role       = aws_iam_role.dragonfly_streaman.name
