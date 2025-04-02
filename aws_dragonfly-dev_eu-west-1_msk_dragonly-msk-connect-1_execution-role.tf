@@ -113,6 +113,23 @@ data "aws_iam_policy_document" "msk_connect_kg_role_policy_document" {
       aws_secretsmanager_secret.msk_connect_kg.arn
     ]
   }
+
+  // kms access
+  statement {
+    effect = "Allow"
+
+    actions = [
+          "kms:Encrypt",
+          "kms:Decrypt",
+          "kms:ReEncrypt*",
+          "kms:GenerateDataKey*",
+          "kms:DescribeKey"
+    ]
+
+    resources = [
+      aws_kms_key.encryption_key.arn
+    ]
+  }
 }
 
 resource "aws_iam_policy" "role_policy" {
