@@ -15,6 +15,6 @@ resource "aws_secretsmanager_secret" "msk_connect_kg" {
 
 // Secret versions
 resource "aws_secretsmanager_secret_version" "msk_connect_kg_password_v1" {
-  secret_id     = aws_secretsmanager_secret.msk_connect_kg_password.id
+  secret_id     = aws_secretsmanager_secret.msk_connect_kg.id
   secret_string = jsonencode(local.secret)
 }
