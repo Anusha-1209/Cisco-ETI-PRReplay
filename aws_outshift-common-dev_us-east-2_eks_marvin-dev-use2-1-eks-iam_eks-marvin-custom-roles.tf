@@ -339,6 +339,11 @@ resource "aws_iam_role_policy_attachment" "aws_marvin_prompt_inspection_sage_mak
 
 resource "aws_iam_role_policy_attachment" "aws_marvin_prompt_inspection_sqs_collect_events_attachment" {
   role       = aws_iam_role.aws_marvin_prompt_inspection_role.name
+  policy_arn = aws_iam_policy.aws_sqs_collect_event_policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "aws_marvin_prompt_inspection_sqs_pre_process_collect_events_attachment" {
+  role       = aws_iam_role.aws_marvin_prompt_inspection_role.name
   policy_arn = aws_iam_policy.aws_sqs_pre_process_collect_event_policy.arn
 }
 
