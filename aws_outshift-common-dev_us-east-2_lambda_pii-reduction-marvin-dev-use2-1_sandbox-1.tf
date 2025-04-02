@@ -1,4 +1,4 @@
-module "lambda_function_container_image" {
+module "pii-reduction-marvin-dev-sandbox-1-use2-1" {
   source = "terraform-aws-modules/lambda/aws"
   function_name = "pii-reduction-marvin-dev-sandbox-1-use2-1"
   description   = "Marvin Pii reduction"
