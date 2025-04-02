@@ -6,12 +6,37 @@ locals {
     "generic"
   ]
 
+  mistral_kv_paths = [
+    "bugbash",
+    "csm",
+    "genai",
+    "generic"
+  ]
+
+  aws_bedrock_kv_paths = [
+    "bugbash",
+    "csm",
+    "genai",
+    "generic"
+  ]
+
   gpt4o_kv_paths = [
     "genai"
   ]
+
   datasources_sharepoint_outshiftgenai_kv_paths = [
     "csm"
   ]
+}
+
+data "vault_generic_secret" "autosync_llms_mistral" {
+  path = "autosync/llms/mistral"
+  provider = vault.venture
+}
+
+data "vault_generic_secret" "autosync_llms_aws_bedrock" {
+  path = "autosync/llms/aws/bedrock"
+  provider = vault.venture
 }
 
 # Sync GPT4 Key
@@ -30,6 +55,19 @@ data "vault_generic_secret" "autosync_datasources_sharepoint_outshiftgenai" {
   provider = vault.venture
 }
 
+resource "vault_generic_secret" "llms_mistral" {
+  for_each = toset(local.mistral_kv_paths)
+  provider = vault.venture
+  data_json = data.vault_generic_secret.autosync_llms_mistral.data_json
+  path = "${each.value}/llms/mistral"
+}
+
+resource "vault_generic_secret" "llms_aws_bedrock" {
+  for_each = toset(local.aws_bedrock_kv_paths)
+  provider = vault.venture
+  data_json = data.vault_generic_secret.autosync_llms_aws_bedrock.data_json
+  path = "${each.value}/llms/aws/bedrock"
+}
 resource "vault_generic_secret" "llms_azure_openai_gpt4" {
   for_each = toset(local.gpt4_kv_paths)
   provider = vault.venture
