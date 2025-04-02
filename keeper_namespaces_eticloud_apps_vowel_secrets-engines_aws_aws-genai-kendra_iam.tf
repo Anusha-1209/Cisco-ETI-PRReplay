@@ -40,7 +40,7 @@ EOF
 }
 
 # Additional IAM role for the user
-resource "aws_iam_role" "jenkins-role" {
+resource "aws_iam_role" "jenkins" {
   provider           = aws.kendra
   name               = "jenkins"
   assume_role_policy = jsonencode({
@@ -56,7 +56,7 @@ resource "aws_iam_role" "jenkins-role" {
     ]
   })
    tags = {
-    Name = "jenkins-role"
+    Name = "jenkins"
   }
 }
 
@@ -119,7 +119,7 @@ EOF
 # Attach the jenkins policy to the jenkins-role
 resource "aws_iam_role_policy_attachment" "jenkins-policy-attach" {
   provider   = aws.kendra
-  role       = aws_iam_role.jenkins-role.name
+  role       = aws_iam_role.jenkins.name
   policy_arn = aws_iam_policy.jenkins-policy.arn
 }
 
