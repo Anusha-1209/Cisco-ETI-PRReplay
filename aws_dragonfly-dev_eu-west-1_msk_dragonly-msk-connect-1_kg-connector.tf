@@ -2,9 +2,14 @@ resource "aws_mskconnect_worker_configuration" "dragonfly_kg_worker_config" {
   name                    = "dragonfly-kg-worker"
   properties_file_content = <<EOT
 # define names of config providers:
-config.providers                             = secretsmanager
-config.providers.secretsmanager.class        = com.amazonaws.kafka.config.providers.SecretsManagerConfigProvider
-config.providers.secretsmanager.param.region = ${data.aws_region.current.name}
+config.providers=secretsmanager
+config.providers.secretsmanager.param.region=${data.aws_region.current.name}
+
+key.converter=org.apache.kafka.connect.storage.StringConverter
+value.converter=org.apache.kafka.connect.storage.StringConverter
+
+# provide implementation classes for each provider:
+config.providers.secretsmanager.class=com.amazonaws.kafka.config.providers.SecretsManagerConfigProvider
 EOT
 }
 
