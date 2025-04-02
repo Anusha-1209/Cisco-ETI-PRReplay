@@ -14,7 +14,7 @@ provider "vault" {
 
 # AWS credentails are the same of cwpp-dev vault secret (we deploy on same aws account)
 data "vault_generic_secret" "aws_infra_credential" {
-  path     = "secret/infra/aws/outshift-common-dev/terraform_admin"
+  path     = "secret/infra/aws/outshift-common-staging/terraform_admin"
   provider = vault.eticloud
 }
 
