@@ -36,10 +36,28 @@ provider "aws" {
   max_retries = 3
 }
 
+
+resource "aws_sqs_queue" "marvin-pre-process-collect-events-dlq-dev-use2-1" {
+  name = "marvin-pre-process-collect-events-dlq-dev-use2-1"
+}
+
+resource "aws_sqs_queue_redrive_allow_policy" "marvin-pre-process-collect-events-dlq-dev-use2-1" {
+  queue_url = aws_sqs_queue.marvin-pre-process-collect-events-dlq-dev-use2-1.id
+
+  redrive_allow_policy = jsonencode({
+    redrivePermission = "byQueue",
+    sourceQueueArns   = [aws_sqs_queue.marvin-pre-process-collect-events-dev-use2-1.arn]
+  })
+}
+
 resource "aws_sqs_queue" "marvin-pre-process-collect-events-dev-use2-1" {
   name = "marvin-pre-process-collect-events-dev-use2-1"
   fifo_queue = false
   visibility_timeout_seconds = 180
+  redrive_policy = jsonencode({
+    deadLetterTargetArn = aws_sqs_queue.marvin-pre-process-collect-events-dlq-dev-use2-1.arn
+    maxReceiveCount     = 4
+  })
   tags = {
     CSBDataClassification = "Cisco Restricted"
     CSBEnvironment        = "NonProd"
