@@ -11,8 +11,8 @@ terraform {
 }
 
 locals {
-  name             = "lightspin-staging-use2-1"
-  region           = "us-east-2"
+  name             = "cspm-staging-euw1-1"
+  region           = "eu-west-1"
   aws_account_name = "lightspin-staging"
 }
 
