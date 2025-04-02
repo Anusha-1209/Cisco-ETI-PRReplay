@@ -25,7 +25,8 @@ locals {
   ]
 
   datasources_sharepoint_outshiftgenai_kv_paths = [
-    "csm"
+    "csm",
+    "bugbash"
   ]
 }
 
