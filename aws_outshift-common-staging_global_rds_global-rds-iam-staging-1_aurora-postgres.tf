@@ -43,6 +43,7 @@ module "rds_primary" {
   secret_path       = "secret/staging/infra/aurora-pg/us-east-2/outshift-common-staging/global-rds-iam-staging-use2-1"
   db_engine_version = "15.4"
   db_allowed_cidrs  = [ data.aws_vpc.eks_primary_vpc.cidr_block, data.aws_vpc.eks_secondary_vpc.cidr_block ]
+  skip_final_snapshot       = true
 }
 
 # Secondary region us-east-2
@@ -64,6 +65,7 @@ module "rds_secondary" {
   secret_path               = "secret/staging/infra/aurora-pg/us-west-2/outshift-common-staging/global-rds-iam-staging-usw2-1"
   db_engine_version         = "15.4"
   db_allowed_cidrs          = [ data.aws_vpc.eks_primary_vpc.cidr_block, data.aws_vpc.eks_secondary_vpc.cidr_block ]
+  skip_final_snapshot       = true
 
   depends_on = [module.rds_primary]
 }
