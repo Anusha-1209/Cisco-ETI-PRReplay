@@ -25,7 +25,7 @@ resource "aws_mskconnect_custom_plugin" "dragonfly_kg_connector" {
 }
 
 resource "aws_mskconnect_connector" "dragonfly_kg_connector" {
-  name = "dragonfly_kg_connector"
+  name = "dragonfly-kg-connector"
 
   kafkaconnect_version = "2.7.1"
 
