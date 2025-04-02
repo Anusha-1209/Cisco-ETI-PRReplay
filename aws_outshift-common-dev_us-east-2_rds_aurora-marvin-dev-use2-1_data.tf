@@ -9,3 +9,9 @@ data "aws_vpc" "cluster_vpc" {
     values = [local.cluster_vpc_name]
   }
 }
+data "aws_vpc" "cluster_vpc_2" { # Add this block
+  filter {
+    name   = "tag:Name"
+    values = [local.cluster_vpc_name_2]
+  }
+}

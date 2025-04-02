@@ -5,6 +5,6 @@ module "rds" {
   db_instance_type  = "db.r5.xlarge"
   cluster_name      = local.rds_name
   secret_path       = "secret/eticcprod/infra/aurora-pg/us-east-2/marvin-dev/marvin-dev-use2-1"
-  db_allowed_cidrs  = [data.aws_vpc.cluster_vpc.cidr_block]
+  db_allowed_cidrs  = [data.aws_vpc.cluster_vpc.cidr_block, data.aws_vpc.cluster_vpc_2.cidr_block]
   db_engine_version = "15"
 }
