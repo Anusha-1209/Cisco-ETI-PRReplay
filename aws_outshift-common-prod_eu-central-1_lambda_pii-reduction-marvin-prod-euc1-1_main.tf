@@ -75,7 +75,7 @@ module "lambda_function_container_image" {
     }
   }
   environment_variables = {
-    SQS_URL = "https://sqs.eu-central-1.amazonaws.com/058264538874/marvin-collect-events-prod-ecu1-1"
+    SQS_URL = "https://sqs.eu-central-1.amazonaws.com/058264538874/marvin-collect-events-prod-euc1-1"
   }
 }
 
