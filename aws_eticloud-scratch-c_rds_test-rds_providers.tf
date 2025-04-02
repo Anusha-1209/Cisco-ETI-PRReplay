@@ -11,7 +11,7 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = "rosey-prod-rds-use2-1"
+      ApplicationName    = "test-rds-cluster"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
