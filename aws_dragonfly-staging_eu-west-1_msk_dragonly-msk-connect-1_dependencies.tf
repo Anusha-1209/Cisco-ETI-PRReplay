@@ -15,7 +15,7 @@ data "vault_generic_secret" "arangodb_secrets" {
 
 // kafka cluster information
 data "aws_msk_cluster" "dragonfly_msk_1" {
-  cluster_name = "dragonfly-msk-1"
+  cluster_name = "dragonfly-staging-msk-1"
 }
 
 // data vpc information
