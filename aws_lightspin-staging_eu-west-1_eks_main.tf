@@ -2,7 +2,7 @@ module "eks_all_in_one" {
   source           = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=0.5.7"
   name             = local.name             # EKS cluster name
   region           = local.region           # AWS provider region
-  eks_aws_account_name = local.eks_aws_account_name # AWS account name
+  aws_account_name = local.eks_aws_account_name # AWS account name
   cidr             = "10.0.0.0/16"          # VPC CIDR
   private_subnet_bits = 2                  # Private subnet bits
   cluster_version  = "1.29"                 # EKS cluster version
