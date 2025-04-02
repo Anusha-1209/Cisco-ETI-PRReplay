@@ -22,3 +22,8 @@ data "aws_msk_cluster" "dragonfly_msk_1" {
 data "aws_iam_role" "msk_connect_execution_role" {
   name = "dragonfly-msk-connect-execution-role"
 }
+
+// bucket containing the custom plugin jar
+data "aws_s3_bucket" "mskconnect_custom_plugin_bucket" {
+  bucket = local.arangodb_connector_plugin_bucket
+}

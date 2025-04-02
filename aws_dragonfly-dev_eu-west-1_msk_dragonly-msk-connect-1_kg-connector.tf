@@ -14,7 +14,7 @@ EOT
 }
 
 resource "aws_mskconnect_custom_plugin" "dragonfly-kg-connector" {
-  name         = "${local.arango_connector_plugin_name}-plugin"
+  name         = "${local.arangodb_connector_plugin_name}-plugin"
   content_type = "JAR"
   location {
     s3 {
@@ -92,7 +92,7 @@ resource "aws_mskconnect_connector" "dragonfly-kg-connector" {
   service_execution_role_arn = aws_iam_role.msk_connect_execution_role.arn
 
   worker_configuration {
-    arn = aws_mskconnect_worker_configuration.dragonfly-kg-worker-config.arn
+    arn      = aws_mskconnect_worker_configuration.dragonfly-kg-worker-config.arn
     revision = aws_mskconnect_worker_configuration.dragonfly-kg-worker-config.latest_revision
   }
 }
