@@ -57,7 +57,7 @@ resource "aws_mskconnect_connector" "dragonfly_kg_connector" {
     "value.converter.schemas.enable" = "false"
     "ssl.hostname.verification"      = "true"
     "value.converter"                = "org.apache.kafka.connect.json.JsonConverter"
-    "connection.password"            = "$${ecretsmanager:dragonfly-msk-connect-kg:password}"
+    "connection.password"            = "$${secretsmanager:dragonfly-msk-connect-kg:password}"
     "connection.ca.crt"              = "$${secretsmanager:dragonfly-msk-connect-kg:ca-certificate}"
   }
 
