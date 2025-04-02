@@ -36,14 +36,14 @@ resource "vault_namespace" "namespace" {
 resource "vault_mount" "kvv2" {
   provider = vault.venture
   path     = "secret"
-  type    = "kv"
-  options = { version = "2" }
+  type     = "kv"
+  options  = { version = "2" }
 }
 
 # OIDC Credentials
 data "vault_generic_secret" "oidc_credential" {
   provider = vault.teamsecrets
-  path = "secret/cisco_sso_auth_clients/vault_oidc_creds"
+  path     = "secret/cisco_sso_auth_clients/vault_oidc_creds"
 }
 
 # oidc auth backend
@@ -61,15 +61,15 @@ resource "vault_jwt_auth_backend" "oidc" {
 
 # vault roles
 resource "vault_jwt_auth_backend_role" "admin" {
-  depends_on                   = [ vault_policy.admin, vault_policy.user]
-  provider                     = vault.venture
-  role_name                    = "admin"
-  role_type                    = "oidc"
-  backend                      = vault_jwt_auth_backend.oidc.path
-  allowed_redirect_uris        = ["https://keeper.cisco.com/ui/vault/auth/oidc/oidc/callback",
-                                  "https://east.keeper.cisco.com/ui/vault/auth/oidc/oidc/callback",
-                                  "https://west.keeper.cisco.com/ui/vault/auth/oidc/oidc/callback"]
-  bound_audiences              = [var.oidc_client_id]
+  depends_on = [vault_policy.admin, vault_policy.user]
+  provider   = vault.venture
+  role_name  = "admin"
+  role_type  = "oidc"
+  backend    = vault_jwt_auth_backend.oidc.path
+  allowed_redirect_uris = ["https://keeper.cisco.com/ui/vault/auth/oidc/oidc/callback",
+    "https://east.keeper.cisco.com/ui/vault/auth/oidc/oidc/callback",
+  "https://west.keeper.cisco.com/ui/vault/auth/oidc/oidc/callback"]
+  bound_audiences = [var.oidc_client_id]
   bound_claims = {
     memberof = "CN=motific-outshift-users-vault-admin,OU=Cisco Groups,DC=cisco,DC=com"
   }
@@ -81,11 +81,11 @@ resource "vault_jwt_auth_backend_role" "admin" {
     given_name  = "given_name",
     sub         = "sub"
   }
-  groups_claim                 = "memberof"
-  oidc_scopes                  = ["profile", "email", "openid"]
-  user_claim                   = "sub"
-  token_policies               = [vault_policy.admin.name,
-                                  vault_policy.default.name]
+  groups_claim = "memberof"
+  oidc_scopes  = ["profile", "email", "openid"]
+  user_claim   = "sub"
+  token_policies = [vault_policy.admin.name,
+  vault_policy.default.name]
 }
 
 # vault policies
