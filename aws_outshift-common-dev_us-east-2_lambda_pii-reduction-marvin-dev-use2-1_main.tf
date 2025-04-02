@@ -43,7 +43,7 @@ locals {
   account_id = data.aws_caller_identity.current_outshift_common.account_id
 }
 
-module "pii-reduction-marvin-dev-use2-1" {
+module "lambda_function_container_image" {
   source = "terraform-aws-modules/lambda/aws"
   function_name = "pii-reduction-marvin-dev-use2-1"
   description   = "Marvin Pii reduction"
