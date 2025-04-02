@@ -37,7 +37,6 @@ provider "aws" {
 }
 
 resource "aws_sqs_queue" "marvin-dev-use2-1-collect-events" {
-  source  = "terraform-aws-modules/sqs/aws"
   name = "marvin-collect-events-dev-use2-1"
   fifo_queue = false
   tags = {
