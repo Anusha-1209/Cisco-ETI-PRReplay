@@ -1,18 +1,3 @@
-terraform {
-  backend "s3" {
-    bucket = "eticloud-tf-state-nonprod"
-    key = "terraform-state/aws/outshift-common-dev/us-east-2/msk/glue-events-table-marvin-dev-sandbox-1-use2-1.tfstate"
-    region = "us-east-2"
-  }
-}
-data "vault_generic_secret" "aws_infra_credential" {
-  path     = "secret/infra/aws/outshift-common-dev/terraform_admin"
-  provider = vault.eticloud
-}
-
-resource "aws_glue_catalog_database" "aws_glue_catalog_marvin_database" {
-  name = "marvin"
-}
 
 resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_sandbox_1_table" {
   name          = "events_dev_sandbox_1_use2_1"
