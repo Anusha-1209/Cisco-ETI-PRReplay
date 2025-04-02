@@ -199,6 +199,7 @@ resource "aws_iam_role" "aws_marvin_producer_role" {
           "StringEquals": {
             "${local.oidc_id}:aud": "sts.amazonaws.com",
             "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend:producer"
+            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-1:producer"
           }
         }
       }
@@ -222,6 +223,7 @@ resource "aws_iam_role" "aws_marvin_batch_processing_role" {
           "StringEquals": {
             "${local.oidc_id}:aud": "sts.amazonaws.com",
             "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend:batch-processing"
+            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-1:batch-processing"
           }
         }
       }
@@ -245,6 +247,7 @@ resource "aws_iam_role" "aws_marvin_prompt_inspection_role" {
           "StringEquals": {
             "${local.oidc_id}:aud": "sts.amazonaws.com",
             "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend:prompt-inspection"
+            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-1:prompt-inspection"
           }
         }
       }
@@ -268,6 +271,7 @@ resource "aws_iam_role" "aws_marvin_auth_role" {
           "StringEquals": {
             "${local.oidc_id}:aud": "sts.amazonaws.com",
             "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend:auth"
+            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-1:auth"
           }
         }
       }
@@ -291,6 +295,7 @@ resource "aws_iam_role" "aws_marvin_forensic_role" {
           "StringEquals": {
             "${local.oidc_id}:aud": "sts.amazonaws.com",
             "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend:forensic"
+            "${local.oidc_id}:sub": "system:serviceaccount:marvin-backend-sandbox-1:forensic"
           }
         }
       }
