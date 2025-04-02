@@ -95,4 +95,13 @@ resource "aws_mskconnect_connector" "dragonfly_kg_connector" {
     arn      = aws_mskconnect_worker_configuration.dragonfly_kg_worker_config.arn
     revision = aws_mskconnect_worker_configuration.dragonfly_kg_worker_config.latest_revision
   }
+
+  log_delivery {
+    worker_log_delivery {
+      cloudwatch_logs {
+        enabled = true
+        log_group = aws_cloudwatch_log_group.dragonfly_kg_connector.name
+      }
+    }
+  }
 }
