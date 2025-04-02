@@ -89,7 +89,7 @@ resource "aws_mskconnect_connector" "dragonfly_kg_connector" {
     }
   }
 
-  service_execution_role_arn = aws_iam_role.msk_connect_execution_role.arn
+  service_execution_role_arn = aws_iam_role.msk_connect_kg_execution_role.arn
 
   worker_configuration {
     arn      = aws_mskconnect_worker_configuration.dragonfly_kg_worker_config.arn
