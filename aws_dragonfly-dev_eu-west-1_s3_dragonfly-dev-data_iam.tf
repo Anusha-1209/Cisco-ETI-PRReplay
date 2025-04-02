@@ -23,7 +23,7 @@ data "aws_iam_policy_document" "inference_client_policy" {
       "kafka-cluster:Connect",
     ]
     resources = [
-      "arn:aws:kafka:${local.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:cluster/${data.aws_msk_cluster.dragonfly_msk_1.cluster_name}/${data.aws_msk_cluster.dragonfly_msk_1.cluster_uuid}"
+      "arn:aws:kafka:${local.aws_region}:${data.aws_caller_identity.current.account_id}:cluster/${data.aws_msk_cluster.dragonfly_msk_1.cluster_name}/${data.aws_msk_cluster.dragonfly_msk_1.cluster_uuid}"
     ]
     effect = "Allow"
   }
@@ -35,8 +35,8 @@ data "aws_iam_policy_document" "inference_client_policy" {
       "kafka-cluster:ReadData",
     ]
     resources = [
-      "arn:aws:kafka:${local.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:topic/${data.aws_msk_cluster.dragonfly_msk_1.cluster_name}/${data.aws_msk_cluster.dragonfly_msk_1.cluster_uuid}/kg-node*",
-      "arn:aws:kafka:${local.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:topic/${data.aws_msk_cluster.dragonfly_msk_1.cluster_name}/${data.aws_msk_cluster.dragonfly_msk_1.cluster_uuid}/kg-edge*",
+      "arn:aws:kafka:${local.aws_region}:${data.aws_caller_identity.current.account_id}:topic/${data.aws_msk_cluster.dragonfly_msk_1.cluster_name}/${data.aws_msk_cluster.dragonfly_msk_1.cluster_uuid}/kg-node*",
+      "arn:aws:kafka:${local.aws_region}:${data.aws_caller_identity.current.account_id}:topic/${data.aws_msk_cluster.dragonfly_msk_1.cluster_name}/${data.aws_msk_cluster.dragonfly_msk_1.cluster_uuid}/kg-edge*",
     ]
     effect = "Allow"
   }
@@ -48,7 +48,7 @@ data "aws_iam_policy_document" "inference_client_policy" {
       "kafka-cluster:DescribeGroup",
     ]
     resources = [
-      "arn:aws:kafka:${local.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:group/${data.aws_msk_cluster.dragonfly_msk_1.cluster_name}/${data.aws_msk_cluster.dragonfly_msk_1.cluster_uuid}/*",
+      "arn:aws:kafka:${local.aws_region}:${data.aws_caller_identity.current.account_id}:group/${data.aws_msk_cluster.dragonfly_msk_1.cluster_name}/${data.aws_msk_cluster.dragonfly_msk_1.cluster_uuid}/*",
     ]
     effect = "Allow"
   }
