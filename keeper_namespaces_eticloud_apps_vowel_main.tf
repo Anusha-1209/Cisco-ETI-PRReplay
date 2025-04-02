@@ -275,7 +275,7 @@ EOT
 locals {
   policies = {
     "admin"                    = "policies/admin.hcl",
-    "developer"                = "policies/developer.hcl",
+    "developer"                = "policies/developer-dev.hcl",
     "developer-staging"        = "policies/developer-staging.hcl",
     "developer-prod"           = "policies/developer-prod.hcl",
     "external-secrets-dev"     = "policies/external-secrets-dev.hcl",
