@@ -1,4 +1,4 @@
-resource "aws_mskconnect_worker_configuration" "dragonfly-kg-worker-config" {
+resource "aws_mskconnect_worker_configuration" "dragonfly_kg_worker_config" {
   name                    = "dragonfly-kg-worker"
   properties_file_content = <<EOT
 key.converter=org.apache.kafka.connect.storage.StringConverter
@@ -13,7 +13,7 @@ config.providers.secretsmanager.param.region=${data.aws_region.current.name}
 EOT
 }
 
-resource "aws_mskconnect_custom_plugin" "dragonfly-kg-connector" {
+resource "aws_mskconnect_custom_plugin" "dragonfly_kg_connector" {
   name         = "${local.arangodb_connector_plugin_name}-plugin"
   content_type = "JAR"
   location {
@@ -24,8 +24,8 @@ resource "aws_mskconnect_custom_plugin" "dragonfly-kg-connector" {
   }
 }
 
-resource "aws_mskconnect_connector" "dragonfly-kg-connector" {
-  name = "dragonfly-kg-connector"
+resource "aws_mskconnect_connector" "dragonfly_kg_connector" {
+  name = "dragonfly_kg_connector"
 
   kafkaconnect_version = "2.7.1"
 
@@ -66,7 +66,9 @@ resource "aws_mskconnect_connector" "dragonfly-kg-connector" {
       bootstrap_servers = data.aws_msk_cluster.dragonfly_msk_1.bootstrap_brokers_sasl_iam
 
       vpc {
-        security_groups = []
+        security_groups = [
+          aws_security_group.
+        ]
         subnets = data.aws_subnets.msk_subnets.ids
       }
     }
@@ -82,15 +84,15 @@ resource "aws_mskconnect_connector" "dragonfly-kg-connector" {
 
   plugin {
     custom_plugin {
-      arn      = aws_mskconnect_custom_plugin.dragonfly-kg-connector.arn
-      revision = aws_mskconnect_custom_plugin.dragonfly-kg-connector.latest_revision
+      arn      = aws_mskconnect_custom_plugin.dragonfly_kg_connector.arn
+      revision = aws_mskconnect_custom_plugin.dragonfly_kg_connector.latest_revision
     }
   }
 
   service_execution_role_arn = aws_iam_role.msk_connect_execution_role.arn
 
   worker_configuration {
-    arn      = aws_mskconnect_worker_configuration.dragonfly-kg-worker-config.arn
-    revision = aws_mskconnect_worker_configuration.dragonfly-kg-worker-config.latest_revision
+    arn      = aws_mskconnect_worker_configuration.dragonfly_kg_worker_config.arn
+    revision = aws_mskconnect_worker_configuration.dragonfly_kg_worker_config.latest_revision
   }
 }
