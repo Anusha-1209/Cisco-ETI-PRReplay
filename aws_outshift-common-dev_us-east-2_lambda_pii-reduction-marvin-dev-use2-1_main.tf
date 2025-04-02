@@ -65,15 +65,15 @@ module "lambda_function_container_image" {
       resources = ["arn:aws:sqs:*:${local.account_id}:*"]
     }
     ecr = {
-      "Effect": "Allow",
-      "Action": [
+      effect: "Allow",
+      actions: [
         "ecr:SetRepositoryPolicy",
         "ecr:GetRepositoryPolicy",
         "ecr:BatchCheckLayerAvailability",
         "ecr:GetDownloadUrlForLayer",
         "ecr:BatchGetImage"
       ],
-      "Resource": "arn:aws:ecr:us-east-2:626007623524:marvin/images/pii-service/server"
+      resources: ["arn:aws:ecr:us-east-2:626007623524:marvin/images/pii-service/server"]
     }
   }
   docker_additional_options = [
