@@ -10,8 +10,15 @@ module "rds" {
 }
 
 resource "aws_rds_global_cluster" "motf-preview-global" {
-  global_cluster_identifier    = "motf-preview-global"
+  global_cluster_identifier = "motf-preview-global"
   # (Optional) Enable to remove DB Cluster members from Global Cluster on destroy. Required with source_db_cluster_identifier.
   force_destroy                = true
   source_db_cluster_identifier = module.rds.cluster_arn
+}
+
+resource "aws_kms_key" "rds_multi_region_primary" {
+  provider            = aws.secondary
+  description         = "RDS multi-region primary KMS key for ${local.aws_account_name}"
+  multi_region        = true
+  enable_key_rotation = true
 }

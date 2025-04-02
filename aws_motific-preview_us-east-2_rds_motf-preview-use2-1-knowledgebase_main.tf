@@ -15,3 +15,9 @@ resource "aws_rds_global_cluster" "motf-preview-knowledgebase-global" {
   force_destroy                = true
   source_db_cluster_identifier = module.rds.cluster_arn
 }
+
+resource "aws_kms_key" "rds_multi_region_primary" {
+  description             = "RDS multi-region primary KMS key for ${local.aws_account_name}"
+  multi_region            = true
+  enable_key_rotation     = true
+}
