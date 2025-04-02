@@ -15,7 +15,6 @@ resource "aws_rds_global_cluster" "motf_prod_global" {
   force_destroy                = true
   deletion_protection          = true
   source_db_cluster_identifier = module.rds.cluster_arn
-  depends_on                   = [module.rds_primary]
 }
 
 resource "aws_kms_key" "rds_multi_region_secondary" {
