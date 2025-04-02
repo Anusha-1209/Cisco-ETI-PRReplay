@@ -1,7 +1,3 @@
-provider "aws" {
-  region = local.aws_region
-}
-
 # Define the IAM policy for S3 access
 data "aws_iam_policy_document" "s3_access" {
   statement {
