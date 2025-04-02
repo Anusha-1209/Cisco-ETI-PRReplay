@@ -2,24 +2,14 @@ locals {
   ingress_rules = []
 
   egress_rules = [
-    // arangodb
     {
-      from_port : 8529,
-      to_port : 8529,
-      protocol : "tcp",
-      cidr_blocks : [
-        data.aws_vpc.eks_vpc.cidr_block,
-      ],
-    },
-    // kafka
-    {
-      from_port : 9098,
-      to_port : 9098,
-      protocol : "tcp",
-      cidr_blocks : [
-        data.aws_vpc.msk_vpc.cidr_block,
-      ],
-    },
+      from_port   = 0
+      to_port     = 65535
+      protocol    = "tcp"
+      cidr_blocks = [
+        "0.0.0.0/0",
+      ]
+    }
   ]
 }
 
