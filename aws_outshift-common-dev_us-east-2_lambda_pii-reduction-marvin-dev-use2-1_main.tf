@@ -36,6 +36,13 @@ provider "aws" {
   max_retries = 3
 }
 
+data "aws_caller_identity" "current_outshift_common" {}
+
+locals {
+  cluster_name = "marvin-dev-use2-1" # The name of the associated EKS cluster. Must be updated
+  account_id = data.aws_caller_identity.current_outshift_common.account_id
+}
+
 module "lambda_function_container_image" {
   source = "terraform-aws-modules/lambda/aws"
   function_name = "pii-reduction-marvin-dev-use2-1"
