@@ -33,28 +33,28 @@ resource "vault_namespace" "namespace" {
 }
 
 # key-value secrets engine
-resource "vault_mount" "kvv2" {
+resource "vault_mount" "bugbash" {
   provider = vault.venture
   path     = "bugbash"
   type     = "kv"
   options  = { version = "2" }
 }
 
-resource "vault_mount" "kvv2" {
+resource "vault_mount" "csm" {
   provider = vault.venture
   path     = "csm"
   type     = "kv"
   options  = { version = "2" }
 }
 
-resource "vault_mount" "kvv2" {
+resource "vault_mount" "genai" {
   provider = vault.venture
   path     = "genai"
   type     = "kv"
   options  = { version = "2" }
 }
 
-resource "vault_mount" "kvv2" {
+resource "vault_mount" "generic" {
   provider = vault.venture
   path     = "generic"
   type     = "kv"
