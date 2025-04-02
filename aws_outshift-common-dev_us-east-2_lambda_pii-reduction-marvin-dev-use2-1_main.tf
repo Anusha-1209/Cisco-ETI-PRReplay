@@ -68,13 +68,17 @@ module "lambda_function_container_image" {
       "Effect": "Allow",
       "Action": [
         "ecr:SetRepositoryPolicy",
-        "ecr:GetRepositoryPolicy"
+        "ecr:GetRepositoryPolicy",
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage"
       ],
       "Resource": "arn:aws:ecr:us-east-2:626007623524:marvin/images/pii-service/server"
     }
   }
-  environment_variables {
-    SQS_URL = "https://sqs.us-east-2.amazonaws.com/471112537430/marvin-collect-events-dev-use2-1"
+  docker_additional_options = [
+    "-e", "SQS_URL='https://sqs.us-east-2.amazonaws.com/471112537430/marvin-collect-events-dev-use2-1'"
   }
+
 }
 
