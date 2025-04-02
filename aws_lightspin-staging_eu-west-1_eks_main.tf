@@ -10,12 +10,6 @@ terraform {
   }
 }
 
-locals {
-  name             = "cspm-staging-euw1-1"
-  region           = "eu-west-1"
-  aws_account_name = "lightspin-staging"
-}
-
 module "eks_all_in_one" {
   source           = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=0.5.7"
   name             = local.name             # EKS cluster name
