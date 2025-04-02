@@ -114,7 +114,7 @@ resource "vault_generic_secret" "datasources_sharepoint_ciscoeticloud_api_motifi
   path = "${each.value}/datasources/sharepoint/ciscoeticloud/api_users/motific-rag-user"
 }
 
-resource "vault_generic_secret" "datasources_sharepoint_ciscoeticloud_api_motific_rag_user" {
+resource "vault_generic_secret" "datasources_sharepoint_ciscoeticloud_human_motific_rag_user1" {
   for_each = toset(local.datasources_sharepoint_ciscoeticloud_human_motific_rag_user1_kv_paths)
   provider = vault.venture
   data_json = data.vault_generic_secret.autosync_datasources_sharepoint_ciscoeticloud_human_motific_rag_user1.data_json
