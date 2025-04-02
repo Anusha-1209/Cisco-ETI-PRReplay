@@ -28,7 +28,7 @@ resource "aws_kms_key" "encryption_key" {
       {
         "Sid" : "External",
         "Effect" : "Allow",
-        "Principal" : { "Service" = "kafkaconnect.amazonaws.com" },
+        "Principal" : { "AWS" = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/dragonfly-kg-connector-role" },
         "Action" : [
           "kms:Encrypt",
           "kms:Decrypt",
