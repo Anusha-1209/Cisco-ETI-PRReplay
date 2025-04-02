@@ -28,7 +28,7 @@ resource "aws_kms_key" "encryption_key" {
       {
         "Sid" : "External",
         "Effect" : "Allow",
-        "Principal" : { "AWS" = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/dragonfly-kg-connector-role" },
+        "Principal" : { "AWS" = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/dragonfly-kg-connector-role-${data.aws_region.current.name}" },
         "Action" : [
           "kms:Decrypt",
           "kms:DescribeKey"
