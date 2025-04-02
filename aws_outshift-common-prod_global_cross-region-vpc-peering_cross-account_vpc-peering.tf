@@ -18,6 +18,6 @@ module "primary_cluster_to_secondary"{
       region       = "us-east-2"
     }
   }
-  accepter_vpc_name  = "prod-db-vpc-1"
+  accepter_vpc_name   = "prod-db-vpc-1"
   requester_vpc_name  = "common-prod-use2-vpc-data"
 }
