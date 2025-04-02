@@ -112,6 +112,41 @@ resource "aws_iam_policy" "jenkins-policy" {
           "Resource": [
               "*"
           ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "kendra:Query",
+          "kendra:CreateIndex",
+          "kendra:DeleteIndex",
+          "kendra:DescribeIndex",
+          "kendra:ListIndices",
+          "kendra:CreateDataSource",
+          "kendra:DescribeDataSource",
+          "kendra:StartDataSourceSyncJob",
+          "kendra:ListDataSourceSyncJobs"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "iam:CreateRole",
+          "iam:AttachRolePolicy",
+          "iam:DetachRolePolicy",
+          "iam:PutRolePolicy",
+          "iam:CreatePolicy",
+          "iam:GetPolicy",
+          "iam:DeletePolicy",
+          "iam:GetRole",
+          "iam:DeleteRole",
+          "iam:PassRole",
+          "iam:DeleteRolePolicy",
+          "iam:RemoveRoleFromInstanceProfile",
+          "iam:ListAttachedRolePolicies",
+          "iam:ListAttachedUserPolicies"
+        ],
+        "Resource": "*"
       }
   ]
 }

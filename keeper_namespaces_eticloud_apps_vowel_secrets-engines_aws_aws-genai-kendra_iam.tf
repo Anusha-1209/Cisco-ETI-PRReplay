@@ -30,21 +30,21 @@ resource "aws_iam_user_policy" "vault-secret-engine-user-kendra" {
       "Effect": "Allow",
       "Action": "sts:AssumeRole",
       "Resource": [
-        "${aws_iam_role.ci-default-role.arn}"
+        "${aws_iam_role.default-role.arn}"
       ]
     }
   ]
 }
 EOF
-  
+
 }
 #endregion
 
 
-#region ci-default role and policy attachments
-resource "aws_iam_role" "ci-default-role" {
+#region default role and policy attachments
+resource "aws_iam_role" "default-role" {
   provider           = aws.kendra
-  name               = "ci-default"
+  name               = "default"
   assume_role_policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [
@@ -67,16 +67,16 @@ resource "aws_iam_role" "ci-default-role" {
   })
 
   tags = {
-    Name = "ci-default"
+    Name = "default"
   }
 }
 #endregion
 
 
 # Additional IAM role for the user
-resource "aws_iam_role" "ci-custom-role" {
+resource "aws_iam_role" "custom-role" {
   provider           = aws.kendra
-  name               = "ci-custom-role"
+  name               = "custom-role"
   assume_role_policy = jsonencode({
     Version : "2012-10-17",
     Statement : [
@@ -90,15 +90,15 @@ resource "aws_iam_role" "ci-custom-role" {
     ]
   })
    tags = {
-    Name = "ci-custom-role"
+    Name = "custom-role"
   }
 }
 
 
-resource "aws_iam_policy" "ci-custom-policy" {
+resource "aws_iam_policy" "custom-policy" {
   provider    = aws.kendra
-  name        = "ci-custom-policy"
-  description = "Custom policy for ci-custom-role"
+  name        = "custom-policy"
+  description = "Custom policy for custom-role"
   policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -117,9 +117,9 @@ resource "aws_iam_policy" "ci-custom-policy" {
         "kendra:CreateIndex",
         "kendra:DeleteIndex",
         "kendra:DescribeIndex",
-        "kendra:ListIndices", 
+        "kendra:ListIndices",
         "kendra:CreateDataSource",
-        "kendra:DescribeDataSource", 
+        "kendra:DescribeDataSource",
         "kendra:StartDataSourceSyncJob",
         "kendra:ListDataSourceSyncJobs"
       ],
@@ -150,11 +150,11 @@ resource "aws_iam_policy" "ci-custom-policy" {
 EOF
 }
 
-# Attach the custom policy to the ci-custom-role
-resource "aws_iam_role_policy_attachment" "ci-custom-policy-attach" {
+# Attach the custom policy to the custom-role
+resource "aws_iam_role_policy_attachment" "custom-policy-attach" {
   provider   = aws.kendra
-  role       = aws_iam_role.ci-custom-role.name
-  policy_arn = aws_iam_policy.ci-custom-policy.arn
+  role       = aws_iam_role.custom-role.name
+  policy_arn = aws_iam_policy.custom-policy.arn
 }
 
 
