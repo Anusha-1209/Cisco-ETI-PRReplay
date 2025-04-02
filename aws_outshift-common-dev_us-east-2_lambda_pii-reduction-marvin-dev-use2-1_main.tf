@@ -52,8 +52,8 @@ module "lambda_function_container_image" {
   memory_size = 3008
   image_uri    = "471112537430.dkr.ecr.us-east-2.amazonaws.com/marvin/presidio-lambda:latest"
   package_type = "Image"
-  attach_policy_json = true
-  policy_jsons = jsonencode(
+  attach_policy_statements = true
+  policy_statements = jsonencode(
     {
       "Version": "2012-10-17",
       "Statement": [{
