@@ -119,11 +119,8 @@ data "aws_iam_policy_document" "msk_connect_kg_role_policy_document" {
     effect = "Allow"
 
     actions = [
-          "kms:Encrypt",
-          "kms:Decrypt",
-          "kms:ReEncrypt*",
-          "kms:GenerateDataKey*",
-          "kms:DescribeKey"
+      "kms:Decrypt",
+      "kms:DescribeKey"
     ]
 
     resources = [
