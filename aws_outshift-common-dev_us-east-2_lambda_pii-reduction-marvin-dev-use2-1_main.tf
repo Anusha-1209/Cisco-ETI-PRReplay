@@ -53,7 +53,7 @@ module "lambda_function_container_image" {
   image_uri    = "471112537430.dkr.ecr.us-east-2.amazonaws.com/marvin/presidio-lambda:latest"
   package_type = "Image"
   attach_policy_statements = true
-  policy_statements = jsonencode(
+  policy_statements =
     {
       "Version": "2012-10-17",
       "Statement": [{
@@ -66,5 +66,4 @@ module "lambda_function_container_image" {
         "Resource": "arn:aws:sqs:*:${local.account_id}:*"
       }]
     }
-  )
 }
