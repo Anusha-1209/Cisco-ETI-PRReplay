@@ -3,7 +3,7 @@ terraform {
     # This is the name of the backend S3 bucket.
     bucket = "eticloud-tf-state-prod" # UPDATE ME.
     # This is the path to the Terraform state file in the backend S3 bucket.
-    key = "terraform-state/aws/lightspin-dev/eu-west-1/eks/lightspin-dev-euw1-1.tfstate"# UPDATE ME.
+    key = "terraform-state/aws/${local.eks_aws_account_name}/${local.region}/eks/${local.name}.tfstate"# UPDATE ME.
     # This is the region where the backend S3 bucket is located.
     region = "us-east-2" # DO NOT CHANGE.
 
