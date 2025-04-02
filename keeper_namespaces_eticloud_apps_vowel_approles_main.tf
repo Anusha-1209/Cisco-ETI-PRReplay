@@ -16,12 +16,6 @@ resource "vault_policy" "ci_jenkins_policy" {
   provider = vault.vowel
   name     = "ci-jenkins"
   policy   = data.local_file.jenkins_policy_hcl.content
-
-  lifecycle {
-    replace_triggered_by = [
-      data.local_file.jenkins_policy_hcl.content
-    ]
-  }
 }
 
 resource "vault_approle_auth_backend_role" "ci_jenkins_approle" {
