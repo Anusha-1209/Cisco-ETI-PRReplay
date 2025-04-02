@@ -1,11 +1,11 @@
+# Get the AWS account ID
+data "aws_caller_identity" "current" {}
+
 # Define the IAM policy for S3 access
 data "aws_iam_policy_document" "s3_access" {
   statement {
     actions = [
-      "s3:GetObject",
-      "s3:ListBucket",
-      "s3:PutObject",
-      "s3:DeleteObject"
+      "s3:*"
     ]
     resources = [
       "arn:aws:s3:::${local.bucket_name}",
@@ -16,7 +16,7 @@ data "aws_iam_policy_document" "s3_access" {
 
 # Create the IAM role
 resource "aws_iam_role" "eks_s3_access_role" {
-  name = "${local.aws_account_name}-data-eu-eks-s3-access-role"
+  name = "${local.aws_account_name}-data-eks-s3-access-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -28,9 +28,17 @@ resource "aws_iam_role" "eks_s3_access_role" {
         Action = "sts:AssumeRoleWithWebIdentity",
         Condition = {
           StringEquals = {
+            "${local.eks_oidc_provider_url}:aud" = "sts.amazonaws.com",
             "${local.eks_oidc_provider_url}:sub" = "system:serviceaccount:dragonfly-backend:*"
           }
         }
+      },
+      {
+        Effect = "Allow",
+        Principal = {
+          AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/admin"
+        },
+        Action = "sts:AssumeRole"
       }
     ]
   })
@@ -38,7 +46,7 @@ resource "aws_iam_role" "eks_s3_access_role" {
 
 # Attach the S3 access policy to the role
 resource "aws_iam_policy" "s3_access_policy" {
-  name   = "${local.aws_account_name}-data-eu-s3-access-policy"
+  name   = "${local.aws_account_name}-data-s3-access-policy"
   policy = data.aws_iam_policy_document.s3_access.json
 }
 
@@ -47,8 +55,11 @@ resource "aws_iam_role_policy_attachment" "attach_s3_policy" {
   policy_arn = aws_iam_policy.s3_access_policy.arn
 }
 
-# Get the AWS account ID
-data "aws_caller_identity" "current" {}
+# Attach the existing "inference-client-policy" to the role
+resource "aws_iam_role_policy_attachment" "attach_inference_client_policy" {
+  role       = aws_iam_role.eks_s3_access_role.name
+  policy_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/inference-client-policy"
+}
 
 # OIDC Provider URL
 locals {
