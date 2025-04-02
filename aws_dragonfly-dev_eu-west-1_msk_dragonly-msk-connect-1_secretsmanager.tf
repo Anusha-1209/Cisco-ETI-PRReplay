@@ -1,7 +1,9 @@
 locals {
   secret = {
+    username       = data.vault_generic_secret.arangodb_secrets.data["username"]
     password       = data.vault_generic_secret.arangodb_secrets.data["password"]
     ca-certificate = data.vault_generic_secret.arangodb_secrets.data["ca.crt.b64"]
+    topics        = data.vault_generic_secret.arangodb_secrets.data["topics"]
   }
 }
 

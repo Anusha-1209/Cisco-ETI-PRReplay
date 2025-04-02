@@ -53,12 +53,13 @@ resource "aws_mskconnect_connector" "dragonfly_kg_connector" {
     "connection.endpoints"           = "arangodb.eks-dragonfly-dev-1.dev.eticloud.io:8529"
     "insert.overwriteMode"           = "UPDATE"
     "data.errors.log.enable"         = "true"
-    "connection.user"                = "root"
+    "connection.user"                = "$${secretsmanager:dragonfly-msk-connect-kg:username}"
     "value.converter.schemas.enable" = "false"
     "ssl.hostname.verification"      = "true"
     "value.converter"                = "org.apache.kafka.connect.json.JsonConverter"
     "connection.password"            = "$${secretsmanager:dragonfly-msk-connect-kg:password}"
     "connection.ca.crt"              = "$${secretsmanager:dragonfly-msk-connect-kg:ca-certificate}"
+    "topics"                         = "$${secretsmanager:dragonfly-msk-connect-kg:topics}"
   }
 
   kafka_cluster {
