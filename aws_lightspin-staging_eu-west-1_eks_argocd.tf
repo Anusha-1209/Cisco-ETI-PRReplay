@@ -1,13 +1,13 @@
 data "vault_generic_secret" "aws_argocd_infra_credential" {
   provider = vault.eticloud
-  path     = "secret/infra/aws/${local.argocd_aws_account}/terraform_admin"
+  path     = "secret/infra/aws/${local.argocd_aws_account_name}/terraform_admin"
 }
 
 provider "aws" {
   alias       = "argocd"
   access_key  = data.vault_generic_secret.aws_argocd_infra_credential.data["AWS_ACCESS_KEY_ID"]
   secret_key  = data.vault_generic_secret.aws_argocd_infra_credential.data["AWS_SECRET_ACCESS_KEY"]
-  region      = "eu-north-1"
+  region      = local.argocd_k8s_region
   max_retries = 3
 }
 
