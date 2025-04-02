@@ -36,8 +36,20 @@ provider "aws" {
   max_retries = 3
 }
 
-module "sqs" {
-  source  = "terraform-aws-modules/sqs/aws"
+resource "aws_sqs_queue" "marvin-collect-events-dlq-staging-use2-1" {
+  name = "marvin-collect-events-dlq-staging-use2-1"
+}
+
+resource "aws_sqs_queue_redrive_allow_policy" "marvin-collect-events-dlq-staging-use2-1" {
+  queue_url = aws_sqs_queue.marvin-collect-events-dlq-staging-use2-1.id
+
+  redrive_allow_policy = jsonencode({
+    redrivePermission = "byQueue",
+    sourceQueueArns   = [aws_sqs_queue.marvin-staging-use2-1-collect-events.arn]
+  })
+}
+
+resource "aws_sqs_queue" "marvin-staging-use2-1-collect-events" {
   name = "marvin-collect-events-staging-use2-1"
   fifo_queue = false
   tags = {
@@ -48,4 +60,37 @@ module "sqs" {
     CSBCiscoMailAlias     = "eti-sre@cisco.com"
     CSBDataTaxonomy       = "Cisco Operations Data"
   }
+}
+
+resource "aws_cloudwatch_metric_alarm" "marvin-collect-events-dlq-alarm-staging-use2-1" {
+  alarm_name          = "${aws_sqs_queue.marvin-collect-events-dlq-staging-use2-1.name}-not-empty-alarm"
+  alarm_description   = "Items are on the ${aws_sqs_queue.marvin-collect-events-dlq-staging-use2-1.name} queue"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = 1
+  metric_name         = "ApproximateNumberOfMessagesVisible"
+  namespace           = "AWS/SQS"
+  period              = 300
+  statistic           = "Average"
+  threshold           = 1
+  treat_missing_data  = "notBreaching"
+  alarm_actions       = [aws_sns_topic.marvin-collect-events-dlq-sns-alarm-staging-use2-1.arn]
+  tags = {
+    CSBDataClassification = "Cisco Restricted"
+    CSBEnvironment        = "NonProd"
+    CSBApplicationName    = "Marvin"
+    CSBResourceOwner      = "Outshift SRE"
+    CSBCiscoMailAlias     = "eti-sre@cisco.com"
+    CSBDataTaxonomy       = "Cisco Operations Data"
+  }
+  dimensions = {
+    "QueueName" = aws_sqs_queue.marvin-collect-events-dlq-staging-use2-1.name
+  }
+}
+resource "aws_sns_topic" "marvin-collect-events-dlq-sns-alarm-staging-use2-1" {
+  name = "marvin-collect-events-dlq-staging-use2-1"
+}
+resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
+  topic_arn = aws_sns_topic.marvin-collect-events-dlq-sns-alarm-staging-use2-1.arn
+  protocol  = "https"
+  endpoint  = "https://events.pagerduty.com/integration/43a07f5f49c8410bc01cad237cadd0c3/enqueue"
 }

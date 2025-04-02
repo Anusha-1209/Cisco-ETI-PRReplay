@@ -36,6 +36,20 @@ provider "aws" {
   max_retries = 3
 }
 
+resource "aws_sqs_queue" "marvin-pre-process-collect-events-dlq-staging-use2-1" {
+  name = "marvin-pre-process-collect-events-dlq-staging-use2-1"
+}
+
+resource "aws_sqs_queue_redrive_allow_policy" "marvin-pre-process-collect-events-dlq-staging-use2-1" {
+  queue_url = aws_sqs_queue.marvin-pre-process-collect-events-dlq-staging-use2-1.id
+
+  redrive_allow_policy = jsonencode({
+    redrivePermission = "byQueue",
+    sourceQueueArns   = [aws_sqs_queue.marvin-pre-process-collect-events-staging-use2-1.arn]
+  })
+}
+
+
 resource "aws_sqs_queue" "marvin-pre-process-collect-events-staging-use2-1" {
   name = "marvin-pre-process-collect-events-staging-use2-1"
   fifo_queue = false
@@ -54,5 +68,44 @@ resource "aws_sqs_queue" "marvin-pre-process-collect-events-staging-use2-1" {
 resource "aws_lambda_event_source_mapping" "pii-reduction-marvin-use2-1-source-mapping" {
   event_source_arn = aws_sqs_queue.marvin-pre-process-collect-events-staging-use2-1.arn
   function_name    = "pii-reduction-marvin-staging-use2-1"
+}
+
+
+resource "aws_lambda_event_source_mapping" "pii-reduction-marvin-use2-1-source-mapping" {
+  event_source_arn = aws_sqs_queue.marvin-pre-process-collect-events-staging-use2-1.arn
+  function_name    = "pii-reduction-marvin-staging-use2-1"
+}
+
+resource "aws_cloudwatch_metric_alarm" "marvin-pre-process-collect-events-dlq-alarm-staging-use2-1" {
+  alarm_name          = "${aws_sqs_queue.marvin-pre-process-collect-events-dlq-staging-use2-1.name}-not-empty-alarm"
+  alarm_description   = "Items are on the ${aws_sqs_queue.marvin-pre-process-collect-events-dlq-staging-use2-1.name} queue"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = 1
+  metric_name         = "ApproximateNumberOfMessagesVisible"
+  namespace           = "AWS/SQS"
+  period              = 300
+  statistic           = "Average"
+  threshold           = 1
+  treat_missing_data  = "notBreaching"
+  alarm_actions       = [aws_sns_topic.marvin-pre-process-collect-events-dlq-sns-alarm-staging-use2-1.arn]
+  tags = {
+    CSBDataClassification = "Cisco Restricted"
+    CSBEnvironment        = "NonProd"
+    CSBApplicationName    = "Marvin"
+    CSBResourceOwner      = "Outshift SRE"
+    CSBCiscoMailAlias     = "eti-sre@cisco.com"
+    CSBDataTaxonomy       = "Cisco Operations Data"
+  }
+  dimensions = {
+    "QueueName" = aws_sqs_queue.marvin-pre-process-collect-events-dlq-staging-use2-1.name
+  }
+}
+resource "aws_sns_topic" "marvin-pre-process-collect-events-dlq-sns-alarm-staging-use2-1" {
+  name = "marvin-pre-process-collect-events-dlq-staging-use2-1"
+}
+resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
+  topic_arn = aws_sns_topic.marvin-pre-process-collect-events-dlq-sns-alarm-staging-use2-1.arn
+  protocol  = "https"
+  endpoint  = "https://events.pagerduty.com/integration/43a07f5f49c8410bc01cad237cadd0c3/enqueue"
 }
 

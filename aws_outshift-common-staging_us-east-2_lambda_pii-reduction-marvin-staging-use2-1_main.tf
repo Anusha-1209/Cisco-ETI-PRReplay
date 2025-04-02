@@ -74,8 +74,8 @@ module "lambda_function_container_image" {
       resources: ["arn:aws:ecr:us-east-2:626007623524:repository/marvin/images/pii-service/server"]
     }
   }
-  docker_additional_options = [
-    "-e", "SQS_URL='https://sqs.us-east-2.amazonaws.com/637423531539/marvin-collect-events-staging-use2-1'"
-  ]
+  environment_variables = {
+    SQS_URL = "https://sqs.us-east-2.amazonaws.com/637423531539/marvin-collect-events-staging-use2-1"
+  }
 }
 
