@@ -91,7 +91,7 @@ resource "aws_cloudwatch_metric_alarm" "marvin-collect-events-dlq-alarm-dev-use2
   }
 }
 resource "aws_sns_topic" "marvin-collect-events-dlq-sns-alarm-dev-use2-1" {
-  name = "marvin-pre-process-collect-events-dlq-dev-use2-1"
+  name = "marvin-collect-events-dlq-dev-use2-1"
 }
 resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
   topic_arn = aws_sns_topic.marvin-collect-events-dlq-sns-alarm-dev-use2-1.arn
