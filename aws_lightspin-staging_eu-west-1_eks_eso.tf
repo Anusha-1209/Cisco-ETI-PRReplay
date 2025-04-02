@@ -24,3 +24,8 @@ module "eso_apps_sre" {
   kubernetes_ca   = data.aws_eks_cluster.eks.certificate_authority[0].data
   policies        = ["external-secrets"]
 }
+
+output "test" {
+  value = data.aws_eks_cluster.eks.certificate_authority[0].data
+  
+}
