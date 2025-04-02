@@ -71,11 +71,6 @@ resource "aws_lambda_event_source_mapping" "pii-reduction-marvin-use2-1-source-m
 }
 
 
-resource "aws_lambda_event_source_mapping" "pii-reduction-marvin-use2-1-source-mapping" {
-  event_source_arn = aws_sqs_queue.marvin-pre-process-collect-events-staging-use2-1.arn
-  function_name    = "pii-reduction-marvin-staging-use2-1"
-}
-
 resource "aws_cloudwatch_metric_alarm" "marvin-pre-process-collect-events-dlq-alarm-staging-use2-1" {
   alarm_name          = "${aws_sqs_queue.marvin-pre-process-collect-events-dlq-staging-use2-1.name}-not-empty-alarm"
   alarm_description   = "Items are on the ${aws_sqs_queue.marvin-pre-process-collect-events-dlq-staging-use2-1.name} queue"
