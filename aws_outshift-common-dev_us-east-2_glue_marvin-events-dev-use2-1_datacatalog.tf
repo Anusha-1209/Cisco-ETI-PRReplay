@@ -238,8 +238,13 @@ data "aws_subnet" "db" {
 
 resource "aws_glue_connection" "example" {
   name = "example"
+  connection_type = "CUSTOM"
+
   connection_properties = {
-    JDBC_CONNECTION_URL = "jdbc:postgres://${data.aws_rds_cluster.marvin-dev-use2-1.endpoint}/marvin"
+    CONNECTOR_CLASS_NAME = "org.postgresql.Driver"
+    CONNECTION_TYPE      = "Jdbc"
+    CONNECTOR_URL        = "s3://marvin-dev-use2-1-msk-s3-connectors/postgresql-42.6.2.jar"
+    JDBC_CONNECTION_URL  = "jdbc:postgres://${data.aws_rds_cluster.marvin-dev-use2-1.endpoint}/marvin"
     PASSWORD            = data.vault_generic_secret.pg_dump.data["user"]
     USERNAME            = data.vault_generic_secret.pg_dump.data["password"]
   }
