@@ -1,5 +1,6 @@
-resource "aws_s3_bucket" "outshift_product_analytics" {
-  bucket = "outshift-product-analytics-s3-bucket"
+import {
+  to = aws_s3_bucket.outshift_product_analytics
+  id = "outshift-product-analytics-s3-bucket"
 }
 
 data "aws_iam_policy_document" "data_sync_from_cnapp_prod_account" {
