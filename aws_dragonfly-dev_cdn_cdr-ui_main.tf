@@ -18,7 +18,7 @@ module "cdr-ui-dev-cloudfront" {
   create_origin_access_identity  = false
 
   logging_config = {
-    bucket = module.dev_log_bucket.s3_bucket_bucket_domain_name
+    bucket = module.cloudfront_dev_log_bucket.s3_bucket_bucket_domain_name
     prefix = "cloudfront"
   }
 
@@ -150,7 +150,7 @@ module "cloudfront_dev_log_bucket" {
   providers = {
     aws = aws.us-east-2
   }
-  
+
   source  = "terraform-aws-modules/s3-bucket/aws"
   version = "4.1.2"
   bucket  = "dragonfly-cdr-ui-dev-cdn-access-logs"
