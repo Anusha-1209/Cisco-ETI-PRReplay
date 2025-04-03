@@ -8,5 +8,4 @@ module "rds" {
   db_allowed_cidrs  = [data.aws_vpc.cluster_vpc.cidr_block]
   db_engine_version = "15"
   master_username   = "root"
-  skip_final_snapshot = true
 }
