@@ -81,19 +81,19 @@ resource "aws_iam_user_policy_attachment" "argocd-internal-backup-s3-attachment"
 
 locals {
   argocd-internal-backup-user = {
-    AWS_ACCESS_KEY_ID = element(
+    aws.access.key.id = element(
       concat(
         aws_iam_access_key.argocd-internal-backup-user-access-key.*.id,
         [""],
       ),
       0
     )
-    AWS_SECRET_ACCESS_KEY = element(concat(aws_iam_access_key.argocd-internal-backup-user-access-key.*.secret, [""]), 0)
+    aws.secret.access.key = element(concat(aws_iam_access_key.argocd-internal-backup-user-access-key.*.secret, [""]), 0)
   }
 }
 
 resource "vault_generic_secret" "argocd-internal-backup-user-vault-secret" {
-  path      = "secret/eticcprod/iam/argocd-internal-backup-user"
+  path      = "secret/prod/argocd/argocd-internal/s3-backup"
   data_json = jsonencode(local.argocd-internal-backup-user)
 }
 
