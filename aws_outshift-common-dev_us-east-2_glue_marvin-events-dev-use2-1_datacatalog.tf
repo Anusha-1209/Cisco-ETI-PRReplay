@@ -12,20 +12,9 @@ provider "vault" {
   namespace = "eticloud"
 }
 
-provider "vault" {
-  alias     = "apisec"
-  address   = "https://keeper.cisco.com"
-  namespace = "eticloud/apps/apisec"
-}
-
 data "vault_generic_secret" "aws_infra_credential" {
   path     = "secret/infra/aws/outshift-common-dev/terraform_admin"
   provider = vault.eticloud
-}
-
-data "vault_generic_secret" "pg_dump" {
-  path     = "secret/dev/marvin/ rds-marvin-dev-use2/aurora-db-credentials/pgdump-password"
-  provider = vault.apisec
 }
 
 provider "aws" {
@@ -218,31 +207,6 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_table" {
   }
 }
 
-resource "aws_iam_role" "AWSGlueServiceRoleBatchProcessing" {
-  name        = "AWSGlueServiceRoleBatchProcessing"
-  description = "IAM Role for GH Actions workflows"
-  tags        = {
-    ApplicationName    = "AWSGlueServiceRoleBatchProcessing"
-    CiscoMailAlias     = "eti-sre-admins@cisco.com"
-    DataClassification = "Cisco Confidential"
-    DataTaxonomy       = "Cisco Operations Data"
-    Environment        = "NonProd"
-    ResourceOwner      = "ETI SRE"
-  }
-  assume_role_policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Effect": "Allow",
-        "Principal": {
-          "Service": "glue.amazonaws.com"
-        },
-        "Action": "sts:AssumeRole"
-      }
-    ]
-  })
-}
-
 data "aws_rds_cluster" "marvin-dev-use2-1" {
   cluster_identifier = "marvin-dev-use2-1"
 }
@@ -253,26 +217,28 @@ data "aws_vpc" "marvin-dev-use2-data" {
     values = ["marvin-dev-use2-data"]
   }
 }
-data "aws_subnet" "marvin-dev-use2-1" {
+resource "aws_subnet" "main" {
   vpc_id     = data.aws_vpc.marvin-dev-use2-data.id
+#  cidr_block = "10.0.1.0/24"
 
   tags = {
     Name = "marvin-dev-use2-data-db-us-east-2a"
   }
 }
 
-resource "aws_glue_connection" "rds-marvin-connection" {
-  name = "rds-marvin=connection"
-
+resource "aws_glue_connection" "example" {
+  name = "example"
   connection_properties = {
-    JDBC_CONNECTION_URL  = "jdbc:postgres://${data.aws_rds_cluster.marvin-dev-use2-1.endpoint}/marvin"
-    PASSWORD            = data.vault_generic_secret.pg_dump.data["user"]
-    USERNAME            = data.vault_generic_secret.pg_dump.data["password"]
+    JDBC_CONNECTION_URL = "jdbc:postgres://${data.aws_rds_cluster.marvin-dev-use2-1.endpoint}/marvin"
+    PASSWORD            = "examplepassword"
+    USERNAME            = "exampleusername"
   }
   physical_connection_requirements {
-    availability_zone      = data.aws_subnet.marvin-dev-use2-1.availability_zone
-    security_group_id_list = data.aws_rds_cluster.marvin-dev-use2-1.vpc_security_group_ids
-    subnet_id              = data.aws_subnet.marvin-dev-use2-1.id
+#    availability_zone      = aws_subnet.example.availability_zone
+    availability_zone      = data.aws_rds_cluster.marvin-dev-use2-1.availability_zones
+    security_group_id_list = [data.aws_rds_cluster.marvin-dev-use2-1.vpc_security_group_ids]
+    subnet_id              = data.aws_vpc.marvin-dev-use2-data.
   }
 }
 
+// LINKERD fedramp
