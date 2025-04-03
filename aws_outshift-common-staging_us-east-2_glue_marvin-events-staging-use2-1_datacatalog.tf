@@ -291,6 +291,28 @@ data "vault_generic_secret" "pg_dump" {
   provider = vault.apisec
 }
 
+
+resource "aws_security_group" "marvin-staging-use2-data-glue" {
+  name        = "marvin-staging-use2-data-glue"
+  description = "Allow TCP inbound traffic and all outbound traffic"
+  vpc_id      = data.aws_vpc.marvin-staging-use2-data.id
+}
+
+resource "aws_vpc_security_group_ingress_rule" "allow_tcp_ipv4" {
+  security_group_id            = aws_security_group.marvin-staging-use2-data-glue.id
+  referenced_security_group_id = aws_security_group.marvin-staging-use2-data-glue.id
+  from_port                    = 0
+  ip_protocol                  = "tcp"
+  to_port                      = 65535
+}
+
+resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
+  security_group_id = aws_security_group.marvin-staging-use2-data-glue.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1" # semantically equivalent to all ports
+}
+
+
 resource "aws_glue_connection" "rds-marvin-connection" {
   name = "rds-marvin-connection"
 

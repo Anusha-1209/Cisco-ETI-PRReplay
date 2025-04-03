@@ -178,7 +178,7 @@ resource "aws_glue_connection" "rds-marvin-test-connection" {
   }
   physical_connection_requirements {
     availability_zone      = data.aws_subnet.marvin-dev-use2-1.availability_zone
-    security_group_id_list = data.aws_rds_cluster.marvin-dev-use2-1.vpc_security_group_ids
+    security_group_id_list = [aws_security_group.marvin-dev-use2-data-glue.id]
     subnet_id              = data.aws_subnet.marvin-dev-use2-1.id
   }
 }
