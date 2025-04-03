@@ -34,10 +34,10 @@ module "ec2" {
   ami_type = "WINDOWS"
 
   # VPC Name
-  vpc_name = "vpc-0477fed0518e53450"
+  vpc_name = "vowel-dev-1-vpc"
   
   # User Management
-  setup_s3_user_mgmt = "true"
+  setup_s3_user_mgmt = "false"
 
   # Is the instance public
   is_public = "true"
