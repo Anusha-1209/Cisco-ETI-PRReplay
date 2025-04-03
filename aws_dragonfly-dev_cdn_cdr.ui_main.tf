@@ -121,7 +121,7 @@ module "acm" {
   source  = "terraform-aws-modules/acm/aws"
   version = "3.0.0"
   domain_name = local.cdn_domain_name
-  zone_id     = module.zones.this_route53_zone_zone_id[local.cdn_domain_name]
+  zone_id     = module.zones.route53_zone_zone_id[local.cdn_domain_name]
   subject_alternative_names = [local.cdn_domain_name]
   tags = {
     ApplicationName    = "dragonfly"
