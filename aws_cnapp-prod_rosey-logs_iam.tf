@@ -89,14 +89,13 @@ resource "aws_iam_policy" "datasync_cnapp_prod" {
         Effect = "Allow",
         Action = [
           "s3:AbortMultipartUpload",
-          "s3:DeleteObject",
           "s3:GetObject",
           "s3:ListMultipartUploadParts",
           "s3:PutObject",
           "s3:GetObjectTagging",
           "s3:PutObjectTagging"
         ],
-        Resource = "arn:aws:s3:::outshift-product-analytics-s3-bucket/*"
+        Resource = "arn:aws:s3:::outshift-product-analytics-s3-bucket/Rosey/*"
       }
     ]
   })
