@@ -80,7 +80,7 @@ module "zones" {
   version = "4.0.0"
   zones = {
     "${local.cdn_domain_name}"  = {
-      comment = "Route53 zonz for CDR dev apps"
+      comment = "Route53 zone for CDR dev apps"
       tags = {
         ApplicationName    = "dragonfly"
         CiscoMailAlias     = "eti-sre-admins@cisco.com"
