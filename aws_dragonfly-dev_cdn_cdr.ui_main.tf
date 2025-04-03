@@ -102,7 +102,6 @@ module "records" {
       }
     }
   ]
-  depends_on = [aws_route53_zone.panoptica-dev-zone]
 }
 
 #############
