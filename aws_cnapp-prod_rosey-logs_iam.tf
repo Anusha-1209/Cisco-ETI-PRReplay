@@ -67,9 +67,9 @@ resource "aws_iam_role_policy_attachment" "rosey_logs" {
 
 
 # Sync data with outshift-product-analytics-s3-bucket S3 bucket located in eticloud-plg-prod account
-resource "aws_iam_policy" "datasync_cnapp_prod" {
-  name        = "WriteToPLGAnalyticsS3Bucket"
-  description = "IAM policy that allows to sync data across 2 S3 buckets in 2 AWS accounts"
+resource "aws_iam_role_policy" "datasync_cnapp_prod" {
+  name = "WriteToPLGAnalyticsS3Bucket"
+  role = aws_iam_role.datasync_cnapp_prod.id
 
   policy = jsonencode({
     Version = "2012-10-17",
