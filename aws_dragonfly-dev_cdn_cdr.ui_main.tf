@@ -79,7 +79,7 @@ module "zones" {
   source  = "terraform-aws-modules/route53/aws//modules/zones"
   version = "4.0.0"
   zones = {
-    local.cdn_domain_name  = {
+    "${local.cdn_domain_name}"  = {
       comment = "Route53 zonz for CDR dev apps"
       tags = {
         ApplicationName    = "dragonfly"
