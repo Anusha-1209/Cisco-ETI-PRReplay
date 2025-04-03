@@ -100,7 +100,7 @@ module "zones" {
 module "records" {
   source  = "terraform-aws-modules/route53/aws//modules/records"
   version = "4.0.0"
-  zone_name = keys(module.zones.route53_zone_zone_id)[0]
+  zone_name = "${local.cdn_domain_name}"
   records = [
     {
       name = "cdr-ui"
