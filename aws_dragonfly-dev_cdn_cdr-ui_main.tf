@@ -17,10 +17,10 @@ module "cdr-ui-dev-cloudfront" {
   create_monitoring_subscription = false
   create_origin_access_identity  = false
 
-  logging_config = {
-    bucket = module.cloudfront_dev_log_bucket.s3_bucket_bucket_domain_name
-    prefix = "cloudfront"
-  }
+  # logging_config = {
+  #  bucket = module.cloudfront_dev_log_bucket.s3_bucket_bucket_domain_name
+  #  prefix = "cloudfront"
+  # }
 
   default_cache_behavior = {
     path_pattern               = "*"
