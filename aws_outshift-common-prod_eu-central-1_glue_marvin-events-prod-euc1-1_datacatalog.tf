@@ -207,15 +207,15 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_table" {
   }
 }
 
-resource "aws_iam_role" "AWSGlueServiceRoleBatchProcessing-euc1-1" {
-  name        = "AWSGlueServiceRoleBatchProcessing-euc1-1"
+resource "aws_iam_role" "AWSGlueServiceRoleBatchProcessing" {
+  name        = "AWSGlueServiceRoleBatchProcessing"
   description = "IAM Role for GH Actions workflows"
   tags        = {
     ApplicationName    = "AWSGlueServiceRoleBatchProcessing"
     CiscoMailAlias     = "eti-sre-admins@cisco.com"
     DataClassification = "Cisco Confidential"
     DataTaxonomy       = "Cisco Operations Data"
-    Environment        = "Prod"
+    Environment        = "NonProd"
     ResourceOwner      = "ETI SRE"
   }
   assume_role_policy = jsonencode({
@@ -246,7 +246,7 @@ data "aws_subnet" "marvin-prod-euc1-1" {
   vpc_id     = data.aws_vpc.marvin-prod-euc1-data.id
 
   tags = {
-    Name = "marvin-prod-euc1-data-db-eu-central-1a"
+    Name = "marvin-prod-euc1-data-db-us-east-2a"
   }
 }
 
