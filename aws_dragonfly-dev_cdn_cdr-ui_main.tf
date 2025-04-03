@@ -1,4 +1,7 @@
 module "cdr-ui-dev-cloudfront" {
+  providers = {
+    aws = aws.us-east-1
+  }
   source                        = "terraform-aws-modules/cloudfront/aws"
   version                       = "3.4.0"
   aliases                       = [local.cdn_domain_name]
@@ -55,23 +58,13 @@ module "cdr-ui-dev-cloudfront" {
       }
     }
   }
-
-  tags = {
-    ApplicationName    = "dragonfly"
-    CiscoMailAlias     = "eti-sre-admins@cisco.com"
-    DataClassification = "Cisco Confidential"
-    DataTaxonomy       = "Cisco Operations Data"
-    Environment        = "NonProd"
-    ResourceOwner      = "ETI SRE"
-  }
-
   viewer_certificate = {
-    acm_certificate_arn      = module.acm.acm_certificate_arn
+    acm_certificate_arn      =  resource.aws_acm_certificate.this.arn
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2021"
   }
   depends_on = [
-    module.acm
+    resource.aws_acm_certificate.this
   ]
 }
 
@@ -103,36 +96,13 @@ module "records" {
 }
 
 #############
-# ACM
-#############
-module "acm" {
-  providers = {
-    aws = aws.us-east-1
-  }
-
-  source  = "terraform-aws-modules/acm/aws"
-  version = "3.0.0"
-  domain_name = local.cdn_domain_name
-  zone_id     = data.aws_route53_zone.domain.zone_id
-  subject_alternative_names = [local.cdn_domain_name]
-  tags = {
-    ApplicationName    = "dragonfly"
-    CiscoMailAlias     = "eti-sre-admins@cisco.com"
-    DataClassification = "Cisco Confidential"
-    DataTaxonomy       = "Cisco Operations Data"
-    Environment        = "NonProd"
-    ResourceOwner      = "ETI SRE"
-  }
-}
-
-#############
 # S3 buckets
 #############
 data "aws_canonical_user_id" "current" {}
 data "aws_cloudfront_log_delivery_canonical_user_id" "cloudfront" {}
 module "cloudfront_dev_log_bucket" {
   providers = {
-    aws = aws.us-east-2
+    aws = aws.us-east-1
   }
 
   source  = "terraform-aws-modules/s3-bucket/aws"
