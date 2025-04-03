@@ -18,7 +18,7 @@ resource "aws_iam_role_policy_attachment" "readonly-policy-attachment" {
   role       = aws_iam_role.readonly.name
   policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
 }
-resource "aws_iam_role_policy_attachment" "readonly-policy-attachment" {
+resource "aws_iam_role_policy_attachment" "EKSReadOnlyAccess-policy-attachment" {
   role       = aws_iam_role.readonly.name
   policy_arn = aws_iam_policy.EKSReadOnlyAccess.arn
 }
