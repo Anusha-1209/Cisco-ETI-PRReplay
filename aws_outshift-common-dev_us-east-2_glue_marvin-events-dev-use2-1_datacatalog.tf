@@ -296,11 +296,11 @@ resource "aws_security_group" "marvin-dev-use2-data-glue" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_tcp_ipv4" {
-  security_group_id = aws_security_group.marvin-dev-use2-data-glue.id
-  security_group_id = aws_security_group.marvin-dev-use2-data-glue.id
-  from_port         = 0
-  ip_protocol       = "tcp"
-  to_port           = 65535
+  security_group_id            = aws_security_group.marvin-dev-use2-data-glue.id
+  referenced_security_group_id = aws_security_group.marvin-dev-use2-data-glue.id
+  from_port                    = 0
+  ip_protocol                  = "tcp"
+  to_port                      = 65535
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
