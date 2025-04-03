@@ -114,7 +114,7 @@ resource "vault_jwt_auth_backend_role" "developer" {
   groups_claim                 = "memberof"
   oidc_scopes                  = ["profile", "email", "openid"]
   user_claim                   = "sub"
-  token_policies               = [vault_policy.policy["developer"].name,
+  token_policies               = [vault_policy.policy["developer-dev"].name,
                                   vault_policy.default.name]
 }
 
@@ -275,7 +275,7 @@ EOT
 locals {
   policies = {
     "admin"                    = "policies/admin.hcl",
-    "developer"                = "policies/developer-dev.hcl",
+    "developer-dev"            = "policies/developer-dev.hcl",
     "developer-staging"        = "policies/developer-staging.hcl",
     "developer-prod"           = "policies/developer-prod.hcl",
     "external-secrets-dev"     = "policies/external-secrets-dev.hcl",
