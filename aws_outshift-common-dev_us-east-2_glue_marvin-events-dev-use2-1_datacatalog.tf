@@ -289,6 +289,26 @@ data "aws_subnet" "marvin-dev-use2-1" {
   }
 }
 
+resource "aws_security_group" "marvin-dev-use2-data-glue" {
+  name        = "allow_tcp"
+  description = "Allow TCO inbound traffic and all outbound traffic"
+  vpc_id      = data.aws_vpc.marvin-dev-use2-data.id
+}
+
+resource "aws_vpc_security_group_ingress_rule" "allow_tcp_ipv4" {
+  security_group_id = aws_security_group.marvin-dev-use2-data-glue.id
+  cidr_ipv4         = data.aws_vpc.marvin-dev-use2-data.cidr_block
+  from_port         = 0
+  ip_protocol       = "tcp"
+  to_port           = 65535
+}
+
+resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
+  security_group_id = aws_security_group.marvin-dev-use2-data-glue.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1" # semantically equivalent to all ports
+}
+
 resource "aws_glue_connection" "rds-marvin-connection" {
   name = "rds-marvin-connection"
 
@@ -299,7 +319,7 @@ resource "aws_glue_connection" "rds-marvin-connection" {
   }
   physical_connection_requirements {
     availability_zone      = data.aws_subnet.marvin-dev-use2-1.availability_zone
-    security_group_id_list = data.aws_rds_cluster.marvin-dev-use2-1.vpc_security_group_ids
+    security_group_id_list = [aws_security_group.marvin-dev-use2-data-glue.id]
     subnet_id              = data.aws_subnet.marvin-dev-use2-1.id
   }
 }
