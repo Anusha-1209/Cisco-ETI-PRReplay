@@ -31,7 +31,7 @@ resource "aws_eks_cluster" "eks-dev-3-13e" {
     EnvironmentName    = "NonProd"
     ResourceOwner      = "ETI SRE"
   }
-  version = "1.28"
+  version = "1.29"
   vpc_config {
     endpoint_private_access = true
     public_access_cidrs     = ["0.0.0.0/0"]
@@ -385,43 +385,6 @@ resource "aws_iam_policy" "eks-dev-3-cluster-ClusterEncryption202301202121016653
   }
 }
 
-resource "aws_eks_node_group" "eks-dev-3-public-nodegroup-87f" {
-  ami_type       = "CUSTOM"
-  capacity_type  = "ON_DEMAND"
-  cluster_name   = "${aws_eks_cluster.eks-dev-3-13e.id}"
-  disk_size      = 0
-  instance_types = ["m5a.2xlarge"]
-  launch_template {
-    version = "1"
-  }
-  node_role_arn   = "${aws_iam_role.eks-dev-3-public-ng-role-20230120213215278600000015-c5a.arn}"
-  release_version = "ami-0a4aa32529d82497d"
-  scaling_config {
-    min_size = 0
-    max_size = 1
-    desired_size = 0
-  }
-  subnet_ids = ["${aws_subnet.eks-dev-3-vpc-private-us-east-2c-adf.id}", "${aws_subnet.eks-dev-3-vpc-private-us-east-2b-05c.id}", "${aws_subnet.eks-dev-3-vpc-private-us-east-2a-4e0.id}"]
-  tags = {
-    ApplicationName    = "us-east-2-eks-dev-3"
-    CiscoMailAlias     = "eti-sre-admins@cisco.com"
-    DataClassification = "Cisco Confidential"
-    DataTaxonomy       = "Cisco Operations Data"
-    EnvironmentName    = "NonProd"
-    Name               = "eks-dev-3-public-nodegroup"
-    ResourceOwner      = "ETI SRE"
-  }
-  taint {
-    effect = "PREFER_NO_SCHEDULE"
-    key    = "node-type"
-    value  = "public"
-  }
-  update_config {
-    max_unavailable_percentage = 33
-  }
-  version = "1.27"
-}
-
 resource "aws_launch_template" "eks-dev-3-127-public-20231011104642636500000001-762" {
   block_device_mappings {
     device_name = "/dev/xvda"
@@ -433,9 +396,10 @@ resource "aws_launch_template" "eks-dev-3-127-public-20231011104642636500000001-
     }
   }
   default_version         = 1
-  description             = "eks-dev-3 Public Launch-Template 1.27"
+  description             = "eks-dev-3 Public Launch-Template 1.29"
   disable_api_termination = false
-  image_id                = "ami-02f7954753fa9a52f"
+
+  image_id                = "ami-01d63edec23de8fb7"
   monitoring {
     enabled = true
   }
@@ -486,32 +450,6 @@ resource "aws_launch_template" "eks-dev-3-127-public-20231011104642636500000001-
   }
 }
 
-resource "aws_iam_role" "eks-dev-3-public-ng-role-20230120213215278600000015-c5a" {
-  assume_role_policy  = jsonencode({
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "EKSNodeAssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
-})
-  description         = "EKS Managed Public node group IAM role"
-  managed_policy_arns = ["arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly", "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy", "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"]
-  tags = {
-    ApplicationName    = "us-east-2-eks-dev-3"
-    CiscoMailAlias     = "eti-sre-admins@cisco.com"
-    DataClassification = "Cisco Confidential"
-    DataTaxonomy       = "Cisco Operations Data"
-    EnvironmentName    = "NonProd"
-    ResourceOwner      = "ETI SRE"
-  }
-}
-
 resource "aws_security_group" "default-faa" {
   description = "default VPC security group"
   egress {
@@ -543,12 +481,6 @@ resource "aws_security_group" "eks-dev-3-node-20230120212042472400000009-05b" {
     ipv6_cidr_blocks = ["::/0"]
     protocol         = "-1"
     to_port          = 0
-  }
-  ingress {
-    from_port       = 0
-    protocol        = "-1"
-    security_groups = ["sg-0607156b95e2a4847", "sg-0732b9b8638bc3140", "sg-0b7740001ea580c9f", "sg-0cc592998db6e9fd2", "sg-0dfb05694f52ceb94"]
-    to_port         = 0
   }
   ingress {
     description     = "Cluster API to node 4443/tcp webhook"
@@ -627,13 +559,6 @@ resource "aws_security_group" "eks-dev-3-node-20230120212042472400000009-05b" {
     self        = true
     to_port     = 65535
   }
-  ingress {
-    description     = "elbv2.k8s.aws/targetGroupBinding=shared"
-    from_port       = 5000
-    protocol        = "tcp"
-    security_groups = ["sg-0564e881af9cc7020"]
-    to_port         = 15051
-  }
   tags = {
     ApplicationName                   = "us-east-2-eks-dev-3"
     CiscoMailAlias                    = "eti-sre-admins@cisco.com"
@@ -661,10 +586,10 @@ resource "aws_eks_node_group" "eks-dev-3-private-nodegroup-58d" {
     version = "1"
   }
   node_role_arn   = "${aws_iam_role.eks-dev-3-private-ng-role-20230120213215277300000014-136.arn}"
-  release_version = "ami-0a4aa32529d82497d"
+  release_version = "ami-01d63edec23de8fb7"
   scaling_config {
-    desired_size = 6
-    max_size     = 8
+    desired_size = 4
+    max_size     = 4
     min_size     = 4
   }
   subnet_ids = ["${aws_subnet.eks-dev-3-vpc-private-us-east-2c-adf.id}", "${aws_subnet.eks-dev-3-vpc-private-us-east-2b-05c.id}", "${aws_subnet.eks-dev-3-vpc-private-us-east-2a-4e0.id}"]
@@ -680,7 +605,7 @@ resource "aws_eks_node_group" "eks-dev-3-private-nodegroup-58d" {
   update_config {
     max_unavailable_percentage = 33
   }
-  version = "1.27"
+  version = "1.29"
 }
 
 resource "aws_launch_template" "eks-dev-3-127-private-20231011104642645600000003-318" {
@@ -694,9 +619,9 @@ resource "aws_launch_template" "eks-dev-3-127-private-20231011104642645600000003
     }
   }
   default_version         = 1
-  description             = "eks-dev-3 Private Launch-Template 1.27"
+  description             = "eks-dev-3 Private Launch-Template 1.29"
   disable_api_termination = false
-  image_id                = "ami-02f7954753fa9a52f"
+  image_id                = "ami-01d63edec23de8fb7"
   key_name                = "eks-dev-3-eks"
   monitoring {
     enabled = true
