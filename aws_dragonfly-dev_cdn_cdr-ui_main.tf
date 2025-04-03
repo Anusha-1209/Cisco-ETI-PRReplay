@@ -1,8 +1,8 @@
 module "cdr-ui-dev-cloudfront" {
   source                        = "terraform-aws-modules/cloudfront/aws"
   version                       = "3.4.0"
-  aliases                       = ["cdr-ui.dev.panoptica.app"]
-  comment                       = "cdr-ui.dev.panoptica.app"
+  aliases                       = [local.cdn_domain_name]
+  comment                       = local.cdn_domain_name
   enabled                       = true
   http_version                  = "http2and3"
   is_ipv6_enabled               = true
@@ -35,7 +35,7 @@ module "cdr-ui-dev-cloudfront" {
     compress                   = false
     use_forwarded_values       = false
   }
-  
+
   origin = {
     a = {
       connection_attempts = 3
@@ -64,7 +64,7 @@ module "cdr-ui-dev-cloudfront" {
     Environment        = "NonProd"
     ResourceOwner      = "ETI SRE"
   }
-  
+
   viewer_certificate = {
     acm_certificate_arn      = module.acm.acm_certificate_arn
     ssl_support_method       = "sni-only"
@@ -79,9 +79,14 @@ module "cdr-ui-dev-cloudfront" {
 # Route53
 #############
 data "aws_route53_zone" "domain" {
-  name = "panoptica.app"
+  provider = aws.route53
+  name = "dev.panoptica.app"
 }
+
 module "records" {
+  providers = {
+    aws = aws.route53
+  }
   source  = "terraform-aws-modules/route53/aws//modules/records"
   version = "4.0.0"
   zone_id = data.aws_route53_zone.domain.zone_id
@@ -95,7 +100,6 @@ module "records" {
       }
     }
   ]
-  depends_on = [module.zones]
 }
 
 #############
@@ -119,7 +123,6 @@ module "acm" {
     Environment        = "NonProd"
     ResourceOwner      = "ETI SRE"
   }
-  depends_on = [module.zones]
 }
 
 #############
@@ -144,7 +147,7 @@ module "cloudfront_dev_log_bucket" {
     }, {
     type       = "CanonicalUser"
     permission = "FULL_CONTROL"
-    id         = data.aws_cloudfront_log_delivery_canonical_user_id.cloudfront.id 
+    id         = data.aws_cloudfront_log_delivery_canonical_user_id.cloudfront.id
     # Ref. https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
     }
   ]
