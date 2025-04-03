@@ -138,7 +138,7 @@ module "records" {
 # S3 buckets
 #############
 data "aws_canonical_user_id" "current" {}
-module "prod_log_bucket" {
+module "dev_log_bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws"
   version = "2.6.0"
   bucket  = "cdr-ui-dev-cdn-access-logs"
