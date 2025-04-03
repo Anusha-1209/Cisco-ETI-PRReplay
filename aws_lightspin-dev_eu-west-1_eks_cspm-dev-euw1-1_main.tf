@@ -60,14 +60,5 @@ module "eks-auth" {
       groups   = ["system:masters"]
     }
   ]
-
-  aws_auth_users = [
-    {
-      userarn  = "system:serviceaccount:atlantis:eks-gitops-1-atlantis",
-      username = "system:serviceaccount:atlantis:eks-gitops-1-atlantis",
-      groups   = ["system:masters"]
-    }
-  ]
-
   # depends_on = [null_resource.wait_for_eks]
 }
