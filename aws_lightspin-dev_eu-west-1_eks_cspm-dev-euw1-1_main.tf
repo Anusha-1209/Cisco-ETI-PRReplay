@@ -5,6 +5,8 @@ module "eks_all_in_one" {
   aws_account_name = local.eks_aws_account_name # AWS account name
   cidr             = "10.0.0.0/16"          # VPC CIDR
   private_subnet_bits = 2                  # Private subnet bits
+  public_subnet_mask = 196
+  intra_subnet_mask = 200
   cluster_version  = "1.29"                 # EKS cluster version
 
   # EKS Managed Private Node Group
