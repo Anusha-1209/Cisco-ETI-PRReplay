@@ -1,5 +1,5 @@
 locals {
-  aws_account_name = "dragonfly-production"
+  aws_account_name = "dragonfly-prod"
 
   compute_vpc = "dragonfly-compute-prod-1-vpc"
   data_vpc    = "dragonfly-data-prod-1-vpc"
