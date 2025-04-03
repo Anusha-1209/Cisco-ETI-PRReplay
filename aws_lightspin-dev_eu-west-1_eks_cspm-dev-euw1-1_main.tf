@@ -15,4 +15,6 @@ module "eks_all_in_one" {
 
   # Karpenter
   create_karpenter_irsa = true # Create Karpenter IRSA
+  create_ebs_csi_irsa = true 
+  create_efs_csi_irsa = true 
 }
