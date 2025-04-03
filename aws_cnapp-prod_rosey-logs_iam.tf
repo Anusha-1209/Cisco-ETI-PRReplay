@@ -64,3 +64,56 @@ resource "aws_iam_role_policy_attachment" "rosey_logs" {
   role       = aws_iam_role.rosey_logs[each.key].name
   policy_arn = aws_iam_policy.rosey_logs[each.key].arn
 }
+
+
+# Sync data with outshift-product-analytics-s3-bucket S3 bucket located in eticloud-plg-prod account
+resource "aws_iam_policy" "datasync_cnapp_prod" {
+  name        = "WriteToPLGAnalyticsS3Bucket"
+  description = "IAM policy that allows to sync data across 2 S3 buckets in 2 AWS accounts"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Sid    = "ListObjectsInBucket",
+        Effect = "Allow",
+        Action = [
+          "s3:GetBucketLocation",
+          "s3:ListBucket",
+          "s3:ListBucketMultipartUploads"
+        ],
+        Resource = "arn:aws:s3:::outshift-product-analytics-s3-bucket"
+      },
+      {
+        Sid    = "AllObjectActions",
+        Effect = "Allow",
+        Action = [
+          "s3:AbortMultipartUpload",
+          "s3:DeleteObject",
+          "s3:GetObject",
+          "s3:ListMultipartUploadParts",
+          "s3:PutObject",
+          "s3:GetObjectTagging",
+          "s3:PutObjectTagging"
+        ],
+        Resource = "arn:aws:s3:::outshift-product-analytics-s3-bucket/*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role" "datasync_cnapp_prod" {
+  name = "DataSync-cnapp-prod"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = "datasync.amazonaws.com"
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+}
