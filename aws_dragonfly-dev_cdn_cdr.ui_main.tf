@@ -75,13 +75,10 @@ module "cdr-ui-dev-cloudfront" {
 #############
 # Route53
 #############
-module "zones" {
-  source  = "terraform-aws-modules/route53/aws//modules/zones"
-  version = "4.0.0"
-  zones = {
-    "${local.cdn_domain_name}"  = {
-      comment = "Route53 zone for CDR dev apps"
-      tags = {
+resource "aws_route53_zone" "panoptica-dev-zone" {
+  name    = local.cdn_domain_name
+  comment = "Route53 zone for CDR dev apps"
+  tags = {
         ApplicationName    = "dragonfly"
         CiscoMailAlias     = "eti-sre-admins@cisco.com"
         DataClassification = "Cisco Confidential"
@@ -89,13 +86,11 @@ module "zones" {
         Environment        = "NonProd"
         ResourceOwner      = "ETI SRE"
       }
-    }
-  }
 }
 module "records" {
   source  = "terraform-aws-modules/route53/aws//modules/records"
   version = "4.0.0"
-  zone_id = keys(module.zones.route53_zone_zone_id)[0]
+  zone_id = aws_route53_zone.panoptica-dev-zone.zone_id
   create  = true
   records = [
     {
