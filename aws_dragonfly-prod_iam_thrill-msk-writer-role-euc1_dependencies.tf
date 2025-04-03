@@ -6,5 +6,5 @@ data "aws_eks_cluster" "cluster" {
 }
 
 data "aws_msk_cluster" "dragonfly_msk_euc_1" {
-  cluster_name = local.cluster_name
+  cluster_name = local.msk_cluster_name
 }
