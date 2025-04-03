@@ -50,21 +50,8 @@ module "eks-auth" {
 
   aws_auth_roles = [
     {
-      rolearn  = "arn:aws:iam::346196940956:user/terraform_admin",
-      username = "terraform_admin",
-      groups   = ["system:masters"]
-    },
-    {
       rolearn  = "arn:aws:iam::346196940956:role/devops",
       username = "devops",
-      groups   = ["system:masters"]
-    }
-  ]
-
-  aws_auth_users = [
-    {
-      userarn  = "system:serviceaccount:atlantis:eks-gitops-1-atlantis",
-      username = "system:serviceaccount:atlantis:eks-gitops-1-atlantis",
       groups   = ["system:masters"]
     }
   ]
