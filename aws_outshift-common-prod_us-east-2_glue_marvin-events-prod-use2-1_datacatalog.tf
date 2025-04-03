@@ -206,3 +206,72 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_table" {
     }
   }
 }
+
+resource "aws_iam_role" "AWSGlueServiceRoleBatchProcessing" {
+  name        = "AWSGlueServiceRoleBatchProcessing"
+  description = "IAM Role for GH Actions workflows"
+  tags        = {
+    ApplicationName    = "AWSGlueServiceRoleBatchProcessing"
+    CiscoMailAlias     = "eti-sre-admins@cisco.com"
+    DataClassification = "Cisco Confidential"
+    DataTaxonomy       = "Cisco Operations Data"
+    Environment        = "NonProd"
+    ResourceOwner      = "ETI SRE"
+  }
+  assume_role_policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "glue.amazonaws.com"
+        },
+        "Action": "sts:AssumeRole"
+      }
+    ]
+  })
+}
+
+data "aws_rds_cluster" "marvin-prod-use2-1" {
+  cluster_identifier = "marvin-prod-use2-1"
+}
+
+data "aws_vpc" "marvin-prod-use2-data" {
+  filter {
+    name   = "tag:Name"
+    values = ["marvin-prod-use2-data"]
+  }
+}
+data "aws_subnet" "marvin-prod-use2-1" {
+  vpc_id     = data.aws_vpc.marvin-prod-use2-data.id
+
+  tags = {
+    Name = "marvin-prod-use2-data-db-us-east-2a"
+  }
+}
+
+provider "vault" {
+  alias     = "apisec"
+  address   = "https://keeper.cisco.com"
+  namespace = "eticloud/apps/apisec"
+}
+
+data "vault_generic_secret" "pg_dump" {
+  path     = "secret/dev/marvin/ rds-marvin-dev-use2/aurora-db-credentials/pgdump-password"
+  provider = vault.apisec
+}
+
+resource "aws_glue_connection" "rds-marvin-connection" {
+  name = "rds-marvin=connection"
+
+  connection_properties = {
+    JDBC_CONNECTION_URL  = "jdbc:postgres://${data.aws_rds_cluster.marvin-prod-use2-1.endpoint}/marvin"
+    PASSWORD            = data.vault_generic_secret.pg_dump.data["user"]
+    USERNAME            = data.vault_generic_secret.pg_dump.data["password"]
+  }
+  physical_connection_requirements {
+    availability_zone      = data.aws_subnet.marvin-prod-use2-1.availability_zone
+    security_group_id_list = data.aws_rds_cluster.marvin-prod-use2-1.vpc_security_group_ids
+    subnet_id              = data.aws_subnet.marvin-prod-use2-1.id
+  }
+}
