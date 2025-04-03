@@ -93,7 +93,7 @@ data "aws_iam_policy_document" "sqs_policy" {
       "sqs:*"
     ]
     resources = [
-      "arn:aws:sqs:us-east-1:975854676552:queue-eventsForwarderTopic-production"
+      "arn:aws:sqs:us-east-2:975854676552:queue-eventsForwarderTopic-production"
     ]
   }
 }
