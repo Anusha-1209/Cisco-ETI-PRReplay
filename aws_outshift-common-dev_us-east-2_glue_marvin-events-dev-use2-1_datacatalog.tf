@@ -262,7 +262,7 @@ data "aws_subnet" "marvin-dev-use2-1" {
 }
 
 resource "aws_glue_connection" "rds-marvin-connection" {
-  name = "rds-marvin=connection"
+  name = "rds-marvin-connection"
 
   connection_properties = {
     JDBC_CONNECTION_URL  = "jdbc:postgres://${data.aws_rds_cluster.marvin-dev-use2-1.endpoint}/marvin"

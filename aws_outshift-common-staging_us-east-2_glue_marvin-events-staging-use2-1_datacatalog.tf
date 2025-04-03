@@ -263,7 +263,7 @@ data "vault_generic_secret" "pg_dump" {
 }
 
 resource "aws_glue_connection" "rds-marvin-connection" {
-  name = "rds-marvin=connection"
+  name = "rds-marvin-connection"
 
   connection_properties = {
     JDBC_CONNECTION_URL  = "jdbc:postgres://${data.aws_rds_cluster.marvin-staging-use2-1.endpoint}/marvin"
