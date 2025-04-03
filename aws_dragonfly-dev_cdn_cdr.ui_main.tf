@@ -139,6 +139,7 @@ module "acm" {
 #############
 
 data "aws_canonical_user_id" "current" {}
+data "aws_cloudfront_canonical_user_id" "current" {}
 module "dev_log_bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws"
   version = "4.1.1"
