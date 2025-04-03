@@ -81,14 +81,14 @@ resource "aws_iam_user_policy_attachment" "argocd-internal-backup-s3-attachment"
 
 locals {
   argocd-internal-backup-user = {
-    aws.access.key.id = element(
+    "aws.access.key.id" = element(
       concat(
         aws_iam_access_key.argocd-internal-backup-user-access-key.*.id,
         [""],
       ),
       0
     )
-    aws.secret.access.key = element(concat(aws_iam_access_key.argocd-internal-backup-user-access-key.*.secret, [""]), 0)
+    "aws.secret.access.key" = element(concat(aws_iam_access_key.argocd-internal-backup-user-access-key.*.secret, [""]), 0)
   }
 }
 
