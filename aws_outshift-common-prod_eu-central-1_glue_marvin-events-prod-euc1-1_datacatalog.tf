@@ -286,7 +286,7 @@ provider "vault" {
 }
 
 data "vault_generic_secret" "pg_dump" {
-  path     = "secret/dev/marvin/ rds-marvin-dev-use2/aurora-db-credentials/pgdump-password"
+  path     = "secret/prod/marvin/rds-marvin-prod-euc1/aurora-db-credentials/pgdump-password"
   provider = vault.apisec
 }
 
