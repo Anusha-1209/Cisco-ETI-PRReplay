@@ -6,7 +6,7 @@ data "aws_iam_policy_document" "data_sync_from_cnapp_prod_account" {
   statement {
     principals {
       type        = "AWS"
-      identifiers = ["arn:aws:iam::${local.cnapp_prod_account_id}:role/source-datasync-role"]
+      identifiers = ["arn:aws:iam::${local.cnapp_prod_account_id}:role/DataSync-cnapp-prod"]
     }
 
     actions = [
