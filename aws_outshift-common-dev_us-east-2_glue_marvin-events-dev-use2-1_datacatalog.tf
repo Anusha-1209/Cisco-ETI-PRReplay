@@ -234,7 +234,7 @@ resource "aws_glue_connection" "example" {
   }
   physical_connection_requirements {
     availability_zone      = data.aws_subnet.db.availability_zone
-    security_group_id_list = [for sg in data.aws_rds_cluster.marvin-dev-use2-1.vpc_security_group_ids : tostring(sg.id)]
+    security_group_id_list = data.aws_rds_cluster.marvin-dev-use2-1.vpc_security_group_ids
     subnet_id              = data.aws_subnet.db.id
   }
 }
