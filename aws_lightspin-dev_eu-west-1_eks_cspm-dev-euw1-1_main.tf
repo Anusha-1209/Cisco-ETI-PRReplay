@@ -13,7 +13,7 @@ module "eks_all_in_one" {
   instance_types = ["m6a.2xlarge"] # EKS instance types
   min_size       = 5               # EKS node group min size
   max_size       = 15              # EKS node group max size
-  desired_size   = 8               # EKS node group desired size
+  desired_size   = 7               # EKS node group desired size
 
   # Karpenter
   create_karpenter_irsa = true # Create Karpenter IRSA
@@ -23,18 +23,18 @@ module "eks_all_in_one" {
   create_efs_csi_irsa = true 
 
 
-  # additional_aws_auth_configmap_roles = [
-  #     {
-  #       rolearn  = "arn:aws:iam::346196940956:user/terraform_admin",
-  #       username = "terraform_admin",
-  #       groups   = ["system:masters"]
-  #     }
-  #     , {
-  #       rolearn  = "arn:aws:iam::346196940956:role/devops",
-  #       username = "devops",
-  #       groups   = ["system:masters"]
-  #     }
-  #     ]
+  additional_aws_auth_configmap_roles = [
+      {
+        rolearn  = "arn:aws:iam::346196940956:user/terraform_admin",
+        username = "terraform_admin",
+        groups   = ["system:masters"]
+      }
+      , {
+        rolearn  = "arn:aws:iam::346196940956:role/devops",
+        username = "devops",
+        groups   = ["system:masters"]
+      }
+      ]
   cluster_addons = {
     coredns = {
       most_recent = true
