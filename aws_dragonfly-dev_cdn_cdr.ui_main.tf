@@ -66,10 +66,13 @@ module "cdr-ui-dev-cloudfront" {
   }
   
   viewer_certificate = {
-    acm_certificate_arn      = local.acm_certificate_arn
+    acm_certificate_arn      = module.acm.acm_certificate_arn
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2021"
   }
+  depends_on = [
+    module.acm
+  ]
 }
 
 #############
@@ -77,7 +80,7 @@ module "cdr-ui-dev-cloudfront" {
 #############
 module "zones" {
   source  = "terraform-aws-modules/route53/aws//modules/zones"
-  version = "~> 3.0"
+  version = "4.0.0"
 
   zones = {
     "${local.cdn_domain_name}" = {
@@ -118,7 +121,7 @@ module "acm" {
   source  = "terraform-aws-modules/acm/aws"
   version = "3.0.0"
   domain_name = local.cdn_domain_name
-  zone_id     = "${module.zones.route53_zone_zone_id}"
+  zone_id     = module.zones.route53_zone_zone_id
   subject_alternative_names = [local.cdn_domain_name]
   tags = {
     ApplicationName    = "dragonfly"
