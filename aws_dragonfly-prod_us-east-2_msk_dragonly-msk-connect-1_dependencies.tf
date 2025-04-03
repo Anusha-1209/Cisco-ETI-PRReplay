@@ -9,7 +9,7 @@ data "aws_region" "current" {}
 
 // Arangodb secrets from vault
 data "vault_generic_secret" "arangodb_secrets" {
-  path     = "secret/prod/us-east-2/thrill-arangodb"
+  path     = "secret/prod/thrill-arangodb/us-east-2"
   provider = vault.dragonfly
 }
 
