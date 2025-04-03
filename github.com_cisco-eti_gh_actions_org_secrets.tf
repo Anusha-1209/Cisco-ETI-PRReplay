@@ -46,6 +46,11 @@ data "sodium_encrypted_item" "WEBEX_TOKEN" {
   content_base64 = base64encode(data.vault_generic_secret.gha_ci_secrets.data["WEBEX_TOKEN"])
 }
 
+data "sodium_encrypted_item" "DEVHUB_TOKEN" {
+  public_key_base64 = data.github_actions_organization_public_key.gha_org_public_key.key
+  content_base64 = base64encode(data.vault_generic_secret.gha_ci_secrets.data["DEVHUB_TOKEN"])
+}
+
 locals {
   github_secrets = {
     "GHCR_TOKEN" = data.sodium_encrypted_item.GHCR_TOKEN.encrypted_value_base64
@@ -54,6 +59,7 @@ locals {
     "VAULT_APPROLE_SECRET_ID" = data.sodium_encrypted_item.VAULT_APPROLE_SECRET_ID.encrypted_value_base64
     "WEBEX_PLATFORM_NOTIFICATION_ROOM_ID" = data.sodium_encrypted_item.WEBEX_PLATFORM_NOTIFICATION_ROOM_ID.encrypted_value_base64
     "WEBEX_TOKEN" = data.sodium_encrypted_item.WEBEX_TOKEN.encrypted_value_base64
+    "DEVHUB_TOKEN" = data.sodium_encrypted_item.DEVHUB_TOKEN.encrypted_value_base64
   }
 }
 resource "github_actions_organization_secret" "dynamic" {
