@@ -1,5 +1,5 @@
 module "eks_all_in_one" {
-  source           = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=0.5.7"
+  source           = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=latest"
   name             = local.name             # EKS cluster name
   region           = local.region           # AWS provider region
   aws_account_name = local.eks_aws_account_name # AWS account name
@@ -15,6 +15,6 @@ module "eks_all_in_one" {
 
   # Karpenter
   create_karpenter_irsa = true # Create Karpenter IRSA
-  # create_ebs_csi_irsa = true 
-  # create_efs_csi_irsa = true 
+  create_ebs_csi_irsa = true 
+  create_efs_csi_irsa = true 
 }
