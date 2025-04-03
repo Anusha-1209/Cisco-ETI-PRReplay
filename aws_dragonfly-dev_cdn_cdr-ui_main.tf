@@ -117,22 +117,22 @@ module "records" {
 #############
 # ACM
 #############
-module "acm" {
-  source  = "terraform-aws-modules/acm/aws"
-  version = "3.0.0"
-  domain_name = local.cdn_domain_name
-  zone_id     = module.zones.route53_zone_zone_id[local.cdn_domain_name]
-  subject_alternative_names = [local.cdn_domain_name]
-  tags = {
-    ApplicationName    = "dragonfly"
-    CiscoMailAlias     = "eti-sre-admins@cisco.com"
-    DataClassification = "Cisco Confidential"
-    DataTaxonomy       = "Cisco Operations Data"
-    Environment        = "NonProd"
-    ResourceOwner      = "ETI SRE"
-  }
-  depends_on = [module.zones]
-}
+# module "acm" {
+#   source  = "terraform-aws-modules/acm/aws"
+#   version = "3.0.0"
+#   domain_name = local.cdn_domain_name
+#   zone_id     = module.zones.route53_zone_zone_id[local.cdn_domain_name]
+#   subject_alternative_names = [local.cdn_domain_name]
+#   tags = {
+#     ApplicationName    = "dragonfly"
+#     CiscoMailAlias     = "eti-sre-admins@cisco.com"
+#     DataClassification = "Cisco Confidential"
+#     DataTaxonomy       = "Cisco Operations Data"
+#     Environment        = "NonProd"
+#     ResourceOwner      = "ETI SRE"
+#   }
+#   depends_on = [module.zones]
+# }
 
 #############
 # S3 buckets
