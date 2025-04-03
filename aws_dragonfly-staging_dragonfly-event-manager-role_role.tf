@@ -91,7 +91,7 @@ data "aws_iam_policy_document" "sqs_policy" {
       "sqs:*"
     ]
     resources = [
-      "arn:aws:sqs:us-east-1:579418176921:queue-eventsForwarderTopic-lightspin"
+      "arn:aws:sqs:us-east-1:579418176921:queue-eventsForwarderTopic-production"
     ]
   }
 }
