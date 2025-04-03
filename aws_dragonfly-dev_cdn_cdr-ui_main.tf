@@ -12,16 +12,18 @@ module "cdr-ui-dev-cloudfront" {
   price_class                   = "PriceClass_All"
   retain_on_delete              = false
   wait_for_deployment           = false
+  default_root_object           = "index.html"
   # When you enable additional metrics for a distribution, CloudFront sends up to 8 metrics to CloudWatch in the US East (N. Virginia) Region.
   # This rate is charged only once per month, per metric (up to 8 metrics per distribution).
   create_monitoring_subscription = false
   create_origin_access_identity  = false
 
-  # logging_config = {
-  #  bucket = module.cloudfront_dev_log_bucket.s3_bucket_bucket_domain_name
-  #  prefix = "cloudfront"
-  # }
-
+  custom_error_response = {
+    error_caching_min_ttl = 300
+    error_code            = 403
+    response_code         = 200
+    response_page_path    = "/index.html"
+  }
   default_cache_behavior = {
     path_pattern               = "*"
     target_origin_id           = "dragonfly-dev-cdr-ui"
@@ -40,23 +42,18 @@ module "cdr-ui-dev-cloudfront" {
   }
 
   origin = {
-    a = {
-      connection_attempts = 3
-      connection_timeout  = 10
-      domain_name         = local.bucket_domain_name
-      origin_id           = "dragonfly-dev-cdr-ui"
+    dragonfly-dev-cdr-ui = {
+        connection_attempts      = 3
+        connection_timeout       = 10
+        domain_name              = "dragonfly-dev-cdr-ui.s3.eu-west-1.amazonaws.com"
+        origin_access_control_id = "ECSHY7OK92LX"
+        origin_id                = "dragonfly-dev-cdr-ui"
 
-      custom_origin_config = {
-        http_port                = 80
-        https_port               = 443
-        origin_keepalive_timeout = 5
-        origin_protocol_policy   = "https-only"
-        origin_read_timeout      = 30
-        origin_ssl_protocols = [
-          "TLSv1.2",
-        ]
+        origin_shield = {
+            enabled              = true
+            origin_shield_region = "us-east-1"
+          }
       }
-    }
   }
   viewer_certificate = {
     acm_certificate_arn      =  resource.aws_acm_certificate.this.arn
@@ -66,73 +63,4 @@ module "cdr-ui-dev-cloudfront" {
   depends_on = [
     resource.aws_acm_certificate.this
   ]
-}
-
-#############
-# Route53
-#############
-data "aws_route53_zone" "domain" {
-  provider = aws.route53
-  name = "dev.panoptica.app"
-}
-
-module "records" {
-  providers = {
-    aws = aws.route53
-  }
-  source  = "terraform-aws-modules/route53/aws//modules/records"
-  version = "4.0.0"
-  zone_id = data.aws_route53_zone.domain.zone_id
-  records = [
-    {
-      name = "cdr-ui"
-      type = "A"
-      alias = {
-        name    = module.cdr-ui-dev-cloudfront.cloudfront_distribution_domain_name
-        zone_id = module.cdr-ui-dev-cloudfront.cloudfront_distribution_hosted_zone_id
-      }
-    }
-  ]
-}
-
-#############
-# S3 buckets
-#############
-data "aws_canonical_user_id" "current" {}
-data "aws_cloudfront_log_delivery_canonical_user_id" "cloudfront" {}
-module "cloudfront_dev_log_bucket" {
-  providers = {
-    aws = aws.us-east-1
-  }
-
-  source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "4.1.2"
-  bucket  = "dragonfly-cdr-ui-dev-cdn-access-logs"
-  control_object_ownership = true
-  object_ownership         = "ObjectWriter"
-  grant = [{
-    type       = "CanonicalUser"
-    permission = "FULL_CONTROL"
-    id         = data.aws_canonical_user_id.current.id
-    }, {
-    type       = "CanonicalUser"
-    permission = "FULL_CONTROL"
-    id         = data.aws_cloudfront_log_delivery_canonical_user_id.cloudfront.id
-    # Ref. https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
-    }
-  ]
-
-  owner = {
-    id = data.aws_canonical_user_id.current.id
-  }
-
-  force_destroy = true
-  tags = {
-    ApplicationName    = "dragonfly"
-    CiscoMailAlias     = "eti-sre-admins@cisco.com"
-    DataClassification = "Cisco Confidential"
-    DataTaxonomy       = "Cisco Operations Data"
-    Environment        = "NonProd"
-    ResourceOwner      = "ETI SRE"
-  }
 }

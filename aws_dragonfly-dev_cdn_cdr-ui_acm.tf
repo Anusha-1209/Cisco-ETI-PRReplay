@@ -8,6 +8,10 @@ locals {
   validation_domains = [for k, v in aws_acm_certificate.this.domain_validation_options : tomap(v) if contains(local.distinct_domain_names, replace(v.domain_name, "*.", ""))]
 }
 
+data "aws_route53_zone" "domain" {
+  provider = aws.route53
+  name = "dev.panoptica.app"
+}
 resource "aws_acm_certificate" "this" {
   provider = aws.us-east-1
   domain_name               = local.cdn_domain_name
@@ -36,10 +40,3 @@ resource "aws_route53_record" "validation" {
 
   depends_on = [aws_acm_certificate.this]
 }
-
-# resource "aws_acm_certificate_validation" "this" {
-#   provider = aws.us-east-1
-#   certificate_arn = aws_acm_certificate.this.arn
-
-#   validation_record_fqdns = aws_route53_record.validation.*.fqdn
-# }
