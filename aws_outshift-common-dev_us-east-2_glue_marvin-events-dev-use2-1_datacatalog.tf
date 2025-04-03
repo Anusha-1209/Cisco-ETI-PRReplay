@@ -219,7 +219,6 @@ data "aws_vpc" "marvin-dev-use2-data" {
 }
 data "aws_subnet" "db" {
   vpc_id     = data.aws_vpc.marvin-dev-use2-data.id
-#  cidr_block = "10.0.1.0/24"
 
   tags = {
     Name = "marvin-dev-use2-data-db-us-east-2a"
@@ -234,7 +233,7 @@ resource "aws_glue_connection" "example" {
     USERNAME            = "exampleusername"
   }
   physical_connection_requirements {
-    availability_zone      = data.aws_rds_cluster.marvin-dev-use2-1.availability_zones
+    availability_zone      = data.aws_rds_cluster.marvin-dev-use2-1.availability_zones[0]
     security_group_id_list = [data.aws_rds_cluster.marvin-dev-use2-1.vpc_security_group_ids]
     subnet_id              = data.aws_subnet.db.id
   }
