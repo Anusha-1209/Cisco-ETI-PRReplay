@@ -15,6 +15,7 @@ data "sodium_encrypted_item" "GHCR_USERNAME" {
   public_key_base64 = data.github_actions_organization_public_key.gha_org_public_key.key
   content_base64 = base64encode(data.vault_generic_secret.gha_ci_secrets.data["GHEC_USERNAME"])
 }
+
 data "sodium_encrypted_item" "VAULT_APPROLE_ROLE_ID" {
   public_key_base64 = data.github_actions_organization_public_key.gha_org_public_key.key
   content_base64 = base64encode(vault_approle_auth_backend_role.github_actions.role_id)
@@ -50,8 +51,4 @@ resource "github_actions_organization_secret" "dynamic" {
   secret_name      = each.key
   visibility       = "private"
   encrypted_value  = each.value
-
-  lifecycle {
-    ignore_changes = [ encrypted_value ]
-  }
 }
