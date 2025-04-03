@@ -37,7 +37,7 @@ provider "aws" {
     tags = {
       DataClassification = "Cisco Restricted"
       Environment        = "Prod"
-      ApplicationName    = "scs-dev-1-eks"
+      ApplicationName    = "eks-fargate-cluster"
       ResourceOwner      = "eti sre"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataTaxonomy       = "Cisco Operations Data"
