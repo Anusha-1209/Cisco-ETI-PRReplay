@@ -80,7 +80,7 @@ resource "aws_iam_role" "role" {
     policy = data.aws_iam_policy_document.policy.json
   }
 
-  managed_policy_arns = []
+  managed_policy_arns = ["arn:aws:iam::947352569831:policy/eks-df-staging-1-streaman-portshift-sqs"]
 }
 
 data "aws_iam_policy_document" "sqs_policy" {
