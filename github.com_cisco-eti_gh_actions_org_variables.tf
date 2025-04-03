@@ -1,6 +1,6 @@
 locals {
   github_variables = {
-    "DEFAULT_RUNNER_GROUP" = "outshift-platform-large-runners"
+    "DEFAULT_RUNNER_GROUP" = "SRE-Large-Runners"
     "ECR_PUBLIC_REGISTRY_ALIAS" = "ciscoeti"
     "GHCR_REGISTRY" = "ghcr.io/cisco-eti"
     "LATEST_SRE_BUILD_IMAGE" = "ghcr.io/cisco-eti/sre-pipeline-docker:2024.05.30-e409a0c-90"
