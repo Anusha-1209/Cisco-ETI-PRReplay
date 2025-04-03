@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "eticloud-tf-state-nonprod"
-    key    = "terraform-state/vpc/us-east-2/motf-dev-use2-data-vpc.tfstate"
+    key    = "terraform-state/vpc/us-east-2/motf-mm-dev-1-vpc.tfstate"
     region = "us-east-2"
   }
 }
