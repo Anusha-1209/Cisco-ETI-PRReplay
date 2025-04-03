@@ -395,7 +395,7 @@ resource "aws_eks_node_group" "eks-dev-3-public-nodegroup-87f" {
     version = "1"
   }
   node_role_arn   = "${aws_iam_role.eks-dev-3-public-ng-role-20230120213215278600000015-c5a.arn}"
-  release_version = "ami-02f7954753fa9a52f"
+  release_version = "ami-0a4aa32529d82497d"
   scaling_config {
     min_size = 0
     max_size = 1
@@ -661,7 +661,7 @@ resource "aws_eks_node_group" "eks-dev-3-private-nodegroup-58d" {
     version = "1"
   }
   node_role_arn   = "${aws_iam_role.eks-dev-3-private-ng-role-20230120213215277300000014-136.arn}"
-  release_version = "ami-02f7954753fa9a52f"
+  release_version = "ami-0a4aa32529d82497d"
   scaling_config {
     desired_size = 6
     max_size     = 8
