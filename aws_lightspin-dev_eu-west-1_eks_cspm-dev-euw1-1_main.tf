@@ -22,6 +22,13 @@ module "eks_all_in_one" {
   create_ebs_csi_irsa = true 
   create_efs_csi_irsa = true 
 
+  aws_auth_additional_roles = [
+  {
+    rolearn  = "arn:aws:iam::346196940956:role/devops"
+    username = "devops"
+    groups   = ["system:masters"]
+  }
+  ]
   cluster_addons = {
     coredns = {
       most_recent = true
@@ -41,12 +48,4 @@ module "eks_all_in_one" {
     }
     # aws-ebs-csi-driver is not included to prevent installation
   }
-
-  additional_aws_auth_configmap_role = [
-  {
-    rolearn  = "arn:aws:iam::346196940956:role/devops"
-    username = "devops"
-    groups   = ["system:masters"]
-  }
-  ]
 }
