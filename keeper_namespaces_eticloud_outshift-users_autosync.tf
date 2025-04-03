@@ -21,12 +21,14 @@ locals {
   ]
 
   gpt4o_kv_paths = [
+    "bugbash",
     "genai"
   ]
 
   datasources_sharepoint_outshiftgenai_kv_paths = [
     "csm",
-    "bugbash"
+    "bugbash",
+    "genai"
   ]
 
   datasources_sharepoint_ciscoeticloud_api_motific_rag_user_kv_paths = [
