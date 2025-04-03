@@ -110,7 +110,7 @@ module "msk" {
     "min.insync.replicas"            = 2
     "num.io.threads"                 = 8
     "num.network.threads"            = 5
-    "num.partitions"                 = 10
+    "num.partitions"                 = 100
     "num.replica.fetchers"           = 2
     "replica.lag.time.max.ms"        = 30000
     "socket.receive.buffer.bytes"    = 102400
@@ -118,6 +118,7 @@ module "msk" {
     "socket.send.buffer.bytes"       = 102400
     "unclean.leader.election.enable" = true
     "zookeeper.session.timeout.ms"   = 18000
+    "group.max.session.timeout.ms"   = 120000
   }
 
   # security groups to put on the cluster itself
