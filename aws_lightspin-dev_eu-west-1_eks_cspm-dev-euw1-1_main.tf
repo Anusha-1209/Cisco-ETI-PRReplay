@@ -7,7 +7,7 @@ module "eks_all_in_one" {
   private_subnet_bits = 2                  # Private subnet bits
   public_subnet_mask = 196
   intra_subnet_mask = 200
-  cluster_version  = "1.29"                 # EKS cluster version
+  cluster_version  = "1.30"                 # EKS cluster version
 
   # EKS Managed Private Node Group
   instance_types = ["m6a.2xlarge"] # EKS instance types
@@ -23,18 +23,18 @@ module "eks_all_in_one" {
   create_efs_csi_irsa = true 
 
 
-  additional_aws_auth_configmap_roles = [
-      {
-        rolearn  = "arn:aws:iam::346196940956:user/terraform_admin",
-        username = "terraform_admin",
-        groups   = ["system:masters"]
-      }
-      , {
-        rolearn  = "arn:aws:iam::346196940956:role/devops",
-        username = "devops",
-        groups   = ["system:masters"]
-      }
-      ]
+  # additional_aws_auth_configmap_roles = [
+  #     {
+  #       rolearn  = "arn:aws:iam::346196940956:user/terraform_admin",
+  #       username = "terraform_admin",
+  #       groups   = ["system:masters"]
+  #     }
+  #     , {
+  #       rolearn  = "arn:aws:iam::346196940956:role/devops",
+  #       username = "devops",
+  #       groups   = ["system:masters"]
+  #     }
+  #     ]
   cluster_addons = {
     coredns = {
       most_recent = true
