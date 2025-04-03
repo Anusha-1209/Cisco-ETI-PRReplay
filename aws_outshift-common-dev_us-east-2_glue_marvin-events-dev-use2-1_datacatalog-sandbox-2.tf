@@ -170,11 +170,9 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_sandbox_2_table" {
 }
 
 resource "aws_glue_connection" "rds-marvin-sandbox-2-connection" {
-  name = "rds-marvin-sandbox-1-connection"
-  connection_type = "CUSTOM"
+  name = "rds-marvin-sandbox-2-connection"
 
   connection_properties = {
-    CONNECTION_TYPE      = "Jdbc"
     JDBC_CONNECTION_URL  = "jdbc:postgres://${data.aws_rds_cluster.marvin-dev-use2-1.endpoint}/marvin-sandbox-2"
     PASSWORD            = data.vault_generic_secret.pg_dump.data["user"]
     USERNAME            = data.vault_generic_secret.pg_dump.data["password"]

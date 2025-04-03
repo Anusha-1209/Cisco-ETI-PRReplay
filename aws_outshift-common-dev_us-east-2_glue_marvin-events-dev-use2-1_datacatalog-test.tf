@@ -170,10 +170,8 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_test_table" {
 
 resource "aws_glue_connection" "rds-marvin-test-connection" {
   name = "rds-marvin-test-connection"
-  connection_type = "CUSTOM"
 
   connection_properties = {
-    CONNECTION_TYPE      = "Jdbc"
     JDBC_CONNECTION_URL  = "jdbc:postgres://${data.aws_rds_cluster.marvin-dev-use2-1.endpoint}/marvin-test"
     PASSWORD            = data.vault_generic_secret.pg_dump.data["user"]
     USERNAME            = data.vault_generic_secret.pg_dump.data["password"]
