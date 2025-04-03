@@ -3,7 +3,7 @@
 locals {
   enrollment_name    = "argocd-sre-enrollment"
   argocd_k8s_name    = "eks-dev-gitops-1"
-  argocd_aws_account = "eticloud-preproduction"
+  argocd_aws_account = "eticloud-preprod"
 }
 
 data "vault_generic_secret" "aws_argocd_infra_credential" {
