@@ -14,12 +14,13 @@ provider "aws" {
 
   default_tags {
     tags = {
-      ApplicationName    = "S3 bucket - ETI Plg prod"
-      CiscoMailAlias     = "eti-sre-admins@cisco.com"
-      DataClassification = "Cisco Confidential"
-      DataTaxonomy       = "Cisco Operations Data"
-      EnvironmentName    = "Prod"
-      ResourceOwner      = "ETI SRE"
+      ApplicationName    = "Panoptica"
+      CiscoMailAlias     = "outshift_plg_data@cisco.com"
+      DataClassification = "Cisco Highly Confidential"
+      DataTaxonomy       = "Product Usage Data"
+      Environment        = "Prod"
+      ResourceOwner      = "Outshift PLG"
+      SecurityCompliance = "Yes"
     }
   }
 }
