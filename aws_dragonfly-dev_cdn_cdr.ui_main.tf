@@ -91,7 +91,6 @@ module "records" {
   source  = "terraform-aws-modules/route53/aws//modules/records"
   version = "4.0.0"
   zone_id = aws_route53_zone.panoptica-dev-zone.zone_id
-  create  = true
   records = [
     {
       name = "cdr-ui"
