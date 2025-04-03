@@ -34,7 +34,8 @@ resource "aws_iam_policy" "argocd-internal-backup-s3" {
                 "s3:ListJobs",
                 "s3:PutStorageLensConfiguration",
                 "s3:ListMultiRegionAccessPoints",
-                "s3:CreateJob"
+                "s3:CreateJob",
+                "s3:PutObject"
             ],
             "Resource": "*"
         },
@@ -72,7 +73,7 @@ resource "aws_iam_access_key" "argocd-internal-backup-user-access-key" {
 
 resource "aws_iam_user_policy_attachment" "argocd-internal-backup-s3-attachment" {
   user       = aws_iam_user.argocd-internal-backup-user.name
-  policy_arn = "arn:aws:iam::009736724745:policy/argocd-internal-backup-s3"
+  policy_arn = aws_iam_policy.argocd-internal-backup-s3.arn
   depends_on = [
     aws_iam_user.argocd-internal-backup-user,
     aws_iam_policy.argocd-internal-backup-s3
