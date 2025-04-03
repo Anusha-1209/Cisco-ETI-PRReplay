@@ -25,12 +25,12 @@ module "eks_all_in_one" {
 
   additional_aws_auth_configmap_roles = [
       {
-        rolearn  = "arn:aws:iam::${local.account_id}:user/terraform_admin",
+        rolearn  = "arn:aws:iam::346196940956:user/terraform_admin",
         username = "terraform_admin",
         groups   = ["system:masters"]
       }
       , {
-        rolearn  = "arn:aws:iam::${local.account_id}:role/devops",
+        rolearn  = "arn:aws:iam::346196940956:role/devops",
         username = "devops",
         groups   = ["system:masters"]
       }

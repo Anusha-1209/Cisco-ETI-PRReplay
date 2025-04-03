@@ -9,4 +9,3 @@ data "aws_eks_cluster_auth" "eks" {
   provider   = aws.eks
   depends_on = [module.eks_all_in_one]
 }
-data "aws_caller_identity" "current" {}
