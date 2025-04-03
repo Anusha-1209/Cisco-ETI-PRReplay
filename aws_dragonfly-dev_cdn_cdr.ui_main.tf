@@ -75,10 +75,14 @@ module "cdr-ui-dev-cloudfront" {
 #############
 # Route53
 #############
-resource "aws_route53_zone" "panoptica-dev-zone" {
-  name    = local.cdn_domain_name
-  comment = "Route53 zone for CDR dev apps"
-  tags = {
+module "zones" {
+  source  = "terraform-aws-modules/route53/aws//modules/zones"
+  version = "~> 3.0"
+
+  zones = {
+    "${local.cdn_domain_name}" = {
+      comment = "Route53 zone for CDR dev apps"
+      tags = {
         ApplicationName    = "dragonfly"
         CiscoMailAlias     = "eti-sre-admins@cisco.com"
         DataClassification = "Cisco Confidential"
@@ -86,11 +90,14 @@ resource "aws_route53_zone" "panoptica-dev-zone" {
         Environment        = "NonProd"
         ResourceOwner      = "ETI SRE"
       }
+    }
+  }
 }
+
 module "records" {
   source  = "terraform-aws-modules/route53/aws//modules/records"
   version = "4.0.0"
-  zone_id = aws_route53_zone.panoptica-dev-zone.zone_id
+  zone_name = keys(module.zones.route53_zone_zone_id)[0]
   records = [
     {
       name = "cdr-ui"
@@ -101,6 +108,7 @@ module "records" {
       }
     }
   ]
+  depends_on = [module.zones]
 }
 
 #############
@@ -110,7 +118,7 @@ module "acm" {
   source  = "terraform-aws-modules/acm/aws"
   version = "3.0.0"
   domain_name = local.cdn_domain_name
-  zone_id     = aws_route53_zone.panoptica-dev-zone.zone_id
+  zone_id     = module.zones.route53_zone_zone_id
   subject_alternative_names = [local.cdn_domain_name]
   tags = {
     ApplicationName    = "dragonfly"
@@ -120,6 +128,7 @@ module "acm" {
     Environment        = "NonProd"
     ResourceOwner      = "ETI SRE"
   }
+  depends_on = [module.zones]
 }
 
 #############
