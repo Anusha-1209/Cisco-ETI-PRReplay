@@ -123,34 +123,33 @@ module "records" {
 #   domain_name = local.cdn_domain_name
 #   zone_id     = module.zones.route53_zone_zone_id[local.cdn_domain_name]
 #   subject_alternative_names = [local.cdn_domain_name]
-#   tags = {
-#     ApplicationName    = "dragonfly"
-#     CiscoMailAlias     = "eti-sre-admins@cisco.com"
-#     DataClassification = "Cisco Confidential"
-#     DataTaxonomy       = "Cisco Operations Data"
-#     Environment        = "NonProd"
-#     ResourceOwner      = "ETI SRE"
-#   }
+  # tags = {
+  #   ApplicationName    = "dragonfly"
+  #   CiscoMailAlias     = "eti-sre-admins@cisco.com"
+  #   DataClassification = "Cisco Confidential"
+  #   DataTaxonomy       = "Cisco Operations Data"
+  #   Environment        = "NonProd"
+  #   ResourceOwner      = "ETI SRE"
+  # }
 #   depends_on = [module.zones]
 # }
 
 #############
 # S3 buckets
 #############
-
 data "aws_canonical_user_id" "current" {}
-module "dev_log_bucket" {
+module "prod_log_bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "4.1.1"
+  version = "2.6.0"
   bucket  = "cdr-ui-dev-cdn-access-logs"
   acl     = null
   grant = [{
     type        = "CanonicalUser"
-    permission  = "FULL_CONTROL"
+    permissions = ["FULL_CONTROL"]
     id          = data.aws_canonical_user_id.current.id
     }, {
     type        = "CanonicalUser"
-    permission  = "FULL_CONTROL"
+    permissions = ["FULL_CONTROL"]
     id          = "c4c1ede66af53448b93c283ce9448c4ba468c9432aa01d700d3878632f77d2d0"
     # Ref. https://github.com/terraform-providers/terraform-provider-aws/issues/12512
     # Ref. https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
