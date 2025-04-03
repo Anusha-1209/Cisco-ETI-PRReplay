@@ -178,8 +178,8 @@ resource "aws_glue_connection" "rds-marvin-sandbox-0-connection" {
     PASSWORD            = data.vault_generic_secret.pg_dump.data["password"]
     USERNAME            = data.vault_generic_secret.pg_dump.data["user"]
     CONNECTION_TYPE      = "Jdbc"
-    CONNECTOR_URL        = "s3://marvin-dev-use2-1-msk-s3-connectors/postgresql-42.6.2.jar"
-    CONNECTOR_CLASS_NAME = "org.postgresql.Driver"
+    JDBC_DRIVER_JAR_URI        = "s3://marvin-dev-use2-1-msk-s3-connectors/postgresql-42.6.2.jar"
+    JDBC_DRIVER_CLASS_NAME = "org.postgresql.Driver"
 
   }
   physical_connection_requirements {
