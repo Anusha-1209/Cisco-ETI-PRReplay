@@ -3,14 +3,14 @@ variable "tags" {
   default = {
     DataClassification = "CiscoConfidential"
     DataTaxonomy       = "CiscoOperationsData"
-    CiscoMailAlias     = "eti-sre_at_cisco_dot_com"
-    ApplicationName    = "eticloud-sre-iam"
-    Environment        = "NonProd"
+    CiscoMailAlias     = "eti-sre-admins@cisco.com"
+    ApplicationName    = "IAM"
+    Environment        = "Prod"
     ResourceOwner      = "ETI SRE"
   }
 }
 
-resource "aws_iam_policy" "argocd-common-backup-s3" {
+resource "aws_iam_policy" "argocd-internal-backup-s3" {
   name        = "argocd-internal-backup-s3"
   path        = "/"
   description = "S3 Read Write Policy for argocd-internal-backup S3 bucket"
@@ -54,54 +54,54 @@ EOF
   tags = var.tags
 }
 
-resource "aws_iam_user" "argocd-common-backup-user" {
-  name          = "argocd-common-backup-user"
+resource "aws_iam_user" "argocd-internal-backup-user" {
+  name          = "argocd-internal-backup-user"
   path          = "/"
   force_destroy = false
   tags          = var.tags
   depends_on = [
-    aws_iam_policy.argocd-common-backup-s3
+    aws_iam_policy.argocd-internal-backup-s3
   ]
 }
 
-resource "aws_iam_access_key" "argocd-common-backup-user-access-key" {
-  user    = aws_iam_user.argocd-common-backup-user.name
+resource "aws_iam_access_key" "argocd-internal-backup-user-access-key" {
+  user    = aws_iam_user.argocd-internal-backup-user.name
   status  = "Active"
   pgp_key = ""
 }
 
-resource "aws_iam_user_policy_attachment" "argocd-common-backup-s3-attachment" {
-  user       = aws_iam_user.argocd-common-backup-user.name
-  policy_arn = "arn:aws:iam::009736724745:policy/argocd-common-backup-s3"
+resource "aws_iam_user_policy_attachment" "argocd-internal-backup-s3-attachment" {
+  user       = aws_iam_user.argocd-internal-backup-user.name
+  policy_arn = "arn:aws:iam::009736724745:policy/argocd-internal-backup-s3"
   depends_on = [
-    aws_iam_user.argocd-common-backup-user,
-    aws_iam_policy.argocd-common-backup-s3
+    aws_iam_user.argocd-internal-backup-user,
+    aws_iam_policy.argocd-internal-backup-s3
   ]
 }
 
 locals {
-  argocd-common-backup-user = {
+  argocd-internal-backup-user = {
     AWS_ACCESS_KEY_ID = element(
       concat(
-        aws_iam_access_key.argocd-common-backup-user-access-key.*.id,
+        aws_iam_access_key.argocd-internal-backup-user-access-key.*.id,
         [""],
       ),
       0
     )
-    AWS_SECRET_ACCESS_KEY = element(concat(aws_iam_access_key.argocd-common-backup-user-access-key.*.secret, [""]), 0)
+    AWS_SECRET_ACCESS_KEY = element(concat(aws_iam_access_key.argocd-internal-backup-user-access-key.*.secret, [""]), 0)
   }
 }
 
-resource "vault_generic_secret" "argocd-common-backup-user-vault-secret" {
-  path      = "secret/eticcprod/iam/argocd-common-backup-user"
-  data_json = jsonencode(local.argocd-common-backup-user)
+resource "vault_generic_secret" "argocd-internal-backup-user-vault-secret" {
+  path      = "secret/eticcprod/iam/argocd-internal-backup-user"
+  data_json = jsonencode(local.argocd-internal-backup-user)
 }
 
 
-resource "aws_iam_policy" "argocd-common-backup-s3-rw" {
-  name        = "argocd-common-backup-s3-rw"
+resource "aws_iam_policy" "argocd-internal-backup-s3-rw" {
+  name        = "argocd-internal-backup-s3-rw"
   path        = "/"
-  description = "S3 Read Write Policy for argocd-common-backup-s3-rw"
+  description = "S3 Read Write Policy for argocd-internal-backup-s3-rw"
 
   policy = <<EOF
 {
@@ -113,8 +113,8 @@ resource "aws_iam_policy" "argocd-common-backup-s3-rw" {
       ],
       "Effect": "Allow",
       "Resource": [
-        "arn:aws:s3:::cisco-eti-argocd-common-backup",
-        "arn:aws:s3:::cisco-eti-argocd-common-backup/*"
+        "arn:aws:s3:::cisco-eti-argocd-internal-backup",
+        "arn:aws:s3:::cisco-eti-argocd-internal-backup/*"
       ]
     }
   ]
@@ -126,8 +126,8 @@ EOF
   tags = {
     DataClassification = "CiscoConfidential"
     DataTaxonomy       = "CiscoOperationsData"
-    CiscoMailAlias     = "eti-sre_at_cisco_dot_com"
-    ApplicationName    = "eticloud-sre-iam"
+    CiscoMailAlias     = "eti-sre-admins@cisco.com"
+    ApplicationName    = "IAM"
     Environment        = "Prod"
     ResourceOwner      = "ETI SRE"
   }
