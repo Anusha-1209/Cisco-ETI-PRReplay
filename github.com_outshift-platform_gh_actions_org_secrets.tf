@@ -51,4 +51,8 @@ resource "github_actions_organization_secret" "dynamic" {
   secret_name      = each.key
   visibility       = "private"
   encrypted_value  = each.value
+
+  lifecycle {
+    ignore_changes = [ encrypted_value ]
+  }
 }
