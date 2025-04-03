@@ -80,7 +80,9 @@ resource "aws_iam_role" "role" {
     policy = data.aws_iam_policy_document.policy.json
   }
 
-  managed_policy_arns = []
+  managed_policy_arns = [
+    aws_iam_policy.portshift_sqs_policy.arn
+  ]
 }
 
 data "aws_iam_policy_document" "sqs_policy" {
@@ -91,7 +93,7 @@ data "aws_iam_policy_document" "sqs_policy" {
       "sqs:*"
     ]
     resources = [
-      "arn:aws:sqs:eu-central-1:975854676552:queue-eventsForwarderTopic-lightspin"
+      "arn:aws:sqs:eu-central-1:975854676552:queue-eventsForwarderTopic-eu-production"
     ]
   }
 }
