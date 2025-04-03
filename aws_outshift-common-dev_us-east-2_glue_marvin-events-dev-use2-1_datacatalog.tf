@@ -217,7 +217,7 @@ data "aws_vpc" "marvin-dev-use2-data" {
     values = ["marvin-dev-use2-data"]
   }
 }
-resource "aws_subnet" "main" {
+data "aws_subnet" "db" {
   vpc_id     = data.aws_vpc.marvin-dev-use2-data.id
 #  cidr_block = "10.0.1.0/24"
 
@@ -234,11 +234,8 @@ resource "aws_glue_connection" "example" {
     USERNAME            = "exampleusername"
   }
   physical_connection_requirements {
-#    availability_zone      = aws_subnet.example.availability_zone
     availability_zone      = data.aws_rds_cluster.marvin-dev-use2-1.availability_zones
     security_group_id_list = [data.aws_rds_cluster.marvin-dev-use2-1.vpc_security_group_ids]
-    subnet_id              = data.aws_vpc.marvin-dev-use2-data.
+    subnet_id              = data.aws_subnet.db.id
   }
 }
-
-// LINKERD fedramp
