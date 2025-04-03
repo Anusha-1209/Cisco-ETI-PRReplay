@@ -19,4 +19,12 @@ module "eks_all_in_one" {
   create_karpenter_irsa   = "false"
   create_alb_irsa         = "false"
   create_otel_irsa        = "false"
+
+  additional_aws_auth_configmap_roles = [
+      {
+        rolearn  = "arn:aws:iam::815522013822:role/devops",
+        username = "devops",
+        groups   = ["system:masters"]
+      }
+  ]
 }
