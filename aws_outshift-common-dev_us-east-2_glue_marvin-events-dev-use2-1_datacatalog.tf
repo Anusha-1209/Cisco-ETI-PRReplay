@@ -242,6 +242,34 @@ resource "aws_iam_role" "AWSGlueServiceRoleBatchProcessing" {
     ]
   })
 }
+resource "aws_iam_role_policy_attachment" "AWSGlueServiceRoleBatchProcessingEC2" {
+  role       = aws_iam_role.AWSGlueServiceRoleBatchProcessing.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+}
+resource "aws_iam_role_policy_attachment" "AWSGlueServiceRoleBatchProcessingRDSFDA" {
+  role       = aws_iam_role.AWSGlueServiceRoleBatchProcessing.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonRDSDataFullAccess"
+}
+resource "aws_iam_role_policy_attachment" "AWSGlueServiceRoleBatchProcessingS3" {
+  role       = aws_iam_role.AWSGlueServiceRoleBatchProcessing.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+}
+resource "aws_iam_role_policy_attachment" "AWSGlueServiceRoleBatchProcessingRDSFA" {
+  role       = aws_iam_role.AWSGlueServiceRoleBatchProcessing.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonRDSFullAccess"
+}
+resource "aws_iam_role_policy_attachment" "AWSGlueServiceRoleBatchProcessingGCFA" {
+  role       = aws_iam_role.AWSGlueServiceRoleBatchProcessing.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSGlueConsoleFullAccess"
+}
+resource "aws_iam_role_policy_attachment" "AWSGlueServiceRoleBatchProcessingGCSMN" {
+  role       = aws_iam_role.AWSGlueServiceRoleBatchProcessing.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSGlueConsoleSageMakerNotebookFullAccess"
+}
+resource "aws_iam_role_policy_attachment" "AWSGlueServiceRoleBatchProcessingCW" {
+  role       = aws_iam_role.AWSGlueServiceRoleBatchProcessing.name
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
+}
 
 data "aws_rds_cluster" "marvin-dev-use2-1" {
   cluster_identifier = "marvin-dev-use2-1"
