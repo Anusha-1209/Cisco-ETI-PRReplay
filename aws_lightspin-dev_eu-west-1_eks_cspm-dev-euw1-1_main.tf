@@ -42,19 +42,3 @@ module "eks_all_in_one" {
     # aws-ebs-csi-driver is not included to prevent installation
   }
 }
-module "eks-auth" {
-  source  = "terraform-aws-modules/eks/aws//modules/aws-auth"
-  version = "~> 20.0"
-
-  manage_aws_auth_configmap = true
-
-  aws_auth_roles = [
-    {
-      rolearn  = "arn:aws:iam::346196940956:role/devops",
-      username = "devops",
-      groups   = ["system:masters"]
-    }
-  ]
-
-  # depends_on = [null_resource.wait_for_eks]
-}
