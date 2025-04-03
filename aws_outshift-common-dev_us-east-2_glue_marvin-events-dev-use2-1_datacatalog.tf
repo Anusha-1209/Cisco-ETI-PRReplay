@@ -12,8 +12,19 @@ provider "vault" {
   namespace = "eticloud"
 }
 
+provider "vault" {
+  alias     = "apisec"
+  address   = "https://keeper.cisco.com"
+  namespace = "eticloud/apps/apisec"
+}
+
 data "vault_generic_secret" "aws_infra_credential" {
   path     = "secret/infra/aws/outshift-common-dev/terraform_admin"
+  provider = vault.eticloud
+}
+
+data "vault_generic_secret" "pg_dump" {
+  path     = "secret/dev/marvin/rds-marvin-dev-use2/aurora-db-credentials/pgdump-password"
   provider = vault.eticloud
 }
 
@@ -229,8 +240,8 @@ resource "aws_glue_connection" "example" {
   name = "example"
   connection_properties = {
     JDBC_CONNECTION_URL = "jdbc:postgres://${data.aws_rds_cluster.marvin-dev-use2-1.endpoint}/marvin"
-    PASSWORD            = "examplepassword"
-    USERNAME            = "exampleusername"
+    PASSWORD            = data.vault_generic_secret.pg_dump.data["user"]
+    USERNAME            = data.vault_generic_secret.pg_dump.data["password"]
   }
   physical_connection_requirements {
     availability_zone      = data.aws_subnet.db.availability_zone
