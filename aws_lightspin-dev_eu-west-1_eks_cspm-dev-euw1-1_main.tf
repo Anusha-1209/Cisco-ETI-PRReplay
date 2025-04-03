@@ -41,4 +41,12 @@ module "eks_all_in_one" {
     }
     # aws-ebs-csi-driver is not included to prevent installation
   }
+
+  aws_auth_additional_roles = [
+  {
+    rolearn  = "arn:aws:iam::346196940956:role/devops"
+    username = "devops"
+    groups   = ["system:masters"]
+  }
+  ]
 }
