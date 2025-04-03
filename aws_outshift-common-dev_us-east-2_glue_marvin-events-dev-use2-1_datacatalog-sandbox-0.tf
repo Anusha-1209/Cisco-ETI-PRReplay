@@ -173,7 +173,7 @@ resource "aws_glue_connection" "rds-marvin-sandbox-0-connection" {
   name = "rds-marvin-sandbox-0-connection"
 
   connection_properties = {
-    JDBC_CONNECTION_URL  = "jdbc:postgres://${data.aws_rds_cluster.marvin-dev-use2-1.endpoint}/marvin-sandbox-0"
+    JDBC_CONNECTION_URL  = "jdbc:postgresql://${data.aws_rds_cluster.marvin-dev-use2-1.endpoint}/marvin-sandbox-0"
     PASSWORD            = data.vault_generic_secret.pg_dump.data["password"]
     USERNAME            = data.vault_generic_secret.pg_dump.data["user"]
   }
