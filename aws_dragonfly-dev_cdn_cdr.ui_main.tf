@@ -112,7 +112,7 @@ module "acm" {
   source  = "terraform-aws-modules/acm/aws"
   version = "3.0.0"
   domain_name = local.cdn_domain_name
-  zone_id     = keys(module.zones.route53_zone_zone_id)[0]
+  zone_id     = aws_route53_zone.panoptica-dev-zone.zone_id
   subject_alternative_names = [local.cdn_domain_name]
   tags = {
     ApplicationName    = "dragonfly"
