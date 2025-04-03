@@ -1,11 +1,12 @@
 module "eks_all_in_one" {
-  source           = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=assume-role-chain"
-  name             = local.name             # EKS cluster name
-  region           = local.region           # AWS provider region
-  aws_account_name = local.eks_aws_account_name # AWS account name
-  cidr             = "10.0.0.0/16"          # VPC CIDR
-  private_subnet_bits = 2                  # Private subnet bits
-  cluster_version  = "1.29"                 # EKS cluster version
+  source                = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=assume-role-chain"
+  name                  = local.name                 # EKS cluster name
+  region                = local.region               # AWS provider region
+  aws_account_name      = local.eks_aws_account_name # AWS account name
+  cidr                  = "10.2.0.0/16"              # VPC CIDR
+  secondary_cidr_blocks = ["100.64.0.0/16"]
+  private_subnet_bits   = 4      # Private subnet bits
+  cluster_version       = "1.29" # EKS cluster version
 
   # EKS Managed Private Node Group
   instance_types = ["m6a.2xlarge"] # EKS instance types
