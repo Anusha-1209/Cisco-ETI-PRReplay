@@ -4,6 +4,8 @@ resource "aws_msk_configuration" "configuration" {
 
   server_properties = <<PROPERTIES
 auto.create.topics.enable = true
+log.retention.ms = 86400000
+num.partitions = 10
 PROPERTIES
 }
 
