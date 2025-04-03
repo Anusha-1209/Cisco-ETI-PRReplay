@@ -298,6 +298,7 @@ resource "aws_security_group" "marvin-dev-use2-data-glue" {
 resource "aws_vpc_security_group_ingress_rule" "allow_tcp_ipv4" {
   security_group_id = aws_security_group.marvin-dev-use2-data-glue.id
   cidr_ipv4         = data.aws_vpc.marvin-dev-use2-data.cidr_block
+  cidr_ipv6         = data.aws_vpc.marvin-dev-use2-data.ipv6_cidr_block
   from_port         = 0
   ip_protocol       = "tcp"
   to_port           = 65535
