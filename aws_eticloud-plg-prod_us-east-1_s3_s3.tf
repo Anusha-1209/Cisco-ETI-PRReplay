@@ -35,5 +35,5 @@ data "aws_iam_policy_document" "data_sync_from_cnapp_prod_account" {
 
 resource "aws_s3_bucket_policy" "data_sync_from_cnapp_prod_account" {
   bucket = data.aws_s3_bucket.outshift_product_analytics.id
-  policy = data.aws_iam_policy_document.allow_access_from_another_account.json
+  policy = data.aws_iam_policy_document.data_sync_from_cnapp_prod_account.json
 }
