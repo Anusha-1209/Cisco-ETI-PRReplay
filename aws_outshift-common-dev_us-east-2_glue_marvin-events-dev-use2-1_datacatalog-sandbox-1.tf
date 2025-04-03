@@ -168,3 +168,22 @@ resource "aws_glue_catalog_table" "aws_glue_catalog_marvin_sandbox_1_table" {
     }
   }
 }
+
+resource "aws_glue_connection" "rds-marvin-sandbox-1-connection" {
+  name = "rds-marvin-sandbox-1-connection"
+  connection_type = "CUSTOM"
+
+  connection_properties = {
+    CONNECTOR_CLASS_NAME = "org.postgresql.Driver"
+    CONNECTION_TYPE      = "Jdbc"
+    CONNECTOR_URL        = "s3://marvin-dev-use2-1-msk-s3-connectors/postgresql-42.6.2.jar"
+    JDBC_CONNECTION_URL  = "jdbc:postgres://${data.aws_rds_cluster.marvin-dev-use2-1.endpoint}/marvin-sandbox-1"
+    PASSWORD            = data.vault_generic_secret.pg_dump.data["user"]
+    USERNAME            = data.vault_generic_secret.pg_dump.data["password"]
+  }
+  physical_connection_requirements {
+    availability_zone      = data.aws_subnet.marvin-dev-use2-1.availability_zone
+    security_group_id_list = data.aws_rds_cluster.marvin-dev-use2-1.vpc_security_group_ids
+    subnet_id              = data.aws_subnet.marvin-dev-use2-1.id
+  }
+}

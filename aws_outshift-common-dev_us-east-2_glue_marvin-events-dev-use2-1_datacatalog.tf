@@ -228,7 +228,7 @@ data "aws_vpc" "marvin-dev-use2-data" {
     values = ["marvin-dev-use2-data"]
   }
 }
-data "aws_subnet" "db" {
+data "aws_subnet" "marvin-dev-use2-1" {
   vpc_id     = data.aws_vpc.marvin-dev-use2-data.id
 
   tags = {
@@ -236,8 +236,8 @@ data "aws_subnet" "db" {
   }
 }
 
-resource "aws_glue_connection" "example" {
-  name = "example"
+resource "aws_glue_connection" "rds-marvin-connection" {
+  name = "rds-marvin=connection"
   connection_type = "CUSTOM"
 
   connection_properties = {
@@ -249,8 +249,9 @@ resource "aws_glue_connection" "example" {
     USERNAME            = data.vault_generic_secret.pg_dump.data["password"]
   }
   physical_connection_requirements {
-    availability_zone      = data.aws_subnet.db.availability_zone
+    availability_zone      = data.aws_subnet.marvin-dev-use2-1.availability_zone
     security_group_id_list = data.aws_rds_cluster.marvin-dev-use2-1.vpc_security_group_ids
-    subnet_id              = data.aws_subnet.db.id
+    subnet_id              = data.aws_subnet.marvin-dev-use2-1.id
   }
 }
+
