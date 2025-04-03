@@ -38,7 +38,7 @@ provider "aws" {
 module "vpc" {
   source                          = "git::https://github.com/cisco-eti/sre-tf-module-aws-vpc?ref=2.0.6"
   region                          = "us-east-2"
-  vpc_cidr                        = "10.12.0.0/16"
+  vpc_cidr                        = "10.34.0.0/16"
   vpc_name                        = "motf-mm-dev-1-vpc"
   cluster_name                    = "vowel-dev-1"
   create_database_subnet_group    = true
