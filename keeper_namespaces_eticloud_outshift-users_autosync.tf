@@ -21,14 +21,15 @@ locals {
   ]
 
   gpt4o_kv_paths = [
-    "bugbash",
+    "genai"
+  ]
+  gpt4o-mini_kv_paths = [
     "genai"
   ]
 
   datasources_sharepoint_outshiftgenai_kv_paths = [
     "csm",
-    "bugbash",
-    "genai"
+    "bugbash"
   ]
 
   datasources_sharepoint_ciscoeticloud_api_motific_rag_user_kv_paths = [
@@ -60,7 +61,10 @@ data "vault_generic_secret" "autosync_llms_azure_openai_gpt4o" {
   path = "autosync/llms/azure/openai/gpt4o"
   provider = vault.venture
 }
-
+data "vault_generic_secret" "autosync_llms_azure_openai_gpt4o-mini" {
+  path = "autosync/llms/azure/openai/gpt4o-mini"
+  provider = vault.venture
+}
 data "vault_generic_secret" "autosync_datasources_sharepoint_outshiftgenai" {
   path = "autosync/datasources/sharepoint/OutshiftGenAI"
   provider = vault.venture
@@ -101,7 +105,12 @@ resource "vault_generic_secret" "llms_azure_openai_gpt4o" {
   data_json = data.vault_generic_secret.autosync_llms_azure_openai_gpt4o.data_json
   path = "${each.value}/llms/azure/openai/gpt4o"
 }
-
+resource "vault_generic_secret" "llms_azure_openai_gpt4o-mini" {
+  for_each = toset(local.gpt4o-mini_kv_paths)
+  provider = vault.venture
+  data_json = data.vault_generic_secret.autosync_llms_azure_openai_gpt4o-mini.data_json
+  path = "${each.value}/llms/azure/openai/gpt4o-mini"
+}
 resource "vault_generic_secret" "datasources_sharepoint_outshiftgenai" {
   for_each = toset(local.datasources_sharepoint_outshiftgenai_kv_paths)
   provider = vault.venture
