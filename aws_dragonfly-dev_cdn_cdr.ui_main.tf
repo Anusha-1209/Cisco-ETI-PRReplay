@@ -96,6 +96,7 @@ module "records" {
   source  = "terraform-aws-modules/route53/aws//modules/records"
   version = "4.0.0"
   zone_id = keys(module.zones.route53_zone_zone_id)[0]
+  create  = true
   records = [
     {
       name = "cdr-ui"
@@ -133,8 +134,6 @@ module "acm" {
 #############
 
 data "aws_canonical_user_id" "current" {}
-data "aws_cloudfront_log_delivery_canonical_user_id" "cloudfront" {}
-
 module "dev_log_bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws"
   version = "4.1.1"
@@ -147,7 +146,7 @@ module "dev_log_bucket" {
     }, {
     type        = "CanonicalUser"
     permission  = "FULL_CONTROL"
-    id          = data.aws_cloudfront_log_delivery_canonical_user_id.cloudfront.id
+    id          = "c4c1ede66af53448b93c283ce9448c4ba468c9432aa01d700d3878632f77d2d0"
     # Ref. https://github.com/terraform-providers/terraform-provider-aws/issues/12512
     # Ref. https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
   }]
