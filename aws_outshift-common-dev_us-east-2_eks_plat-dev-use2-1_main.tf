@@ -1,7 +1,6 @@
 # This file was created by Outshift Platform Self-Service automation.
 module "eks_all_in_one" {
   source                 = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=latest"
-  provider               = aws.eks
   name                   = local.name            # EKS cluster name
   region                 = local.region          # AWS provider region
   aws_account_name       = local.eks_aws_account # AWS account name
