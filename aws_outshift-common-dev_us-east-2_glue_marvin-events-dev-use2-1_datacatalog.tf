@@ -309,6 +309,7 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
   ip_protocol       = "-1" # semantically equivalent to all ports
 }
 
+
 resource "aws_glue_connection" "rds-marvin-connection" {
   name = "rds-marvin-connection"
 
@@ -316,6 +317,9 @@ resource "aws_glue_connection" "rds-marvin-connection" {
     JDBC_CONNECTION_URL  = "jdbc:postgresql://${data.aws_rds_cluster.marvin-dev-use2-1.endpoint}:5432/marvin"
     PASSWORD            = data.vault_generic_secret.pg_dump.data["password"]
     USERNAME            = data.vault_generic_secret.pg_dump.data["user"]
+    JDBC_DRIVER_JAR_URI        = "s3://marvin-dev-use2-1-msk-s3-connectors/postgresql-42.6.2.jar"
+    JDBC_DRIVER_CLASS_NAME = "org.postgresql.Driver"
+
   }
   physical_connection_requirements {
     availability_zone      = data.aws_subnet.marvin-dev-use2-1.availability_zone
@@ -323,4 +327,3 @@ resource "aws_glue_connection" "rds-marvin-connection" {
     subnet_id              = data.aws_subnet.marvin-dev-use2-1.id
   }
 }
-
