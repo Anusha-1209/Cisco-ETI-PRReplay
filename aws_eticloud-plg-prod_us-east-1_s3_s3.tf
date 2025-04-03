@@ -3,6 +3,10 @@ import {
   id = "outshift-product-analytics-s3-bucket"
 }
 
+data "aws_s3_bucket" "outshift_product_analytics" {
+  bucket = "outshift-product-analytics-s3-bucket"
+}
+
 data "aws_iam_policy_document" "data_sync_from_cnapp_prod_account" {
   statement {
     principals {
@@ -23,13 +27,13 @@ data "aws_iam_policy_document" "data_sync_from_cnapp_prod_account" {
     ]
 
     resources = [
-      aws_s3_bucket.outshift_product_analytics.arn,
-      "${aws_s3_bucket.outshift_product_analytics.arn}/Rosey/*",
+      data.aws_s3_bucket.outshift_product_analytics.arn,
+      "${data.aws_s3_bucket.outshift_product_analytics.arn}/Rosey/*",
     ]
   }
 }
 
 resource "aws_s3_bucket_policy" "data_sync_from_cnapp_prod_account" {
-  bucket = aws_s3_bucket.outshift_product_analytics.id
+  bucket = data.aws_s3_bucket.outshift_product_analytics.id
   policy = data.aws_iam_policy_document.allow_access_from_another_account.json
 }
