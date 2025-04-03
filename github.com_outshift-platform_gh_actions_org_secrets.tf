@@ -3,17 +3,22 @@ data "vault_generic_secret" "gha_ci_secrets" {
   path     = "ci/gha/gh-actions"
 }
 
+data "vault_generic_secret" "GHCR_TOKEN" {
+  provider = vault.eticloud
+  path     = "ci/gha/GHCR_TOKEN"
+}
+
 data "github_actions_organization_public_key" "gha_org_public_key" {
 }
 
 data "sodium_encrypted_item" "GHCR_TOKEN" {
   public_key_base64 = data.github_actions_organization_public_key.gha_org_public_key.key
-  content_base64 = base64encode(data.vault_generic_secret.generic_user_gh_token.data["GHA_GHCR_TOKEN"])
+  content_base64 = base64encode(data.vault_generic_secret.GHCR_TOKEN.data["PAT"])
 }
 
 data "sodium_encrypted_item" "GHCR_USERNAME" {
   public_key_base64 = data.github_actions_organization_public_key.gha_org_public_key.key
-  content_base64 = base64encode(data.vault_generic_secret.gha_ci_secrets.data["GHEC_USERNAME"])
+  content_base64 = base64encode(data.vault_generic_secret.GHCR_TOKEN.data["GHEC_USERNAME"])
 }
 
 data "sodium_encrypted_item" "VAULT_APPROLE_ROLE_ID" {
