@@ -22,19 +22,6 @@ module "eks_all_in_one" {
   create_ebs_csi_irsa = true 
   create_efs_csi_irsa = true 
 
-
-  additional_aws_auth_configmap_roles = [
-      {
-        rolearn  = "arn:aws:iam::346196940956:user/terraform_admin",
-        username = "terraform_admin",
-        groups   = ["system:masters"]
-      }
-      , {
-        rolearn  = "arn:aws:iam::346196940956:role/devops",
-        username = "devops",
-        groups   = ["system:masters"]
-      }
-      ]
   cluster_addons = {
     coredns = {
       most_recent = true
@@ -54,4 +41,24 @@ module "eks_all_in_one" {
     }
     # aws-ebs-csi-driver is not included to prevent installation
   }
+}
+module "eks-auth" {
+  source  = "terraform-aws-modules/eks/aws//modules/aws-auth"
+  version = "~> 20.0"
+
+  manage_aws_auth_configmap = true
+
+  aws_auth_roles = [
+    {
+      rolearn  = "arn:aws:iam::346196940956:user/terraform_admin",
+      username = "terraform_admin",
+      groups   = ["system:masters"]
+    }
+    , {
+      rolearn  = "arn:aws:iam::346196940956:role/devops",
+      username = "devops",
+      groups   = ["system:masters"]
+    }
+  ]
+  # depends_on = [null_resource.wait_for_eks]
 }
