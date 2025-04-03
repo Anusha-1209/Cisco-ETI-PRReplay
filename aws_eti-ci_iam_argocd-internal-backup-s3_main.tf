@@ -35,7 +35,8 @@ resource "aws_iam_policy" "argocd-internal-backup-s3" {
                 "s3:PutStorageLensConfiguration",
                 "s3:ListMultiRegionAccessPoints",
                 "s3:CreateJob",
-                "s3:PutObject"
+                "s3:PutObject",
+                "s3:PutPublicAccessBlock"
             ],
             "Resource": "*"
         },
@@ -82,14 +83,14 @@ resource "aws_iam_user_policy_attachment" "argocd-internal-backup-s3-attachment"
 
 locals {
   argocd-internal-backup-user = {
-    "aws.access.key.id" = element(
+    "access_key" = element(
       concat(
         aws_iam_access_key.argocd-internal-backup-user-access-key.*.id,
         [""],
       ),
       0
     )
-    "aws.secret.access.key" = element(concat(aws_iam_access_key.argocd-internal-backup-user-access-key.*.secret, [""]), 0)
+    "secret_key" = element(concat(aws_iam_access_key.argocd-internal-backup-user-access-key.*.secret, [""]), 0)
   }
 }
 
