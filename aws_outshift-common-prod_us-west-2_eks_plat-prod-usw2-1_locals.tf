@@ -4,5 +4,5 @@ locals {
   region          = "us-west-2"
   eks_aws_account = "outshift-common-prod"
   vpc_cidr        = "10.200.0.0/16"
-  account_id      = data.aws_caller_identity.current.account_id
+  account_id      = "058264538874"
 }
