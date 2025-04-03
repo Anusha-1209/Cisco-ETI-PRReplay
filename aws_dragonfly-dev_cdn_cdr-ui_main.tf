@@ -65,14 +65,14 @@ module "cdr-ui-dev-cloudfront" {
     ResourceOwner      = "ETI SRE"
   }
   
-  viewer_certificate = {
-    acm_certificate_arn      = module.acm.acm_certificate_arn
-    ssl_support_method       = "sni-only"
-    minimum_protocol_version = "TLSv1.2_2021"
-  }
-  depends_on = [
-    module.acm
-  ]
+  # viewer_certificate = {
+  #   acm_certificate_arn      = module.acm.acm_certificate_arn
+  #   ssl_support_method       = "sni-only"
+  #   minimum_protocol_version = "TLSv1.2_2021"
+  # }
+  # depends_on = [
+  #   module.acm
+  # ]
 }
 
 #############
