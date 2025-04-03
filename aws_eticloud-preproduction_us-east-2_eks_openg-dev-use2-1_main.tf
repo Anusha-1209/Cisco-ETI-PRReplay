@@ -12,11 +12,11 @@ module "eks_all_in_one" {
   # EKS Managed Private Node Group
   instance_types          = ["m6a.2xlarge"]
   ami_type                = "CISCO_HARDENED_AL2"
-  skip_cisco_hardened_ami = "false"
-  min_size                = "3"
-  max_size                = "3"
-  desired_size            = "3"
-  create_karpenter_irsa   = "true"
-  create_alb_irsa         = "true"
-  create_otel_irsa        = "true"
+  skip_cisco_hardened_ami = false
+  min_size                = 3
+  max_size                = 3
+  desired_size            = 3
+  create_karpenter_irsa   = true
+  create_alb_irsa         = true
+  create_otel_irsa        = true
 }
