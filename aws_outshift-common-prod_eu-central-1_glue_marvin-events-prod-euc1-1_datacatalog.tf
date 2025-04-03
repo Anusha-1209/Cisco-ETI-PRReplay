@@ -246,7 +246,7 @@ data "aws_subnet" "marvin-prod-euc1-1" {
   vpc_id     = data.aws_vpc.marvin-prod-euc1-data.id
 
   tags = {
-    Name = "marvin-prod-euc1-data-db-us-east-2a"
+    Name = "marvin-prod-euc1-data-db-eu-central-2a"
   }
 }
 
