@@ -16,10 +16,3 @@ module "eks_all_in_one" {
   # Karpenter
   create_karpenter_irsa = true # Create Karpenter IRSA
 }
-
-
-# Instance profile for legacy karpenter
-resource "aws_iam_instance_profile" "ip" {
-  name = "KarpenterNodeInstanceProfile-${local.name}"
-  role = "KarpenterNodeRole-${local.name}"
-}
