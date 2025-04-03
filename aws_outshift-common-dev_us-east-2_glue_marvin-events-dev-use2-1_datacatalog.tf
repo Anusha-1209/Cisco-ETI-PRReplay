@@ -25,7 +25,7 @@ data "vault_generic_secret" "aws_infra_credential" {
 
 data "vault_generic_secret" "pg_dump" {
   path     = "secret/dev/marvin/rds-marvin-dev-use2/aurora-db-credentials/pgdump-password"
-  provider = vault.eticloud
+  provider = vault.apisec
 }
 
 provider "aws" {
