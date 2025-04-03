@@ -290,8 +290,8 @@ data "aws_subnet" "marvin-dev-use2-1" {
 }
 
 resource "aws_security_group" "marvin-dev-use2-data-glue" {
-  name        = "allow_tcp"
-  description = "Allow TCO inbound traffic and all outbound traffic"
+  name        = "marvin-dev-use2-data-glue"
+  description = "Allow TCP inbound traffic and all outbound traffic"
   vpc_id      = data.aws_vpc.marvin-dev-use2-data.id
 }
 
