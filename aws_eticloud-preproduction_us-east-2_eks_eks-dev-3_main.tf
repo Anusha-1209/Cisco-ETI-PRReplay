@@ -31,7 +31,7 @@ resource "aws_eks_cluster" "eks-dev-3-13e" {
     EnvironmentName    = "NonProd"
     ResourceOwner      = "ETI SRE"
   }
-  version = "1.27"
+  version = "1.28"
   vpc_config {
     endpoint_private_access = true
     public_access_cidrs     = ["0.0.0.0/0"]
