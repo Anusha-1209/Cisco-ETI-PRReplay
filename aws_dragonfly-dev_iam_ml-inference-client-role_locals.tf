@@ -11,5 +11,8 @@ locals {
   dragonfly_msk_cluster_name = "dragonfly-msk-1"
 
   dragonfly_backend_namespace = "dragonfly-backend"
-  service_account             = "${local.dragonfly_backend_namespace}:dragonfly-ml-inferenceclient-a-dev-app"
+  service_accounts            = [
+    "system:serviceaccount:${local.dragonfly_backend_namespace}:dragonfly-ml-inferenceclient-a-dev-app",
+    "system:serviceaccount:${local.dragonfly_backend_namespace}:dragonfly-ml-inferenceclient",
+  ]
 }
