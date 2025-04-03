@@ -11,18 +11,18 @@ provider "aws" {
   max_retries = 3
 }
 
-# module "argocd" {
-#   source            = "git::https://github.com/cisco-eti/sre-tf-module-argo-cluster-enrollment?ref=0.1.1"
-#   eks_cluster_name  = local.name
-#   eks_cluster_host  = data.aws_eks_cluster.eks.endpoint
-#   eks_cluster_ca    = data.aws_eks_cluster.eks.certificate_authority[0].data
-#   eks_cluster_token = data.aws_eks_cluster_auth.eks.token
+module "argocd" {
+  source            = "git::https://github.com/cisco-eti/sre-tf-module-argo-cluster-enrollment?ref=0.1.1"
+  eks_cluster_name  = local.name
+  eks_cluster_host  = data.aws_eks_cluster.eks.endpoint
+  eks_cluster_ca    = data.aws_eks_cluster.eks.certificate_authority[0].data
+  eks_cluster_token = data.aws_eks_cluster_auth.eks.token
 
-#   argocd_cluster_host  = data.aws_eks_cluster.argocd.endpoint
-#   argocd_cluster_token = data.aws_eks_cluster_auth.argocd.token
-#   argocd_cluster_ca    = data.aws_eks_cluster.argocd.certificate_authority[0].data
-#   providers = {
-#     aws.eks    = aws.eks
-#     aws.argocd = aws.argocd
-#   }
-# }
+  argocd_cluster_host  = data.aws_eks_cluster.argocd.endpoint
+  argocd_cluster_token = data.aws_eks_cluster_auth.argocd.token
+  argocd_cluster_ca    = data.aws_eks_cluster.argocd.certificate_authority[0].data
+  providers = {
+    aws.eks    = aws.eks
+    aws.argocd = aws.argocd
+  }
+}
