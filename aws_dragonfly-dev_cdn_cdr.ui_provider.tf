@@ -21,7 +21,7 @@ data "vault_generic_secret" "aws_infra_credential" {
 
 variable "AWS_INFRA_REGION" {
   description = "AWS Region"
-  default     = "us-east-2"
+  default     = "us-east-1"
 }
 
 provider "aws" {
