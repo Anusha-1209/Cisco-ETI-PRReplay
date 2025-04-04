@@ -22,5 +22,5 @@ provider "vault" {
 
 data "vault_generic_secret" "aws_infra_credential" {
   provider = vault.eticloud_eticcprod
-  path     = "secret/infra/aws/eticloud/terraform_admin"
+  path     = "secret/infra/aws/eticloud-preprod/terraform_admin"
 }
