@@ -120,6 +120,7 @@ resource "vault_jwt_auth_backend_role" "developer" {
 # Define a map of policy names to filenames
 locals {
   policies = {
+    "default"                               = "policies/default.hcl",
     "developer"                             = "policies/developer.hcl",
     "admin"                                 = "policies/admin.hcl",
     "external-secrets-dev"                  = "policies/external-secrets-dev.hcl",
@@ -129,8 +130,7 @@ locals {
     "external-secrets-cnapp-staging-euc1-1" = "policies/external-secrets-cnapp-staging-euc1-1.hcl",
     "external-secrets-cnapp-staging-use2-1" = "policies/external-secrets-cnapp-staging-use2-1.hcl",
     "external-secrets-cnapp-prod-euc1-1"    = "policies/external-secrets-cnapp-prod-euc1-1.hcl",
-    "external-secrets-cnapp-prod-use2-1"    = "policies/external-secrets-cnapp-prod-use2-1.hcl",
-    "default"                               = "policies/default.hcl",
+    "external-secrets-cnapp-prod-use2-1"    = "policies/external-secrets-cnapp-prod-use2-1.hcl"
   }
 }
 
