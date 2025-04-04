@@ -21,5 +21,5 @@ module "genie_dev_documentdb_cluster" {
   vpc_data_name         = "common-dev-use2-vpc-data"
   vpc_eks_name          = "comn-dev-use2-1"
   venture_namespace     = "genie"
-  secret_path           = "secret/dev"
+  secret_path           = "secret/dev/documentDB"
 }
