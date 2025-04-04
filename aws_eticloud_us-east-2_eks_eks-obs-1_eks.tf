@@ -43,7 +43,7 @@ module "eks" {
   source       = "git::https://github.com/cisco-eti/sre-tf-module-aws-eks?ref=1.6.0"
   cluster_name = "eks-obs-1" #The name of the cluster.
   #cluster_version and cluster_os combine get the AMI for the worker nodes.
-  cluster_version = "1.22"         #The version of the control plane.
+  cluster_version = "1.29"         #The version of the control plane.
   cluster_os      = "AmazonLinux2" #Current options are "Ubuntu20" and "AmazonLinux2".
   vpc_name        = "eks-obs-1"    #The name of the VPC where the cluster should live.
   # Private Node group options
