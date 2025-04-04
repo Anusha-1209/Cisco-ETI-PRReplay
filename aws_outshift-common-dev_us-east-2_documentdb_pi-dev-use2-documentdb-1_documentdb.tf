@@ -7,7 +7,7 @@ terraform {
 }
 
 module "ppu_dev_documentdb_cluster" {
-  source            = "git::https://github.com/cisco-eti/sre-tf-module-aws-documentdb?ref=develop"
+  source            = "git::https://github.com/cisco-eti/sre-tf-module-aws-documentdb?ref=1.0.0"
   account_name      = "outshift-common-dev" # id 471112537430
   application_name  = "pi-dev-use2-documentdb-1"
   environment       = "dev"
