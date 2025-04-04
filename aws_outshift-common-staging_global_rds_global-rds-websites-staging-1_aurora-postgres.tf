@@ -14,6 +14,11 @@ resource "aws_rds_global_cluster" "rds_global" {
   force_destroy                = true
   source_db_cluster_identifier = module.rds_primary.cluster_arn
   depends_on                   = [module.rds_primary]
+  lifecycle {
+    ignore_changes = [
+      database_name,  
+    ]
+  }
 }
 
 resource "aws_kms_key" "primary" {
