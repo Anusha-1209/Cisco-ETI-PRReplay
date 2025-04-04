@@ -21,6 +21,10 @@ module "ecr-access-common" {
       oidc-url = "https://oidc.eks.us-east-2.amazonaws.com/id/5212D47604AC8A5C7DE4CCD518C8E481" # Cluster eks-dev-gitops-1
       oidc-thumbprint = "9e99a48a9960b14926bb7f3b02e22da2b0ab7280"
     },
+    {
+      oidc-url = "https://oidc.eks.us-east-2.amazonaws.com/id/2AE4FE86091716D60E100A7712615F27" # Cluster eks-gitops-1
+      oidc-thumbprint = "9e99a48a9960b14926bb7f3b02e22da2b0ab7280"
+    },
   ]
   
 }
