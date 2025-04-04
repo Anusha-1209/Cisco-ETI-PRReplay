@@ -62,7 +62,7 @@ module "rds_secondary" {
   # instances                 = {}
   cluster_name              = "global-rds-genie-prod-usw2-1"
   kms_key_id                = aws_kms_replica_key.secondary.arn
-  secret_path               = "secret/prod/infra/aurora-pg/us-west-2/outshift-common-prod/global-rds-iam-prod-usw2-1"
+  secret_path               = "secret/prod/infra/aurora-pg/us-west-2/outshift-common-prod/global-rds-genie-prod-usw2-1"
   db_engine_version         = "15.4"
   db_allowed_cidrs          = [ data.aws_vpc.eks_primary_vpc.cidr_block, data.aws_vpc.eks_secondary_vpc.cidr_block ]
 
