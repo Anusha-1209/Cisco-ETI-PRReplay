@@ -15,8 +15,8 @@ provider "aws" {
   region     = "us-east-2"
 }
 
-resource "aws_iam_policy" "aws_pi_dev_triton_s3_policy" {
-  name        = "pi-dev-triton-s3-policy"
+resource "aws_iam_policy" "aws_mm_testset_s3_policy" {
+  name        = "mm-testset-s3-policy"
   description = "AWS motific unified plugins Role IAM Policy"
   policy = jsonencode({
     Version = "2012-10-17",
@@ -28,7 +28,7 @@ resource "aws_iam_policy" "aws_pi_dev_triton_s3_policy" {
           "sts:AssumeRoleWithWebIdentity"
         ],
         Resource = [
-          "arn:aws:iam::961088030672:role/pi-dev-triton-s3-role"
+          "arn:aws:iam::961088030672:role/mm-testset-s3-role"
         ]
       },
       {
@@ -43,8 +43,8 @@ resource "aws_iam_policy" "aws_pi_dev_triton_s3_policy" {
   })
 }
 
-resource "aws_iam_role" "aws_pi_dev_triton_s3_role" {
-  name = "pi-dev-triton-s3-role"
+resource "aws_iam_role" "aws_mm_testset_s3_role" {
+  name = "mm-testset-s3-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -52,13 +52,12 @@ resource "aws_iam_role" "aws_pi_dev_triton_s3_role" {
       {
         Effect = "Allow"
         Principal = {
-          Federated = "arn:aws:iam::961088030672:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/428BED16838229317784F16BFC14546E"
+          Federated = "arn:aws:iam::961088030672:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6"
         }
         Action = "sts:AssumeRoleWithWebIdentity"
         Condition = {
           StringEquals = {
-            "oidc.eks.us-east-2.amazonaws.com/id/428BED16838229317784F16BFC14546E:aud" = "sts.amazonaws.com"
-            "oidc.eks.us-east-2.amazonaws.com/id/428BED16838229317784F16BFC14546E:sub" = "system:serviceaccount:ppu-dev:triton-s3-sa"
+            "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:aud" = "sts.amazonaws.com"
           }
         }
       },
@@ -66,13 +65,12 @@ resource "aws_iam_role" "aws_pi_dev_triton_s3_role" {
         Action    = "sts:AssumeRoleWithWebIdentity"
         Condition = {
             StringEquals = {
-                "oidc.eks.us-east-2.amazonaws.com/id/428BED16838229317784F16BFC14546E:aud" = "sts.amazonaws.com"
-                "oidc.eks.us-east-2.amazonaws.com/id/428BED16838229317784F16BFC14546E:sub" = "system:serviceaccount:ppu-test:triton-s3-sa"
+                "oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6:aud" = "sts.amazonaws.com"
               }
           }
         Effect    = "Allow"
         Principal = {
-            Federated = "arn:aws:iam::961088030672:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/428BED16838229317784F16BFC14546E"
+            Federated = "arn:aws:iam::961088030672:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/849169A185E9E37DE274BF7BC92232A6"
           }
       }
     ]
@@ -81,7 +79,7 @@ resource "aws_iam_role" "aws_pi_dev_triton_s3_role" {
   force_detach_policies = false
 }
 
-resource "aws_iam_role_policy_attachment" "aws_pi_dev_triton_s3_policy_attachment" {
-  role       = aws_iam_role.aws_pi_dev_triton_s3_role.name
-  policy_arn = aws_iam_policy.aws_pi_dev_triton_s3_policy.arn
+resource "aws_iam_role_policy_attachment" "aws_mm_testset_s3_policy_attachment" {
+  role       = aws_iam_role.aws_mm_testset_s3_role.name
+  policy_arn = aws_iam_policy.aws_mm_testset_s3_policy.arn
 }
