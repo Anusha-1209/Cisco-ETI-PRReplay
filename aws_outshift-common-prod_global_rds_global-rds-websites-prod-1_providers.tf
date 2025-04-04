@@ -18,7 +18,7 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = "outshift_foundational_services"
+      ApplicationName    = "websites"
       Component          = "websites"
       ResourceOwner      = "websites"
       CiscoMailAlias     = "websites@cisco.com"
