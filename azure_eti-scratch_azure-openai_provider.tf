@@ -22,7 +22,7 @@ provider "vault" {
 }
 
 provider "azurerm" {
-  subscription_id = "a24f7eab-1920-42f7-9d33-9fb98a311c22"
+  subscription_id = "a24f7eab-1920-42f7-9d33-9fb98a311c22" # eti-scratch Azure subscription
   client_id       = data.vault_generic_secret.azure_infra_credential.data["appId"]
   client_secret   = data.vault_generic_secret.azure_infra_credential.data["password"]
   tenant_id       = data.vault_generic_secret.azure_infra_credential.data["tenant"]
