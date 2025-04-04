@@ -39,13 +39,12 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = "outshift_common_services"
-      Component          = "genie"
+      ApplicationName    = "pi-prod-use2-data-vpc"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
       EnvironmentName    = "Prod"
-      ResourceOwner      = "genie"
+      ResourceOwner      = "Outshift SRE"
     }
   }
 }
