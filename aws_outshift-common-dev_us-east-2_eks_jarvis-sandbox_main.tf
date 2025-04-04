@@ -32,7 +32,4 @@ module "eks_all_in_one" {
       groups   = ["system:masters"]
     }
   ]
-  providers = {
-    aws = aws.eks
-  }
 }
