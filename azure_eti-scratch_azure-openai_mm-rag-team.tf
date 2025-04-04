@@ -1,6 +1,6 @@
 locals {
   mm-rag-team   = "mm-rag-team"
-  region = "eastus"
+  #region = "eastus"
   ai-team-tags = {
     ApplicationName    = "ai-team"
     ComponentName      = "mm-rag-team"
