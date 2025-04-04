@@ -44,6 +44,11 @@ module "rds_primary" {
   secret_path       = "secret/prod/infra/aurora-pg/us-east-2/outshift-common-prod/global-rds-platform-prod-use2-1"
   db_engine_version = "15.4"
   db_allowed_cidrs  = [ data.aws_vpc.eks_primary_vpc.cidr_block, data.aws_vpc.eks_secondary_vpc.cidr_block ]
+  lifecycle {
+    ignore_changes = [
+      database_name,  
+    ]
+  }
 }
 
 # Secondary region us-east-2
@@ -67,4 +72,9 @@ module "rds_secondary" {
   db_allowed_cidrs          = [ data.aws_vpc.eks_primary_vpc.cidr_block, data.aws_vpc.eks_secondary_vpc.cidr_block ]
 
   depends_on = [module.rds_primary]
+  lifecycle {
+    ignore_changes = [
+      database_name,  
+    ]
+  }
 }

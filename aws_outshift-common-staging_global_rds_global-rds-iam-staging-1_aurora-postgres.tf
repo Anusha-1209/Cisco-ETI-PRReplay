@@ -44,6 +44,11 @@ module "rds_primary" {
   db_engine_version = "15.4"
   db_allowed_cidrs  = [ data.aws_vpc.eks_primary_vpc.cidr_block, data.aws_vpc.eks_secondary_vpc.cidr_block ]
   skip_final_snapshot       = true
+  lifecycle {
+    ignore_changes = [
+      database_name,  
+    ]
+  }
 }
 
 # Secondary region us-east-2
@@ -68,4 +73,9 @@ module "rds_secondary" {
   skip_final_snapshot       = true
 
   depends_on = [module.rds_primary]
+  lifecycle {
+    ignore_changes = [
+      database_name,  
+    ]
+  }
 }
