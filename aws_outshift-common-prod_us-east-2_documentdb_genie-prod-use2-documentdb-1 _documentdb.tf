@@ -9,6 +9,7 @@ terraform {
 module "genie_prod_documentdb_cluster" {
   source                = "git::https://github.com/cisco-eti/sre-tf-module-aws-documentdb?ref=1.0.1"
   account_name          = "outshift-common-prod"
+  cluster_identifier    = "genie-prod-use2-documentdb-1"
   application_name_tag  = "outshift_common_services"
   component_tag         = "genie"
   resource_owner_tag    = "genie"
