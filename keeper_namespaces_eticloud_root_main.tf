@@ -113,6 +113,25 @@ path "k8s/*"
 EOT
 }
 
+resource "vault_policy" "backstage-developer" {
+  name   = "backstage-developer"
+  policy = <<EOT
+path "secret/project/backstage/dev/*"
+{
+  capabilities = ["create", "read", "update", "list"]
+}
+path "secret/data/project/backstage/dev/*"
+{
+  capabilities = ["create", "read", "update", "list"]
+}
+path "secret/*"
+{
+  capabilities = ["list"]
+}
+
+EOT
+}
+
 resource "vault_jwt_auth_backend_role" "vault_admin" {
   depends_on                   = [ vault_policy.vault-admin ]
   provider                     = vault.eticloud
@@ -139,5 +158,34 @@ resource "vault_jwt_auth_backend_role" "vault_admin" {
   oidc_scopes                  = ["profile", "email", "openid"]
   user_claim                   = "sub"
   token_policies               = ["vault-admin"]
+
+}
+
+resource "vault_jwt_auth_backend_role" "backstage-developer" {
+  depends_on                   = [ vault_policy.backstage-developer ]
+  provider                     = vault.eticloud
+  role_name                    = "backstage-developer"
+  role_type                    = "oidc"
+  backend                      = vault_jwt_auth_backend.oidc.path
+  allowed_redirect_uris        = ["https://keeper.cisco.com/ui/vault/auth/oidc/oidc/callback",
+                                  "https://east.keeper.cisco.com/ui/vault/auth/oidc/oidc/callback",
+                                  "https://west.keeper.cisco.com/ui/vault/auth/oidc/oidc/callback",
+                                  "http://localhost:8250/oidc/callback"]
+  bound_audiences              = [var.oidc_client_id]
+  bound_claims = {
+    memberof = "CN=outshift-backstage-developers,OU=Cisco Groups,DC=cisco,DC=com"
+  }
+  disable_bound_claims_parsing = true
+  bound_claims_type            = "string"
+  claim_mappings = {
+    email       = "email",
+    family_name = "family_name",
+    given_name  = "given_name",
+    sub         = "sub"
+  }
+  groups_claim                 = "memberof"
+  oidc_scopes                  = ["profile", "email", "openid"]
+  user_claim                   = "sub"
+  token_policies               = [vault_policy.backstage-developer.name]
 
 }
