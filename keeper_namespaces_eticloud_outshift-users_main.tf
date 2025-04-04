@@ -236,7 +236,7 @@ path "smith/*"
 EOT
 }
 
-# Outshift smith Vault Role
+# Outshift engineering_rd Vault Role
 resource "vault_jwt_auth_backend_role" "engineering_rd" {
   depends_on = [vault_policy.engineering_rd]
   provider   = vault.venture
@@ -272,6 +272,4 @@ resource "vault_policy" "engineering_rd" {
 path "engineering_rd/*"
 {
   capabilities = ["read", "list"]
-}
-EOT
 }
