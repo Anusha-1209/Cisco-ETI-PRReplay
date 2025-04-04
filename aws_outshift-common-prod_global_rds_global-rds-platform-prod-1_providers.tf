@@ -19,7 +19,7 @@ provider "aws" {
   default_tags {
     tags = {
       ApplicationName    = "outshift_infrastructure"
-      Component          = "database"
+      Component          = "data_service"
       ResourceOwner      = "openg"
       CiscoMailAlias     = "openg-admins@cisco.com"
       DataClassification = "Cisco Confidential"
