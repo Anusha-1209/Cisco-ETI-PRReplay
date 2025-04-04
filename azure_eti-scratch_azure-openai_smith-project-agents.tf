@@ -16,8 +16,6 @@ resource "azurerm_cognitive_account" "smith-project-agents" {
   sku_name              = "S0"
 }
 
-z
-
 resource "azurerm_cognitive_deployment" "smith-project-agents-gpt4o" {
   name                 = "gpt-4o"
   cognitive_account_id = azurerm_cognitive_account.smith-project-agents.id
