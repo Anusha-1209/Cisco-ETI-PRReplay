@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket  = "eticloud-tf-state-nonprod"                                                
-    key     = "terraform-state/aws/eticloud/global/rds/global-rds-genie-dev-1.tfstate"     
+    key     = "terraform-state/aws/outshift-common-dev/global/rds/global-rds-genie-dev-1.tfstate"     
     region  = "us-east-2"                                                                  
   }
 }
