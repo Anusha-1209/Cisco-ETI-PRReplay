@@ -23,7 +23,7 @@ provider "aws" {
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
       EnvironmentName    = "NonProd"
-      ResourceOwner      = "ETI SRE"
+      ResourceOwner      = "Genie"
     }
   }
 }
