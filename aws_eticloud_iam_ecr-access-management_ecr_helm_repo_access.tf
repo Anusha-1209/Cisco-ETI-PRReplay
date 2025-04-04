@@ -1,5 +1,5 @@
 module "ecr-access-common" {
-  source = "module/"
+  source = "./module/"
   oidcs = [
     {
       oidc-url = "https://oidc.eks.us-east-2.amazonaws.com/id/43DADA9FA93A358C59DB2A908D525B93" # Cluster scs-dev-1-vluster
