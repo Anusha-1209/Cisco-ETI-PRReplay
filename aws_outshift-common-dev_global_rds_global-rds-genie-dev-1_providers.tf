@@ -38,7 +38,7 @@ provider "aws" {
   default_tags {
     tags = {
       ApplicationName    = "outshift_common_services"
-      Component          = "genie"
+      component          = "genie"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
