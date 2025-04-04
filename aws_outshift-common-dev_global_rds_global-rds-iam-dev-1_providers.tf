@@ -18,12 +18,13 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = "global-rds-iam-dev-1_primary"
-      CiscoMailAlias     = "eti-sre-admins@cisco.com"
+      ApplicationName    = "outshift_foundational_services"
+      Component          = "iam"
+      ResourceOwner      = "eti-iam"
+      CiscoMailAlias     = "eti-iam@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
       EnvironmentName    = "NonProd"
-      ResourceOwner      = "ETI SRE"
     }
   }
 }

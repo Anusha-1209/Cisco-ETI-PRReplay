@@ -13,6 +13,7 @@ module "genie_prod_documentdb_cluster" {
   application_name_tag  = "outshift_foundational_services"
   component_tag         = "genie"
   resource_owner_tag    = "genie-outshift"
+  cisco_mail_alias_tag  = "genie-outshift@cisco.com"
   environment           = "prod"
   engine_version        = "5.0.0"
   master_username       = "genie"
