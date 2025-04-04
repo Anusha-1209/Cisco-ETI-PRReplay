@@ -252,7 +252,7 @@ resource "vault_jwt_auth_backend_role" "smith" {
   role_type  = "oidc"
   backend    = vault_jwt_auth_backend.oidc.path
   allowed_redirect_uris = ["https://keeper.cisco.com/ui/vault/auth/oidc/oidc/callback",
-    "https://east.keeper.cisco.com/ui/vault/auth/oidc/oidc/callback",
+    "http://localhost:8250/oidc/callback",
   "https://west.keeper.cisco.com/ui/vault/auth/oidc/oidc/callback"]
   bound_audiences = [var.oidc_client_id]
   bound_claims = {
