@@ -18,12 +18,13 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = "global-rds-genie-dev-1_primary"
+      ApplicationName    = "outshift_common_services"
+      component          = "genie"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
       EnvironmentName    = "NonProd"
-      ResourceOwner      = "Genie"
+      ResourceOwner      = "genie"
     }
   }
 }
@@ -42,7 +43,7 @@ provider "aws" {
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
       EnvironmentName    = "NonProd"
-      ResourceOwner      = "ETI SRE"
+      ResourceOwner      = "genie"
     }
   }
 }
