@@ -273,3 +273,5 @@ path "engineering_rd/*"
 {
   capabilities = ["read", "list"]
 }
+EOT
+}
