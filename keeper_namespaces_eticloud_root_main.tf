@@ -136,10 +136,10 @@ resource "vault_policy" "groups_automation_devs" {
   name   = "groups_automation_devs"
   policy = <<EOT
 # Common secrets
-path "secret/data/common/groups-automation/*" {
+path "secret/data/projects/groups-automation/*" {
   capabilities = ["update","delete","create","read", "list"]
 }
-path "secret/common/groups-automation/*" {
+path "secret/projects/groups-automation/*" {
   capabilities = ["update","delete","create","read", "list"]
 }
 
