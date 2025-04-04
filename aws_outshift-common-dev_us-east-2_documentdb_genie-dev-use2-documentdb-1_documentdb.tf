@@ -10,9 +10,9 @@ module "genie_dev_documentdb_cluster" {
   source                = "git::https://github.com/cisco-eti/sre-tf-module-aws-documentdb?ref=1.0.1"
   account_name          = "outshift-common-dev" # id 471112537430
   cluster_identifier    = "genie-dev-use2-documentdb-1"
-  application_name_tag  = "outshift_common_services"
+  application_name_tag  = "outshift_foundational_services"
   component_tag         = "genie"
-  resource_owner_tag    = "genie"
+  resource_owner_tag    = "genie-outshift"
   environment           = "dev"
   engine_version        = "5.0.0"
   master_username       = "genie"
