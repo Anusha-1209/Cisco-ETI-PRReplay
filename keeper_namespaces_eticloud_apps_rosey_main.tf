@@ -125,7 +125,7 @@ locals {
     "external-secrets-dev"                  = "policies/external-secrets-dev.hcl",
     "external-secrets-staging"              = "policies/external-secrets-staging.hcl",
     "external-secrets-prod"                 = "policies/external-secrets-prod.hcl",
-    "external-secrets-rosey-dev-euw1-1"     = "policies/external-secrets-rosey-dev-euw1-1.hcl",
+    "external-secrets-comn-dev-use2-1"     = "policies/external-secrets-comn-dev-use2-1.hcl",
     "external-secrets-cnapp-staging-euc1-1" = "policies/external-secrets-cnapp-staging-euc1-1.hcl",
     "external-secrets-cnapp-staging-use2-1" = "policies/external-secrets-cnapp-staging-use2-1.hcl",
     "external-secrets-cnapp-prod-euc1-1"    = "policies/external-secrets-cnapp-prod-euc1-1.hcl",
