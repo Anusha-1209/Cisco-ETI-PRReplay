@@ -132,6 +132,20 @@ path "secret/*"
 EOT
 }
 
+resource "vault_policy" "groups_automation_devs" {
+  name   = "groups_automation_devs"
+  policy = <<EOT
+# Common secrets
+path "secret/data/common/groups-automation/*" {
+  capabilities = ["update","delete","create","read", "list"]
+}
+path "secret/common/groups-automation/*" {
+  capabilities = ["update","delete","create","read", "list"]
+}
+
+EOT
+}
+
 resource "vault_jwt_auth_backend_role" "vault_admin" {
   depends_on                   = [ vault_policy.vault-admin ]
   provider                     = vault.eticloud
@@ -187,5 +201,34 @@ resource "vault_jwt_auth_backend_role" "backstage-developer" {
   oidc_scopes                  = ["profile", "email", "openid"]
   user_claim                   = "sub"
   token_policies               = [vault_policy.backstage-developer.name]
+
+}
+
+resource "vault_jwt_auth_backend_role" "groups_automation_devs" {
+  depends_on                   = [ vault_policy.groups_automation_devs ]
+  provider                     = vault.eticloud
+  role_name                    = "groups_automation_devs"
+  role_type                    = "oidc"
+  backend                      = vault_jwt_auth_backend.oidc.path
+  allowed_redirect_uris        = ["https://keeper.cisco.com/ui/vault/auth/oidc/oidc/callback",
+                                  "https://east.keeper.cisco.com/ui/vault/auth/oidc/oidc/callback",
+                                  "https://west.keeper.cisco.com/ui/vault/auth/oidc/oidc/callback",
+                                  "http://localhost:8250/oidc/callback"]
+  bound_audiences              = [var.oidc_client_id]
+  bound_claims = {
+    memberof = "CN=groups-automation-devs,OU=Cisco Groups,DC=cisco,DC=com"
+  }
+  disable_bound_claims_parsing = true
+  bound_claims_type            = "string"
+  claim_mappings = {
+    email       = "email",
+    family_name = "family_name",
+    given_name  = "given_name",
+    sub         = "sub"
+  }
+  groups_claim                 = "memberof"
+  oidc_scopes                  = ["profile", "email", "openid"]
+  user_claim                   = "sub"
+  token_policies               = [vault_policy.groups_automation_devs.name]
 
 }
