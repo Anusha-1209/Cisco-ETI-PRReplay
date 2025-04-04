@@ -1,7 +1,6 @@
 locals {
-  name   = "smith-project-agents"
-  region = "eastus"
-  tags = {
+  smith-project-agents   = "smith-project-agents"
+  smith-project-agents-tags = {
     ApplicationName    = "smith"
     CiscoMailAlias     = "eti-sre-admins@cisco.com"
     DataClassification = "Cisco Restricted"
@@ -12,24 +11,23 @@ locals {
 }
 
 resource "azurerm_resource_group" "smith-project-agents" {
-  name     = local.name
-  location = local.region
+  name     = local.smith-project-agents
+  location = local.region_eastus
 }
 
 resource "azurerm_cognitive_account" "smith-project-agents" {
-  name                  = "${local.name}"
-  custom_subdomain_name = "${local.name}"
+  name                  = "${local.smith-project-agents}"
+  custom_subdomain_name = "${local.smith-project-agents}"
   location              = azurerm_resource_group.smith-project-agents.location
   resource_group_name   = azurerm_resource_group.smith-project-agents.name
   kind                  = "OpenAI"
   sku_name              = "S0"
-  tags                  = local.tags
+  tags                  = local.smith-project-agents-tags
 }
 
 resource "azurerm_cognitive_deployment" "smith-project-agents-gpt4o" {
   name                 = "gpt-4o"
   cognitive_account_id = azurerm_cognitive_account.smith-project-agents.id
-  rai_policy_name      = "HIGH_INPUT_OUTPUT_FILTER"
   model {
     format  = "OpenAI"
     name    = "gpt-4o"
@@ -41,19 +39,3 @@ resource "azurerm_cognitive_deployment" "smith-project-agents-gpt4o" {
     capacity = 1000
   }
 }
-
-# resource "azurerm_cognitive_deployment" "smith-project-agents-gpt4o-mini" {
-#   name                 = "gpt-4o-mini"
-#   cognitive_account_id = azurerm_cognitive_account.smith-project-agents.id
-#   rai_policy_name      = "HIGH_INPUT_OUTPUT_FILTER"
-#   model {
-#     format  = "OpenAI"
-#     name    = "gpt-4o-mini"
-#     version = "2024-07-18"
-#   }
-
-#   sku {
-#     name = "GlobalStandard"
-#     capacity = 10
-#   }
-# }
