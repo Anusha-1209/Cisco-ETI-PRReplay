@@ -37,19 +37,19 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = "outshift_common_services"
+      ApplicationName    = "outshift_foundational_services"
       Component          = "genie"
-      CiscoMailAlias     = "eti-sre-admins@cisco.com"
+      ResourceOwner      = "genie-outshift"
+      CiscoMailAlias     = "genie-outshift@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
       EnvironmentName    = "NonProd"
-      ResourceOwner      = "genie"
     }
   }
 }
 
 terraform {
-  #required_version = ">= 1.5.5"
+  required_version = ">= 1.5.5"
 
   required_providers {
     aws = {
