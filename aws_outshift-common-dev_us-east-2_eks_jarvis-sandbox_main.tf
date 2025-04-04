@@ -16,9 +16,9 @@ module "eks_all_in_one" {
   min_size                = "3"
   max_size                = "3"
   desired_size            = "3"
-  create_karpenter_irsa   = "true"
-  create_alb_irsa         = "true"
-  create_otel_irsa        = "true"
+  create_karpenter_irsa   = true
+  create_alb_irsa         = true
+  create_otel_irsa        = true
 
   additional_aws_auth_configmap_roles = [
     {
