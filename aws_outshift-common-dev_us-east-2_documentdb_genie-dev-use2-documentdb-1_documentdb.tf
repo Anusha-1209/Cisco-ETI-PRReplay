@@ -6,7 +6,7 @@ terraform {
   }
 }
 
-module "ppu_dev_documentdb_cluster" {
+module "genie_dev_documentdb_cluster" {
   source                = "git::https://github.com/cisco-eti/sre-tf-module-aws-documentdb?ref=1.0.1"
   account_name          = "outshift-common-dev" # id 471112537430
   application_name_tag  = "outshift_common_services"
