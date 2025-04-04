@@ -19,4 +19,6 @@ module "eks_all_in_one" {
   create_karpenter_irsa   = "true"
   create_alb_irsa         = "true"
   create_otel_irsa        = "true"
+  manage_aws_auth_configmap = "false"
+
 }
