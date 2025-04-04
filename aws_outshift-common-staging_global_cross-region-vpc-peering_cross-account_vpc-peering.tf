@@ -35,7 +35,7 @@ module "primary_eks_cluster_to_secondary"{
     }
   }
   accepter_vpc_name  = "prod-db-vpc-1"
-  requester_vpc_name  = "common-staging-use2-1"
+  requester_vpc_name  = "comn-staging-use2-1"
 }
 
 module "secondary_eks_cluster_to_secondary"{
@@ -51,5 +51,5 @@ module "secondary_eks_cluster_to_secondary"{
     }
   }
   accepter_vpc_name  = "prod-db-vpc-1"
-  requester_vpc_name  = "common-staging-usw2-1"
+  requester_vpc_name  = "comn-staging-usw2-1"
 }
