@@ -34,7 +34,7 @@ module "ec2" {
   instance_type = "g5.12xlarge"
 
   # AMI Type
-  ami_type = "CISCO_HARDENED_AL2"
+  ami_type = "UBUNTU"
 
   # VPC Name
   vpc_name = "cisco-quantum-vpc-1"
