@@ -7,7 +7,7 @@ terraform {
 }
 
 module "vpc_peering_primary_to_primary"{
-  source             = "git::https://github.com/cisco-eti/sre-tf-module-multi-region-vpc-peering.git?ref=1.1.1"
+  source             = "git::https://github.com/cisco-eti/sre-tf-module-multi-region-vpc-peering.git?ref=2.0.0"
   aws_accounts_to_regions = {
     "common" = {
       account_name = "lightspin-dev"
