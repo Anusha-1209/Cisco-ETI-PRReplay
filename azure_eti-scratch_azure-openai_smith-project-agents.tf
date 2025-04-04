@@ -1,7 +1,16 @@
 locals {
   name   = "smith-project-agents"
   region = "eastus"
+  tags = {
+    ApplicationName    = "smith"
+    CiscoMailAlias     = "eti-sre-admins@cisco.com"
+    DataClassification = "Cisco Restricted"
+    DataTaxonomy       = "Cisco Operations Data"
+    Environment        = "NonProd"
+    ResourceOwner      = "Outshift SRE"
+  }
 }
+
 resource "azurerm_resource_group" "smith-project-agents" {
   name     = local.name
   location = local.region
@@ -14,6 +23,7 @@ resource "azurerm_cognitive_account" "smith-project-agents" {
   resource_group_name   = azurerm_resource_group.smith-project-agents.name
   kind                  = "OpenAI"
   sku_name              = "S0"
+  tags                  = local.tags
 }
 
 resource "azurerm_cognitive_deployment" "smith-project-agents-gpt4o" {
