@@ -36,7 +36,6 @@ module "eso_eticloud" {
 }
 
 module "eso_eticloud_apps_appnet" {
-  count = 0 # This module is not needed for this cluster
   source          = "git::https://github.com/cisco-eti/sre-tf-module-eso-access.git?ref=1.0.0"
   cluster_name    = local.name
   vault_namespace = "eticloud/apps/appnet"
