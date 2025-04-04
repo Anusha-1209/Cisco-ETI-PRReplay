@@ -36,7 +36,7 @@ module "rds_primary" {
   source              = "git::https://github.com/cisco-eti/sre-tf-module-aws-aurora-postgres?ref=2.0.2"
   vpc_name            = local.data_primary_vpc
   database_name       = "postgressql"
-  db_instance_type    = "db.r5.xlarge"
+  db_instance_type    = "db.r7g.xlarge"
   cluster_name        = "global-rds-genie-dev-use2-1"
   kms_key_id          = aws_kms_key.primary.arn
   master_username     = "root"
