@@ -10,12 +10,12 @@ data "aws_iam_policy_document" "assume_role_policy" {
     actions = ["sts:AssumeRoleWithWebIdentity"]
     condition {
       test     = "StringEquals"
-      values = ["sts.amazonaws.com"]
+      values   = ["sts.amazonaws.com"]
       variable = "${local.oidc_id}:aud"
     }
     condition {
       test     = "StringEquals"
-      values = local.service_accounts
+      values   = local.service_accounts
       variable = "${local.oidc_id}:sub"
     }
   }
