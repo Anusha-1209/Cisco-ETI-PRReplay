@@ -61,6 +61,41 @@ resource "vault_mount" "phoenix" {
   options  = { version = "2" }
 }
 
+resource "vault_mount" "prcoach" {
+  provider = vault.venture
+  path     = "prcoach"
+  type     = "kv"
+  options  = { version = "2" }
+}
+
+resource "vault_mount" "engineering_rd" {
+  provider = vault.venture
+  path     = "engineering_rd"
+  type     = "kv"
+  options  = { version = "2" }
+}
+
+resource "vault_mount" "dmonkey" {
+  provider = vault.venture
+  path     = "dmonkey"
+  type     = "kv"
+  options  = { version = "2" }
+}
+
+resource "vault_mount" "autosync" {
+  provider = vault.venture
+  path     = "autosync"
+  type     = "kv"
+  options  = { version = "2" }
+}
+
+resource "vault_mount" "actionengine" {
+  provider = vault.venture
+  path     = "actionengine"
+  type     = "kv"
+  options  = { version = "2" }
+}
+
 # OIDC Credentials
 data "vault_generic_secret" "oidc_credential" {
   provider = vault.teamsecrets
