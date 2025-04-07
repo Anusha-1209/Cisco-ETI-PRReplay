@@ -23,7 +23,7 @@ resource "vault_jwt_auth_backend_role" "prcoach" {
   groups_claim   = "memberof"
   oidc_scopes    = ["profile", "email", "openid"]
   user_claim     = "sub"
-  token_policies = [vault_policy.prcoach.name] # TODO: vault_policy.default.name was added in Keeper UI, import it
+  token_policies = [vault_policy.prcoach.name, vault_policy.default.name]
 }
 
 resource "vault_policy" "prcoach" {
