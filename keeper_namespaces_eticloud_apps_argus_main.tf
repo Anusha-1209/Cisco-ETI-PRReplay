@@ -120,7 +120,7 @@ resource "vault_jwt_auth_backend_role" "developer" {
 locals {
   policies = {
     "admin"     = "policies/admin.hcl",
-    "default"     = "policies/default.hcl",
+    "default"   = "policies/default.hcl",
     "developer" = "policies/developer.hcl",
   }
 }
