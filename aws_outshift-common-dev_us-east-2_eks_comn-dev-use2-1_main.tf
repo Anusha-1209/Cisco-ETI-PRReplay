@@ -14,7 +14,6 @@ locals {
   region           = "us-east-2"
   aws_account_name = "outshift-common-dev"
   account_id       = "471112537430"
-  environment      = "dev"
 }
 
 module "eks_all_in_one" {
@@ -32,6 +31,7 @@ module "eks_all_in_one" {
   min_size       = 6               # EKS node group min size
   max_size       = 6               # EKS node group max size
   desired_size   = 6               # EKS node group desired size
+
 
   # Karpenter
   create_karpenter_irsa = true # Create Karpenter IRSA
