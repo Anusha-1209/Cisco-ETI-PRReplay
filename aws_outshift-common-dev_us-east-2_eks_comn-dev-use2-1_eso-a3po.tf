@@ -1,5 +1,5 @@
 locals {
-  policy_eticloud = <<-EOT
+  policy_a3po = <<-EOT
   # K8s External Secrets Vault Policy
 
   # Secret paths
@@ -33,7 +33,7 @@ module "eso_a3po" {
   cluster_endpoint  = data.vault_generic_secret.cluster_endpoint.data["cluster_endpoint"]
   cluster_name      = local.name
   environment       = local.environment
-  policy            = local.policy_eticloud
+  policy            = local.policy_a3po
   source            = "git::https://github.com/cisco-eti/sre-tf-module-eso-access.git?ref=2.0.7"
   vault_namespace   = "eticloud/apps/a3po"
   
