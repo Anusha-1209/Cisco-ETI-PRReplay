@@ -24,3 +24,4 @@ module "genie_prod_documentdb_cluster" {
   venture_namespace     = "genie"
   secret_path           = "secret/prod/documentDB"
 }
+
