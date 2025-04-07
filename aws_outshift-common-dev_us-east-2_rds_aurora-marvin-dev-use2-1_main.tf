@@ -8,3 +8,4 @@ module "rds" {
   db_allowed_cidrs  = [data.aws_vpc.cluster_vpc.cidr_block, data.aws_vpc.cluster_vpc_2.cidr_block]
   db_engine_version = "15"
 }
+
