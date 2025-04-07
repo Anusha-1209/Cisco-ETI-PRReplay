@@ -38,8 +38,8 @@ provider "aws" {
   default_tags {
     tags = {
       ApplicationName    = "outshift_foundational_services"
-      Component          = "iam"
-      ResourceOwner      = "eti-iam"
+      Component          = "outshift_iam"
+      ResourceOwner      = "iam-admins"
       CiscoMailAlias     = "eti-iam@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
