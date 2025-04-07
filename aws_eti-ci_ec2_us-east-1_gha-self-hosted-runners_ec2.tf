@@ -15,7 +15,7 @@ module "ec2-instance" {
   version       = "5.7.1"
   ami           = data.aws_ami.c9-ec2.image_id
   instance_type = "c5.2xlarge"
-  name          = "gha-self-cloud-agent-1"
+  name          = var.ec2_name
   vpc_security_group_ids = [data.aws_security_group.default.id,
     data.aws_security_group.cloud_agent_ssh_from_cisco.id,
   data.aws_security_group.cloud_agent_host_monitoring_from_cisco.id]

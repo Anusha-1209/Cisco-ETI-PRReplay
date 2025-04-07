@@ -1,3 +1,9 @@
+variable "ec2_name" {
+  description = "EC2 Instance Name"
+  default     = "gha-self-cloud-agent-1"
+  type        = string
+}
+
 variable "region" {
   description = "AWS Region"
   default     = "us-east-1"
