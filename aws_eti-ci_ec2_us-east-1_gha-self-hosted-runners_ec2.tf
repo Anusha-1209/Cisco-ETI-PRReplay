@@ -1,15 +1,3 @@
-locals {
-  user_data = <<-EOT
-    #!/bin/bash
-    mkdir ~/actions-runner && cd ~/actions-runner
-    curl -o actions-runner-osx-x64-2.321.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.321.0/actions-runner-osx-x64-2.321.0.tar.gz
-    tar xzf ./actions-runner-osx-x64-2.321.0.tar.gz
-    TOKEN=$(aws ssm get-parameter --name "outshift-platform-gha-token" --with-decryption --query "Parameter.Value" --output text)
-    ./config.sh --url https://github.com/outshift-platform --token $TOKEN
-    ./run.sh &
-  EOT
-}
-
 module "ec2-instance" {
   source        = "terraform-aws-modules/ec2-instance/aws"
   version       = "5.7.1"
@@ -45,8 +33,6 @@ module "ec2-instance" {
     enable_resource_name_dns_aaaa_record = false
     hostname_type                        = "ip-name"
   }
-
-  user_data = base64encode(local.user_data)
 }
 
 resource "aws_iam_role" "ec2_ssm" {
