@@ -29,9 +29,9 @@ module "vpc" {
   # Tags
   application_name    = "outshift_infrastructure"
   component           = "jarvis"
-  cisco_mail_alias    = "openg-admins@cisco.com"
+  cisco_mail_alias    = "outshift-jarvis@cisco.com"
   data_classification = "Cisco Confidential"
   data_taxonomy       = "Cisco Operations Data"
   environment         = "NonProd"
-  resource_owner      = "openg"
+  resource_owner      = "team_jarvis"
 }

@@ -23,12 +23,13 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = "ETI SRE Platform"
+      ApplicationName    = "outshift_infrastructure"
+      Component          = "openg_idp"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Restricted"
       DataTaxonomy       = "Cisco Operations Data"
       Environment        = "NonProd"
-      ResourceOwner      = "subbaksh@cisco.com"
+      ResourceOwner      = "eti-sre-admin"
 
       IntendedPublic = "False"
 
