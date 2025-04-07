@@ -18,10 +18,10 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = "websites"
-      Component          = "websites"
-      ResourceOwner      = "websites"
-      CiscoMailAlias     = "websites@cisco.com"
+      ApplicationName    = "outshift_marketing"
+      Component          = "outshift_websites"
+      ResourceOwner      = "eti-website-admins"
+      CiscoMailAlias     = "eti-websites@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
       EnvironmentName    = "NonProd"
@@ -37,10 +37,10 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = "websites"
-      Component          = "websites"
-      ResourceOwner      = "websites"
-      CiscoMailAlias     = "websites@cisco.com"
+      ApplicationName    = "outshift_marketing"
+      Component          = "outshift_websites"
+      ResourceOwner      = "eti-website-admins"
+      CiscoMailAlias     = "eti-websites@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
       EnvironmentName    = "NonProd"
