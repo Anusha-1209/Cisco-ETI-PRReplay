@@ -8,7 +8,6 @@ module "ec2-instance" {
     data.aws_security_group.cloud_agent_ssh_from_cisco.id,
   data.aws_security_group.cloud_agent_host_monitoring_from_cisco.id]
   subnet_id            = data.aws_subnet.public.id
-  iam_instance_profile = aws_iam_instance_profile.ec2_ssm.name
   key_name             = "eti-jenkins"
   monitoring           = true
   ebs_optimized        = true
