@@ -101,7 +101,7 @@ resource "aws_security_group_rule" "kafka_ingress" {
 
 module "msk" {
   source               = "cloudposse/msk-apache-kafka-cluster/aws"
-  version              = "2.3.0"
+  version              = "3.6.0"
   name                 = local.msk_name
   vpc_id               = data.aws_vpc.db_vpc.id
   subnet_ids           = data.aws_subnets.private.ids
