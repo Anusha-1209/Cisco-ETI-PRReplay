@@ -25,7 +25,7 @@ module "eks_all_in_one" {
   cidr               = "10.0.0.0/16"          # VPC CIDR
   public_subnet_mask = 196
   intra_subnet_mask  = 200
-  cluster_version    = "1.29"                 # EKS cluster version
+  cluster_version    = "1.30"                 # EKS cluster version
 
   # EKS Managed Private Node Group
   instance_types = ["m6a.2xlarge"] # EKS instance types
