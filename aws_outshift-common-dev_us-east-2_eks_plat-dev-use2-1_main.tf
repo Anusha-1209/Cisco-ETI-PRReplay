@@ -8,7 +8,6 @@ module "eks_all_in_one" {
   cluster_version        = "1.30"                # EKS cluster version
   bastion_instance_count = 1                     # Bastion instance count
 
-
   # EKS Managed Private Node Group
   instance_types          = ["m6a.xlarge"]
   ami_type                = "CISCO_HARDENED_AL2"
