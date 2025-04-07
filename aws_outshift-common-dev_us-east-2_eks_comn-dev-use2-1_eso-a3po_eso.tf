@@ -1,3 +1,8 @@
+/* 
+Created this ESO config file in its own directory to allow it to have its own tfstate 
+as a workaround to Atlantis apply failure as it kept trying to modify resources related to the comn-dev-use2-1 cluster tfstate
+*/
+
 terraform {
   backend "s3" {
     # This is the name of the backend S3 bucket.
