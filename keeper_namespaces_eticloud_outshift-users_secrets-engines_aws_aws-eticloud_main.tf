@@ -1,5 +1,5 @@
 resource "vault_aws_secret_backend" "dev-sandbox-aws-eticloud" {
-  provider    = vault.eticloud
+  provider    = vault.outshift-users
   path        = "dev-sandbox-aws-eticloud"
   description = "AWS Secrets Engine for Dev Sandbox access"
 
@@ -8,7 +8,7 @@ resource "vault_aws_secret_backend" "dev-sandbox-aws-eticloud" {
 }
 
 resource "vault_aws_secret_backend_role" "dev-sandbox-vault-role" {
-  provider        = vault.eticloud
+  provider        = vault.outshift-users
   backend         = vault_aws_secret_backend.dev-sandbox-aws-eticloud.path
   name            = "dev-sandbox-vault-role"
   credential_type = "assumed_role"

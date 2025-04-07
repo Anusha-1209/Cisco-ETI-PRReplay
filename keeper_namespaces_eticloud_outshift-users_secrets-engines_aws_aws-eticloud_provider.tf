@@ -4,13 +4,12 @@ provider "vault" {
 }
 
 provider "vault" {
-  alias     = "eticcprod"
-  namespace = "eticloud/eticcprod"
+  alias     = "outshift-users"
+  namespace = "eticloud/outshift-users"
 }
 
 data "vault_generic_secret" "aws_infra_credential" {
-  provider = vault.eticcprod
-  path     = "secret/eticcprod/infra/dev/aws-dev-1"
+  path      = "secret/infra/aws/eticloud/terraform_admin"
 }
 
 # Infra AWS Provider
