@@ -14,6 +14,7 @@ locals {
   region           = "us-east-2"
   aws_account_name = "outshift-common-dev"
   account_id       = "471112537430"
+  environment      = "dev"
 }
 
 module "eks_all_in_one" {
