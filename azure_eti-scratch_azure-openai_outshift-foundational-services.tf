@@ -1,6 +1,5 @@
 locals {
   name   = "outshift-foundational-services-project-agents"
-  region = "eastus"
   tags = {
     ApplicationName    = "outshift_foundational_services"
     Component          = "ragv2"
@@ -14,7 +13,7 @@ locals {
 
 resource "azurerm_resource_group" "outshift-foundational-services-project-agents" {
   name     = local.name
-  location = local.region
+  location = local.region_eastus
 }
 
 resource "azurerm_cognitive_account" "outshift-foundational-services-project-agents" {
