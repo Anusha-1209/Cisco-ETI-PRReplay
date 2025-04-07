@@ -13,6 +13,7 @@ locals {
   name             = "comn-dev-use2-1"
   region           = "us-east-2"
   aws_account_name = "outshift-common-dev"
+  account_id       = "471112537430"
 }
 
 module "eks_all_in_one" {
@@ -32,4 +33,22 @@ module "eks_all_in_one" {
 
   # Karpenter
   create_karpenter_irsa = true # Create Karpenter IRSA
+
+  additional_aws_auth_configmap_roles = [
+    {
+      rolearn  = "arn:aws:iam::${local.account_id}:user/terraform_admin",
+      username = "terraform_admin",
+      groups   = ["system:masters"]
+    }
+    , {
+      rolearn  = "arn:aws:iam::${local.account_id}:role/devops",
+      username = "devops",
+      groups   = ["system:masters"]
+    }
+    , {
+      rolearn  = "arn:aws:iam::${local.account_id}:role/cluster-access",
+      username = "cluster-access",
+      groups   = ["system:masters"]
+    }
+  ]
 }
