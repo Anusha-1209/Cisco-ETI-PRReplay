@@ -37,7 +37,7 @@ provider "aws" {
 
 module "s3" {
   source                = "git::https://github.com/cisco-eti/sre-tf-module-aws-s3.git?ref=1.0.3"
-  bucket_name           = "phoenix-ui"
+  bucket_name           = "outshift-phoenix-ui"
   CSBApplicationName    = "outshift_ventures"
   CSBCiscoMailAlias     = "outshift-phoenix@cisco.com"
   CSBDataClassification = "Cisco Confidential"
