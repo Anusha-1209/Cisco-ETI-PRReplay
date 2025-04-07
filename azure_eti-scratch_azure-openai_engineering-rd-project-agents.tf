@@ -40,3 +40,18 @@ resource "azurerm_cognitive_deployment" "engineering-rd-project-agents-gpt4o" {
     capacity = 1000
   }
 }
+
+resource "azurerm_cognitive_deployment" "engineering-rd-project-agents-gpt4o"  {
+  name                 = "gpt-4o-mini"
+  cognitive_account_id = azurerm_cognitive_account.engineering-rd-project-agents.id
+  model {
+    format  = "OpenAI"
+    name    = "gpt-4o-mini"
+    version = "2024-07-18"
+  }
+
+  sku {
+    name = "GlobalStandard"
+    capacity = 1000
+  }
+}
