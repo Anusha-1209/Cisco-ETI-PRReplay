@@ -4,9 +4,15 @@ provider "vault" {
   namespace = "eticloud/eticcprod"
 }
 
+provider "vault" {
+  alias     = "eticloud"
+  address   = "https://keeper.cisco.com"
+  namespace = "eticloud"
+}
+
 data "vault_generic_secret" "aws_infra_credential" {
   provider = vault.eticcprod
-  path     = "secret/eticcprod/infra/ci/aws"
+  path     = "secret/eticcprod/infra/ci/aws" # should be migrated to secret/infra/aws/eti-ci/terraform_admin in the eticloud namespace
 }
 
 terraform {

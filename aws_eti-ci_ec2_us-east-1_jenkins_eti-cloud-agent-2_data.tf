@@ -50,3 +50,9 @@ data "aws_security_group" "cloud_agent_host_monitoring_from_cisco" {
 }
 
 data "aws_caller_identity" "current" {}
+
+
+data "vault_generic_secret" "gha_token" {
+  provider = vault.eticloud
+  path     = "ci/gha/outshift-platform/gha_token"
+}
