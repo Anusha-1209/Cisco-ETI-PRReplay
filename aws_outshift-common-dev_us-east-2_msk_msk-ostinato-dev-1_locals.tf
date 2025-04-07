@@ -3,4 +3,5 @@ locals {
   cluster_vpc_name = "comn-dev-use2-1"
   cluster_name = "comn-dev-use2-1"
   msk_name  = "msk-ostinato-dev-1"
+  aws_account_name = "outshift-common-dev"
 }
