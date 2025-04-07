@@ -1,51 +1,32 @@
 locals {
   gpt4_kv_paths = [
-    "bugbash",
-    "csm",
-    "genai"
   ]
 
   text_embedding_3_small_kv_paths = [
-    "genai"
   ]
 
   text_embedding_3_large_kv_paths = [
-    "genai"
   ]
 
   mistral_kv_paths = [
-    "bugbash",
-    "csm",
-    "genai"
   ]
 
   aws_bedrock_kv_paths = [
-    "bugbash",
-    "csm",
-    "genai"
   ]
 
   gpt4o_kv_paths = [
-    "bugbash",
-    "genai"
   ]
 
   gpt4o-mini_kv_paths = [
-    "genai"
   ]
 
   datasources_sharepoint_outshiftgenai_kv_paths = [
-    "csm",
-    "bugbash",
-    "genai"
   ]
 
   datasources_sharepoint_ciscoeticloud_api_motific_rag_user_kv_paths = [
-    "genai"
   ]
 
   datasources_sharepoint_ciscoeticloud_human_motific_rag_user1_kv_paths = [
-    "genai"
   ]
 }
 
