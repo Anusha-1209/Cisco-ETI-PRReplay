@@ -23,7 +23,6 @@ terraform {
 
   }
 }
-
 variable "AWS_INFRA_REGION" {
   description = "AWS Region"
   default     = "us-east-2" #Set the region for the resources to be created.
