@@ -147,6 +147,5 @@ path "auth/token/revoke-self" {
 path "sys/capabilities-self" {
     capabilities = ["update"]
 }
-}
 EOT
 }
