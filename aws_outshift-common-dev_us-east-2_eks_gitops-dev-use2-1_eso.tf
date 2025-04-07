@@ -1,11 +1,5 @@
-# This file was created by Outshift Platform Self-Service automation.
-data "vault_generic_secret" "cluster_certificate" {
-  path       = "secret/infra/eks/${local.name}/certificate"
-  depends_on = [module.eks_all_in_one]
-}
-
 locals {
-  policy = <<-EOT
+  policy_eticloud = <<-EOT
   # K8s External Secrets Vault Policy
 
   # Secret paths
@@ -31,16 +25,18 @@ locals {
   EOT
 }
 
+# cluster resources for external-secrets
 module "eso_eticloud" {
-  source          = "git::https://github.com/cisco-eti/sre-tf-module-eso-access.git?ref=2.0.6"
-  cluster_name      = local.name
-  vault_namespace   = "eticloud"
-  cluster_endpoint  = data.aws_eks_cluster.eks.endpoint
+  depends_on = [ module.eks_all_in_one ]
   cluster_ca        = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
-  policy            = local.policy
+  cluster_endpoint  = data.vault_generic_secret.cluster_endpoint.data["cluster_endpoint"]
+  cluster_name      = local.name
   environment       = local.environment
+  policy            = local.policy_eticloud
+  source            = "git::https://github.com/cisco-eti/sre-tf-module-eso-access.git?ref=2.0.7"
+  vault_namespace   = "eticloud"
   
   providers = {
-    aws = aws.eks
+    vault      = vault.eticloud
   }
 }
