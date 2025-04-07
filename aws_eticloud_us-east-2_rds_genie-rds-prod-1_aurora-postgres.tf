@@ -55,5 +55,3 @@ module "rds" {
     db_allowed_cidrs = ["10.1.0.0/16"]
     secret_path       = "secret/eticcprod/infra/aurora-pg/us-east-2/genie-rds-prod-1"
 }
-
-
