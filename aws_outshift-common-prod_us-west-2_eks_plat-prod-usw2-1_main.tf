@@ -33,3 +33,4 @@ module "eks_all_in_one" {
     }
   ]
 }
+
