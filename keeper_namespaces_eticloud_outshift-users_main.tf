@@ -185,6 +185,7 @@ resource "vault_jwt_auth_backend_role" "outshift_foundational_services" {
   user_claim   = "sub"
   token_policies = [vault_policy.outshift_foundational_services.name]
 }
+
 resource "vault_policy" "outshift_foundational_services" {
   provider = vault.venture
   name     = "outshift_foundational_services"
