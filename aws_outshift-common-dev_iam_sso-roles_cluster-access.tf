@@ -25,7 +25,7 @@ data "aws_iam_policy_document" "cluster-access-policy-document" {
       "eks:ListIdentityProviderConfigs"
     ]
     resources = [
-      "arn:aws:eks:us-east-2:${local.account_id}:cluster/pi-prod-use2-1"
+      "arn:aws:eks:us-east-2:${local.account_id}:cluster/*"
     ]
   }
 }
