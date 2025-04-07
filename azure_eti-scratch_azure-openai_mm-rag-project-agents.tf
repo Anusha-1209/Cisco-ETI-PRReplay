@@ -1,7 +1,7 @@
 locals {
   mm-rag-team = "mm-rag-team"
   ai-team-tags = {
-    ApplicationName    = "ai-team"
+    ApplicationName    = "outshift_ai_rd"
     ComponentName      = "mm-rag-team"
     CiscoMailAlias     = "eti-sre-admins@cisco.com"
     DataClassification = "Cisco Restricted"

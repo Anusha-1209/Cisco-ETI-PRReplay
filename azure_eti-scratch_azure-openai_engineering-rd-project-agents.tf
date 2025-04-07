@@ -1,8 +1,8 @@
 locals {
   engineering-rd-project-agents = "engineering-rd-project-agents"
   engineering-rd-project-agents-tags = {
-    ApplicationName    = "engineering_rd"
-    Component          = "test-agent"
+    ApplicationName    = "outshift_ventures"
+    Component          = "engineering_rd"
     ResourceOwner      = "tiswanso"
     CiscoMailAlias     = "tiswanso@cisco.com"
     DataClassification = "Cisco Restricted"

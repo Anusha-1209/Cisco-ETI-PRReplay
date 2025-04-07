@@ -1,8 +1,8 @@
 locals {
   project-actionengine = "project-actionengine"
   project-actionengine-tags = {
-    ApplicationName    = "ActionEngine (LAM)"
-    Component          = "Planner system"
+    ApplicationName    = "outshift_ventures"
+    Component          = "action_engine"
     ResourceOwner      = "Julia Valenti"
     CiscoMailAlias     = "julvalen@cisco.com"
     DataClassification = "Cisco Restricted"

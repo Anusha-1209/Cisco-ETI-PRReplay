@@ -1,7 +1,8 @@
 locals {
   smith-project-agents = "smith-project-agents"
   smith-project-agents-tags = {
-    ApplicationName    = "smith"
+    ApplicationName    = "outshift_ai_rd"
+    Component          = "smith"
     CiscoMailAlias     = "eti-sre-admins@cisco.com"
     DataClassification = "Cisco Restricted"
     DataTaxonomy       = "Cisco Operations Data"

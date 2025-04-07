@@ -1,8 +1,8 @@
 locals {
   puccini-project-agents = "puccini-project-agents"
   puccini-project-agents-tags = {
-    ApplicationName    = "puccini"
-    Component          = "nolan"
+    ApplicationName    = "outshift_ventures"
+    Component          = "puccini"
     ResourceOwner      = "mahviswa"
     CiscoMailAlias     = "mahviswa@cisco.com"
     DataClassification = "Cisco Restricted"

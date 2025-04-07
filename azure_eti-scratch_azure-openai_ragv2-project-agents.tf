@@ -1,7 +1,7 @@
 locals {
   ragv2-project-agents = "ragv2-project-agents"
   ragv2-project-agents-tags = {
-    ApplicationName    = "outshift_foundational_services"
+    ApplicationName    = "outshift_ai_rd"
     Component          = "ragv2"
     ResourceOwner      = "sushroff"
     CiscoMailAlias     = "sushroff@cisco.com"

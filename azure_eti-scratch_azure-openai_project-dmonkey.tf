@@ -1,7 +1,7 @@
 locals {
   project-dmonkey = "project-dmonkey"
   project-dmonkey-tags = {
-    ApplicationName    = "dmonkey"
+    ApplicationName    = "outshift_ai_rd"
     Component          = "dmonkey"
     ResourceOwner      = "ai-team"
     CiscoMailAlias     = "sagupta7@cisco.com"
