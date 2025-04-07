@@ -158,11 +158,11 @@ path "engineering_rd/*"
 EOT
 }
 
-# Outshift outshift_foundational_services Vault Role
-resource "vault_jwt_auth_backend_role" "outshift_foundational_services" {
-  depends_on = [vault_policy.outshift_foundational_services]
+# Outshift ragv2 Vault Role
+resource "vault_jwt_auth_backend_role" "ragv2" {
+  depends_on = [vault_policy.ragv2]
   provider   = vault.venture
-  role_name  = "outshift_foundational_services"
+  role_name  = "ragv2"
   role_type  = "oidc"
   backend    = vault_jwt_auth_backend.oidc.path
   allowed_redirect_uris = ["https://keeper.cisco.com/ui/vault/auth/oidc/oidc/callback",
@@ -170,7 +170,7 @@ resource "vault_jwt_auth_backend_role" "outshift_foundational_services" {
   "https://west.keeper.cisco.com/ui/vault/auth/oidc/oidc/callback"]
   bound_audiences = [var.oidc_client_id]
   bound_claims = {
-    memberof = "CN=outshift-vault-outshift-foundational-services,OU=Cisco Groups,DC=cisco,DC=com"
+    memberof = "CN=outshift-vault-ragv2,OU=Cisco Groups,DC=cisco,DC=com"
   }
   disable_bound_claims_parsing = true
   bound_claims_type            = "string"
@@ -183,16 +183,16 @@ resource "vault_jwt_auth_backend_role" "outshift_foundational_services" {
   groups_claim = "memberof"
   oidc_scopes  = ["profile", "email", "openid"]
   user_claim   = "sub"
-  token_policies = [vault_policy.outshift_foundational_services.name]
+  token_policies = [vault_policy.ragv2.name]
 }
 
-resource "vault_policy" "outshift_foundational_services" {
+resource "vault_policy" "ragv2" {
   provider = vault.venture
-  name     = "outshift_foundational_services"
+  name     = "ragv2"
   policy   = <<EOT
 # Manage auth methods broadly across Vault
 # List, create, update, and delete key/value secrets
-path "outshift_foundational_services/*"
+path "outshift_foundational_services/ragv2/*"
 {
   capabilities = ["read", "list"]
 }

@@ -1,6 +1,6 @@
 locals {
-  outshift-foundational-services-project-agents   = "outshift-foundational-services-project-agents"
-  outshift-foundational-services-project-agents-tags = {
+  ragv2-project-agents   = "ragv2-project-agents"
+  ragv2-project-agents-tags = {
     ApplicationName    = "outshift_foundational_services"
     Component          = "ragv2"
     ResourceOwner      = "sushroff"
@@ -11,24 +11,24 @@ locals {
   }
 }
 
-resource "azurerm_resource_group" "outshift-foundational-services-project-agents" {
-  name     = local.outshift-foundational-services-project-agents
+resource "azurerm_resource_group" "ragv2-project-agents" {
+  name     = local.ragv2-project-agents
   location = local.region_eastus
 }
 
-resource "azurerm_cognitive_account" "outshift-foundational-services-project-agents" {
-  name                  = "${local.outshift-foundational-services-project-agents}"
-  custom_subdomain_name = "${local.outshift-foundational-services-project-agents}"
-  location              = azurerm_resource_group.outshift-foundational-services-project-agents.location
-  resource_group_name   = azurerm_resource_group.outshift-foundational-services-project-agents.name
+resource "azurerm_cognitive_account" "ragv2-project-agents" {
+  name                  = "${local.ragv2-project-agents}"
+  custom_subdomain_name = "${local.ragv2-project-agents}"
+  location              = azurerm_resource_group.ragv2-project-agents.location
+  resource_group_name   = azurerm_resource_group.ragv2-project-agents.name
   kind                  = "OpenAI"
   sku_name              = "S0"
-  tags                  = local.outshift-foundational-services-project-agents-tags
+  tags                  = local.ragv2-project-agents-tags
 }
 
-resource "azurerm_cognitive_deployment" "outshift-foundational-services-project-agents-gpt-4o-mini" {
+resource "azurerm_cognitive_deployment" "ragv2-project-agents-gpt-4o-mini" {
   name                 = "gpt-4o-mini"
-  cognitive_account_id = azurerm_cognitive_account.outshift-foundational-services-project-agents.id
+  cognitive_account_id = azurerm_cognitive_account.ragv2-project-agents.id
   model {
     format  = "OpenAI"
     name    = "gpt-4o-mini"
