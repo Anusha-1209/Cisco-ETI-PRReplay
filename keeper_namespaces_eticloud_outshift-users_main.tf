@@ -47,6 +47,13 @@ resource "vault_mount" "smith" {
   options  = { version = "2" }
 }
 
+resource "vault_mount" "ostinato" {
+  provider = vault.venture
+  path     = "ostinato"
+  type     = "kv"
+  options  = { version = "2" }
+}
+
 # OIDC Credentials
 data "vault_generic_secret" "oidc_credential" {
   provider = vault.teamsecrets
