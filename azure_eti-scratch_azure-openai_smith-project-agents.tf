@@ -32,6 +32,8 @@ resource "azurerm_cognitive_deployment" "smith-project-agents-gpt4o" {
     format  = "OpenAI"
     name    = "gpt-4o"
     version = "2024-08-06"
+    rai_policy_name = "Microsoft.DefaultV2"
+    version_upgrade_option = "OnceCurrentVersionExpired"
   }
 
   sku {
