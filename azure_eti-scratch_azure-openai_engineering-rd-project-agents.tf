@@ -41,7 +41,7 @@ resource "azurerm_cognitive_deployment" "engineering-rd-project-agents-gpt4o" {
   }
 }
 
-resource "azurerm_cognitive_deployment" "engineering-rd-project-agents-gpt4o"  {
+resource "azurerm_cognitive_deployment" "engineering-rd-project-agents-gpt4o-mini"  {
   name                 = "gpt-4o-mini"
   cognitive_account_id = azurerm_cognitive_account.engineering-rd-project-agents.id
   model {
