@@ -90,7 +90,7 @@ resource "aws_secretsmanager_secret_policy" "msk_secret" {
 }
 
 # Allow inbound from db vpc CIDR to SASL/SCRAM port 9096 for bastion tunnels
-resource "aws_security_group_rule" "kafka_ingress_eks-dev-3" {
+resource "aws_security_group_rule" "kafka_ingress" {
   type              = "ingress"
   from_port         = 9096
   to_port           = 9096
