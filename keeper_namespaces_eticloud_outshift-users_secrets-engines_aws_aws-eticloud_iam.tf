@@ -3,6 +3,26 @@ resource "aws_iam_user" "vault-secret-engine-dev-sandbox" {
   name = "vault-secret-engine-dev-sandbox"
 }
 
+resource "aws_iam_user_policy" "vault-secret-engine-dev-sandbox-policy" {
+  name   = "vault-secret-engine-dev-sandbox-policy"
+  user   = aws_iam_user.vault-secret-engine-dev-sandbox.name
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+          "iam:CreateUser"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
 resource "aws_iam_access_key" "vault-secret-engine-dev-sandbox" {
   user = aws_iam_user.vault-secret-engine-dev-sandbox.name
 }
@@ -52,13 +72,6 @@ resource "aws_iam_policy" "dev-sandbox-ecr-access-policy" {
       ],
       "Effect": "Allow",
       "Resource": "arn:aws:ecr:us-east-2:626007623524:repository/sandbox/*"
-    },
-    {
-      "Action": [
-          "iam:CreateUser"
-      ],
-      "Effect": "Allow",
-      "Resource": "*"
     }
   ]
 }
