@@ -7,4 +7,7 @@ variable "role_name" {
 variable "tags" {
   description = "Tags to apply to the IAM roles"
   type        = map(string)
+  default = {
+    ApplicationName = "outshift_ventures"
+  }
 }
