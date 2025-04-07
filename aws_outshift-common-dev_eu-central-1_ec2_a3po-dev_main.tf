@@ -49,7 +49,7 @@ module "ec2" {
   ignore_ami_changes = "true"
 
   # Tags
-  application_name    = "outshift_foundational_services"
+  application_name    = "outshift_ventures"
   component           = "a3po"
   cisco_mail_alias    = "outshift-a3po@cisco.com"
   data_classification = "Cisco Confidential"
