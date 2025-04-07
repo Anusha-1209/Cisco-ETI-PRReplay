@@ -9,5 +9,5 @@ resource "aws_iam_role" "this" {
 # Attach PowerUserAccess AWS Managed Policy 
 resource "aws_iam_role_policy_attachment" "power_user_access_policy_attachment" {
   role       = aws_iam_role.this.name
-  policy_arn = "arn:aws:iam::aws:policy/PowerUserAccess"
+  policy_arn = var.policy_arn
 }
