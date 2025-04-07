@@ -14,7 +14,7 @@ module "rds" {
   source            = "git::https://github.com/cisco-eti/sre-tf-module-aws-aurora-postgres?ref=1.1.0"
   vpc_name          = local.vpc_name
   database_name     = "phoenix"
-  db_instance_type  = "db.r7g.xlarge"
+  db_instance_type  = "db.r7g.large"
   cluster_name      = local.rds_name
   secret_path       = "secret/eticcprod/infra/aurora-pg/us-east-2/outshift-common-dev/phoenix-dev-1"
   db_allowed_cidrs  = [data.aws_vpc.cluster_vpc.cidr_block]
