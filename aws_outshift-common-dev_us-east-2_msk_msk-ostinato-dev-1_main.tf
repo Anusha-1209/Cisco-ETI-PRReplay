@@ -101,11 +101,11 @@ resource "aws_security_group_rule" "kafka_ingress" {
 
 module "msk" {
   source               = "cloudposse/msk-apache-kafka-cluster/aws"
-  version              = "3.6.0"
+  version              = "2.3.0"
   name                 = local.msk_name
   vpc_id               = data.aws_vpc.db_vpc.id
   subnet_ids           = data.aws_subnets.private.ids
-  kafka_version        = "3.3.2"
+  kafka_version        = "3.6.0"
   broker_instance_type = "kafka.t3.small"
   properties = {
     "auto.create.topics.enable"      = true
