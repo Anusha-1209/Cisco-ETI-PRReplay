@@ -35,5 +35,5 @@ data "vault_generic_secret" "generic_user_gh_token" {
 # Configure the GitHub Provider
 provider "github" {
   token = data.vault_generic_secret.generic_user_gh_token.data["TERRAFORM_ADMIN_GHEC_PAT"]
-  owner = "cisco-platform" # CHANGE_ME: The owner of the repository
+  owner = "cisco-platform"
 }
