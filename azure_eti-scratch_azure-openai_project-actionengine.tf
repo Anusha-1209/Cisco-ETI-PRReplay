@@ -1,5 +1,5 @@
 locals {
-  project-actionengine   = "project-actionengine"
+  project-actionengine = "project-actionengine"
   project-actionengine-tags = {
     ApplicationName    = "ActionEngine (LAM)"
     Component          = "Planner system"
@@ -17,8 +17,8 @@ resource "azurerm_resource_group" "project-actionengine" {
 }
 
 resource "azurerm_cognitive_account" "project-actionengine" {
-  name                  = "${local.project-actionengine}"
-  custom_subdomain_name = "${local.project-actionengine}"
+  name                  = local.project-actionengine
+  custom_subdomain_name = local.project-actionengine
   location              = azurerm_resource_group.project-actionengine.location
   resource_group_name   = azurerm_resource_group.project-actionengine.name
   kind                  = "OpenAI"
@@ -36,12 +36,12 @@ resource "azurerm_cognitive_deployment" "project-actionengine-gpt4o" {
   }
 
   sku {
-    name = "GlobalStandard"
+    name     = "GlobalStandard"
     capacity = 1000
   }
 }
 
-resource "azurerm_cognitive_deployment" "project-actionengine-gpt4o-mini"  {
+resource "azurerm_cognitive_deployment" "project-actionengine-gpt4o-mini" {
   name                 = "gpt-4o-mini"
   cognitive_account_id = azurerm_cognitive_account.project-actionengine.id
   model {
@@ -51,7 +51,7 @@ resource "azurerm_cognitive_deployment" "project-actionengine-gpt4o-mini"  {
   }
 
   sku {
-    name = "GlobalStandard"
+    name     = "GlobalStandard"
     capacity = 1000
   }
 }

@@ -17,8 +17,8 @@ resource "azurerm_resource_group" "prcoach-project-agents" {
 }
 
 resource "azurerm_cognitive_account" "prcoach-project-agents" {
-  name                  = "${local.prcoach-project-agents}"
-  custom_subdomain_name = "${local.prcoach-project-agents}"
+  name                  = local.prcoach-project-agents
+  custom_subdomain_name = local.prcoach-project-agents
   location              = azurerm_resource_group.prcoach-project-agents.location
   resource_group_name   = azurerm_resource_group.prcoach-project-agents.name
   kind                  = "OpenAI"
@@ -36,12 +36,12 @@ resource "azurerm_cognitive_deployment" "prcoach-project-agents-gpt4o" {
   }
 
   sku {
-    name = "GlobalStandard"
+    name     = "GlobalStandard"
     capacity = 1000
   }
 }
 
-resource "azurerm_cognitive_deployment" "prcoach-project-agents-gpt4o-mini"  {
+resource "azurerm_cognitive_deployment" "prcoach-project-agents-gpt4o-mini" {
   name                 = "gpt-4o-mini"
   cognitive_account_id = azurerm_cognitive_account.prcoach-project-agents.id
   model {
@@ -51,7 +51,7 @@ resource "azurerm_cognitive_deployment" "prcoach-project-agents-gpt4o-mini"  {
   }
 
   sku {
-    name = "GlobalStandard"
+    name     = "GlobalStandard"
     capacity = 1000
   }
 }

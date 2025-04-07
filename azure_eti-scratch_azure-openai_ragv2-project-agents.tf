@@ -1,5 +1,5 @@
 locals {
-  ragv2-project-agents   = "ragv2-project-agents"
+  ragv2-project-agents = "ragv2-project-agents"
   ragv2-project-agents-tags = {
     ApplicationName    = "outshift_foundational_services"
     Component          = "ragv2"
@@ -17,8 +17,8 @@ resource "azurerm_resource_group" "ragv2-project-agents" {
 }
 
 resource "azurerm_cognitive_account" "ragv2-project-agents" {
-  name                  = "${local.ragv2-project-agents}"
-  custom_subdomain_name = "${local.ragv2-project-agents}"
+  name                  = local.ragv2-project-agents
+  custom_subdomain_name = local.ragv2-project-agents
   location              = azurerm_resource_group.ragv2-project-agents.location
   resource_group_name   = azurerm_resource_group.ragv2-project-agents.name
   kind                  = "OpenAI"
@@ -36,7 +36,7 @@ resource "azurerm_cognitive_deployment" "ragv2-project-agents-gpt-4o-mini" {
   }
 
   sku {
-    name = "GlobalStandard"
+    name     = "GlobalStandard"
     capacity = 1000
   }
 }

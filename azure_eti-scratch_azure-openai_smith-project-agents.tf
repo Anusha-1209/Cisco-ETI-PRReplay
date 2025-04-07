@@ -1,5 +1,5 @@
 locals {
-  smith-project-agents   = "smith-project-agents"
+  smith-project-agents = "smith-project-agents"
   smith-project-agents-tags = {
     ApplicationName    = "smith"
     CiscoMailAlias     = "eti-sre-admins@cisco.com"
@@ -16,8 +16,8 @@ resource "azurerm_resource_group" "smith-project-agents" {
 }
 
 resource "azurerm_cognitive_account" "smith-project-agents" {
-  name                  = "${local.smith-project-agents}"
-  custom_subdomain_name = "${local.smith-project-agents}"
+  name                  = local.smith-project-agents
+  custom_subdomain_name = local.smith-project-agents
   location              = azurerm_resource_group.smith-project-agents.location
   resource_group_name   = azurerm_resource_group.smith-project-agents.name
   kind                  = "OpenAI"
@@ -35,7 +35,7 @@ resource "azurerm_cognitive_deployment" "smith-project-agents-gpt4o" {
   }
 
   sku {
-    name = "GlobalStandard"
+    name     = "GlobalStandard"
     capacity = 1050
   }
 }

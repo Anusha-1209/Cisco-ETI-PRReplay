@@ -17,8 +17,8 @@ resource "azurerm_resource_group" "agntcy-project" {
 }
 
 resource "azurerm_cognitive_account" "agntcy-project" {
-  name                  = "${local.agntcy-project}"
-  custom_subdomain_name = "${local.agntcy-project}"
+  name                  = local.agntcy-project
+  custom_subdomain_name = local.agntcy-project
   location              = azurerm_resource_group.agntcy-project.location
   resource_group_name   = azurerm_resource_group.agntcy-project.name
   kind                  = "OpenAI"
@@ -36,12 +36,12 @@ resource "azurerm_cognitive_deployment" "agntcy-project-gpt4o" {
   }
 
   sku {
-    name = "GlobalStandard"
+    name     = "GlobalStandard"
     capacity = 1000
   }
 }
 
-resource "azurerm_cognitive_deployment" "agntcy-project-gpt4o-mini"  {
+resource "azurerm_cognitive_deployment" "agntcy-project-gpt4o-mini" {
   name                 = "gpt-4o-mini"
   cognitive_account_id = azurerm_cognitive_account.agntcy-project.id
   model {
@@ -51,7 +51,7 @@ resource "azurerm_cognitive_deployment" "agntcy-project-gpt4o-mini"  {
   }
 
   sku {
-    name = "GlobalStandard"
+    name     = "GlobalStandard"
     capacity = 1000
   }
 }

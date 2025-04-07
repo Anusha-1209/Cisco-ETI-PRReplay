@@ -1,5 +1,5 @@
 locals {
-  project-dmonkey   = "project-dmonkey"
+  project-dmonkey = "project-dmonkey"
   project-dmonkey-tags = {
     ApplicationName    = "dmonkey"
     Component          = "dmonkey"
@@ -17,8 +17,8 @@ resource "azurerm_resource_group" "project-dmonkey" {
 }
 
 resource "azurerm_cognitive_account" "project-dmonkey" {
-  name                  = "${local.project-dmonkey}"
-  custom_subdomain_name = "${local.project-dmonkey}"
+  name                  = local.project-dmonkey
+  custom_subdomain_name = local.project-dmonkey
   location              = azurerm_resource_group.project-dmonkey.location
   resource_group_name   = azurerm_resource_group.project-dmonkey.name
   kind                  = "OpenAI"
@@ -36,12 +36,12 @@ resource "azurerm_cognitive_deployment" "project-dmonkey-gpt4o" {
   }
 
   sku {
-    name = "GlobalStandard"
+    name     = "GlobalStandard"
     capacity = 1000
   }
 }
 
-resource "azurerm_cognitive_deployment" "project-dmonkey-gpt4o-mini"  {
+resource "azurerm_cognitive_deployment" "project-dmonkey-gpt4o-mini" {
   name                 = "gpt-4o-mini"
   cognitive_account_id = azurerm_cognitive_account.project-dmonkey.id
   model {
@@ -51,7 +51,7 @@ resource "azurerm_cognitive_deployment" "project-dmonkey-gpt4o-mini"  {
   }
 
   sku {
-    name = "GlobalStandard"
+    name     = "GlobalStandard"
     capacity = 1000
   }
 }

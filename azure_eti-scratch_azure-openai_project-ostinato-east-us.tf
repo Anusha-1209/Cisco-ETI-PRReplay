@@ -1,5 +1,5 @@
 locals {
-  project-ostinato   = "project-ostinato"
+  project-ostinato = "project-ostinato"
   project-ostinato-tags = {
     ApplicationName    = "outshift_foundational_services"
     Component          = "ostinato"
@@ -17,8 +17,8 @@ resource "azurerm_resource_group" "project-ostinato" {
 }
 
 resource "azurerm_cognitive_account" "project-ostinato" {
-  name                  = "${local.project-ostinato}"
-  custom_subdomain_name = "${local.project-ostinato}"
+  name                  = local.project-ostinato
+  custom_subdomain_name = local.project-ostinato
   location              = azurerm_resource_group.project-ostinato.location
   resource_group_name   = azurerm_resource_group.project-ostinato.name
   kind                  = "OpenAI"
@@ -36,12 +36,12 @@ resource "azurerm_cognitive_deployment" "project-ostinato-gpt4o" {
   }
 
   sku {
-    name = "GlobalStandard"
+    name     = "GlobalStandard"
     capacity = 1000
   }
 }
 
-resource "azurerm_cognitive_deployment" "project-ostinato-gpt4o-mini"  {
+resource "azurerm_cognitive_deployment" "project-ostinato-gpt4o-mini" {
   name                 = "gpt-4o-mini"
   cognitive_account_id = azurerm_cognitive_account.project-ostinato.id
   model {
@@ -51,7 +51,7 @@ resource "azurerm_cognitive_deployment" "project-ostinato-gpt4o-mini"  {
   }
 
   sku {
-    name = "GlobalStandard"
+    name     = "GlobalStandard"
     capacity = 1000
   }
 }

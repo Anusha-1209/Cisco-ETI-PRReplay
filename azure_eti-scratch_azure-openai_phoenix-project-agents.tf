@@ -17,8 +17,8 @@ resource "azurerm_resource_group" "phoenix-project-agents" {
 }
 
 resource "azurerm_cognitive_account" "phoenix-project-agents" {
-  name                  = "${local.phoenix-project-agents}"
-  custom_subdomain_name = "${local.phoenix-project-agents}"
+  name                  = local.phoenix-project-agents
+  custom_subdomain_name = local.phoenix-project-agents
   location              = azurerm_resource_group.phoenix-project-agents.location
   resource_group_name   = azurerm_resource_group.phoenix-project-agents.name
   kind                  = "OpenAI"
@@ -36,12 +36,12 @@ resource "azurerm_cognitive_deployment" "phoenix-project-agents-gpt4o" {
   }
 
   sku {
-    name = "GlobalStandard"
+    name     = "GlobalStandard"
     capacity = 1000
   }
 }
 
-resource "azurerm_cognitive_deployment" "phoenix-project-agents-gpt4o-mini"  {
+resource "azurerm_cognitive_deployment" "phoenix-project-agents-gpt4o-mini" {
   name                 = "gpt-4o-mini"
   cognitive_account_id = azurerm_cognitive_account.phoenix-project-agents.id
   model {
@@ -51,7 +51,7 @@ resource "azurerm_cognitive_deployment" "phoenix-project-agents-gpt4o-mini"  {
   }
 
   sku {
-    name = "GlobalStandard"
+    name     = "GlobalStandard"
     capacity = 1000
   }
 }

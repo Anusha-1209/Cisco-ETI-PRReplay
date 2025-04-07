@@ -1,5 +1,5 @@
 locals {
-  mm-rag-team   = "mm-rag-team"
+  mm-rag-team = "mm-rag-team"
   ai-team-tags = {
     ApplicationName    = "ai-team"
     ComponentName      = "mm-rag-team"
@@ -17,8 +17,8 @@ resource "azurerm_resource_group" "mm-rag-team" {
 }
 
 resource "azurerm_cognitive_account" "mm-rag-team" {
-  name                  = "${local.mm-rag-team}"
-  custom_subdomain_name = "${local.mm-rag-team}"
+  name                  = local.mm-rag-team
+  custom_subdomain_name = local.mm-rag-team
   location              = azurerm_resource_group.mm-rag-team.location
   resource_group_name   = azurerm_resource_group.mm-rag-team.name
   kind                  = "OpenAI"
@@ -36,7 +36,7 @@ resource "azurerm_cognitive_deployment" "mm-rag-team-gpt4o" {
   }
 
   sku {
-    name = "GlobalStandard"
+    name     = "GlobalStandard"
     capacity = 1000
   }
 }
