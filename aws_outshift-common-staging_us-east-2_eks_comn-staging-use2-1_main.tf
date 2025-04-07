@@ -19,13 +19,14 @@ module "eks_all_in_one" {
   source = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=latest"
 
 
-  name               = local.name             # EKS cluster name
-  region             = local.region           # AWS provider region
-  aws_account_name   = local.aws_account_name # AWS account name
-  cidr               = "10.0.0.0/16"          # VPC CIDR
+  name               = local.name               # EKS cluster name
+  region             = local.region             # AWS provider region
+  aws_account_name   = local.aws_account_name   # AWS account name
+  cidr               = "10.0.0.0/16"            # VPC CIDR
   public_subnet_mask = 196
   intra_subnet_mask  = 200
-  cluster_version    = "1.30"                 # EKS cluster version
+  cluster_version    = "1.30"                   # EKS cluster version
+  ami_id             = "ami-0cba9f6415d2bb366"  # AMI ID
 
   # EKS Managed Private Node Group
   instance_types = ["m6a.2xlarge"] # EKS instance types
