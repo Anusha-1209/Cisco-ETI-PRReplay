@@ -20,10 +20,10 @@ resource "vault_jwt_auth_backend_role" "actionengine" {
     given_name  = "given_name",
     sub         = "sub"
   }
-  groups_claim = "memberof"
-  oidc_scopes  = ["profile", "email", "openid"]
-  user_claim   = "sub"
-  token_policies = [vault_policy.actionengine.name]
+  groups_claim   = "memberof"
+  oidc_scopes    = ["profile", "email", "openid"]
+  user_claim     = "sub"
+  token_policies = [vault_policy.actionengine.name, vault_policy.default.name]
 }
 resource "vault_policy" "actionengine" {
   provider = vault.venture

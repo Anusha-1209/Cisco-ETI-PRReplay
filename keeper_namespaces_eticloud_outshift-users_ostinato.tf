@@ -20,10 +20,10 @@ resource "vault_jwt_auth_backend_role" "ostinato" {
     given_name  = "given_name",
     sub         = "sub"
   }
-  groups_claim = "memberof"
-  oidc_scopes  = ["profile", "email", "openid"]
-  user_claim   = "sub"
-  token_policies = [vault_policy.ostinato.name]
+  groups_claim   = "memberof"
+  oidc_scopes    = ["profile", "email", "openid"]
+  user_claim     = "sub"
+  token_policies = [vault_policy.ostinato.name, vault_policy.default.name]
 }
 resource "vault_policy" "ostinato" {
   provider = vault.venture

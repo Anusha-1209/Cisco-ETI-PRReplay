@@ -4,8 +4,8 @@ resource "aws_iam_user" "vault-secret-engine-dev-sandbox" {
 }
 
 resource "aws_iam_user_policy" "vault-secret-engine-dev-sandbox-policy" {
-  name   = "vault-secret-engine-dev-sandbox-policy"
-  user   = aws_iam_user.vault-secret-engine-dev-sandbox.name
+  name = "vault-secret-engine-dev-sandbox-policy"
+  user = aws_iam_user.vault-secret-engine-dev-sandbox.name
 
   policy = <<EOF
 {

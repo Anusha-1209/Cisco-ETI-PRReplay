@@ -9,7 +9,7 @@ provider "vault" {
 }
 
 data "vault_generic_secret" "aws_infra_credential" {
-  path      = "secret/infra/aws/eticloud/terraform_admin"
+  path = "secret/infra/aws/eticloud/terraform_admin"
 }
 
 # Infra AWS Provider
