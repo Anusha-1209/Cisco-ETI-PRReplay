@@ -1,20 +1,3 @@
-# OIDC Credentials
-data "vault_generic_secret" "oidc_credential" {
-  provider = vault.teamsecrets
-  path     = "secret/cisco_sso_auth_clients/vault_oidc_creds"
-}
-
-# oidc auth backend
-resource "vault_jwt_auth_backend" "oidc" {
-  provider           = vault.venture
-  type               = "oidc"
-  path               = "oidc"
-  oidc_client_id     = var.oidc_client_id
-  oidc_client_secret = data.vault_generic_secret.oidc_credential.data["client_secret"]
-  oidc_discovery_url = "https://sso-dbbfec7f.sso.duosecurity.com/oidc/${var.oidc_client_id}"
-  default_role       = "generic-user"
-}
-
 # Outshift dmonkey Vault Role
 resource "vault_jwt_auth_backend_role" "dmonkey" {
   depends_on = [vault_policy.dmonkey]
