@@ -18,12 +18,13 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = "Outshift Platform Application Cluster"
+      ApplicationName    = "outshift_infrastructure"
+      Component          = "platform_2025"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
       Environment        = "NonProd"
-      ResourceOwner      = "Outshift Platform"
+      ResourceOwner      = "eti-sre-admin"
     }
   }
 }
