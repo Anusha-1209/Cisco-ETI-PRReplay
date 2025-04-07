@@ -124,5 +124,5 @@ resource "vault_jwt_auth_backend" "oidc" {
   oidc_client_id     = var.oidc_client_id
   oidc_client_secret = data.vault_generic_secret.oidc_credential.data["client_secret"]
   oidc_discovery_url = "https://sso-dbbfec7f.sso.duosecurity.com/oidc/${var.oidc_client_id}"
-  default_role       = "default"
+  default_role       = "sandbox-developer"
 }

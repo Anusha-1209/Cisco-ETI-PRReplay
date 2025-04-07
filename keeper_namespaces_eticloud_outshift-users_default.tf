@@ -1,8 +1,8 @@
-# Outshift default Vault Role
-resource "vault_jwt_auth_backend_role" "default" {
-  depends_on = [vault_policy.default]
+# Outshift sandbox-developer Vault Role
+resource "vault_jwt_auth_backend_role" "sandbox-developer" {
+  depends_on = [vault_policy.sandbox-developer]
   provider   = vault.venture
-  role_name  = "default"
+  role_name  = "sandbox-developer"
   role_type  = "oidc"
   backend    = vault_jwt_auth_backend.oidc.path
   allowed_redirect_uris = ["https://keeper.cisco.com/ui/vault/auth/oidc/oidc/callback",
@@ -23,11 +23,11 @@ resource "vault_jwt_auth_backend_role" "default" {
   groups_claim = "memberof"
   oidc_scopes  = ["profile", "email", "openid"]
   user_claim   = "sub"
-  token_policies = [vault_policy.default.name]
+  token_policies = [vault_policy.sandbox-developer.name]
 }
-resource "vault_policy" "default" {
+resource "vault_policy" "sandbox-developer" {
   provider = vault.venture
-  name     = "default"
+  name     = "sandbox-developer"
   policy   = <<EOT
 # Manage auth methods broadly across Vault
 # List, create, update, and delete key/value secrets
