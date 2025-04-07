@@ -27,7 +27,7 @@ provider "vault" {
 }
 
 # cluster resources for external-secrets
-module "eso_eticloud" {
+module "eso_ostinato" {
   depends_on = [ module.eks_all_in_one ]
   cluster_ca        = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
   cluster_endpoint  = data.vault_generic_secret.cluster_endpoint.data["cluster_endpoint"]
