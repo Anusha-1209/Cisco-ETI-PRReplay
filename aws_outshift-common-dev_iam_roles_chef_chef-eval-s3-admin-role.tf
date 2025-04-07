@@ -1,20 +1,20 @@
 resource "aws_iam_policy" "chef_eval_s3_admin_policy" {
   name        = "chef-eval-s3-admin-policy"
   description = "chef-eval S3 Admin Role IAM Policy"
-  policy      = jsonencode({
+  policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
       {
         Effect = "Allow",
         Action = [
-          "s3:PutObject",      
-          "s3:GetObject",      
-          "s3:DeleteObject",   
-          "s3:ListBucket"      
+          "s3:PutObject",
+          "s3:GetObject",
+          "s3:DeleteObject",
+          "s3:ListBucket"
         ],
         Resource = [
-          "arn:aws:s3:::chef-eval",    
-          "arn:aws:s3:::chef-eval/*" 
+          "arn:aws:s3:::chef-eval",
+          "arn:aws:s3:::chef-eval/*"
         ]
       }
     ]
