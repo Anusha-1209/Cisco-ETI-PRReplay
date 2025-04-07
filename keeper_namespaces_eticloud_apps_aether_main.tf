@@ -65,7 +65,7 @@ resource "vault_jwt_auth_backend" "oidc" {
 resource "vault_jwt_auth_backend_role" "aether" {
   depends_on = [vault_policy.aether]
   provider   = vault.venture
-  role_name  = "aether"
+  role_name  = "developer"
   role_type  = "oidc"
   backend    = vault_jwt_auth_backend.oidc.path
   allowed_redirect_uris = ["https://keeper.cisco.com/ui/vault/auth/oidc/oidc/callback",
@@ -89,9 +89,9 @@ resource "vault_jwt_auth_backend_role" "aether" {
   token_policies = [vault_policy.aether.name]
 }
 
-resource "vault_policy" "aether" {
+resource "vault_policy" "developer" {
   provider = vault.venture
-  name     = "aether"
+  name     = "developer"
   policy   = <<EOT
 # Manage auth methods broadly across Vault
 # List, create, update, and delete key/value secrets
