@@ -32,6 +32,14 @@ resource "vault_namespace" "namespace" {
   path     = var.venture_name
 }
 
+# key-value secrets engine
+resource "vault_mount" "genai" {
+  provider = vault.venture
+  path     = "genai"
+  type     = "kv"
+  options  = { version = "2" }
+}
+
 resource "vault_mount" "smith" {
   provider = vault.venture
   path     = "smith"
