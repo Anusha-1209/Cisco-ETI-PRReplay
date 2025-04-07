@@ -1,10 +1,10 @@
 resource "aws_eip" "eip" {
   instance = module.ec2-instance.id
-  tags     = {
+  tags = {
     "Name" = var.ec2_name
   }
 
-  tags_all             = {
+  tags_all = {
     "Name" = var.ec2_name
   }
 }
