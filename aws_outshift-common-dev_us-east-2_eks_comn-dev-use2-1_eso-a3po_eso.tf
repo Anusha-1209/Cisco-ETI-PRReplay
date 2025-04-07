@@ -40,7 +40,7 @@ data "aws_eks_cluster" "cluster" {
 data "vault_generic_secret" "cluster_certificate" {
   provider   = vault.eticloud
   path       = "secret/infra/eks/${local.name}/certificate"
-  depends_on = [module.eks_all_in_one]
+  
 }
 
 module "eso_eticloud_apps_a3po" {
