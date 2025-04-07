@@ -55,7 +55,7 @@ resource "aws_iam_policy" "dev-sandbox-ecr-access-policy" {
     },
     {
       "Action": [
-        iam:CreateUser
+          "iam:CreateUser"
       ],
       "Effect": "Allow",
       "Resource": "*"
