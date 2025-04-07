@@ -5,12 +5,12 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = "ostinato"
+      ApplicationName    = "outshift_foundational_services"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Confidential"
       DataTaxonomy       = "Cisco Operations Data"
       Environment        = "Prod"
-      ResourceOwner      = "outshift_foundational_services"
+      ResourceOwner      = "ostinato"
     }
   }
 }
