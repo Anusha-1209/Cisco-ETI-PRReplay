@@ -31,5 +31,10 @@ module "eks_all_in_one" {
       username = "devops",
       groups   = ["system:masters"]
     }
+    , {
+      rolearn  = "arn:aws:iam::${local.account_id}:role/cluster-access",
+      username = "cluster-access",
+      groups   = ["system:masters"]
+    }
   ]
 }
