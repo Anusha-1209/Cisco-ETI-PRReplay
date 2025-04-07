@@ -17,13 +17,13 @@ provider "aws" {
   max_retries = 3
   default_tags {
     tags = {
-      ApplicationName    = "OPEng Platform"
-      Component          = "baseapps"
+      ApplicationName    = "outshift_infrastructure"
+      Component          = "platform_2025"
       CiscoMailAlias     = "eti-sre-admins@cisco.com"
       DataClassification = "Cisco Restricted"
       DataTaxonomy       = "Cisco Operations Data"
       Environment        = "NonProd"
-      ResourceOwner      = "Outshift SRE"
+      ResourceOwner      = "eti-sre-admin"
     }
   }
 }
