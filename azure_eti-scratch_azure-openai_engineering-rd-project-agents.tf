@@ -1,7 +1,6 @@
 locals {
-  name   = "engineering-rd-project-agents"
-  region = "eastus"
-  tags = {
+  engineering-rd-project-agents   = "engineering-rd-project-agents"
+  engineering-rd-project-agents-tags = {
     ApplicationName    = "engineering_rd"
     Component          = "test-agent"
     ResourceOwner      = "tiswanso"
@@ -13,24 +12,23 @@ locals {
 }
 
 resource "azurerm_resource_group" "engineering-rd-project-agents" {
-  name     = local.name
-  location = local.region
+  name     = local.engineering-rd-project-agents
+  location = local.region_eastus
 }
 
 resource "azurerm_cognitive_account" "engineering-rd-project-agents" {
-  name                  = "${local.name}"
-  custom_subdomain_name = "${local.name}"
+  name                  = "${local.engineering-rd-project-agents}"
+  custom_subdomain_name = "${local.engineering-rd-project-agents}"
   location              = azurerm_resource_group.engineering-rd-project-agents.location
   resource_group_name   = azurerm_resource_group.engineering-rd-project-agents.name
   kind                  = "OpenAI"
   sku_name              = "S0"
-  tags                  = local.tags
+  tags                  = local.engineering-rd-project-agents-tags
 }
 
 resource "azurerm_cognitive_deployment" "engineering-rd-project-agents-gpt4o" {
   name                 = "gpt-4o"
   cognitive_account_id = azurerm_cognitive_account.engineering-rd-project-agents.id
-  rai_policy_name      = "HIGH_INPUT_OUTPUT_FILTER"
   model {
     format  = "OpenAI"
     name    = "gpt-4o"
