@@ -13,7 +13,12 @@ resource "aws_iam_user_policy" "vault-secret-engine-dev-sandbox-policy" {
   "Statement": [
     {
       "Action": [
-          "iam:CreateUser"
+          "iam:CreateUser",
+          "iam:PutUserPolicy",
+          "iam:CreateAccessKey",
+          "iam:DeleteAccessKey",
+          "iam:DeleteUser"
+
       ],
       "Effect": "Allow",
       "Resource": "*"
@@ -72,6 +77,13 @@ resource "aws_iam_policy" "dev-sandbox-ecr-access-policy" {
       ],
       "Effect": "Allow",
       "Resource": "arn:aws:ecr:us-east-2:626007623524:repository/sandbox/*"
+    },
+    {
+      "Action": [
+        "sts:GetCallerIdentity"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
     }
   ]
 }
