@@ -29,7 +29,7 @@ provider "aws" {
       DataClassification = "Cisco Restricted"
       DataTaxonomy       = "Cisco Operations Data"
       Environment        = "NonProd"
-      ResourceOwner      = "eti-sre-admins@cisco.com"
+      ResourceOwner      = "subbaksh@cisco.com"
 
       IntendedPublic = "False"
 
@@ -38,7 +38,7 @@ provider "aws" {
 }
 
 module "s3" {
-  source                = "git::https://wwwin-github.cisco.com/eti/sre-tf-module-aws-s3.git?ref=1.0.2"
+  source                = "git::https://github.cisco.com/cisco-eti/sre-tf-module-aws-s3.git?ref=1.0.2"
   bucket_name           = "outshift-platform-backstage-docs-dev"
   CSBApplicationName    = "ETI SRE Platform"
   CSBCiscoMailAlias     = "eti-sre-admins@cisco.com"
