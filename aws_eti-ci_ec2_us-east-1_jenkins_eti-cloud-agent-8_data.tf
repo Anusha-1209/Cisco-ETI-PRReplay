@@ -41,12 +41,12 @@ data "aws_security_group" "default" {
 }
 data "aws_security_group" "cloud_agent_ssh_from_cisco" {
   vpc_id = data.aws_vpc.ec2_vpc.id
-  name = "cloud_agent_ssh_from_cisco"
+  name   = "cloud_agent_ssh_from_cisco"
 }
 
 data "aws_security_group" "cloud_agent_host_monitoring_from_cisco" {
   vpc_id = data.aws_vpc.ec2_vpc.id
-  name = "cloud_agent_host_monitoring_from_cisco"
+  name   = "cloud_agent_host_monitoring_from_cisco"
 }
 
 data "aws_account_id" "current" {}
