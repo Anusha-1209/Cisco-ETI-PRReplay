@@ -102,6 +102,14 @@ resource "vault_mount" "actionengine" {
   listing_visibility = "hidden"
 }
 
+resource "vault_mount" "puccini" {
+  provider           = vault.venture
+  path               = "puccini"
+  type               = "kv"
+  options            = { version = "2" }
+  listing_visibility = "hidden"
+}
+
 # OIDC Credentials
 data "vault_generic_secret" "oidc_credential" {
   provider = vault.teamsecrets
