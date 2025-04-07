@@ -16,6 +16,5 @@ module "ec2-instance" {
       volume_size = 1000
       volume_type = "gp3"
     }
-  ] 
+  ]
 }
-  
