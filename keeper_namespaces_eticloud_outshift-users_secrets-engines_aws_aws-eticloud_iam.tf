@@ -4,8 +4,8 @@ resource "aws_iam_user" "vault-secret-engine-dev-sandbox" {
 }
 
 resource "aws_iam_user_policy" "vault-secret-engine-dev-sandbox-policy" {
-  name = "vault-secret-engine-dev-sandbox-policy"
-  user = aws_iam_user.vault-secret-engine-dev-sandbox.name
+  name   = "vault-secret-engine-dev-sandbox-policy"
+  user   = aws_iam_user.vault-secret-engine-dev-sandbox.name
 
   policy = <<EOF
 {
@@ -42,37 +42,36 @@ resource "aws_iam_policy" "dev-sandbox-ecr-access-policy" {
   "Statement": [
     {
       "Action": [
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:GetRepositoryPolicy",
+          "ecr:DescribeRepositories",
+          "ecr:ListImages",
+          "ecr:DescribeImages",
+          "ecr:BatchGetImage",
+          "ecr:InitiateLayerUpload",
+          "ecr:UploadLayerPart",
+          "ecr:CompleteLayerUpload",
+          "ecr:PutImage",
           "ecr:BatchGetRepositoryScanningConfiguration",
           "ecr:TagResource",
-          "ecr:BatchCheckLayerAvailability",
           "ecr:GetLifecyclePolicy",
           "ecr:DescribeImageScanFindings",
           "ecr:CreateRepository",
           "ecr:PutImageScanningConfiguration",
-          "ecr:GetDownloadUrlForLayer",
           "ecr:DescribePullThroughCacheRules",
-          "ecr:GetAuthorizationToken",
-          "ecr:PutImage",
           "ecr:UntagResource",
-          "ecr:BatchGetImage",
-          "ecr:DescribeImages",
-          "ecr:InitiateLayerUpload",
           "ecr:PutImageTagMutability",
           "ecr:DescribeImageReplicationStatus",
           "ecr:ListTagsForResource",
-          "ecr:UploadLayerPart",
           "ecr:CreatePullThroughCacheRule",
-          "ecr:ListImages",
           "ecr:PutRegistryPolicy",
           "ecr:GetRegistryScanningConfiguration",
-          "ecr:CompleteLayerUpload",
-          "ecr:DescribeRepositories",
           "sts:GetServiceBearerToken",
           "ecr:ReplicateImage",
           "ecr:DescribeRegistry",
           "ecr:BatchImportUpstreamImage",
           "ecr:SetRepositoryPolicy",
-          "ecr:GetRepositoryPolicy",
           "ecr:PutReplicationConfiguration"
       ],
       "Effect": "Allow",
@@ -80,7 +79,8 @@ resource "aws_iam_policy" "dev-sandbox-ecr-access-policy" {
     },
     {
       "Action": [
-        "sts:GetCallerIdentity"
+        "sts:GetCallerIdentity",
+        "ecr:GetAuthorizationToken"
       ],
       "Effect": "Allow",
       "Resource": "*"
