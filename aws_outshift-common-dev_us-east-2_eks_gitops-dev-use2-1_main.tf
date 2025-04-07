@@ -10,7 +10,7 @@ module "eks_all_in_one" {
 
 
   # EKS Managed Private Node Group
-  instance_types          = ["m6a.large"]
+  instance_types          = ["m6a.xlarge"]
   ami_type                = "CISCO_HARDENED_AL2"
   skip_cisco_hardened_ami = "false"
   min_size                = "1"
