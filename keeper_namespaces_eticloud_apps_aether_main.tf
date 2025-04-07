@@ -86,7 +86,7 @@ resource "vault_jwt_auth_backend_role" "aether" {
   groups_claim = "memberof"
   oidc_scopes  = ["profile", "email", "openid"]
   user_claim   = "sub"
-  token_policies = [vault_policy.aether.name]
+  token_policies = [vault_policy.developer.name]
 }
 
 resource "vault_policy" "developer" {
