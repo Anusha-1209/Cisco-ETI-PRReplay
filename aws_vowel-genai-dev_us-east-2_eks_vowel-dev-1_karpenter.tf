@@ -8,10 +8,10 @@ data "aws_eks_cluster" "cluster" {
 # locals
 locals {
   account_id         = data.aws_caller_identity.current.account_id
-  account_name       = "vowel-genai-dev"
+  account_name       = local.aws_account_name
   oidc_id            = trimprefix(data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer, "https://")
-  eks_name           = "vowel-dev-1"
-  aws_default_region = "us-east-2"
+  eks_name           = local.name
+  aws_default_region = local.region
 }
 
 resource "aws_iam_policy" "aws_karpenter_controller_policy" {
