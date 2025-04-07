@@ -29,9 +29,9 @@ module "eks_all_in_one" {
 
   # EKS Managed Private Node Group
   instance_types = ["m6a.2xlarge"] # EKS instance types
-  min_size       = 3               # EKS node group min size
-  max_size       = 3               # EKS node group max size
-  desired_size   = 3               # EKS node group desired size
+  min_size       = 2               # EKS node group min size
+  max_size       = 2               # EKS node group max size
+  desired_size   = 2               # EKS node group desired size
 
   # Karpenter
   create_karpenter_irsa = true #  Create Karpenter IRSA
