@@ -1,11 +1,8 @@
 data "aws_caller_identity" "current_outshift_common" {}
-data "aws_eks_cluster" "cluster_marvin" {
-  name = local.cluster_name
-}
 locals {
   cluster_name = "marvin-stage-use2-1" # The name of the associated EKS cluster. Must be updated
   account_id = data.aws_caller_identity.current_outshift_common.account_id
-  oidc_id    = trimprefix(data.aws_eks_cluster.cluster_marvin.identity[0].oidc[0].issuer, "https://")
+  oidc_id    = trimprefix("TBD", "https://")
 }
 
 resource "aws_iam_policy" "aws_sqs_collect_event_policy" {
