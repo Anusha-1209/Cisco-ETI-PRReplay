@@ -12,9 +12,9 @@ module "eks_all_in_one" {
   instance_types          = ["m6a.xlarge"]
   ami_type                = "CISCO_HARDENED_AL2"
   skip_cisco_hardened_ami = false
-  min_size                = 3
-  max_size                = 3
-  desired_size            = 3
+  min_size                = 1
+  max_size                = 1
+  desired_size            = 1
   create_karpenter_irsa   = true
   create_alb_irsa         = true
   create_otel_irsa        = true
