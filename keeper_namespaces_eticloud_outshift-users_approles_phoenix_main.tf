@@ -39,7 +39,7 @@ resource "vault_approle_auth_backend_role_secret_id" "ci_gha_backend_role_secret
 # Creates a secret with the backend role name, id, and secret id. Will be entered manually into GitHub Actions.
 resource "vault_kv_secret_v2" "ci_gha_backend_secret" {
   provider  = vault.phoenix
-  mount     = "secret"
+  mount     = "phoenix"
   name      = "approle/ci-gha-approle"
   data_json = jsonencode(
     {
