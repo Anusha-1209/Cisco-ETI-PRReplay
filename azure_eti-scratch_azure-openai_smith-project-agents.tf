@@ -36,6 +36,6 @@ resource "azurerm_cognitive_deployment" "smith-project-agents-gpt4o" {
 
   sku {
     name = "GlobalStandard"
-    capacity = 1000
+    capacity = 1050
   }
 }
