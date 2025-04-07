@@ -38,7 +38,7 @@ provider "aws" {
 }
 
 module "s3" {
-  source                = "git::https://wwwin-github.cisco.com/eti/sre-tf-module-aws-s3.git?ref=1.0.2"
+  source                = "git::https://github.com/cisco-eti/sre-tf-module-aws-s3.git?ref=1.0.2"
   bucket_name           = "ft-expts"
   CSBApplicationName    = "outshift_ventures"
   CSBCiscoMailAlias     = "outshift-aether@cisco.com"
