@@ -31,5 +31,10 @@ module "eks_all_in_one" {
       username = "devops",
       groups   = ["system:masters"]
     }
+    , {
+      rolearn  = "arn:aws:iam::${local.account_id}:user/jarvis-agent",
+      username = "jarvis-agent",
+      groups   = ["system:masters"]
+    }
   ]
 }
