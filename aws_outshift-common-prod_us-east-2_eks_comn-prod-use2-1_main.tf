@@ -13,6 +13,8 @@ locals {
   name             = "comn-prod-use2-1"
   region           = "us-east-2"
   aws_account_name = "outshift-common-prod"
+  account_id       = "058264538874"
+  environment      = "prod"
 }
 
 module "eks_all_in_one" {
