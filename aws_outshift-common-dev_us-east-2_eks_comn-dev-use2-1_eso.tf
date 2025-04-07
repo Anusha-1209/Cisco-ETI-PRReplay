@@ -52,6 +52,7 @@ module "eso_eticloud_apps_research" {
   kubernetes_ca   = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
   policies        = ["external-secrets-${local.name}"]
 }
+
 module "eso_eticloud_apps_sre" {
   source          = "git::https://github.com/cisco-eti/sre-tf-module-eso-access.git?ref=1.0.0"
   cluster_name    = local.name
@@ -116,19 +117,28 @@ module "eso_eticloud_apps_cil" {
 }
 
 module "eso_eticloud_apps_ppu" {
-  source               = "git::https://github.com/cisco-eti/sre-tf-module-eso-access.git?ref=1.0.0"
-  cluster_name         = local.name
-  vault_namespace      = "eticloud/apps/ppu"
-  kubernetes_host      = data.aws_eks_cluster.cluster.endpoint
-  kubernetes_ca        = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
-  policies             = ["external-secrets-${local.name}"]
+  source          = "git::https://github.com/cisco-eti/sre-tf-module-eso-access.git?ref=1.0.0"
+  cluster_name    = local.name
+  vault_namespace = "eticloud/apps/ppu"
+  kubernetes_host = data.aws_eks_cluster.cluster.endpoint
+  kubernetes_ca   = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
+  policies        = ["external-secrets-${local.name}"]
 }
 
 module "eso_eticloud_apps_rosey" {
-  source               = "git::https://github.com/cisco-eti/sre-tf-module-eso-access.git?ref=1.0.0"
-  cluster_name         = local.name
-  vault_namespace      = "eticloud/apps/rosey"
-  kubernetes_host      = data.aws_eks_cluster.cluster.endpoint
-  kubernetes_ca        = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
-  policies             = ["external-secrets-${local.name}"]
+  source          = "git::https://github.com/cisco-eti/sre-tf-module-eso-access.git?ref=1.0.0"
+  cluster_name    = local.name
+  vault_namespace = "eticloud/apps/rosey"
+  kubernetes_host = data.aws_eks_cluster.cluster.endpoint
+  kubernetes_ca   = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
+  policies        = ["external-secrets-${local.name}"]
+}
+
+module "eso_eticloud_apps_puccini" {
+  source          = "git::https://github.com/cisco-eti/sre-tf-module-eso-access.git?ref=1.0.0"
+  cluster_name    = local.name
+  vault_namespace = "eticloud/apps/puccini"
+  kubernetes_host = data.aws_eks_cluster.cluster.endpoint
+  kubernetes_ca   = base64decode(data.vault_generic_secret.cluster_certificate.data["b64certificate"])
+  policies        = ["external-secrets-${local.name}"]
 }
