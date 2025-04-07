@@ -55,8 +55,7 @@ resource "aws_iam_policy" "dev-sandbox-ecr-access-policy" {
     },
     {
       "Action": [
-        "ecr-public:GetAuthorizationToken",
-        "sts:GetServiceBearerToken"
+        iam:CreateUser
       ],
       "Effect": "Allow",
       "Resource": "*"
