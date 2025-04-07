@@ -25,7 +25,7 @@ module "eks_all_in_one" {
   aws_account_name = local.aws_account_name   # AWS account name
   ami_id           = "ami-068d8b6dc14fbaea9"  # AMI ID
   cidr             = "10.0.0.0/16"            # VPC CIDR
-  cluster_version  = "1.29"                   # EKS cluster version
+  cluster_version  = "1.32"                   # EKS cluster version
 
   # EKS Managed Private Node Group
   instance_types = ["m6a.2xlarge"] # EKS instance types
