@@ -99,5 +99,9 @@ path "aether/*"
 {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
+path "secret/*"
+{
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}
 EOT
 }
