@@ -3,8 +3,8 @@ resource "vault_aws_secret_backend" "dev-sandbox-aws-eticloud" {
   path        = "dev-sandbox-aws-eticloud"
   description = "AWS Secrets Engine for Dev Sandbox access"
 
-  access_key  = aws_iam_access_key.vault-secret-engine-user-eticloud.id
-  secret_key  = aws_iam_access_key.vault-secret-engine-user-eticloud.secret
+  access_key  = aws_iam_access_key.vault-secret-engine-dev-sandbox.id
+  secret_key  = aws_iam_access_key.vault-secret-engine-dev-sandbox.secret
 }
 
 resource "vault_aws_secret_backend_role" "dev-sandbox-vault-role" {

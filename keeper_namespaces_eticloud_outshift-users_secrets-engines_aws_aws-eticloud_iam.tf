@@ -20,7 +20,7 @@ resource "aws_iam_user_policy" "vault-secret-engine-dev-sandbox" {
       "Effect": "Allow",
       "Action": "sts:AssumeRole",
       "Resource": [
-        "arn:aws:iam::626007623524:role/dev-sandbox-ecr-access",
+        "arn:aws:iam::626007623524:role/dev-sandbox-ecr-access"
       ]
     }
   ]
