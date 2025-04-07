@@ -11,9 +11,7 @@ resource "vault_aws_secret_backend_role" "dev-sandbox-vault-role" {
   provider        = vault.outshift-users
   backend         = vault_aws_secret_backend.dev-sandbox-aws-eticloud.path
   name            = "dev-sandbox-vault-role"
-  credential_type = "assumed_role"
+  credential_type = "iam_user"
 
-  role_arns = [
-    aws_iam_role.dev-sandbox-ecr-access.arn,
-  ]
+  policy_document = aws_iam_policy.dev-sandbox-ecr-access-policy.policy
 }
