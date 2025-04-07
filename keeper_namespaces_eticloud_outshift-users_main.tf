@@ -54,6 +54,13 @@ resource "vault_mount" "ostinato" {
   options  = { version = "2" }
 }
 
+resource "vault_mount" "phoenix" {
+  provider = vault.venture
+  path     = "phoenix"
+  type     = "kv"
+  options  = { version = "2" }
+}
+
 # OIDC Credentials
 data "vault_generic_secret" "oidc_credential" {
   provider = vault.teamsecrets
@@ -70,4 +77,3 @@ resource "vault_jwt_auth_backend" "oidc" {
   oidc_discovery_url = "https://sso-dbbfec7f.sso.duosecurity.com/oidc/${var.oidc_client_id}"
   default_role       = "generic-user"
 }
-
