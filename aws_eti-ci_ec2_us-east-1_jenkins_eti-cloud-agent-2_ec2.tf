@@ -4,7 +4,7 @@ locals {
     mkdir ~/actions-runner && cd ~/actions-runner
     curl -o actions-runner-osx-x64-2.321.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.321.0/actions-runner-osx-x64-2.321.0.tar.gz
     tar xzf ./actions-runner-osx-x64-2.321.0.tar.gz
-    TOKEN=$(aws ssm get-parameter --name "gha-token" --with-decryption --query "Parameter.Value" --output text)
+    TOKEN=$(aws ssm get-parameter --name "outshift-platform-gha-token" --with-decryption --query "Parameter.Value" --output text)
     ./config.sh --url https://github.com/outshift-platform --token $TOKEN
     ./run.sh &
   EOT
@@ -73,7 +73,7 @@ resource "aws_iam_role_policy" "ec2_ssm_policy" {
     Statement = [{
       Effect   = "Allow",
       Action   = ["ssm:GetParameter"],
-      Resource = "arn:aws:ssm:us-east-1:${data.aws_caller_identity.current.account_id}:parameter/gha-token"
+      Resource = "arn:aws:ssm:us-east-1:${data.aws_caller_identity.current.account_id}:parameter/outshift-platform-gha-token"
     }]
   })
 }
