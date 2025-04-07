@@ -46,7 +46,9 @@ module "phoenix-ui-dev-cloudfront" {
         connection_attempts      = 3
         connection_timeout       = 10
         domain_name              = "outshift-phoenix-ui.s3.us-east-2.amazonaws.com"
+        origin_access_control_id = "EPYA8TEOXT0M2"
         origin_id                = "outshift-phoenix-ui"
+        
 
         origin_shield = {
             enabled              = true
