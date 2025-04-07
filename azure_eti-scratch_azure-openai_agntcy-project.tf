@@ -1,5 +1,5 @@
 locals {
-  agntcy-project = "agntcy-project"
+  agntcy-project = "agntcy"
   agntcy-project-tags = {
     ApplicationName    = "agntcy"
     Component          = "ioa"
