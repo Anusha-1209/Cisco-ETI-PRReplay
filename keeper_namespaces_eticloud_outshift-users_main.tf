@@ -192,7 +192,7 @@ resource "vault_policy" "ragv2" {
   policy   = <<EOT
 # Manage auth methods broadly across Vault
 # List, create, update, and delete key/value secrets
-path "outshift_foundational_services/ragv2/*"
+path "outshift_foundational_services/azure-ai/ragv2/*"
 {
   capabilities = ["read", "list"]
 }
