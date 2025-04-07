@@ -55,45 +55,51 @@ resource "vault_mount" "ostinato" {
 }
 
 resource "vault_mount" "phoenix" {
-  provider = vault.venture
-  path     = "phoenix"
-  type     = "kv"
-  options  = { version = "2" }
+  provider           = vault.venture
+  path               = "phoenix"
+  type               = "kv"
+  options            = { version = "2" }
+  listing_visibility = "hidden"
 }
 
 resource "vault_mount" "prcoach" {
-  provider = vault.venture
-  path     = "prcoach"
-  type     = "kv"
-  options  = { version = "2" }
+  provider           = vault.venture
+  path               = "prcoach"
+  type               = "kv"
+  options            = { version = "2" }
+  listing_visibility = "hidden"
 }
 
 resource "vault_mount" "engineering_rd" {
-  provider = vault.venture
-  path     = "engineering_rd"
-  type     = "kv"
-  options  = { version = "2" }
+  provider           = vault.venture
+  path               = "engineering_rd"
+  type               = "kv"
+  options            = { version = "2" }
+  listing_visibility = "hidden"
 }
 
 resource "vault_mount" "dmonkey" {
-  provider = vault.venture
-  path     = "dmonkey"
-  type     = "kv"
-  options  = { version = "2" }
+  provider           = vault.venture
+  path               = "dmonkey"
+  type               = "kv"
+  options            = { version = "2" }
+  listing_visibility = "hidden"
 }
 
 resource "vault_mount" "autosync" {
-  provider = vault.venture
-  path     = "autosync"
-  type     = "kv"
-  options  = { version = "2" }
+  provider           = vault.venture
+  path               = "autosync"
+  type               = "kv"
+  options            = { version = "2" }
+  listing_visibility = "hidden"
 }
 
 resource "vault_mount" "actionengine" {
-  provider = vault.venture
-  path     = "actionengine"
-  type     = "kv"
-  options  = { version = "2" }
+  provider           = vault.venture
+  path               = "actionengine"
+  type               = "kv"
+  options            = { version = "2" }
+  listing_visibility = "hidden"
 }
 
 # OIDC Credentials
