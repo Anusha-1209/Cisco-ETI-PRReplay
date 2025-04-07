@@ -26,7 +26,7 @@ provider "aws" {
 }
 
 module "ec2" {
-  source                          = "git::https://wwwin-github.cisco.com/eti/sre-tf-module-aws-ec2?ref=1.1.8"
+  source                          = "git::https://github.com/cisco-eti/sre-tf-module-aws-ec2?ref=1.1.8"
   ec2_name                        = "cisco-research-12" # The name of the instance(s) to be created. Will be appended with a number.
   ec2_associate_public_ip_address = false              # Whether the instance(s) will have a public IP address. If true, the instances will be created in public subnets and additional security groups will be required.
   ec2_instance_count              = 1                  # The number of instances to create.
