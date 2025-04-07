@@ -116,6 +116,13 @@ resource "vault_jwt_auth_backend_role" "developer" {
   vault_policy.default.name]
 }
 
+# vault default policy
+resource "vault_policy" "default" {
+  provider = vault.venture
+  name     = "default"
+  policy   = file(local.policies["default"])
+}
+
 # Define a map of policy names to filenames
 locals {
   policies = {
