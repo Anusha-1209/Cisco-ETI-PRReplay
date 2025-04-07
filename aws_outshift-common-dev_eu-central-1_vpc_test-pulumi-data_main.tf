@@ -35,3 +35,15 @@ module "vpc" {
   environment         = "NonProd"
   resource_owner      = "eti-sre-admins"
 }
+
+module "vpc_peering_compute_to_data" {
+  source             = "git::https://github.com/cisco-eti/sre-tf-module-vpc-peering.git?ref=2.0.0"
+  aws_accounts_to_regions = {
+    "common" = {
+      account_name = "outshift-common-dev"
+      region       = "eu-central-1"
+    }
+  }
+  accepter_vpc_name  = "outshift-platform-pulumi-test-vpc" # EKS VPC
+  requester_vpc_name = "test-pulumi-data"
+}
