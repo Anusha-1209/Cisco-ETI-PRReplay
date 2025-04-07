@@ -32,7 +32,7 @@ resource "azurerm_cognitive_deployment" "outshift-foundational-services-project-
   model {
     format  = "OpenAI"
     name    = "gpt-4o-mini"
-    version = "2024-05-13"
+    version = "2024-07-18"
   }
 
   sku {
