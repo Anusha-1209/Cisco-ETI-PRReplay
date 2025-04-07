@@ -10,7 +10,7 @@ resource "vault_auth_backend" "approle" {
 #region RESOURCES FOR CI-GHA-APPROLE #######
 
 data "local_file" "gha_policy_hcl" {
-  filename = "policies/phoenix-ci-gha-policy.hcl"
+  filename = "policies/ci-gha-policy.hcl"
 }
 
 resource "vault_policy" "ci_gha_policy" {
