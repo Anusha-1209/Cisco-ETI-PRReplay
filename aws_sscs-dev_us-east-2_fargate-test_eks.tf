@@ -56,7 +56,7 @@ module "eks" {
   cluster_endpoint_public_access  = true
   enable_cluster_creator_admin_permissions = true
 
-  
+
 
   cluster_addons = {
     coredns = {
@@ -123,15 +123,6 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
   token                  = data.aws_eks_cluster_auth.cluster.token
 }
-
-# resource "null_resource" "wait_for_eks" {
-#   provisioner "local-exec" {
-#     command = "echo 'Module 1 finished. Waiting for 180 seconds...' && sleep 180"
-#     on_failure = continue
-#   }
-
-#   depends_on = [module.eks]
-# }
 
 module "eks-auth" {
   source  = "terraform-aws-modules/eks/aws//modules/aws-auth"
