@@ -22,7 +22,7 @@ resource "aws_iam_policy" "aws_ostinato_dev_rag_services_policy" {
     Version = "2012-10-17",
     Statement = [
       {
-        Sid    = "VisualEditor0",
+        Sid    = "ostinato-dev-policy-0",
         Effect = "Allow",
         Action = [
           "secretsmanager:GetSecretValue",
@@ -33,7 +33,7 @@ resource "aws_iam_policy" "aws_ostinato_dev_rag_services_policy" {
         Resource = "*"
       },
       {
-        Sid    = "VisualEditor1",
+        Sid    = "ostinato-dev-policy-1",
         Effect = "Allow",
         Action = [
           "sagemaker:InvokeEndpoint",
