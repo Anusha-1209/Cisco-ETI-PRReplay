@@ -40,3 +40,18 @@ resource "azurerm_cognitive_deployment" "puccini-project-agents-gpt4o" {
     capacity = 1000
   }
 }
+
+resource "azurerm_cognitive_deployment" "puccini-project-agents-gpt4o-mini"  {
+  name                 = "gpt-4o-mini"
+  cognitive_account_id = azurerm_cognitive_account.puccini-project-agents.id
+  model {
+    format  = "OpenAI"
+    name    = "gpt-4o-mini"
+    version = "2024-07-18"
+  }
+
+  sku {
+    name = "GlobalStandard"
+    capacity = 1000
+  }
+}
