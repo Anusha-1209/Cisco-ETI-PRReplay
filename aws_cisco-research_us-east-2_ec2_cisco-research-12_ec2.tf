@@ -43,4 +43,4 @@ module "ec2" {
   tag_data_taxonomy               = "Cisco Operations Data"
   tag_environment                 = "Sandbox"
   tag_resource_owner              = "ETI SRE"
-}
+}  
