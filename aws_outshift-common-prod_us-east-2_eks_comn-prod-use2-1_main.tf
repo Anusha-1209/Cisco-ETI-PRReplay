@@ -13,7 +13,7 @@ locals {
   name             = "comn-prod-use2-1"
   region           = "us-east-2"
   aws_account_name = "outshift-common-prod"
-  account_id       = "058264538874"
+  account_id       = ""
   environment      = "prod"
 }
 
@@ -24,6 +24,7 @@ module "eks_all_in_one" {
   region           = local.region           # AWS provider region
   aws_account_name = local.aws_account_name # AWS account name
   cidr             = "10.0.0.0/16"          # VPC CIDR
+  ami_id           = "ami-083da7e490915501b"
   cluster_version  = "1.29"                 # EKS cluster version
 
   # EKS Managed Private Node Group
