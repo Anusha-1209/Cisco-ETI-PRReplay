@@ -22,7 +22,7 @@ module "eks_all_in_one" {
   name             = local.name               # EKS cluster name
   region           = local.region             # AWS provider region
   aws_account_name = local.aws_account_name   # AWS account name
-  ami_id           = "ami-0d33fa832c75e40d0"  # AMI ID
+  ami_id           = "ami-068d8b6dc14fbaea9"  # AMI ID
   cidr             = "10.0.0.0/16"            # VPC CIDR
   cluster_version  = "1.29"                   # EKS cluster version
 
