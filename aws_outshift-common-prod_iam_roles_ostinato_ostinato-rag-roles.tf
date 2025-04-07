@@ -40,8 +40,8 @@ resource "aws_iam_policy" "aws_ostinato_prod_rag_services_policy" {
           "sts:AssumeRoleWithWebIdentity"
         ],
         Resource = [
-          "arn:aws:iam::471112537430:role/ostinato-prod-rag-services-role",
-          "arn:aws:sagemaker:*:471112537430:endpoint/*"
+          "arn:aws:iam::058264538874:role/ostinato-prod-rag-services-role",
+          "arn:aws:sagemaker:*:058264538874:endpoint/*"
         ]
       }
     ]
@@ -57,39 +57,39 @@ resource "aws_iam_role" "aws_ostinato_prod_rag_services_role" {
       {
         Effect = "Allow",
         Principal = {
-          Federated = "arn:aws:iam::471112537430:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/A9EDA6D83ABE1896B92C50B3BACC7C27"
+          Federated = "arn:aws:iam::058264538874:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/39E6F8D301761D65BAFA5DADA4DEB5A5"
         },
         Action = "sts:AssumeRoleWithWebIdentity",
         Condition = {
           StringEquals = {
-            "oidc.eks.us-east-2.amazonaws.com/id/A9EDA6D83ABE1896B92C50B3BACC7C27:aud" : "sts.amazonaws.com",
-            "oidc.eks.us-east-2.amazonaws.com/id/A9EDA6D83ABE1896B92C50B3BACC7C27:sub" : "system:serviceaccount:ostinato-system:rag-acquisition-sa"
+            "oidc.eks.us-east-2.amazonaws.com/id/39E6F8D301761D65BAFA5DADA4DEB5A5:aud" : "sts.amazonaws.com",
+            "oidc.eks.us-east-2.amazonaws.com/id/39E6F8D301761D65BAFA5DADA4DEB5A5:sub" : "system:serviceaccount:ostinato-system:rag-acquisition-sa"
           }
         }
       },
       {
         Effect = "Allow",
         Principal = {
-          Federated = "arn:aws:iam::471112537430:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/A9EDA6D83ABE1896B92C50B3BACC7C27"
+          Federated = "arn:aws:iam::058264538874:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/39E6F8D301761D65BAFA5DADA4DEB5A5"
         },
         Action = "sts:AssumeRoleWithWebIdentity",
         Condition = {
           StringEquals = {
-            "oidc.eks.us-east-2.amazonaws.com/id/A9EDA6D83ABE1896B92C50B3BACC7C27:aud" : "sts.amazonaws.com",
-            "oidc.eks.us-east-2.amazonaws.com/id/A9EDA6D83ABE1896B92C50B3BACC7C27:sub" : "system:serviceaccount:ostinato-system:rag-inference-sa"
+            "oidc.eks.us-east-2.amazonaws.com/id/39E6F8D301761D65BAFA5DADA4DEB5A5:aud" : "sts.amazonaws.com",
+            "oidc.eks.us-east-2.amazonaws.com/id/39E6F8D301761D65BAFA5DADA4DEB5A5:sub" : "system:serviceaccount:ostinato-system:rag-inference-sa"
           }
         }
       },
       {
         Effect = "Allow",
         Principal = {
-          Federated = "arn:aws:iam::471112537430:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/A9EDA6D83ABE1896B92C50B3BACC7C27"
+          Federated = "arn:aws:iam::058264538874:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/39E6F8D301761D65BAFA5DADA4DEB5A5"
         },
         Action = "sts:AssumeRoleWithWebIdentity",
         Condition = {
           StringEquals = {
-            "oidc.eks.us-east-2.amazonaws.com/id/A9EDA6D83ABE1896B92C50B3BACC7C27:aud" : "sts.amazonaws.com",
-            "oidc.eks.us-east-2.amazonaws.com/id/A9EDA6D83ABE1896B92C50B3BACC7C27:sub" : "system:serviceaccount:ostinato-system:rag-ingestion-manager-sa"
+            "oidc.eks.us-east-2.amazonaws.com/id/39E6F8D301761D65BAFA5DADA4DEB5A5:aud" : "sts.amazonaws.com",
+            "oidc.eks.us-east-2.amazonaws.com/id/39E6F8D301761D65BAFA5DADA4DEB5A5:sub" : "system:serviceaccount:ostinato-system:rag-ingestion-manager-sa"
           }
         }
       },
@@ -97,13 +97,13 @@ resource "aws_iam_role" "aws_ostinato_prod_rag_services_role" {
         Action    = "sts:AssumeRoleWithWebIdentity"
         Condition = {
             StringEquals = {
-                "oidc.eks.us-east-2.amazonaws.com/id/A9EDA6D83ABE1896B92C50B3BACC7C27:aud" = "sts.amazonaws.com"
-                "oidc.eks.us-east-2.amazonaws.com/id/A9EDA6D83ABE1896B92C50B3BACC7C27:sub" = "system:serviceaccount:ostinato-system:rag-doc-processor-sa"
+                "oidc.eks.us-east-2.amazonaws.com/id/39E6F8D301761D65BAFA5DADA4DEB5A5:aud" = "sts.amazonaws.com"
+                "oidc.eks.us-east-2.amazonaws.com/id/39E6F8D301761D65BAFA5DADA4DEB5A5:sub" = "system:serviceaccount:ostinato-system:rag-doc-processor-sa"
               }
           }
         Effect    = "Allow"
         Principal = {
-            Federated = "arn:aws:iam::471112537430:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/A9EDA6D83ABE1896B92C50B3BACC7C27"
+            Federated = "arn:aws:iam::058264538874:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/39E6F8D301761D65BAFA5DADA4DEB5A5"
           }
       }
     ]
