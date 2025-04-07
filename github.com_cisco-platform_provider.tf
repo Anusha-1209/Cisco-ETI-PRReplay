@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "eticloud-tf-state-prod"
-    key    = "terraform-state/github.com/cisco-eti/backend.tfstate"
+    key    = "terraform-state/github.com/cisco-platform/backend.tfstate"
     region = "us-east-2"
   }
   required_providers {
