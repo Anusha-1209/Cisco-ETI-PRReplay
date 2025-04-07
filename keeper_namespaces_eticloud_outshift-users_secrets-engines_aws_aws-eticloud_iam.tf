@@ -1,15 +1,15 @@
 # Create the IAM user secret engine will use to auth against AWS
-resource "aws_iam_user" "vault-secret-engine-user-eticloud" {
-  name = "vault-secret-engine-user-eticloud"
+resource "aws_iam_user" "vault-secret-engine-dev-sandbox" {
+  name = "vault-secret-engine-dev-sandbox"
 }
 
-resource "aws_iam_access_key" "vault-secret-engine-user-eticloud" {
-  user = aws_iam_user.vault-secret-engine-user-eticloud.name
+resource "aws_iam_access_key" "vault-secret-engine-dev-sandbox" {
+  user = aws_iam_user.vault-secret-engine-dev-sandbox.name
 }
 
-resource "aws_iam_user_policy" "vault-secret-engine-user-eticloud" {
-  name = "vault-secret-engine-user-eticloud"
-  user = aws_iam_user.vault-secret-engine-user-eticloud.name
+resource "aws_iam_user_policy" "vault-secret-engine-dev-sandbox" {
+  name = "vault-secret-engine-dev-sandbox"
+  user = aws_iam_user.vault-secret-engine-dev-sandbox.name
 
   policy = <<EOF
 {
@@ -20,7 +20,7 @@ resource "aws_iam_user_policy" "vault-secret-engine-user-eticloud" {
       "Effect": "Allow",
       "Action": "sts:AssumeRole",
       "Resource": [
-        "arn:aws:iam::626007623524:role/dev-sandbox-ecr-push",
+        "arn:aws:iam::626007623524:role/dev-sandbox-ecr-access",
       ]
     }
   ]
@@ -28,17 +28,17 @@ resource "aws_iam_user_policy" "vault-secret-engine-user-eticloud" {
 EOF
 }
 
-## dev-sandbox-ecr-push role and policy
+## dev-sandbox-ecr-access role and policy
 
-resource "aws_iam_role" "dev-sandbox-ecr-push" {
-  name               = "dev-sandbox-ecr-push"
+resource "aws_iam_role" "dev-sandbox-ecr-access" {
+  name               = "dev-sandbox-ecr-access"
   assume_role_policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [
       {
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "arn:aws:iam::626007623524:user/vault-secret-engine-user-eticloud"
+          "AWS" : "arn:aws:iam::626007623524:user/vault-secret-engine-dev-sandbox"
         },
         "Action" : "sts:AssumeRole"
       }
@@ -46,13 +46,13 @@ resource "aws_iam_role" "dev-sandbox-ecr-push" {
   })
 
   tags = {
-    Name = "dev-sandbox-ecr-push"
+    Name = "dev-sandbox-ecr-access"
   }
 }
 
-resource "aws_iam_policy" "dev-sandbox-ecr-push-policy" {
-  name        = "dev-sandbox-ecr-push-policy"
-  description = "write access to ECR for CI artifact storage"
+resource "aws_iam_policy" "dev-sandbox-ecr-access-policy" {
+  name        = "dev-sandbox-ecr-access-policy"
+  description = "Write access to ECR for Dev Sandbox storage"
 
   policy = <<EOF
 {
@@ -109,7 +109,7 @@ resource "aws_iam_policy" "dev-sandbox-ecr-push-policy" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "dev-sandbox-ecr-push-policy-attach" {
-  role       = aws_iam_role.dev-sandbox-ecr-push.name
-  policy_arn = aws_iam_policy.dev-sandbox-ecr-push-policy.arn
+resource "aws_iam_role_policy_attachment" "dev-sandbox-ecr-access-policy-attach" {
+  role       = aws_iam_role.dev-sandbox-ecr-access.name
+  policy_arn = aws_iam_policy.dev-sandbox-ecr-access-policy.arn
 }

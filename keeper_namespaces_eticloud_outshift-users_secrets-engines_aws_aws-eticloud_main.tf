@@ -14,6 +14,6 @@ resource "vault_aws_secret_backend_role" "dev-sandbox-vault-role" {
   credential_type = "assumed_role"
 
   role_arns = [
-    aws_iam_role.dev-sandbox-ecr-push.arn,
+    aws_iam_role.dev-sandbox-ecr-access.arn,
   ]
 }
