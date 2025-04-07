@@ -31,7 +31,7 @@ resource "azurerm_cognitive_deployment" "smith-project-agents-gpt4o" {
   model {
     format  = "OpenAI"
     name    = "gpt-4o"
-    version = "2024-05-13"
+    version = "2024-08-06"
   }
 
   sku {
