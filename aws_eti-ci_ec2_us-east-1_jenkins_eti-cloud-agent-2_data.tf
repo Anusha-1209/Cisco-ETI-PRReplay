@@ -49,4 +49,4 @@ data "aws_security_group" "cloud_agent_host_monitoring_from_cisco" {
   name   = "cloud_agent_host_monitoring_from_cisco"
 }
 
-data "aws_account_id" "current" {}
+data "aws_caller_identity" "current" {}
