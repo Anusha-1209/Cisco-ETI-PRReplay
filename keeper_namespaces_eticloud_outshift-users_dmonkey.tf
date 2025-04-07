@@ -1,8 +1,8 @@
-# Outshift dmonkey Vault Role
-resource "vault_jwt_auth_backend_role" "dmonkey" {
-  depends_on = [vault_policy.dmonkey]
+# Outshift default Vault Role
+resource "vault_jwt_auth_backend_role" "default" {
+  depends_on = [vault_policy.default]
   provider   = vault.venture
-  role_name  = "dmonkey"
+  role_name  = "default"
   role_type  = "oidc"
   backend    = vault_jwt_auth_backend.oidc.path
   allowed_redirect_uris = ["https://keeper.cisco.com/ui/vault/auth/oidc/oidc/callback",
@@ -10,7 +10,7 @@ resource "vault_jwt_auth_backend_role" "dmonkey" {
   "https://west.keeper.cisco.com/ui/vault/auth/oidc/oidc/callback"]
   bound_audiences = [var.oidc_client_id]
   bound_claims = {
-    memberof = "CN=outshift-vault-dmonkey,OU=Cisco Groups,DC=cisco,DC=com"
+    memberof = "CN=GHEC_cisco-eti_login,OU=Cisco Groups,DC=cisco,DC=com"
   }
   disable_bound_claims_parsing = true
   bound_claims_type            = "string"
@@ -23,15 +23,15 @@ resource "vault_jwt_auth_backend_role" "dmonkey" {
   groups_claim = "memberof"
   oidc_scopes  = ["profile", "email", "openid"]
   user_claim   = "sub"
-  token_policies = [vault_policy.dmonkey.name]
+  token_policies = [vault_policy.default.name]
 }
-resource "vault_policy" "dmonkey" {
+resource "vault_policy" "default" {
   provider = vault.venture
-  name     = "dmonkey"
+  name     = "default"
   policy   = <<EOT
 # Manage auth methods broadly across Vault
 # List, create, update, and delete key/value secrets
-path "dmonkey/*"
+path "dev-sandbox-aws-eticloud/*"
 {
   capabilities = ["read", "list"]
 }
