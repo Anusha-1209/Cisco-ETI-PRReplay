@@ -1,5 +1,3 @@
-provider "vault" {}
-
 variable "venture_name" {
   type    = string
   default = "puccini" # <-- requires updating
