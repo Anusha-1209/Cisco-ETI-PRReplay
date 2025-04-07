@@ -63,7 +63,7 @@ resource "vault_jwt_auth_backend" "oidc" {
 # vault roles
 # Outshift Aether Vault Role
 resource "vault_jwt_auth_backend_role" "aether" {
-  depends_on = [vault_policy.aether]
+  depends_on = [vault_policy.developer]
   provider   = vault.venture
   role_name  = "developer"
   role_type  = "oidc"
