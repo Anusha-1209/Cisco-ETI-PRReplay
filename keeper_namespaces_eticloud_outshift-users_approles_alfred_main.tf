@@ -40,7 +40,7 @@ resource "vault_approle_auth_backend_role_secret_id" "ci_gha_backend_role_secret
 resource "vault_kv_secret_v2" "ci_gha_backend_secret" {
   provider  = vault.prcoach
   mount     = "prcoach"
-  name      = "prcoach-approle/ci-gha-approle"
+  name      = "gha/prcoach-ci-gha-approle"
   data_json = jsonencode(
     {
       role_name = vault_approle_auth_backend_role.ci_gha_approle.role_name
