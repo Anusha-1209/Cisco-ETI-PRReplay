@@ -10,7 +10,7 @@ resource "vault_jwt_auth_backend_role" "sandbox-developer" {
   "https://west.keeper.cisco.com/ui/vault/auth/oidc/oidc/callback"]
   bound_audiences = [var.oidc_client_id]
   bound_claims = {
-    memberof = "CN=eti_sre_admin,OU=Cisco Groups,DC=cisco,DC=com"
+    memberof = "CN=outshift-komodor-users,OU=Cisco Groups,DC=cisco,DC=com"
   }
   disable_bound_claims_parsing = true
   bound_claims_type            = "string"
