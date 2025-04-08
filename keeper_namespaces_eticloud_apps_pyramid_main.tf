@@ -2,7 +2,7 @@ provider "vault" {}
 
 variable "venture_name" {
   type    = string
-  default = "aether"
+  default = "pyramid"
 }
 
 variable "oidc_client_id" {
@@ -24,7 +24,7 @@ provider "vault" {
 
 provider "vault" {
   address   = "https://keeper.cisco.com"
-  namespace = "eticloud/apps/aether"
+  namespace = "eticloud/apps/pyramid"
   alias     = "venture"
 }
 
@@ -61,8 +61,8 @@ resource "vault_jwt_auth_backend" "oidc" {
 
 
 # vault roles
-# Outshift Aether Vault Role
-resource "vault_jwt_auth_backend_role" "aether" {
+# Outshift PyramID Vault Role
+resource "vault_jwt_auth_backend_role" "pyramid" {
   depends_on = [vault_policy.developer]
   provider   = vault.venture
   role_name  = "developer"
@@ -73,7 +73,7 @@ resource "vault_jwt_auth_backend_role" "aether" {
   "https://west.keeper.cisco.com/ui/vault/auth/oidc/oidc/callback"]
   bound_audiences = [var.oidc_client_id]
   bound_claims = {
-    memberof = "CN=outshift-vault-aether,OU=Cisco Groups,DC=cisco,DC=com"
+    memberof = "CN=outshift-vault-pyramid,OU=Cisco Groups,DC=cisco,DC=com"
   }
   disable_bound_claims_parsing = true
   bound_claims_type            = "string"
@@ -95,7 +95,7 @@ resource "vault_policy" "developer" {
   policy   = <<EOT
 # Manage auth methods broadly across Vault
 # List, create, update, and delete key/value secrets
-path "aether/*"
+path "pyramid/*"
 {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
