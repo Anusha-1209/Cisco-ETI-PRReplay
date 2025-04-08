@@ -25,6 +25,11 @@ provider "aws" {
   region     = "us-east-2"
 }
 
+import {
+  to = aws_iam_policy.aws_ostinato_prod_rag_services_policy
+  id = "arn:aws:iam::058264538874:policy/ostinato-prod-rag-services-policy"
+}
+
 resource "aws_iam_policy" "aws_ostinato_prod_rag_services_policy" {
   name        = "ostinato-prod-rag-services-policy"
   description = "AWS rag services role IAM Policy"
@@ -67,6 +72,11 @@ resource "aws_iam_policy" "aws_ostinato_prod_rag_services_policy" {
       }
     ]
   })
+}
+
+import {
+  to = aws_iam_role.aws_ostinato_prod_rag_services_role
+  id = "ostinato-prod-rag-services-role"
 }
 
 resource "aws_iam_role" "aws_ostinato_prod_rag_services_role" {
@@ -131,6 +141,11 @@ resource "aws_iam_role" "aws_ostinato_prod_rag_services_role" {
   })
 
   force_detach_policies = false
+}
+
+import {
+  to = aws_iam_role_policy_attachment.aws_ostinato_rag_services_policy_attachment
+  id = "ostinato-prod-rag-services-role/arn:aws:iam::058264538874:policy/ostinato-prod-rag-services-policy"
 }
 
 resource "aws_iam_role_policy_attachment" "aws_ostinato_rag_services_policy_attachment" {
