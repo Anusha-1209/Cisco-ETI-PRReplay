@@ -1,4 +1,4 @@
 provider "vault" {
-  alias     = "aether"
-  namespace = "eticloud/apps/aether"
+  alias     = "pyramid"
+  namespace = "eticloud/apps/pyramid"
 }

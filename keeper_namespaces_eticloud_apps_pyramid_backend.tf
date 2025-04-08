@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "eticloud-tf-state-prod"
-    key    = "terraform-state/keeper/eticloud/apps/aether/aether-namespace.tfstate"
+    key    = "terraform-state/keeper/eticloud/apps/pyramid/pyramid-namespace.tfstate"
     region = "us-east-2"
   }
 }
