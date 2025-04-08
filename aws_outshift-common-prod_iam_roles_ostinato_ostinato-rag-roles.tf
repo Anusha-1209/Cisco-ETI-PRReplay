@@ -1,3 +1,13 @@
+terraform {
+  backend "s3" {
+    bucket         = "eticloud-tf-state-prod"
+    key            = "terraform-state/outshift-common-prod/iam/role/ostinato-rag-roles.tfstate"
+    region         = "us-east-2"
+    dynamodb_table = "eticloud-tf-locks"
+    encrypt        = true
+  }
+}
+
 provider "vault" {
   alias     = "eticloud"
   address   = "https://keeper.cisco.com"
@@ -53,7 +63,7 @@ resource "aws_iam_policy" "aws_ostinato_prod_rag_services_policy" {
           "rds:CreateDBInstance",
           "rds:ModifyDBInstance"
         ],
-        Resource = "arn:aws:rds:us-east-2:058264538874:cluster:ostinato-*" 
+        Resource = "arn:aws:rds:us-east-2:058264538874:cluster:ostinato-*"
       }
     ]
   })
