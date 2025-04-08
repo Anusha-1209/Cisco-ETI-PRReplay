@@ -1,5 +1,5 @@
 resource "vault_auth_backend" "approle" {
-  provider = vault.aether
+  provider = vault.pyramid
   type     = "approle"
 
   tune {
