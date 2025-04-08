@@ -119,7 +119,7 @@ module "ec2-instance-jarvis-runner-1" {
   version       = "5.7.1"
   ami           = data.aws_ami.c9-ec2.image_id
   instance_type = "c5.2xlarge"
-  name          = "jarvis-runner-1"
+  name          = "outshift-jarvis-runner-1"
   vpc_security_group_ids = [data.aws_security_group.default.id,
     data.aws_security_group.cloud_agent_ssh_from_cisco.id,
   data.aws_security_group.cloud_agent_host_monitoring_from_cisco.id]
@@ -156,7 +156,7 @@ module "ec2-instance-jarvis-runner-2" {
   version       = "5.7.1"
   ami           = data.aws_ami.c9-ec2.image_id
   instance_type = "c5.2xlarge"
-  name          = "jarvis-runner-2"
+  name          = "outshift-jarvis-runner-2"
   vpc_security_group_ids = [data.aws_security_group.default.id,
     data.aws_security_group.cloud_agent_ssh_from_cisco.id,
   data.aws_security_group.cloud_agent_host_monitoring_from_cisco.id]
