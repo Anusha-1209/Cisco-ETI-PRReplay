@@ -95,7 +95,7 @@ resource "aws_eip" "eip_jarvis_runner_2" {
 }
 
 resource "aws_route53_record" "ec2_host_record_name_jarvis_runner_2" {
-  name    = "outshift-jarvis-runner-1"
+  name    = "outshift-jarvis-runner-2"
   zone_id = data.aws_route53_zone.this.id
   type    = "A"
   ttl     = 60
