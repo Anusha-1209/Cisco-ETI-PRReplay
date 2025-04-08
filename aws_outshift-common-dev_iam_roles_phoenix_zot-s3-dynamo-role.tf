@@ -39,6 +39,7 @@ resource "aws_iam_policy" "zot_s3_dynamo_policy" {
         "Action" : [
           "dynamodb:GetItem",
           "dynamodb:UpdateItem",
+          "dynamodb:PutItem",
           "dynamodb:DeleteItem"
         ],
         "Resource" : "arn:aws:dynamodb:*:*:table/ZotBlobTable"
