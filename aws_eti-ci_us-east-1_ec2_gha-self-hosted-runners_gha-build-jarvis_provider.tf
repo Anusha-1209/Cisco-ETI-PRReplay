@@ -12,7 +12,7 @@ data "vault_generic_secret" "aws_infra_credential" {
 terraform {
   backend "s3" {
     bucket = "eticloud-tf-state-nonprod"
-    key    = "terraform-state/ec2/us-east-2/gha-self-hosted-runners.tfstate"
+    key    = "terraform-state/ec2/us-east-2/gha-self-hosted-runners-new.tfstate"
     region = "us-east-2"
   }
 }
