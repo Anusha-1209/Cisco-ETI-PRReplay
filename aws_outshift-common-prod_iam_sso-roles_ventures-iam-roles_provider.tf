@@ -14,6 +14,6 @@ data "vault_generic_secret" "aws_infra_credential" {
 provider "aws" {
   access_key  = data.vault_generic_secret.aws_infra_credential.data["AWS_ACCESS_KEY_ID"]     # DON'T CHANGE THIS VALUE
   secret_key  = data.vault_generic_secret.aws_infra_credential.data["AWS_SECRET_ACCESS_KEY"] # DON'T CHANGE THIS VALUE
-  region      = "us-east-2"                                                                 
+  region      = "us-east-2"
   max_retries = 3
 }
