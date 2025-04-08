@@ -38,6 +38,31 @@ resource "aws_iam_policy" "gha_phoenix_cf_role_policy" {
           "kms:*"
         ],
         "Resource" : "*"
+      },
+      {
+        "Effect"   = "Allow"
+        "Action"   = [
+            "cloudformation:*",
+          ]
+        "Resource" = "*"
+      },
+      {
+        "Effect"   = "Allow"
+        "Action"   = [
+            "elasticloadbalancing:*",
+          ]
+        "Resource" = "*"
+      },
+      {
+        "Effect"   = "Allow"
+        "Action"   = [
+            "wafv2:*",
+            "waf-regional:*",
+            "shield:*",
+            "acm:*",
+            "cognito-idp:*",
+          ]
+        "Resource" = "*"
       }
     ]
   })
