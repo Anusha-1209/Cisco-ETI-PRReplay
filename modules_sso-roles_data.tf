@@ -19,15 +19,4 @@ data "aws_iam_policy_document" "assume_role_with_saml" {
       values   = ["https://signin.aws.amazon.com/saml"]
     }
   }
-
-  statement {
-    effect = "Allow"
-
-    actions = ["sts:AssumeRole"]
-    principals {
-      type = "AWS"
-
-      identifiers = ["arn:aws:iam::${local.account_id}:root"]
-    }
-  }
 }
