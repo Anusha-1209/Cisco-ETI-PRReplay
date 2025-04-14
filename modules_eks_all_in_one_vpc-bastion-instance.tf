@@ -1,6 +1,6 @@
 resource "aws_launch_template" "bastion_launch_template" {
   name_prefix                   = "${local.name}-bastion"
-  image_id                      = data.aws_ami.amazonlinux2_cisco_hardened.image_id
+  image_id                      = local.bastion_instance_ami_id
   instance_type                 = var.bastion_instance_type
   update_default_version        = true
   monitoring {
