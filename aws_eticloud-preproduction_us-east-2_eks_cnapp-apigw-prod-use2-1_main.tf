@@ -3,14 +3,14 @@ terraform {
     # This is the name of the backend S3 bucket.
     bucket  = "eticloud-tf-state-nonprod"                                                   # UPDATE ME.
     # This is the path to the Terraform state file in the backend S3 bucket.
-    key     = "terraform-state/aws/eticloud-preprod/us-east-2/eks/cnapp-apigw-dev-use2-1.tfstate" # UPDATE ME.
+    key     = "terraform-state/aws/eticloud-preprod/us-east-2/eks/cnapp-apigw-prod-use2-1.tfstate" # UPDATE ME.
     # This is the region where the backend S3 bucket is located.
     region  = "us-east-2"                                                                   # DO NOT CHANGE.
   }
 }
 
 locals {
-  name              = "cnapp-apigw-dev-use2-1"
+  name              = "cnapp-apigw-prod-use2-1"
   region            = "us-east-2"
   aws_account_name  = "eticloud-preprod"
   vpc_cidr          = "10.100.0.0/16"
@@ -26,6 +26,7 @@ module "cluster" {
 
   # EKS Managed Private Node Group
   instance_types    = ["m6a.large"]           # EKS instance types
+  ami_id            = "ami-0d9fe0469fe8439cb" # EKS AMI ID
   min_size          = 3                       # EKS node group min size
   max_size          = 10                      # EKS node group max size
   desired_size      = 3                       # EKS node group desired size
