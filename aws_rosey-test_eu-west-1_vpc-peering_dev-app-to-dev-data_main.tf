@@ -10,7 +10,7 @@ locals {
 }
 
 data "vault_generic_secret" "aws_infra_credential" {
-  provider = vault.eticcprod
+  provider = vault.eticloud
   path     = "secret/infra/aws/${local.aws_account_name}/terraform_admin"
 }
 
