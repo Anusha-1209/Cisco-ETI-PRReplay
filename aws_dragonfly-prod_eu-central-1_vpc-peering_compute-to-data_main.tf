@@ -13,7 +13,7 @@ provider "vault" {
 }
 
 data "vault_generic_secret" "aws_infra_credential" {
-  path     = "secret/eticcprod/infra/dragonfly-prod/aws"
+  path     = "secret/eticcprod/infra/dragonfly-production/aws"
   provider = vault.eticloud_eticcprod
 }
 
