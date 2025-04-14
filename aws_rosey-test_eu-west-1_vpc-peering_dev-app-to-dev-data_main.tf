@@ -154,37 +154,26 @@ data "aws_security_groups" "es_cluster_sg" {
   }
 }
 
-output "sg_eks" {
-  value = data.aws_security_groups.eks_cluster_sg.ids
+locals {
+  es_cluster_sg  = data.aws_security_groups.es_cluster_sg.ids[0]
+  eks_cluster_sg = data.aws_security_groups.eks_cluster_sg.ids[0]
 }
 
-output "sg_data" {
-  value = data.aws_security_groups.es_cluster_sg.ids
+#security group rules because the rules are going to reference the groups
+resource "aws_security_group_rule" "dev-data-vpc-to-app" {
+  type = "ingress"
+  from_port = 0
+  to_port = 65535
+  protocol = "-1"
+  security_group_id = local.es_cluster_sg
+  source_security_group_id = local.eks_cluster_sg
 }
 
-output "sg_eks_0" {
-  value = data.aws_security_groups.eks_cluster_sg.ids[0]
-}
-
-output "sg_data_0" {
-  value = data.aws_security_groups.es_cluster_sg.ids[0]
-}
-
-# security group rules because the rules are going to reference the groups
-# resource "aws_security_group_rule" "dev-data-vpc-to-app" {
-#   type = "ingress"
-#   from_port = 0
-#   to_port = 65535
-#   protocol = "-1"
-#   security_group_id = data.aws_security_groups.es_cluster_sg.ids[0]
-#   source_security_group_id = data.aws_security_groups.eks_cluster_sg.ids[0]
-# }
-
-# resource "aws_security_group_rule" "app-to-dev-data-vpc" {
-#   type = "ingress"
-#   from_port = 0
-#   to_port = 65535
-#   protocol = "-1"
-#   security_group_id = data.aws_security_groups.eks_cluster_sg.ids[0]
-#   source_security_group_id = data.aws_security_groups.es_cluster_sg.ids[0]
-# } 
+resource "aws_security_group_rule" "app-to-dev-data-vpc" {
+  type = "ingress"
+  from_port = 0
+  to_port = 65535
+  protocol = "-1"
+  security_group_id = local.eks_cluster_sg
+  source_security_group_id = local.es_cluster_sg
+} 
