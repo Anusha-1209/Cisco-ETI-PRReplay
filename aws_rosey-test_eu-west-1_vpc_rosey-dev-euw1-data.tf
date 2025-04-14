@@ -3,9 +3,12 @@
 ################################################################################
 terraform {
   backend "s3" {
-    bucket = "eticloud-tf-state-prod"
-    key    = "terraform-state/vpc/us-east-2/scs-prod-1-vpc.tfstate"
-    region = "us-east-2"
+    # This is the name of the backend S3 bucket.
+    bucket  = "eticloud-tf-state-nonprod"                                                   # UPDATE ME.
+    # This is the path to the Terraform state file in the backend S3 bucket.
+    key     = "terraform-state/aws/rosey-test/eu-west-1/vpc/rosey-dev-euw1-data-1.tfstate"  # UPDATE ME.
+    # This is the region where the backend S3 bucket is located.
+    region  = "us-east-2"                                                                   # DO NOT CHANGE.
   }
 }
 
