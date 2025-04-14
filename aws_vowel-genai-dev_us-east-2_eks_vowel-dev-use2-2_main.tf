@@ -25,7 +25,7 @@ module "eks_all_in_one" {
   cluster_version   = "1.28"                  # EKS cluster version
   # EKS Managed Private Node Group
   instance_types    = ["m6a.2xlarge"]         # EKS instance types
-  min_size          = 3                       # EKS node group min size
+  min_size          = 8                       # EKS node group min size
   max_size          = 15                      # EKS node group max size
   desired_size      = 8                       # EKS node group desired size
 }
