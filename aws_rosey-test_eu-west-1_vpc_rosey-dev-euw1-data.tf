@@ -60,4 +60,5 @@ module "vpc" {
   aws_account_name                = local.aws_account_name
   name                            = local.vpc_name
   cidr                            = local.vpc_cidr
+  cluster_version                 = "1.28"                 
 }
