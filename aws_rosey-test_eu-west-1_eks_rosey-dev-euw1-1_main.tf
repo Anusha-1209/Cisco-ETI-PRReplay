@@ -45,8 +45,4 @@ module "eticloud_setup_external_secrets_operator" {
   kubernetes_host      = data.aws_eks_cluster.cluster.endpoint
   kubernetes_ca        = data.vault_generic_secret.cluster_certificate.data["b64certificate"]
   policies             = ["external-secrets-dev"]
-
-  depends_on = [
-    module.eks_all_in_one
-  ]
 }
