@@ -127,7 +127,7 @@ variable "vpc_tags" {
 variable "create_vpc_endpoints" {
   description = "Controls if VPC endpoints should be created"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "vpc_endpoints" {
