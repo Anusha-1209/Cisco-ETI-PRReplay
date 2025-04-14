@@ -17,7 +17,7 @@ locals {
 
 module "eks_all_in_one" {
   # EKS cluster partially created as of Jan 15 2024
-  source = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=latest" # Based on v0.0.10
+  source = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=0.0.10" # Based on v0.0.10
 
   name             = local.name             # EKS cluster name
   region           = local.region           # AWS provider region
