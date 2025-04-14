@@ -49,7 +49,7 @@ data "aws_vpc" "redis_vpc" {
 
 # Create a security group for the Elasticache service
 resource "aws_security_group" "redis_security_group" {
-  name   = "rosey-dev-data-euw1-1-sg"
+  name   = "rosey-data-dev-euw1-1-sg"
   vpc_id = data.aws_vpc.redis_vpc.id
   ingress {
     from_port       = 6379
@@ -61,7 +61,7 @@ resource "aws_security_group" "redis_security_group" {
 
 resource "aws_elasticache_replication_group" "rosey-dev-euw1-1" {
   replication_group_id       = "rosey-dev-euw1-1"
-  description                = "Redis cluster for rosey-dev-euw1-1 ElastiCache"
+  description                = "Redis cluster for rosey-dev-data-euw1-1 ElastiCache"
   engine                     = "redis"
   engine_version             = "7.1"
 
