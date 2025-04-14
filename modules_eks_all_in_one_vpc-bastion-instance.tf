@@ -1,7 +1,7 @@
 resource "aws_launch_template" "bastion_launch_template" {
   name_prefix                   = "${local.name}-bastion"
   image_id                      = local.ami_id
-  instance_type                 = ["t3.nano"]
+  instance_type                 = var.bastion_instance_type
   update_default_version        = true
   monitoring {
     enabled = true
@@ -21,12 +21,12 @@ resource "aws_launch_template" "bastion_launch_template" {
 
   tag_specifications {
     resource_type = "instance"
-    tags          = merge(map("Name", var.bastion_launch_template_name), merge(var.tags))
+    tags          = merge(tomap({"Name"= "${local.name}-bastion-lt"}), merge(var.tags))
   }
 
   tag_specifications {
     resource_type = "volume"
-    tags          = merge(map("Name", var.bastion_launch_template_name), merge(var.tags))
+    tags          = merge(tomap({"Name"= "${local.name}-bastion-lt"}), merge(var.tags))
   }
 
   lifecycle {
