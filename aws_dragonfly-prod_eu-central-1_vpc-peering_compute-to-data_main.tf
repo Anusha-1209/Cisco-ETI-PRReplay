@@ -95,13 +95,13 @@ resource "aws_route" "data_to_compute" {
 
 # Security groups
 resource "aws_security_group" "compute_to_data" {
-  name        = "compute-pvc-to-data-pvc"
+  name        = "compute-vpc-to-data-pvc"
   description = "Allows all communication into data-pvc from the compute-pvc"
   vpc_id      = data.aws_vpc.acceptor_vpc.id
 }
 
 resource "aws_security_group" "data_to_compute" {
-  name        = "eks-dev-1-to-nonprod-db-vpc-1"
+  name        = "data-vpc-to-compute-pvc"
   description = "Allows all communication into compute-pvc from the data-pvc"
   vpc_id      = data.aws_vpc.requestor_vpc.id
 }
