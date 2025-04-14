@@ -48,7 +48,7 @@ resource "aws_autoscaling_group" "bastion_auto_scaling_group" {
   min_size         = var.bastion_instance_count
   desired_capacity = var.bastion_instance_count
 
-  vpc_zone_identifier = aws_subnet.private[*].id
+  vpc_zone_identifier = aws_subnet.public[*].id
 
   default_cooldown          = 180
   health_check_grace_period = 180
