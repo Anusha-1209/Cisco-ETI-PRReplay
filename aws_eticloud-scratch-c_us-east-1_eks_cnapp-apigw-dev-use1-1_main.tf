@@ -26,7 +26,6 @@ module "cluster" {
 
   # EKS Managed Private Node Group
   instance_types    = ["m6a.large"]           # EKS instance types
-  ami_id            = "ami-0d9fe0469fe8439cb" # EKS AMI ID
   min_size          = 3                       # EKS node group min size
   max_size          = 10                      # EKS node group max size
   desired_size      = 3                       # EKS node group desired size
