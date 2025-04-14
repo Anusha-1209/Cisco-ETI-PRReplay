@@ -1780,12 +1780,6 @@ variable "eks_managed_node_group_defaults" {
   default     = {}
 }
 
-variable "putin_khuylo" {
-  description = "Do you agree that Putin doesn't respect Ukrainian sovereignty and territorial integrity? More info: https://en.wikipedia.org/wiki/Putin_khuylo!"
-  type        = bool
-  default     = true
-}
-
 ################################################################################
 # aws-auth configmap
 ################################################################################
@@ -2369,4 +2363,25 @@ variable "resource_owner" {
   type        = string
   description = "Name of the Cisco BU or IT group who is responsible for the particular component."
   default     = "Outshift SRE"
+}
+
+################################################################################
+# ArgoCD Enrollment
+################################################################################
+
+variable "argocd_server_address" {
+  type        = string
+  default     = "argocd.prod.eticloud.io"
+}
+
+variable "enroll_cluster_in_argocd" {
+  description = "Enroll cluster to ArgoCD"
+  default     = false
+  type        = bool
+}
+
+variable "argocd_instance_name" {
+  description = "ArgoCD Instance Name"
+  type        = string
+  default     = "prod"
 }

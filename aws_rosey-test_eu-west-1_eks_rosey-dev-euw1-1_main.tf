@@ -10,12 +10,18 @@ terraform {
   }
 }
 
-module "eks_all_in_one" {
-  source            = "../../../../../modules/eks_all_in_one"
+locals {
+  name = "rosey-dev-euw1-1"
+  region = "eu-west-1"
+  aws_account_name = "rosey-test"
+}
 
-  name              = "rosey-dev-euw1-1"      # EKS cluster name
-  region            = "eu-west-1"             # AWS provider region
-  aws_account_name  = "rosey-test"            # AWS account name
+module "eks_all_in_one" {
+  source            = "git::https://github.com/cisco-eti/sre-tf-module-eks-allinone.git?ref=0.0.1"
+
+  name              = local.name              # EKS cluster name
+  region            = local.region            # AWS provider region
+  aws_account_name  = local.aws_account_name  # AWS account name
   cidr              = "10.0.0.0/16"           # VPC CIDR
   cluster_version   = "1.28"                  # EKS cluster version
 

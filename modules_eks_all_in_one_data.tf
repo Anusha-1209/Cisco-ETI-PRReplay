@@ -23,6 +23,7 @@ data "aws_ami" "amazonlinux2_cisco_hardened" {
 
 data "aws_eks_cluster_auth" "cluster" {
   name = local.name
+  depends_on = [ aws_eks_cluster.this ]
 }
 
 

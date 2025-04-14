@@ -3,7 +3,6 @@
 ################################################################################
 
 resource "aws_eks_addon" "this" {
-  # Not supported on outposts
   for_each = { for k, v in var.cluster_addons : k => v if !try(v.before_compute, false) && var.create_cluster_addons }
 
   cluster_name = aws_eks_cluster.this[0].name
