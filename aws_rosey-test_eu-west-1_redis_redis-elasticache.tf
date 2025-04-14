@@ -13,6 +13,7 @@ locals {
   name                 = "rosey-dev-euw1-1"
   region               = "eu-west-1"
   aws_account_name     = "rosey-test"
+  data_vpc_name        = "rosey-dev-data-euw1-1"
 }
 
 provider "vault" {
@@ -39,9 +40,17 @@ data "aws_vpc" "cluster_vpc" {
   }
 }
 
+data "aws_vpc" "redis_vpc" {
+  filter {
+    name   = "tag:Name"
+    values = [local.data_vpc_name]
+  }
+}
+
 # Create a security group for the Elasticache service
 resource "aws_security_group" "redis_security_group" {
-  name = "rosey-dev-euw1-1-sg"
+  name   = "rosey-dev-euw1-1-sg"
+  vpc_id = data.aws_vpc.redis_vpc.id
   ingress {
     from_port       = 6379
     to_port         = 6379
