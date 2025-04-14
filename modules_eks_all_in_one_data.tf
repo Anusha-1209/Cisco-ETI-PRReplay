@@ -11,6 +11,16 @@ data "aws_ami" "eks_default_cisco" {
   }
 }
 
+data "aws_ami" "amazonlinux2_cisco_hardened" {
+  owners      = ["849570812361"] # <--- The Cloud 9 AWS account
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["CiscoHardened-AmazonLinux2-amd64-*"]
+  }
+}
+
 data "aws_eks_cluster_auth" "cluster" {
   name = local.name
 }

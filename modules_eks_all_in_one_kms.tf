@@ -1,7 +1,5 @@
 locals {
   kms_description                   = "Customer managed key to encrypt ${local.name} EKS secrets or managed node group volumes"
-
-  account_id                        = data.aws_caller_identity.current.account_id
   partition                         = data.aws_partition.current.partition
   kms_dns_suffix                    = data.aws_partition.current.dns_suffix
 
