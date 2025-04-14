@@ -18,7 +18,7 @@ locals {
   vpc_cidr           = "10.3.0.0/16"
   eks_cluster_name   = "rosey-dev-data-euw1-1"
   app_name           = "rosey-dev" 
-  aws_account_name   = "rosey-dev" 
+  aws_account_name   = "rosey-test" 
   aws_account_id     = "475589446868"
 }
 
