@@ -13,6 +13,8 @@ locals {
   name                 = "rosey-dev-euw1-1"
   region               = "eu-west-1"
   aws_account_name     = "rosey-test"
+  data_vpc_name        = "rosey-dev-data-euw1-1"
+  subnet_group_name    = "rosey-dev-data-sg-euw1-1"
 }
 
 provider "vault" {
@@ -39,9 +41,33 @@ data "aws_vpc" "cluster_vpc" {
   }
 }
 
+data "aws_vpc" "redis_vpc" {
+  filter {
+    name   = "tag:Name"
+    values = [local.data_vpc_name]
+  }
+}
+
+data "aws_subnets" "redis_subnets" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.redis_vpc.id]
+  }
+  tags = {
+    Tier = "Private"
+  }
+}
+
+# Create a subnet group for the Elasticache service
+# resource "aws_elasticache_subnet_group" "redis_subnet_group" {
+#   name       = local.subnet_group_name
+#   subnet_ids = data.aws_subnets.redis_subnets.ids
+# }
+
 # Create a security group for the Elasticache service
 resource "aws_security_group" "redis_security_group" {
-  name = "rosey-dev-euw1-1-sg"
+  name   = "rosey-data-dev-euw1-1-sg"
+  vpc_id = data.aws_vpc.redis_vpc.id
   ingress {
     from_port       = 6379
     to_port         = 6379
@@ -52,7 +78,7 @@ resource "aws_security_group" "redis_security_group" {
 
 resource "aws_elasticache_replication_group" "rosey-dev-euw1-1" {
   replication_group_id       = "rosey-dev-euw1-1"
-  description                = "Redis cluster for rosey-dev-euw1-1 ElastiCache"
+  description                = "Redis cluster for rosey-dev-data-euw1-1 ElastiCache"
   engine                     = "redis"
   engine_version             = "7.1"
 
@@ -66,5 +92,6 @@ resource "aws_elasticache_replication_group" "rosey-dev-euw1-1" {
   num_node_groups            = 2
   replicas_per_node_group    = 1
 
+  subnet_group_name          = local.subnet_group_name
   security_group_ids         = [aws_security_group.redis_security_group.id]
 }
