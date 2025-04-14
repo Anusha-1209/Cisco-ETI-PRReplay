@@ -42,4 +42,6 @@ locals {
       mapRoles = yamlencode(local.aws_auth_configmap_string)
   }
 
+  argocd_manager_service_account_name = "argocd-manager"
+  argocd_manager_namespace            = "kube-system"
 }

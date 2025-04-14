@@ -10,12 +10,20 @@ terraform {
   }
 }
 
+locals {
+  name              = "eks-cookiesncream-1"
+  region            = "us-east-2"
+  aws_account_name  = "eticloud-scratch-c"
+  vpc_cidr          = "10.22.0.0/16"
+}
+
 module "eks_all_in_one" {
   source            = "../../../../../modules/eks_all_in_one"
-  name              = "eks-cookiesncream-1"   # EKS cluster name
-  region            = "us-east-2"             # AWS provider region
-  aws_account_name  = "eticloud-scratch-c"    # AWS account name
-  cidr              = "10.22.0.0/16"          # VPC CIDR
+  name              = local.name              # EKS cluster name
+  region            = local.region            # AWS provider region
+  aws_account_name  = local.aws_account_name  # AWS account name
+  cidr              = local.vpc_cidr          # VPC CIDR
+
   cluster_version   = "1.28"                  # EKS cluster version
 
   # EKS Managed Private Node Group
@@ -24,4 +32,9 @@ module "eks_all_in_one" {
   min_size          = 2                       # EKS node group min size
   max_size          = 10                      # EKS node group max size
   desired_size      = 2                       # EKS node group desired size
+
+  # Add to argocd
+  enroll_cluster_in_argocd = true
+  argocd_server_address    = "argocd.prod.eticloud.io"
+  argocd_instance_name     = "prod"
 }
