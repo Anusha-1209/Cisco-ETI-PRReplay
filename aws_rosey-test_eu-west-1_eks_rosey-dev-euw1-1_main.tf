@@ -24,4 +24,13 @@ module "eks_all_in_one" {
   min_size          = 3                       # EKS node group min size
   max_size          = 10                      # EKS node group max size
   desired_size      = 3                       # EKS node group desired size
+
+  # ESO Setup
+  # DO NOT create EKS Cluster with external-secrets enabled until External Secrets Operator is installed in the cluster
+  setup_external_secrets_operator = true
+  external_secrets_namespaces     = {
+    eticloud = {
+      vault_policy = [ "external-secrets-dev"]
+    }
+  }
 }
