@@ -101,7 +101,7 @@ resource "aws_route" "app_to_data" {
   count                     = length(data.aws_route_tables.requestor_vpc_rt.ids)
   route_table_id            = data.aws_route_tables.requestor_vpc_rt.ids[count.index]
   destination_cidr_block    = data.aws_vpc.acceptor_vpc.cidr_block
-  vpc_peering_connection_id = aws_vpc_peering_connection.data_to_app.id
+  vpc_peering_connection_id = aws_vpc_peering_connection.app_to_data.id
 }
 
 resource "aws_route" "data_to_app" {
