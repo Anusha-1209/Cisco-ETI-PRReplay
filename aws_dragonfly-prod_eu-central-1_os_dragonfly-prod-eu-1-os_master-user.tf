@@ -13,3 +13,18 @@ resource "vault_generic_secret" "os_auth_credentials" {
 
   provider = vault.dragonfly
 }
+
+resource "vault_generic_secret" "connection" {
+  path = "secret/prod/os/eu-central-1/os-dragonfly-prod-1/connection"
+  data_json = jsonencode({
+    username = var.os_master_user
+    password = random_password.password.result
+    endpoint = "https://${aws_opensearch_domain.dragonfly_prod_eu_1_os.endpoint}"
+  })
+
+  provider = vault.dragonfly
+
+  depends_on = [
+    aws_opensearch_domain.dragonfly_prod_eu_1_os
+  ]
+} 
