@@ -8,7 +8,7 @@ resource "aws_security_group" "bastion_host_security_group" {
   vpc_id            = local.vpc_id
 }
 
-resource "aws_security_group_rule" "bastion-ingress-01" {
+resource "aws_security_group_rule" "bastion_ingress_01" {
 
   count             = var.bastion_security_group_id == "" ? 1 : 0
   description       =  "Incoming traffic to bastion"
@@ -20,7 +20,7 @@ resource "aws_security_group_rule" "bastion-ingress-01" {
   security_group_id = local.bastion_security_group
 }
 
-resource "aws_security_group_rule" "bastion-ingress-02" {
+resource "aws_security_group_rule" "bastion_ingress_02" {
 
   count             = var.bastion_security_group_id == "" ? 1 : 0
   description       = "Incoming traffic to bastion"
@@ -32,7 +32,7 @@ resource "aws_security_group_rule" "bastion-ingress-02" {
   security_group_id = local.bastion_security_group
 }
 
-resource "aws_security_group_rule" "bastion-egress-all" {
+resource "aws_security_group_rule" "bastion_egress_all" {
   count             = var.bastion_security_group_id == "" ? 1 : 0
 
   description       = "Outgoing traffic from bastion to instances"
@@ -45,7 +45,7 @@ resource "aws_security_group_rule" "bastion-egress-all" {
   security_group_id = local.bastion_security_group
 }
 
-resource "aws_security_group" "bastion-to-eks-private-nodes-security_group" {
+resource "aws_security_group" "bastion_to_eks_private_nodes_security_group" {
   description       = "Enable SSH access to the Private instances from the bastion via SSH port"
   name              = "${local.name}-bastion-to-eks-nodes"
   vpc_id            = local.vpc_id
@@ -53,7 +53,7 @@ resource "aws_security_group" "bastion-to-eks-private-nodes-security_group" {
   tags              = merge(var.tags)
 }
 
-resource "aws_security_group_rule" "bastion-ingress-instances" {
+resource "aws_security_group_rule" "bastion_ingress_instances" {
   description = "Incoming traffic from bastion"
   type        = "ingress"
   from_port   = var.private_ssh_port
@@ -62,5 +62,5 @@ resource "aws_security_group_rule" "bastion-ingress-instances" {
 
   source_security_group_id = local.bastion_security_group
 
-  security_group_id = aws_security_group.bastion-to-eks-private-nodes-security_group.id
+  security_group_id = aws_security_group.bastion_to_eks_private_nodes_security_group.id
 }
