@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "eticloud-tf-state-nonprod"                                                       
-    key    = "terraform-state/aws-eticloud/s3/us-east-2/phoenix-ui.tfstate" 
+    key    = "terraform-state/aws-eticloud/s3/us-east-2/outshift-phoenix-ui.tfstate" 
     region = "us-east-2"                                                                       
   }
 }
@@ -36,8 +36,8 @@ provider "aws" {
 }
 
 module "s3" {
-  source                = "git::https://github.com/cisco-eti/sre-tf-module-aws-s3.git?ref=1.0.3"
-  bucket_name           = "phoenix-ui"
+  source                = "git::https://github.com/cisco-eti/sre-tf-module-aws-s3.git?ref=1.0.2"
+  bucket_name           = "outshift-phoenix-ui"
   CSBApplicationName    = "outshift_ventures"
   CSBCiscoMailAlias     = "outshift-phoenix@cisco.com"
   CSBDataClassification = "Cisco Confidential"
