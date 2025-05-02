@@ -26,7 +26,7 @@ module "phoenix-ui-dev-cloudfront" {
   }
   default_cache_behavior = {
     path_pattern               = "*"
-    target_origin_id           = "dragonfly-dev-cdr-ui"
+    target_origin_id           = "outshift-phoenix-ui"
     viewer_protocol_policy     = "redirect-to-https"
     allowed_methods            = ["GET", "HEAD", "OPTIONS"]
     cached_methods             = ["GET", "HEAD"]
@@ -42,16 +42,15 @@ module "phoenix-ui-dev-cloudfront" {
   }
 
   origin = {
-    dragonfly-dev-cdr-ui = {
+    outshift-phoenix-ui = {
         connection_attempts      = 3
         connection_timeout       = 10
-        domain_name              = "dragonfly-dev-cdr-ui.s3.eu-west-1.amazonaws.com"
-        origin_access_control_id = "ECSHY7OK92LX"
-        origin_id                = "dragonfly-dev-cdr-ui"
+        domain_name              = "outshift-phoenix-ui.s3.us-east-2.amazonaws.com"
+        origin_id                = "outshift-phoenix-ui"
 
         origin_shield = {
             enabled              = true
-            origin_shield_region = "us-east-1"
+            origin_shield_region = "us-east-2"
           }
       }
   }

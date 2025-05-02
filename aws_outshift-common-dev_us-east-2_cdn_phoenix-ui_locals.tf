@@ -1,6 +1,6 @@
 locals {
-  aws_account         = "dragonfly-dev"
-  cdn_domain_name     = "cdr-ui.dev.panoptica.app"
+  aws_account         = "outshift-common-dev"
+  cdn_domain_name     = "phoenix-ui.dev.app"
   route53_account     = "eticloud"
-  bucket_domain_name  = "dragonfly-dev-cdr-ui.s3.eu-west-1.amazonaws.com"
+  bucket_domain_name  = "outshift-phoenix-ui.s3.us-east-2.amazonaws.com"
 }
