@@ -10,7 +10,7 @@ locals {
 
 data "aws_route53_zone" "domain" {
   provider = aws.route53
-  name = "dev.outshift.ai"
+  name = "phoenix.dev.outshift.ai"
 }
 resource "aws_acm_certificate" "this" {
   provider = aws.us-east-1
